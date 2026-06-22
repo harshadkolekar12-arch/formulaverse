@@ -1,0 +1,742 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHYSICS FORMULAS</title>
+
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+<meta name="theme-color" content="#38bdf8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="FormulaVerse">
+
+
+    <meta name="description" content="Browse Physics formulas by category — Kinematics, Mechanics, Electrostatics and more on FormulaVerse">
+<meta name="keywords" content="physics categories, kinematics formulas, mechanics formulas, electrostatics formulas">
+<meta property="og:title" content="Physics Categories — FormulaVerse"/>
+<meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/index"/>
+    <link rel="stylesheet" href="{% static 'formulas/index.css' %}">
+
+    <script>
+    MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+    };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        background-color: pink;
+        font-family: Arial, sans-serif;
+
+    }
+
+    /* HAMBURGER */
+    .hamburger {
+        position: fixed;
+        top: 10px; left: 8.7px;
+        z-index: 1100;
+        width: 30px; height: 37.5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+        color:  #000080;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 16px; height: 2.5px;
+        background: #000080;
+        transition: all 0.3s ease;
+
+    }
+
+    .hamburger span:nth-child(1){
+        width: 16px;
+    }
+
+    .hamburger span:nth-child(2){
+        width: 10px;
+
+    }
+
+    .hamburger span:nth-child(3){
+        width: 16px;
+    }
+
+    .hamburger.open span:nth-child(1) {  transform: translateY(7.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) {  opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    /* SIDEBAR */
+    .sidebar {
+        position: fixed;
+        top: 0; left: 0;
+        width: 290px;
+        height: 100vh;
+        background: linear-gradient(160deg, #0f172a, #1e293b);
+        z-index: 1050;
+        transform: translateX(-100%);
+        transition: transform 0.35s ease;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 4px 0 24px rgba(0,0,0,0.4);
+        overflow-y: auto;
+    }
+
+    .sidebar.open { transform: translateX(0); }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 1040;
+        backdrop-filter: blur(2px);
+    }
+
+    .sidebar-overlay.open { display: block; }
+
+    .sidebar-profile {
+        padding: 50px 24px 24px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
+    }
+
+    .sidebar-avatar {
+        width: 75px; height: 75px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #38bdf8, #0284c7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+        margin: 0 auto 12px;
+    }
+
+    .sidebar-username { font-size: 1.2rem; font-weight: bold; color: #38bdf8; }
+    .sidebar-email { font-size: 0.8rem; color: #94a3b8; margin-top: 3px; }
+
+    .sidebar-stats {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        padding: 18px 24px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-box {
+        background: rgba(56,189,248,0.1);
+        border: 1px solid rgba(56,189,248,0.2);
+        border-radius: 10px;
+        padding: 12px 18px;
+        text-align: center;
+        flex: 1;
+    }
+
+    .stat-number { font-size: 1.6rem; font-weight: bold; color: #38bdf8; }
+    .stat-label { font-size: 0.72rem; color: #94a3b8; margin-top: 2px; }
+
+    .sidebar-info {
+        padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .info-row {
+        background: rgba(255,255,255,0.05);
+        border-radius: 8px;
+        padding: 10px 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .info-label { color: #94a3b8; font-size: 0.8rem; }
+    .info-value { color: white; font-size: 0.6rem; font-weight: 300; }
+
+    .sidebar-actions {
+        padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .sidebar-btn {
+        width: 100%;
+        padding: 11px;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+    }
+
+    .sidebar-btn:hover { opacity: 0.85; }
+    .btn-saved { background: rgba(56,189,248,0.15); border: 1px solid rgba(56,189,248,0.3); color: #38bdf8; }
+    .btn-logout { background: #38bdf8; color: #0f172a; }
+    .btn-delete { background: transparent; border: 1px solid #ef4444; color: #ef4444; }
+
+    .confirm-box {
+        display: none;
+        background: rgba(239,68,68,0.1);
+        border: 1px solid #ef4444;
+        border-radius: 10px;
+        padding: 12px;
+        margin: 0 20px 10px;
+    }
+
+    .confirm-box p { color: #fca5a5; font-size: 0.8rem; margin-bottom: 8px; text-align: center; }
+
+    .btn-confirm-delete {
+        background: #ef4444;
+        color: white;
+        width: 100%;
+        padding: 9px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.85rem;
+    }
+
+    /* EXISTING STYLES */
+    .ripple-text {
+        font-size: clamp(1.8rem, 7vw, 4rem) !important;
+        letter-spacing: 0.15em;
+        text-align: center;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        padding: 32px 11.7px;
+        box-sizing: border-box;
+    }
+
+    h1 { color: #000080; }
+
+
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        padding: 8px 12px;
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+
+    @media (max-width: 600px) {
+        .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .topic-card {
+        padding: 6px 10px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: #FFF;
+        border: 1px solid rgba(255,105, 135, 0.3);
+        backdrop-filter: blur(6px);
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .topic-card:hover { background: rgba(255,105, 135, 0.4); }
+    .card-icon { font-size: 15px; margin: 0; flex-shrink: 0; }
+
+    .card-title {
+        font-size: 13.47px;
+        font-weight: bold;
+        margin: 0;
+        color: #4a0e1a;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .container{
+        background: rga(255, 182, 193, 0.3);
+        border: 1px solid rgba(180, 50, 80, 0.2);
+        border-radius:  12px;
+    }
+
+    .formula-title{
+          color: #4a0e1a;
+          font-weight: bold;
+          text-decoration: none;
+    }
+    </style>
+</head>
+<body>
+
+    <!-- Hamburger -->
+    <div class="hamburger" id="hamburger" onclick="toggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Overlay -->
+    <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+
+        <div class="sidebar-profile">
+           {% if user.profile.profile_pic %}
+    <img src="{{ user.profile.profile_pic.url }}"
+         style="width:75px;height:75px;border-radius:50%;object-fit:cover;">
+{% else %}
+    <div class="sidebar-avatar">
+        {{ user.username|first|upper }}
+    </div>
+{% endif %}
+
+
+            <div class="sidebar-username">{{ user.username }}</div>
+            <div class="sidebar-email">{{ user.email }}</div>
+        </div>
+
+        <div class="sidebar-stats">
+            <div class="stat-box">
+                <div class="stat-number">{{ saved_count }}</div>
+                <div class="stat-label">Saved Formulas</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ total }}</div>
+                <div class="stat-label">Total Formulas</div>
+            </div>
+        </div>
+
+        <div class="sidebar-info">
+            <div class="info-row">
+                <span class="info-label">📅 Joined</span>
+                <span class="info-value">{{ user.date_joined|date:"d M Y" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">📧 Email</span>
+                <span class="info-value">{{ user.email }}</span>
+            </div>
+        </div>
+
+        <div class="sidebar-actions">
+            <a href="/saved" class="sidebar-btn btn-saved">⭐ Saved Formulas</a>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="sidebar-btn btn-logout">🚪 Logout</button>
+            </form>
+            <button class="sidebar-btn btn-delete"
+                onclick="document.getElementById('confirm-delete').style.display='block'">
+                🗑️ Delete Account
+            </button>
+        </div>
+
+        <div class="confirm-box" id="confirm-delete">
+            <p>⚠️ This permanently deletes your account!</p>
+            <form method="POST" action="{% url 'profile' %}">
+                {% csrf_token %}
+                <button name="delete" class="btn-confirm-delete">Yes, Delete</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Total pill -->
+    <div style="position:fixed;top:8px;right:5px;
+        color:  #000080 ;font-size:12px;font-weight:bold;padding:5px 12px;
+        border-radius:20px;z-index:999;backdrop-filter:blur(6px);
+        border:1px solid rgba(255,100,100,0.3);">
+        📐 {{ total }} formulas
+    </div>
+
+    <!-- Title -->
+    <h1 class="ripple-text">FORMULAVERSE</h1>
+
+    <p style="text-align:center; color: #1A1A1A;
+           font-size:18px; font-weight: bold; letter-spacing:0.1em;
+           margin-top:-20px; margin-bottom:18px;">
+    • Learn &nbsp;&nbsp; • Grow
+</p>
+    <div style="padding: 0 12px 16px;">
+    <input
+        type="text"
+        id="searchBar"
+        placeholder="🔍 Search formulas... (e.g. Ohm's Law)"
+        oninput="searchFormulas()"
+        style="width:100%; padding:12px 16px; border-radius:25px;
+               border:2px solid rgba(180,50,80,0.3);
+               background:rgba(255,255,255,0.8);
+               font-size:15px; color:#4a0e1a;
+               outline:none; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+</div>
+
+
+    <!-- Category Cards -->
+    <div class="cards-grid">
+        <div class="topic-card"><div class="card-icon" style="color:#2563eb;">→</div><a href="/kinematics"><p class="card-title">Kinematics</p></a></div>
+        <div class="topic-card"><div class="card-icon">⚙️</div><a href="/mechanics"><p class="card-title">Mechanics</p></a></div>
+        <div class="topic-card"><div class="card-icon">⚡</div><a href="electrostatics"><p class="card-title">Electrostatics</p></a></div>
+        <div class="topic-card"><div class="card-icon">🌡️</div><a href="thermodynamics"><p class="card-title">Thermodynamics</p></a></div>
+        <div class="topic-card"><div class="card-icon">🪐</div><a href="gravitation"><p class="card-title">Gravitation</p></a></div>
+        <div class="topic-card"><div class="card-icon" style="color:#0d9488;">⊗</div><a href="modern physics"><p class="card-title">Modern Physics</p></a></div>
+        <div class="topic-card"><div class="card-icon" style="color:#b91c1c;">〜</div><a href="quantum physics"><p class="card-title">Quantum Physics</p></a></div>
+        <div class="topic-card"><div class="card-icon">🚀</div><a href="dynamics"><p class="card-title">Dynamics</p></a></div>
+        <div class="topic-card"><div class="card-icon">⚡</div><a href="work, energy and power"><p class="card-title">Work,Energy and Power</p></a></div>
+        <div class="topic-card"><div class="card-icon">⏚</div><a href="current electricity"><p class="card-title">Current Electricity</p></a></div>
+        <div class="topic-card"><div class="card-icon">🧲</div><a href="magnetism"><p class="card-title">Magnetism</p></a></div>
+        <div class="topic-card"><div class="card-icon">☮️</div><a href="optics"><p class="card-title">Optics</p></a></div>
+        <div class="topic-card"><div class="card-icon">∿</div><a href="oscillations"><p class="card-title">Oscillations</p></a></div>
+        <div class="topic-card"><div class="card-icon">🔌</div><a href="electromagnetism"><p class="card-title">Electromagnetism</p></a></div>
+        <div class="topic-card"><div class="card-icon">🌊⚙️</div><a href="fluid mechanics"><p class="card-title">Fluid Mechanics</p></a></div>
+        <div class="topic-card"><div class="card-icon">🌊</div><a href="waves"><p class="card-title">Waves</p></a></div>
+    </div>
+
+    <!-- Formula Cards -->
+    <div class="container">
+        {% for formula in formulas %}
+        <ul>
+            <li>
+                <div class="formula-card" data-category="{{ formula.category.name|lower }}">
+                    <a href="{{ formula.get_absolute_url }}">
+                        <div class="formula-title">{{ formula.title }}</div>
+                    </a>
+                    <div class="formula-form">
+                        $$ {{ formula.form }} $$
+                    </div>
+
+                    {% if formula.given_by %}
+                    <div class="formula-author">
+                        (Given by: {{ formula.given_by }})
+                    </div>
+
+                    {% endif %}
+                </div>
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+
+    <!-- Chatbot Button -->
+    <div id="chat-icon" onclick="toggleChat()" style="position:fixed;bottom:30px;right:30px;
+        background:#00bcd4;color:white;width:60px;height:60px;border-radius:50%;
+        display:flex;align-items:center;justify-content:center;font-size:28px;
+        cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:1000;">💬</div>
+
+    <!-- Chatbot Box -->
+    <div id="chat-box" style="display:none;position:fixed;bottom:100px;right:30px;
+        width:350px;height:480px;background:#1e1e2e;border-radius:16px;
+        box-shadow:0 8px 24px rgba(0,0,0,0.4);flex-direction:column;z-index:1000;overflow:hidden;">
+        <div style="background:#00bcd4;padding:14px 18px;color:white;font-weight:bold;
+            font-size:16px;display:flex;justify-content:space-between;align-items:center;">
+            🤖 Physics AI Tutor
+            <span onclick="toggleChat()" style="cursor:pointer;font-size:20px;">✕</span>
+        </div>
+        <div id="chat-messages" style="flex:1;overflow-y:auto;padding:14px;
+            display:flex;flex-direction:column;gap:10px;height:340px;">
+            <div style="background:#2a2a3e;color:#ccc;padding:10px 14px;
+                border-radius:12px;font-size:14px;max-width:85%;">
+                👋 Hi! I'm your Physics tutor. Ask me anything!
+            </div>
+        </div>
+        <div style="padding:12px;display:flex;gap:8px;border-top:1px solid #333;">
+            <input id="chat-input" type="text" placeholder="Ask a physics doubt..."
+                onkeypress="if(event.key==='Enter') sendMessage()"
+                style="flex:1;padding:10px 14px;border-radius:20px;border:none;
+                    background:#2a2a3e;color:white;font-size:14px;outline:none;">
+            <button onclick="sendMessage()" style="background:#00bcd4;color:white;
+                border:none;border-radius:50%;width:40px;height:40px;
+                cursor:pointer;font-size:18px;">➤</button>
+        </div>
+    </div>
+
+
+    <div id="fotd-popup" style="
+    display:none;
+    position:fixed;
+    top:50%; left:50%;
+    transform:translate(-50%, -50%);
+    background:linear-gradient(135deg, #1e293b, #0f172a);
+    border:1px solid rgba(56,189,248,0.4);
+    border-radius:20px;
+    padding:24px;
+    width:85%;
+    max-width:360px;
+    z-index:9999;
+    text-align:center;
+    box-shadow:0 0 40px rgba(56,189,248,0.2);">
+
+    <!-- Star & Label -->
+    <div style="font-size:28px; margin-bottom:8px;">⭐</div>
+    <div style="font-size:11px; color:#38bdf8;
+                letter-spacing:3px; font-weight:600;
+                margin-bottom:12px;">
+        FORMULA OF THE DAY
+    </div>
+
+    <!-- Title -->
+    <div style="font-size:18px; font-weight:700;
+                color:#f1f5f9; margin-bottom:10px;">
+        {{ formula_of_day.title }}
+    </div>
+
+    <!-- Formula -->
+    <div style="color:#f97316; font-size:15px;
+                margin-bottom:10px;">
+        $$ {{ formula_of_day.form }} $$
+    </div>
+
+    <!-- Author -->
+    <div style="font-size:12px; color:#94a3b8;
+                margin-bottom:16px;">
+        — {{ formula_of_day.given_by }}
+    </div>
+
+    <!-- Progress Bar -->
+    <div style="background:rgba(255,255,255,0.1);
+                border-radius:10px; height:4px;
+                margin-bottom:16px; overflow:hidden;">
+        <div id="fotd-progress"
+             style="height:100%; width:100%;
+                    background:#38bdf8;
+                    border-radius:10px;
+                    transition:width 4s linear;">
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div style="display:flex; gap:10px; justify-content:center;">
+        <a href="{{ formula_of_day.get_absolute_url }}"
+           style="background:#38bdf8; color:#0f172a;
+                  padding:8px 18px; border-radius:20px;
+                  font-size:13px; font-weight:700;
+                  text-decoration:none;">
+            Learn More →
+        </a>
+        <button onclick="closePopup()"
+            style="background:transparent;
+                   border:1px solid #94a3b8;
+                   color:#94a3b8; padding:8px 18px;
+                   border-radius:20px; font-size:13px;
+                   cursor:pointer;">
+            Close
+        </button>
+    </div>
+</div>
+
+<!-- Dark Overlay -->
+<div id="fotd-overlay" style="
+    display:none;
+    position:fixed; inset:0;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(3px);
+    z-index:9998;">
+</div>
+
+<div id="install-popup" style="display:none; position:fixed; bottom:20px;
+  left:50%; transform:translateX(-50%); background:#0f172a; color:white;
+  padding:20px 24px; border-radius:16px; box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  z-index:9999; align-items:center; gap:16px; width:85%; max-width:380px;">
+
+  <img src="/static/formulas/icon-192.png" width="48" height="48"
+    style="border-radius:10px;">
+
+  <div style="flex:1">
+    <div style="font-weight:bold; font-size:16px;">Install FormulaVerse</div>
+    <div style="font-size:13px; opacity:0.7;">Add to home screen for quick access</div>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:8px;">
+    <button onclick="installApp()" style="background:#38bdf8; color:#0f172a;
+      border:none; padding:8px 16px; border-radius:8px; font-weight:bold; cursor:pointer;">
+      Install
+    </button>
+    <button onclick="dismissPopup()" style="background:transparent; color:white;
+      border:1px solid rgba(255,255,255,0.3); padding:8px 16px; border-radius:8px; cursor:pointer;">
+      Not now
+    </button>
+  </div>
+</div>
+
+    <script>
+
+    if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/static/formulas/sw.js')
+        .then(reg => console.log('SW registered!'))
+        .catch(err => console.log('SW failed:', err));
+    });
+}
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('open');
+            document.getElementById('hamburger').classList.toggle('open');
+        }
+
+        let chatHistory = [];
+
+        function toggleChat() {
+            const box = document.getElementById('chat-box');
+            box.style.display = box.style.display === 'none' ? 'flex' : 'none';
+            box.style.flexDirection = 'column';
+        }
+
+        function addMessage(text, isUser) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const msg = document.createElement('div');
+            msg.style.cssText = `padding:10px 14px;border-radius:12px;font-size:14px;
+                max-width:85%;line-height:1.5;
+                ${isUser ? 'background:#00bcd4;color:white;align-self:flex-end;margin-left:auto;'
+                         : 'background:#2a2a3e;color:#ccc;align-self:flex-start;'}`;
+            msg.innerText = text;
+            messagesDiv.appendChild(msg);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function addTypingIndicator() {
+            const messagesDiv = document.getElementById('chat-messages');
+            const typing = document.createElement('div');
+            typing.id = 'typing-indicator';
+            typing.style.cssText = `background:#2a2a3e;color:#aaa;padding:10px 14px;
+                border-radius:12px;font-size:14px;max-width:85%;`;
+            typing.innerText = '⏳ Thinking...';
+            messagesDiv.appendChild(typing);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typing = document.getElementById('typing-indicator');
+            if (typing) typing.remove();
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+            addMessage(message, true);
+            input.value = '';
+            addTypingIndicator();
+            chatHistory.push({ role: "user", content: message });
+            try {
+                const response = await fetch('/chatbot/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, history: chatHistory.slice(-6) })
+                });
+                const data = await response.json();
+                removeTypingIndicator();
+                if (data.response) {
+                    addMessage(data.response, false);
+                    chatHistory.push({ role: "assistant", content: data.response });
+                } else {
+                    addMessage("Sorry, something went wrong. Try again!", false);
+                }
+            } catch (error) {
+                removeTypingIndicator();
+                addMessage("Connection error. Please try again!", false);
+            }
+        }
+
+        function searchFormulas() {
+    const query = document.getElementById('searchBar')
+                          .value.toLowerCase();
+    document.querySelectorAll('.formula-card')
+            .forEach(card => {
+        const title = card.querySelector('.formula-title')
+                          .innerText.toLowerCase();
+        card.closest('li').style.display =
+            title.includes(query) ? 'block' : 'none';
+    });
+}
+
+window.addEventListener('load', function() {
+    setTimeout(() => {
+
+        // Typeset MathJax in popup first
+        if (window.MathJax) {
+            MathJax.typesetPromise([
+                document.getElementById('fotd-popup')
+            ]).then(() => {
+                showPopup();
+            });
+        } else {
+            showPopup();
+        }
+
+    }, 1500); // wait 1.5 seconds
+});
+
+function showPopup() {
+    document.getElementById('fotd-popup').style.display = 'block';
+    document.getElementById('fotd-overlay').style.display = 'block';
+
+    // Start progress bar
+    setTimeout(() => {
+        document.getElementById('fotd-progress').style.width = '0%';
+    }, 100);
+
+    // Auto close after 5 seconds
+    setTimeout(() => {
+        closePopup();
+    }, 5000);
+}
+
+function closePopup() {
+    document.getElementById('fotd-popup').style.display = 'none';
+    document.getElementById('fotd-overlay').style.display = 'none';
+}
+
+document.getElementById('fotd-overlay')
+        .addEventListener('click', closePopup);
+
+
+          let deferredPrompt;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); // Stop automatic mini-bar
+    deferredPrompt = e;
+
+    // Show your custom popup
+    document.getElementById('install-popup').style.display = 'flex';
+  });
+
+  function installApp() {
+    document.getElementById('install-popup').style.display = 'none';
+    deferredPrompt.prompt(); // Show native install dialog
+    deferredPrompt.userChoice.then((result) => {
+      if (result.outcome === 'accepted') {
+        console.log('App installed');
+      }
+      deferredPrompt = null;
+    });
+  }
+
+  function dismissPopup() {
+    document.getElementById('install-popup').style.display = 'none';
+  }
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+{% load static %}
+{% load socialaccount %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> REGISTER </title>
+
+    <link rel="stylesheet" href="{% static 'css/rocket_animation.css' %}">
+    <meta name="description" content="Join FormulaVerse — Access 35+ Physics formulas for JEE and NEET">
+<meta name="keywords" content="physics formulas, JEE, NEET, register">
+<meta property="og:title" content="Register — FormulaVerse"/>
+<meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/signup"/>
+
+    <style>
+
+        body {
+  background-color: #0e0b1e;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #c8c4e8;
+  min-height: 100vh;
+}
+
+/* --- Page Header / Banner --- */
+.register-header {
+  background: ivoy;
+  text-align: center;
+  padding: 2.5rem 1rem 2rem;
+  border-bottom: 1px solid #2e2560;
+  border-radius: 50%;
+}
+
+.register-header h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: navy blue;
+  letter-spacing: 0.04em;
+}
+
+.rocket {
+  display: inline-block;
+  font-size: 2rem;
+  opacity: 0;
+  animation: rocketLaunch 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 0.4s;
+  transform-origin: center bottom;
+}
+
+@keyframes rocketLaunch {
+  /* Sitting on pad */
+  0% {
+    opacity: 1;
+    transform: translate(0px, 0px) rotate(0deg) scale(1);
+  }
+
+  /* Ignition shake */
+  8% {
+    transform: translate(-3px, 2px) rotate(-2deg) scale(1.05);
+  }
+  12% {
+    transform: translate(3px, 2px) rotate(2deg) scale(1.05);
+  }
+
+  /* Liftoff — tilts and goes diagonal (up-right) */
+  20% {
+    opacity: 1;
+    transform: translate(5px, -15px) rotate(15deg) scale(1.1);
+  }
+  45% {
+    opacity: 1;
+    transform: translate(40px, -70px) rotate(35deg) scale(1.05);
+  }
+  70% {
+    opacity: 0.7;
+    transform: translate(90px, -140px) rotate(45deg) scale(0.85);
+  }
+
+  /* Disappears off screen diagonally */
+  100% {
+    opacity: 0;
+    transform: translate(160px, -240px) rotate(50deg) scale(0.4);
+  }
+}
+
+/* Fire trail below rocket */
+.rocket-trail {
+  display: inline-block;
+  font-size: 1.1rem;
+  opacity: 0;
+  position: absolute;
+  animation: trailFade 1.6s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes trailFade {
+  0%   { opacity: 0;   transform: translate(0px, 0px) rotate(0deg) scale(0.5); }
+  15%  { opacity: 1;   transform: translate(-2px, 5px) rotate(-5deg) scale(1); }
+  40%  { opacity: 0.8; transform: translate(-15px, 40px) rotate(-30deg) scale(1.1); }
+  70%  { opacity: 0.3; transform: translate(-40px, 90px) rotate(-45deg) scale(0.9); }
+  100% { opacity: 0;   transform: translate(-70px, 150px) rotate(-50deg) scale(0.4); }
+}
+
+/* Smoke puff at launchpad */
+.rocket-smoke {
+  display: inline-block;
+  font-size: 1.2rem;
+  opacity: 0;
+  animation: smokePuff 1.2s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+@keyframes smokePuff {
+  0%   { opacity: 0;   transform: scale(0.3) translateY(0); }
+  20%  { opacity: 0.9; transform: scale(1.2) translateY(5px); }
+  60%  { opacity: 0.4; transform: scale(1.8) translateY(10px); }
+  100% { opacity: 0;   transform: scale(2.5) translateY(15px); }
+}
+
+
+
+
+
+
+
+.register-header .rocket-icon {
+  font-size: 2rem;
+  display: block;
+  margin-top: 0.4rem;
+}
+
+/* --- Card Wrapper --- */
+.register-container {
+  max-width: 480px;
+  margin: 2.5rem auto;
+  padding: 0 1.2rem;
+}
+
+.register-card {
+  background: #110e22;
+  border: 1px solid #2e2560;
+  border-radius: 18px;
+  padding: 2rem 1.8rem;
+  box-shadow: 0 8px 40px rgba(127, 119, 221, 0.1);
+}
+
+/* --- Google Button --- */
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 80%;
+  padding: 0.75rem 1rem;
+  background: #1b1638;
+  border: 1px solid #3d3580;
+  border-radius: 10px;
+  color: #c8c4e8;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  text-decoration: none;
+}
+
+.btn-google:hover {
+  background: #231e48;
+  border-color: #7f77dd;
+}
+
+.btn-google .google-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #7f77dd;
+  flex-shrink: 0;
+}
+
+/* --- Divider --- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 1.6rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #2e2560;
+}
+
+.divider span {
+  font-size: 0.8rem;
+  color: #5a527a;
+  white-space: nowrap;
+}
+
+/* --- Form Heading --- */
+.register-card h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #afa9ec;
+  text-align: center;
+  margin-bottom: 1.4rem;
+  letter-spacing: 0.02em;
+}
+
+/* --- Labels --- */
+.form-group {
+  margin-bottom: 1.1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #8880bb;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.03em;
+}
+
+/* --- Inputs --- */
+.form-group input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  background: #1b1638;
+  border: 1px solid #3d3580;
+  border-radius: 10px;
+  color: #e0ddf8;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input::placeholder {
+  color: #3d3580;
+}
+
+.form-group input:focus {
+  border-color: #7f77dd;
+  box-shadow: 0 0 0 3px rgba(127, 119, 221, 0.18);
+}
+
+/* --- Submit Button --- */
+.btn-register {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 0.6rem;
+  background: #7f77dd;
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-register:hover {
+  background: #534ab7;
+}
+
+.btn-register:active {
+  transform: scale(0.98);
+}
+
+/* --- Login Link --- */
+.login-link {
+  text-align: center;
+  margin-top: 1.2rem;
+  font-size: 0.85rem;
+  color: #5a527a;
+}
+
+.login-link a {
+  color: #afa9ec;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-link a:hover {
+  color: #7f77dd;
+  text-decoration: underline;
+}
+
+    </style>
+
+
+
+</head>
+<body>
+
+    <div class="register-header">
+  <h1>Welcome</h1>
+
+  <span class="rocket" id="rocket">🚀</span>
+<span class="rocket-trail" id="trail">🔥</span>
+</div>
+
+<div class="register-container">
+  <div class="register-card">
+    <a href="{% provider_login_url 'google' %}" class="btn-google">
+      <span class="google-dot"></span> Continue with Google →
+    </a>
+
+    <div class="divider"><span>or</span></div>
+
+    <h2>Create Account</h2>
+
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" name="username" placeholder="Enter username">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Enter email">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" name="password1" placeholder="Enter Password">
+    </div>
+    <div class="form-group">
+      <label>Password confirmation</label>
+      <input type="password" name="password2"  placeholder="Confirm Password">
+    </div>
+
+    <button class="btn-register">Register →</button>
+
+    <p class="login-link">Already have an account? <a href="/login">Log in</a></p>
+  </div>
+</div
+
+</body>
+
+

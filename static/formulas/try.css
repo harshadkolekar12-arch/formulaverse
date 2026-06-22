@@ -1,0 +1,25 @@
+h6{
+    font-size: 18vw;
+    color: transparent;
+    background-clip: text;
+    background-image: url(https://plus.unsplash.com/premium_photo-1757690499338-38c511645730?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzOXx8fGVufDB8fHx8fA%3D%3D);
+    
+
+
+
+
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    letter-spacing: 0.4rem;
+    text-shadow: 6rem;
+    animation: animate 20s linear infinite;
+}
+
+@keyframes animate{
+    to{
+        background-position-x: -420px;
+
+    }
+}
+

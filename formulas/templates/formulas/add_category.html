@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Category</title>
+  <style>
+    body { background: #F0FDF4; font-family: sans-serif; padding: 24px 20px; }
+    h1 { color: #166534; }
+    .card { background: #fff; border-radius: 12px; border: 1px solid #BBF7D0; padding: 24px; max-width: 400px; }
+    label { display: block; font-size: 12px; font-weight: 700; color: #166634;
+            text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    input, textarea { width: 100%; padding: 9px 12px; border: 1px solid #BBF7D0;
+                      border-radius: 8px; font-size: 13px; background: #F0FDF4;
+                      box-sizing: border-box; margin-bottom: 14px; }
+    .btn-submit { background: #166534; color: #fff; padding: 10px 24px;
+                  border: none; border-radius: 99px; font-size: 14px;
+                  font-weight: 600; cursor: pointer; }
+    .msg { background: #D1FAE5; color: #065F46; padding: 10px 16px;
+           border-radius: 8px; margin-bottom: 16px; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>Add Category</h1>
+  {% if messages %}<div class="msg">{% for m in messages %}{{ m }}{% endfor %}</div>{% endif %}
+  <div class="card">
+    <form method="POST">
+      {% csrf_token %}
+      {% for field in form %}
+        <label>{{ field.label }}</label>{{ field }}
+      {% endfor %}
+      <button class="btn-submit" type="submit">Save Category</button>
+      <a href="{% url 'mini_panel' %}" style="margin-left:14px; color:#166534; font-size:13px;">← Back</a>
+    </form>
+  </div>
+</body>
+</html>

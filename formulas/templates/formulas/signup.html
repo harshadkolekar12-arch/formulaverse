@@ -1,0 +1,53 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGNUP</title>
+    <link rel="stylesheet" href="{% static "formulas/signup.css" %}">
+</head>
+<body>
+    <div class="signup">
+         <h2> Signup</h2>
+
+         {% load socialaccount %}
+
+<!-- Add this where you want the Google button -->
+<div style="text-align: center; margin: 20px 0;">
+  <a href="{% provider_login_url 'google' %}"
+     style="background: #4285F4; color: white; padding: 12px 24px;
+            border-radius: 5px; text-decoration: none; display: inline-block;">
+    🔵 Sign in with Google
+  </a>
+</div>
+
+
+    <form method="POST">
+        {% csrf_token %}
+        <h2> Account Information </h2>
+        <label> Username</label>
+        <input type="text" name="username" required>
+        <label> Email Address </label>
+        <input type="email" name="email" required>
+        <label> Password </label>
+        <input type="password" name="password" required>
+        <label> Confirm Password </label>
+        <input type="password" name="password" required>
+
+        <h2> Personal Information </h2>
+
+        <label> Full Name </label>
+        <input type="text" name="full_name">
+        <label> Phone Number </label>
+        <input type="tel" name="phone">
+
+        <button> Create Account <a href="login-page"></a></button>
+    </form>
+
+    </div>
+
+</body>
+</html>

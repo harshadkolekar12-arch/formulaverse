@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category.name }} — FormulaVerse</title>
+    <meta name="description" content="All {{ category.name }} formulas for JEE and NEET — FormulaVerse">
+
+    <script>
+    MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+    };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        background: #0e0b1e;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        color: #c8c4e8;
+        padding-bottom: 30px;
+    }
+
+    .container {
+        max-width: 92%;
+        margin: 0 auto;
+        padding: 0 10px;
+    }
+
+    /* Section Label */
+    .section-label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+        color: #FFD700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin: 20px 0 14px;
+        gap: 10px;
+    }
+
+    /* Count Circle */
+    .count-circle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #f4c775;
+        background: #2e2560;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+    }
+
+    /* Remove list styling */
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    /* Formula Card */
+    .formula-card {
+        background: #1a1535;
+        border: 1px solid rgba(255,255,255,0.1);  /* ← fixed missing ) */
+        border-radius: 12px;
+        padding: 14px 16px;
+        margin: 8px 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        transition: transform 0.3s ease,
+                    box-shadow 0.3s ease,
+                    background 0.3s ease,
+                    border 0.3s ease;
+    }
+
+    .formula-card:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow:
+            0 0 15px rgba(56,189,248,0.3),
+            0 20px 40px rgba(0,0,0,0.4);
+        background: #1e2d4a;        /* ← dark blue instead of white */
+        border: 1px solid rgba(56,189,248,0.4);
+    }
+
+    /* Formula Title */
+    .formula-title {
+        font-size: 17px;
+        font-weight: bold;
+        color: #38bdf8;
+        margin-bottom: 8px;
+        text-decoration: none;
+        display: block;
+        transition: color 0.3s ease;
+    }
+
+    .formula-title:hover {
+        color: #7dd3fc;
+    }
+
+    /* Formula Expression */
+    .formula-form {
+        color: #f97316;
+        max-width: 200px;
+        max-height: 80px;
+        overflow: hidden;
+        transform: scale(0.85);
+        transform-origin: left center;
+        font-size: 1rem;
+        margin: 6px 0;
+    }
+
+    /* Author */
+    .formula-author {
+        font-size: 13px;
+        color: #94a3b8;
+        margin-top: 8px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="section-label">
+            <span> FORMULAS UNDER THIS CATEGORY</span>
+            <div class="count-circle">
+                {{ formulas.count }}
+            </div>
+        </div>
+
+        <!-- Formula Cards -->
+        {% for formula in formulas %}
+        <ul>
+            <li>
+                <div class="formula-card">
+                    <a href="{{ formula.get_absolute_url }}"
+                       class="formula-title">
+                        {{ formula.title }}
+                    </a>
+                    <div class="formula-form">
+                        $$ {{ formula.form }} $$
+                    </div>
+                    <div class="formula-author">
+                        {% if formula.given_by %}
+                            (Given by: {{ formula.given_by }})
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+        </ul>
+        {% endfor %}
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ABOUT ME! </title>
+
+    <title>About the Creator — FormulaVerse</title>
+<meta name="description" content="Meet Harshad Kolekar — the creator of FormulaVerse, a Physics formula app for JEE and NEET students">
+<meta name="keywords" content="FormulaVerse creator, Harshad Kolekar, physics app developer">
+<meta property="og:title" content="About — FormulaVerse"/>
+<meta property="og:description" content="Meet the creator of FormulaVerse!"/>
+<meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/me"/>
+
+    <style>
+
+        body{
+            background-color: #FDF4FF;
+        }
+
+        .intro-image{
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-top: 20px;
+            padding: 12px;
+
+        }
+
+        .me-image img{
+            width: 100px;
+            height: 150px;
+            display: flex;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+            justify-content: center;
+        }
+
+        .intro-text{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .intro-text h1{
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #581C87;
+
+        }
+
+        .intro-text h2{
+            display: flex;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 6px 0 0;
+            color: #581C87;
+        }
+
+        .description{
+            max-width: 680px;
+            margin: 32px auto 0;
+            padding: 0 20px;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #374151;
+            text-align: justify;
+        }
+
+        .description p{
+            margin: 0;
+            color: #7E22CE;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="intro-image">
+    <div class="me-image">
+    <img src="{% static "images/harshad.webp" %}">
+    </div>
+    <div class="intro-text">
+    <h1> Hello 👋</h1>
+    <h2> I'm Harshad Kolekar </h2>
+    </div>
+    </div>
+
+    <div class="description">
+        <i><p>
+            A Bachelor of Technology student in Computer Science Engineering with a specialization in Artificial Intelligence and Machine Learning.
+            I enjoy turning data into meaningful insights and building practical web applications using Python and Django.
+            Whether it's exploring datasets, creating predictive models, or developing full-stack solutions, I love solving real-world problems through code.
+
+
+        </p></i>
+
+    </div>
+
+
+
+    <!-- SKILLS SECTION -->
+<section style="margin: 30px 0;">
+  <h3 style="color: #581C87; font-size: 14px; text-transform: uppercase;
+             letter-spacing: 0.08em; margin-bottom: 14px;">Skills</h3>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+    <span style="background:#DBEAFE; color:#1E40AF; padding:6px 14px; border-radius:99px; font-size:13px; font-weight:600;">Python</span>
+    <span style="background:#D1FAE5; color:#065F46; padding:6px 14px; border-radius:99px; font-size:13px; font-weight:600;">Django</span>
+    <span style="background:#EDE9FE; color:#5B21B6; padding:6px 14px; border-radius:99px; font-size:13px; font-weight:600;">Machine Learning</span>
+    <span style="background:#FEF3C7; color:#92400E; padding:6px 14px; border-radius:99px; font-size:13px; font-weight:600;">SQL</span>
+    <span style="background:#FFE4E6; color:#9F1239; padding:6px 14px; border-radius:99px; font-size:13px; font-weight:600;">Git</span>
+    <span style="background:#E0F2FE; color:#075985; padding:6px 14px; border-radius:99px; font-size:13px; font-weight:600;">Data Analysis</span>
+    <span style="background:#FFF7ED; color:#9A3412; padding:6px 14px; border-radius:99px; font-size:13px; font-weight:600;">Pipelines</span>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section style="margin: 30px 0;">
+  <h2 style="color: #581C87; font-size: 14px; text-transform: uppercase;
+             letter-spacing: 0.08em; margin-bottom: 14px;">Get in touch</h2>
+  <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <a href="https://github.com/harshadkolekar12-arch"
+       style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px;
+              border-radius:99px; background:#166534; color:#fff; font-size:14px;
+              font-weight:600; text-decoration:none; border:2px solid #166534;">
+      GitHub
+    </a>
+    <a href="https://linkedin.com/in/harshad-kolekar-a956a828a"
+       style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px;
+              border-radius:99px; background:#fff; color:#166534; font-size:14px;
+              font-weight:600; text-decoration:none; border:2px solid #166534;">
+      LinkedIn
+    </a>
+    <a href="mailto:harshad.kolekar12@gmail.com"
+       style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px;
+              border-radius:99px; background:#fff; color:#166534; font-size:14px;
+              font-weight:600; text-decoration:none; border:2px solid #166534;">
+      Email me
+    </a>
+  </div>
+</section>
+
+
+
+</body>

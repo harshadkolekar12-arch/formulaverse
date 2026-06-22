@@ -1,0 +1,67 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('/static/images/physics-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Glass Card */
+.auth-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    padding: 40px;
+    border-radius: 15px;
+    width: 350px;
+    color: white;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+}
+
+/* Heading */
+.auth-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Input Fields */
+.auth-card input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+/* Button */
+.auth-card button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: none;
+    background: #00d4ff;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-card button:hover {
+    background: #00aacc;
+    box-shadow: 0 0 15px #00d4ff;
+}
+
+/* Link */
+.auth-card a {
+    color: #00ffff;
+    text-decoration: none;
+}
+.auth-card a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,251 @@
+body{
+    background-color: blue;
+    background-image: url("../images/equation.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    padding: 20px;
+    color: darkred;
+    letter-spacing: 1px;
+    font-size: 3rem;
+    font-weight: bold;
+    background-color: lightpink;
+    animation: float 2s ease-in-out infinite;
+
+}
+
+@keyframes float{
+    0%, 100%{transform: translateX(0);}
+    50%{transform: translateX(-13px);}
+
+}
+
+.formula{
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    padding: 20px;
+    color: black;
+    font-size: 3.3rem;
+    border-radius: 8px;
+    margin-top: 0.03rem;
+    font-weight: bold;
+   
+
+}
+
+.chapter{
+    font-size: 2rem;
+    margin-top: 1rem;
+
+}
+
+.description{
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    background-color: lightgreen;
+    width: 40%;
+
+
+}
+
+.question{
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.answer{
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.solve{
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    font-weight: bold;
+
+    
+}
+
+.user_answer{
+    margin-left: 2.5rem;
+    font-size: 1.7rem;
+
+
+}
+
+#input input{
+    border-radius: 10%;
+    width: 10rem;
+    height: 2rem;
+    background:lightgoldenrodyellow;
+
+
+}
+
+#input input:hover{
+    color: burlywood;
+}
+
+button{
+    color: rgb(0, 0, 70);
+    background: lightgoldenrodyellow;
+    background-color: lightskyblue;
+    font-weight: bold;
+    width: 4rem;
+    height: 2rem;
+    border-radius: 10%;
+
+    
+}
+
+.info{
+    display: flex;
+    justify-content: flex-start;
+    font-size: 1.6rem;
+    margin-top: 0.01rem;
+}
+
+.paricles{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    
+}
+
+.paricles span{
+    position: absolute;
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    animation: dustFloat linear infinite;
+
+}
+
+.paricles span:nth-child(1) {left: 10%; animation-duration: 18s;}
+.paricles span:nth-child(2) {left: 25%; animation-duration: 22s;}
+.paricles span:nth-child(3) {left: 40%; animation-duration: 16s;}
+.paricles span:nth-child(4) {left: 55%; animation-duration: 20s;}
+.paricles span:nth-child(5) {left: 70%; animation-duration: 24s;}
+.paricles span:nth-child(6) {left: 85%; animation-duration: 19s;}
+.paricles span:nth-child(7) {left: 95%; animation-duration: 26s;}
+.paricles span:nth-child(8) {left: 5%; animation-duration: 21s;}
+
+@keyframes dustFloat{
+    0%{
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+    20%{opacity: 0.4;}
+    80%{opacity: 0.4;}
+
+    100%{
+        transform: translateY(-10vh);
+        opacity: 0;
+
+    }
+}
+
+.category{
+    position: absolute;
+    top: 130px;
+    right: 20px;
+    width: 180px;
+    height: 198px;
+    background: #f4f8ff;
+    padding: 12px;
+    border-left: 2.6px solid #2563eb;
+     border-right: 2.6px solid #2563eb;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-size: 20px;
+}
+.category h3{
+    color: darkblue;
+}
+
+.category p{
+    font-size: 16px;
+    font-weight: bold;
+    color: darkorchid;
+}
+
+@media (max-width: 768px){
+    .category{
+        position: static;
+        width: 80%;
+        margin: 12px 0;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-sizing: border-box;
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .category h3{
+        font-size: 1.1rem;
+    }
+
+    .category p{
+        font-size: 0.95rem;
+        line-height: 1.4;
+
+    }
+
+
+}
+
+@media (max-width: 768px){
+    .title{
+        margin-bottom: 15px;
+        
+    }
+}
+
+.save{
+    background: #ff4d6d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    
+}
+
+.image img{
+    width: 100%;
+
+}
+
+.explanation img{
+   width: 83%;
+}
+
+
+@media (max-width:100px){
+    .explanation{
+        font-size: 17px;
+        padding: 10px;
+
+    }
+}

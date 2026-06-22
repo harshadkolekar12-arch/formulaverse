@@ -1,0 +1,22 @@
+{
+    "name": "FormulaVerse",
+    "short_name": "FormulaVerse",
+    "description": "All Physics Formulas for JEE and NEET",
+    "start_url": "/base",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#38bdf8",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/static/formulas/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/formulas/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

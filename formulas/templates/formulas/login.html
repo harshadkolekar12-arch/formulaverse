@@ -1,0 +1,53 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> LOGIN </title>
+
+    <title>Login — FormulaVerse</title>
+<meta name="description" content="Login to FormulaVerse to save and access Physics formulas">
+<meta name="keywords" content="physics formulas, JEE, NEET, login">
+<meta property="og:title" content="Login — FormulaVerse"/>
+<meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/login"/>
+</head>
+<body>
+     <link rel="stylesheet" href="{% static "formulas/login.css" %}">
+    <div class="auth-card">
+         <h2> Login </h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.username.label_tag }}
+        {{ form.username }}
+
+        {{ form.password.label_tag }}
+        {{ form.password }}
+        <button type="submit"> Login </button>
+
+        {% if form.errors %}
+    <div style="color:red;">
+      {% for field in form %}
+        {% for error in field.errors %}
+          <p>{{ field.label }}: {{ error }}</p>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        <p>{{ error }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+    </form>
+
+    <p style="text-align: center; margin-top: 15px;">
+        Don't have an account? <a href="{% url "signup" %}"> Sign Up</a></p>
+
+    </div>
+
+</body>
+</html>

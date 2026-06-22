@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ title }}</title>
+  <style>
+    body { background: #F0FDF4; font-family: sans-serif; padding: 24px 20px; }
+    h1 { color: #166534; margin-bottom: 20px; }
+    .card { background: #fff; border-radius: 12px; border: 1px solid #BBF7D0;
+            padding: 24px; max-width: 600px; }
+    label { display: block; font-size: 12px; font-weight: 700; color: #166534;
+            text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    input, textarea, select {
+      width: 100%; padding: 9px 12px; border: 1px solid #BBF7D0;
+      border-radius: 8px; font-size: 13px; color: #374151;
+      background: #F0FDF4; box-sizing: border-box; margin-bottom: 14px; }
+    input[type="checkbox"] { width: auto; margin-bottom: 14px; }
+    input[type="file"] { background: #fff; }
+    .btn-submit { background: #166534; color: #fff; padding: 10px 24px;
+                  border: none; border-radius: 99px; font-size: 14px;
+                  font-weight: 600; cursor: pointer; }
+    .btn-back { color: #166534; font-size: 13px; text-decoration: none;
+                  margin-left: 14px; }
+    .msg { background: #D1FAE5; color: #065F46; padding: 10px 16px;
+           border-radius: 8px; margin-bottom: 16px; font-size: 13px; }
+    .errorlist { color: #DC2626; font-size: 12px; list-style: none;
+                 padding: 0; margin: -10px 0 10px; }
+  </style>
+</head>
+<body>
+  <h1>{{ title }}</h1>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="msg">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="card">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+          <ul class="errorlist">
+            {% for error in field.errors %}<li>{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+      {% endfor %}
+      <button class="btn-submit" type="submit">Save Formula</button>
+      <a class="btn-back" href="{% url 'mini_panel' %}">← Back to panel</a>
+    </form>
+  </div>
+</body>
+</html>

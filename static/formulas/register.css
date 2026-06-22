@@ -1,0 +1,100 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+}
+
+/* LEFT SIDE */
+.left-section{
+    flex:1;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    text-align:center;
+    padding:40px;
+}
+
+.left-section h6{
+    font-size:11vw;
+    letter-spacing:0.3rem;
+    background-clip: text;
+    background-image: url(https://images.unsplash.com/photo-1618259831738-178fe19eac2d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fG5pY2UlMjBjb2xvcmZ1bCUyMGZsb3dlcnN8ZW58MHx8MHx8fDA%3D);
+
+}
+
+/* RIGHT SIDE */
+.right-section{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:white;
+}
+
+/* FORM CARD */
+.auth-box{
+    width:350px;
+}
+
+.auth-box h2{
+    margin-bottom:25px;
+}
+
+.auth-box input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    outline:none;
+}
+
+.auth-box input:focus{
+    border-color:#0072ff;
+}
+
+.auth-box button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#00c6ff;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.auth-box button:hover{
+    background:#0072ff;
+}
+
+/* MOBILE RESPONSIVE */
+@media(max-width:768px){
+
+    body{
+        flex-direction:column;
+    }
+
+    .left-section{
+        height:200px;
+    }
+
+    .left-section h1{
+        font-size:35px;
+    }
+
+    .right-section{
+        height:auto;
+        padding:30px;
+    }
+
+}
