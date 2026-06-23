@@ -122,7 +122,8 @@ WSGI_APPLICATION = 'physics.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
+        default=os.environ.get('DATABASE_URL'),
+        con_max_age = 600
     )
 }
 
