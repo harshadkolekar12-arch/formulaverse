@@ -71,7 +71,7 @@ SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP' : {
             'client_id' : os.getenv('GOOGLE_CLIENT_ID'),
-            'secret' : OS.GETENV('GOOGLE_CLIENT_SECRET'),
+            'secret' : os.GETENV('GOOGLE_CLIENT_SECRET'),
             'key' : ''
             }
             }
