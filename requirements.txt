@@ -13,5 +13,5 @@ dj-rest-auth
 django-environ
 stripe
 PyJWT
-cyptography
+cryptography==41.0.7
 
