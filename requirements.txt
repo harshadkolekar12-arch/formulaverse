@@ -15,5 +15,6 @@ stripe
 PyJWT
 cryptography==41.0.7
 groq
+dj-database-url>=2.0.0
 
 
