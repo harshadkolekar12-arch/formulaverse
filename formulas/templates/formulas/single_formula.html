@@ -7,12 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FORMULA</title>
 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
+     crossorigin="anonymous"></script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YHLZCEHWF7');
+</script>
+
     <title>{{ formula.title }} — FormulaVerse</title>
 <meta name="description" content="{{ formula.title }} formula by {{ formula.given_by }} on FormulaVerse">
 <meta name="keywords" content="{{ formula.title }}, physics formula, JEE, NEET">
 <meta property="og:title" content="{{ formula.title }} — FormulaVerse"/>
 <meta property="og:description" content="{{ formula.title }} by {{ formula.given_by }}"/>
 <meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/formula/{{ formula.id }}"/>
+<meta name="keywords" content="{{ formula.title }},
+JEE formula, NEET formula, physics formula">
     <script>
     MathJax = {
         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -42,7 +56,7 @@
             --muted:     #94A3B8;
             --radius:    12px;
             --font-display: 'Space Grotesk', sans-serif;
-            --font-body:    'Inter', sans-serif;
+            --font-body:    'Outfit', sans-serif;
         }
 
         body {
@@ -85,7 +99,7 @@
             background: var(--cyan-dim);
             border: 1px solid rgba(6,182,212,0.35);
             border-radius: var(--radius);
-            padding: 32px 24px;
+            padding: 32px 10px;
             margin: 24px auto 0;
             max-width: 540px;
             text-align: center;
@@ -93,7 +107,7 @@
         .formula-hero .MJXc-display,
         .formula-hero mjx-container {
             color: var(--cyan) !important;
-            font-size: 1.5em !important;
+            font-size: 1.3em !important;
         }
 
         .content-wrapper {
@@ -268,6 +282,24 @@
             background: var(--border);
             margin: 24px 0;
         }
+
+        .video-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9.5px;
+  background-color: black;
+  color: #ffffff;
+  padding: 9px 18px;
+  margin-left: 13px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.video-btn:hover {
+  background-color: #cc0000;
+}
     </style>
 </head>
 <body>
@@ -291,7 +323,7 @@
        target="_blank"
        style="background:#25D366; color:white;
               padding:7px 14px; border-radius:20px;
-              font-size:12px; font-weight:600;
+              font-size:12px; font-weight:750;
               text-decoration:none;">
         📲 Share
     </a>
@@ -353,15 +385,42 @@
             <p>{{ formula.category.explain }}</p>
         </div>
 
-        <form method="POST" action="{% url "saved-page" %}">
-            {% csrf_token %}
-            <input type="hidden" name="formula_id" value="{{ formula.id }}">
-            <button type="submit" class="btn-save">
-                &#9733; Save
-            </button>
-        </form>
+       <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 5px;">
 
+   <form method="POST" action="{% url 'saved-page' pk=formula.id %}">
+    {% csrf_token %}
+
+
+    <button type="submit" name="save"
+        style="background:#FAF6EE; color: #212529; border:1px solid #fbbf24;
+        padding:10px 20px; border-radius:8px; cursor:pointer;
+        font-size:14px; font-weight: bold; display:flex; align-items:center; gap:6px;">
+        ★ Save
+    </button>
+</form>
+</div>
+
+
+<div id="animationModal" style="display:none; position:fixed; inset:0;
+     background:rgba(0,0,0,0.85); z-index:9999; align-items:center;
+     justify-content:center;">
+  <div style="background:#0d1117; border:1px solid #38bdf8; border-radius:16px;
+              width:90%; max-width:600px; padding:24px; position:relative;">
+
+    <button onclick="closeAnimation()"
+      style="position:absolute; top:12px; right:16px; background:none;
+             border:none; color:#fff; font-size:22px; cursor:pointer;">✕</button>
+
+    <h3 id="animTitle" style="color:#38bdf8; margin:0 0 16px 0;"></h3>
+
+    <div id="loadingAnim" style="text-align:center; color:#aaa; padding:40px;">
+      ⚙️ Generating animation...
     </div>
+
+    <div id="animationContent"></div>
+  </div>
+</div>
+
 
     <!-- Practice Section -->
 <!-- Practice Section -->
@@ -437,6 +496,8 @@
         </button>
     </div>
 </div>
+
+
 
 <script>
 let currentDifficulty = 'medium';
@@ -521,7 +582,8 @@ function checkAnswer(selected) {
 
 
 function copyFormula() {
-    let formula = `{{  formula.form }}`;
+    try{
+         let formula = "{{ formula.form|escapejs }}";
 
      formula = formula
         .replace(/\\frac{([^}])}{([^}])}/g, '($1)/($2)')
@@ -565,7 +627,7 @@ function copyFormula() {
         .replace(/\\/g, '')
         .trim();
 
-    const text = `{{ formula.title }}\n${formula}\n— {{ formula.given_by }}\n\nvia FormulaVerse`;
+
 
     navigator.clipboard.writeText('{{ formula.form }}')
     .then(() => {
@@ -578,9 +640,55 @@ function copyFormula() {
             btn.style.color = '#38bdf8';
             btn.style.borderColor = '#38bdf8';
         }, 2000);
-    })
-    .catch(() => {
-        alert('Copy failed! Try again!');
     });
+
+    } catch(e) {
+        navigator.clipboard.writeText(
+            document.getElementById('formula-data').innerText
+            );
+    }
+}
+
+
+const prebuiltAnimations = {
+  // Add formula IDs that have pre-built ones
+  // e.g. 5: '<svg>...</svg>'
+};
+
+async function openAnimation(formulaId) {
+  const modal = document.getElementById('animationModal');
+  modal.style.display = 'flex';
+  document.getElementById('loadingAnim').style.display = 'block';
+  document.getElementById('animationContent').innerHTML = '';
+
+  // Check pre-built first
+  if (prebuiltAnimations[formulaId]) {
+    document.getElementById('loadingAnim').style.display = 'none';
+    document.getElementById('animationContent').innerHTML = prebuiltAnimations[formulaId];
+    return;
+  }
+
+  // Else call AI
+  try {
+    const res = await fetch(`/formula/${formulaId}/animation/`);
+    const data = await res.json();
+    document.getElementById('animTitle').textContent = data.title;
+    document.getElementById('loadingAnim').style.display = 'none';
+    document.getElementById('animationContent').innerHTML = data.html;
+
+    // Execute any scripts in the returned HTML
+    document.getElementById('animationContent')
+      .querySelectorAll('script')
+      .forEach(s => eval(s.innerHTML));
+
+  } catch(e) {
+    document.getElementById('loadingAnim').textContent = '❌ Failed to load animation.';
+  }
+}
+
+function closeAnimation() {
+  document.getElementById('animationModal').style.display = 'none';
+  document.getElementById('animationContent').innerHTML = '';
 }
 </script>
+

@@ -5,6 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ category.name }} — FormulaVerse</title>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
+     crossorigin="anonymous"></script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YHLZCEHWF7');
+</script>
+<meta name="keywords" content="{{ formula.title }},
+JEE formula, NEET formula, physics formula">
     <meta name="description" content="All {{ category.name }} formulas for JEE and NEET — FormulaVerse">
 
     <script>
@@ -20,7 +34,7 @@
 
     body {
         background: #0e0b1e;
-        font-family: 'Segoe UI', system-ui, sans-serif;
+        font-family: 'Outfit', sans-serif;
         color: #c8c4e8;
         padding-bottom: 30px;
     }
@@ -41,7 +55,7 @@
         color: #FFD700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
-        margin: 20px 0 14px;
+        margin: 20px 3px 14px;
         gap: 10px;
     }
 
@@ -130,6 +144,13 @@
 </head>
 
 <body>
+    <a href="{% url "index-page" %}">
+        <div style="position: fixed; top: 0px; left: 3.7px; color: #fff; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.4)">
+            ←
+        </div>
+    </a>
+
+
     <div class="container">
 
         <!-- Header -->
@@ -148,7 +169,7 @@
                     <a href="{{ formula.get_absolute_url }}"
                        class="formula-title">
                         {{ formula.title }}
-                    </a>
+
                     <div class="formula-form">
                         $$ {{ formula.form }} $$
                     </div>
@@ -157,6 +178,7 @@
                             (Given by: {{ formula.given_by }})
                         {% endif %}
                     </div>
+                    </a>
                 </div>
             </li>
         </ul>

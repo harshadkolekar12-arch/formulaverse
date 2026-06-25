@@ -1,6 +1,9 @@
 from groq import Groq
 from django.conf import settings
 from .models import Formula
+import json
+import re
+
 
 def get_all_formulas_text():
     formulas = Formula.objects.all()
@@ -13,7 +16,7 @@ def get_all_formulas_text():
     return formula_text
 
 def ask_chatbot(user_message, chat_history=[]):
-    client = Groq(api_key=settings.GROQ_API_KEY)
+    client = Groq(api_key=settings.GROQ_CHATBOT_KEY)
     formulas_context = get_all_formulas_text()
     system_prompt = "You are a helpful Physics tutor for Formulaverse. Help students with physics formulas and doubts. Formulas in database: " + formulas_context + " Explain simply and give real-life examples."
     messages = [{"role": "system", "content": system_prompt}]
@@ -27,9 +30,11 @@ def ask_chatbot(user_message, chat_history=[]):
     )
     return response.choices[0].message.content
 
+
+
 def generate_practice_question(formula_title, formula_eq,
                                 chapter, description, difficulty="medium"):
-    client = Groq(api_key=settings.GROQ_API_KEY)
+    client = Groq(api_key=settings.GROQ_PRACTICE_KEY)
 
     system_prompt = """You are a physics practice question generator.
 Always respond with ONLY valid JSON, no extra text."""
@@ -48,14 +53,30 @@ Return this exact JSON structure:
     "explanation": "..."
 }}"""
 
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ],
-        max_tokens=500
-    )
+    for attempt in range(3):
+        try:
+            response = client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt}
+                ],
+                max_tokens=500
+            )
+            raw = response.choices[0].message.content.strip()
+            print(f"Attempt {attempt+1} RAW GROQ RESPONSE:", raw)  # remove after debugging
 
-    import json
-    return json.loads(response.choices[0].message.content)
+            match = re.search(r'\{.*\}', raw, re.DOTALL)
+            if match:
+                raw = match.group()
+
+            result = json.loads(raw)
+
+            if all(k in result for k in ["question", "options", "correct", "explanation"]):
+                return result
+
+        except Exception as e:
+            print(f"Attempt {attempt+1} failed:", e)
+            if attempt == 2:
+                raise e
+            continue

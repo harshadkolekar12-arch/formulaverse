@@ -5,14 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> SAVED </title>
 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
+     crossorigin="anonymous"></script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YHLZCEHWF7');
+</script>
+
     <meta name="description" content="Your saved Physics formulas on FormulaVerse">
 <meta property="og:title" content="Saved Formulas — FormulaVerse"/>
 <meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/saved"/>
+<meta name="keywords" content="{{ formula.title }},
+JEE formula, NEET formula, physics formula">
 
     <style>
 
 body{
-    font-family: Arial, sans-serif;
+    font-family: 'Outfit', sans-serif;
     background: linear-gradient(to right,#0f172a,#1e293b);
     color:white;
     margin:0;
@@ -174,6 +188,15 @@ a:hover{
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 <body>
+    {% if last_formula %}
+
+     <a href="{% url "single-formula-page" pk=last_formula.id %}">
+        <div style="position: fixed; top: 0px; left: 3.7px; color: #fff; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.4)">
+            ←
+        </div>
+    </a>
+    {% endif %}
+
 
     <h1>🚀 Saved Formulas</h1>
 <p>Your Personal FormulaVault</p>
@@ -196,7 +219,7 @@ a:hover{
                         (Given by: {{ formula.given_by }})
                     </div>
 
-                    <form method="POST" action="{% url "unsave-formula" formula.id  %}">
+                    <form method="POST" action="{% url "unsave-formula" pk=formula.id  %}">
                         {% csrf_token %}
                         <button type="submit" class="btn-save">
                              &#9733; Unsave

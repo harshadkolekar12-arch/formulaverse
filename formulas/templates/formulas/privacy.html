@@ -1,0 +1,280 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — FormulaVerse</title>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
+     crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #F8FAFC;
+            color: #1E293B;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Top bar */
+        .topbar {
+            background: #0F172A;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .topbar a {
+            color: #06B6D4;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .topbar span {
+            color: #94A3B8;
+            font-size: 0.85rem;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 100%);
+            padding: 48px 24px 40px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            color: #94A3B8;
+            font-size: 0.9rem;
+        }
+        .hero .badge {
+            display: inline-block;
+            background: rgba(6,182,212,0.15);
+            border: 1px solid rgba(6,182,212,0.4);
+            color: #06B6D4;
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* Content */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+        }
+
+        .intro {
+            background: #fff;
+            border: 1px solid #E2E8F0;
+            border-left: 4px solid #06B6D4;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .section {
+            background: #fff;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-bottom: 16px;
+            transition: box-shadow 0.2s;
+        }
+        .section:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .section-num {
+            background: #0F172A;
+            color: #06B6D4;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0F172A;
+        }
+
+        .section p {
+            color: #475569;
+            font-size: 0.92rem;
+            line-height: 1.75;
+        }
+
+        .section ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        .section ul li {
+            color: #475569;
+            font-size: 0.92rem;
+            padding: 5px 0 5px 20px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .section ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #06B6D4;
+            font-weight: 700;
+        }
+
+        .section a {
+            color: #06B6D4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .section a:hover { text-decoration: underline; }
+
+        /* Footer */
+        .footer {
+            background: #0F172A;
+            text-align: center;
+            padding: 20px;
+            color: #64748B;
+            font-size: 0.82rem;
+        }
+        .footer a { color: #06B6D4; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<div class="topbar">
+    <a href="{% url "index-page" %}">← FormulaVerse</a>
+    <span>/ Privacy Policy</span>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+    <div class="badge">Legal</div>
+    <h1>🔒 Privacy Policy</h1>
+    <p>Last updated: June 25, 2026</p>
+</div>
+
+<!-- Content -->
+<div class="container">
+
+    <div class="intro">
+        Welcome to <strong>FormulaVerse</strong> (formulaverse.in). This Privacy Policy explains how we collect, use, and protect your information when you visit our website. We believe in keeping things simple and transparent.
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">1</div>
+            <h2>Information We Collect</h2>
+        </div>
+        <p>We do not require you to create an account or provide personal information to use FormulaVerse. The following data may be collected automatically:</p>
+        <ul>
+            <li>Browser type and version</li>
+            <li>Pages visited and time spent</li>
+            <li>Device type (mobile/desktop)</li>
+            <li>Approximate location (country/city level)</li>
+            <li>Referring website</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">2</div>
+            <h2>Cookies</h2>
+        </div>
+        <p>FormulaVerse uses cookies to:</p>
+        <ul>
+            <li>Save your formula bookmarks (session cookies)</li>
+            <li>Analyze site traffic via Google Analytics</li>
+            <li>Serve relevant advertisements via Google AdSense</li>
+        </ul>
+        <p style="margin-top:10px;">You can disable cookies in your browser settings at any time.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">3</div>
+            <h2>Google Analytics</h2>
+        </div>
+        <p>We use Google Analytics to understand how visitors use our site. It collects anonymous usage data. You can opt out using the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics Opt-out Browser Add-on</a>.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">4</div>
+            <h2>Google AdSense</h2>
+        </div>
+        <p>We use Google AdSense to display advertisements. Google may use cookies to show ads based on your previous visits to this and other websites. You can opt out of personalized advertising at <a href="https://www.google.com/settings/ads" target="_blank">Google Ads Settings</a>.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">5</div>
+            <h2>Third-Party Links</h2>
+        </div>
+        <p>FormulaVerse may contain links to external websites (GitHub, LinkedIn, etc.). We are not responsible for the privacy practices of those sites.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">6</div>
+            <h2>Children's Privacy</h2>
+        </div>
+        <p>FormulaVerse is designed for students and does not knowingly collect personal information from children under 13. If you believe a child has provided personal information, please contact us.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">7</div>
+            <h2>Changes to This Policy</h2>
+        </div>
+        <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-num">8</div>
+            <h2>Contact</h2>
+        </div>
+        <p>If you have any questions about this Privacy Policy, please contact us via the <a href="/me">About page</a>.</p>
+    </div>
+
+</div>
+
+<div class="footer">
+    © 2026 FormulaVerse · <a href="/">Home</a> · <a href="/me">About</a>
+</div>
+
+</body>
+</html>

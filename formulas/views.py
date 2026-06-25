@@ -23,28 +23,18 @@ from django.views.decorators.http import require_POST
 from .chatbot import generate_practice_question
 import random
 from datetime import date
+import requests
+import os
+#from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+
+#from allauth.account.adapter import DefaultAccountAdapter
+
 # Create your views here.
 
-class RegisterView(CreateView):
-    form_class= RegisterForm
-    template_name= "formulas/register.html"
-    success_url=reverse_lazy("base-page")
 
-    def form_valid(self, form):
-        user= form.save()
-        login(self.request, user)
-        return super().form_valid(form)
-
-class LoginView(LoginView):
-    template_name="formulas/login.html"
-
-
-class LogoutView(LogoutView):
-    next_page= reverse_lazy("login")
-
-class BaseView( LoginRequiredMixin, TemplateView):
+class BaseView(TemplateView):
     template_name="formulas/base.html"
-    login_url="login"
+
 
 class IndexView(ListView):
     template_name = "formulas/index.html"
@@ -64,7 +54,7 @@ class IndexView(ListView):
             ).count()
 
 
-        formula_of_day = random.choice(list(formulas))
+        formula_of_day = random.choice(list(formulas)) if formulas.exists() else None
 
 
         return render(request, "formulas/index.html", {
@@ -75,12 +65,27 @@ class IndexView(ListView):
             "formula_of_day": formula_of_day,
         })
 
+
+
 class SingleFormulaView(DetailView):
     template_name="formulas/single_formula.html"
     model=Formula
     fields="__all__"
     context_object_name="formula"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        formula = self.object
+
+        if not formula.video_url:
+            url = get_youtube_video(formula.title)
+            if url:
+                formula.video_url = url
+                formula.save(update_fields=['video_url'])
+
+        context['video_url'] = formula.video_url
+        return context
 
     def post(self, request, *args, **kwargs):
         self.object=self.get_object()
@@ -92,8 +97,8 @@ class SingleFormulaView(DetailView):
 
         context=self.get_context_data()
 
-        correct_answer=self.object.correct_answer.strip().lower()
-        user_answer=request.POST.get("user_answer").strip().lower()
+        correct_answer=(self.object.correct_answer or '').strip().lower()
+        user_answer=(request.POST.get("user_answer") or '').strip().lower()
         explanation=self.object.explanation
 
 
@@ -115,25 +120,30 @@ class SingleFormulaView(DetailView):
             return render(request, "formulas/single_formula.html", context)
 
 class SavedFormulasView(View):
-    template_name="formulas/saved_formulas.html"
-    model=Formula
+    def post(self, request, pk, *args, **kwargs):
+        formula_id = request.POST.get("formula_id")
+        formula = get_object_or_404(Formula, id=pk)
 
+        if not request.session.session_key:
 
+            request.session.create()
 
-    def post(self, request, *args, **kwargs):
-        formula_id=request.POST.get("formula_id")
-        formula=get_object_or_404(Formula, id=formula_id)
-
-        formula.is_saved=True
-        formula.user=request.user
+        session_key = request.session.session_key
+        formula.is_saved = True
+        formula.session_key = session_key
         formula.save()
+        return redirect('saved-page', pk=pk)
 
-        return redirect("saved-page")
-
-    def get(self, request):
-        saved_formulas=Formula.objects.filter(is_saved=True, user=request.user)
+    def get(self, request, pk):
+        formula = get_object_or_404(Formula, id=pk)
+        session_key = request.session.session_key
+        saved_formulas = Formula.objects.filter(
+            is_saved=True,
+            session_key = session_key
+        )
         return render(request, "formulas/saved_formulas.html", {
-            "savedformulas": saved_formulas
+            "savedformulas": saved_formulas,
+            "last_formula" : formula
         })
 
 
@@ -142,14 +152,6 @@ def unsave(request, pk):
         formula.is_saved = False
         formula.save()
         return redirect("single-formula-page", pk=pk)
-
-@login_required
-def profile(request):
-    if request.method == "POST":
-        if "delete" in request.POST:
-            request.user.delete()
-            return redirect("signup")
-    return redirect("index-page")
 
 
 
@@ -190,13 +192,14 @@ class CategoryView(ListView):
     def get_queryset(self):
         return Formula.objects.filter(category__name__iexact=self.kwargs['category'])
 
-    def get_context_date(self, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category_name'] = self.kwargs['category'].title()
         return context
 
 class AboutMeView(TemplateView):
     template_name = "formulas/me.html"
+
 
 
 
@@ -246,26 +249,109 @@ def add_category(request):
     return render(request, 'add_category.html', {'form': form})
 
 
-@login_required
-@require_POST
-def upload_pic(request):
-    try:
-        profile, _ = Profile.objects.get_or_create(user=request.user)
-        if 'profile_pic' in request.FILES:
-            profile.profile_pic = request.FILES['profile_pic']
-            profile.save()
-    except Exception as e:
-        print("Upload error:", e)
-    return redirect('index-page')
+
 
 def practice_question(request, formula_id):
-    formula = Formula.objects.get(id=formula_id)
-    difficulty = request.GET.get("difficulty", "medium")
-    result = generate_practice_question(
-        formula.title, formula.form,
-        formula.chapter, formula.description,
-        difficulty
-    )
-    return JsonResponse(result)
+    try:
+        formula = Formula.objects.get(id=formula_id)
+        difficulty = request.GET.get("difficulty", "medium")
 
+        result = generate_practice_question(
+            formula.title, formula.form,
+            formula.chapter, formula.description,
+            difficulty
+        )
+        return JsonResponse(result)
 
+    except Formula.DoesNotExist:
+        return JsonResponse({"error": "Formula not found"}, status=404)
+    except json.JSONDecodeError as e:
+        return JsonResponse({"error": f"Invalid JSON: {str(e)}"}, status=500)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+def get_youtube_video(formula_title):
+    api_key = "AIzaSyAMRUukG1tvBo3947-UavtL1gIdK2RgY0E"
+    query = f"{formula_title} physics explanation"
+
+    url = f"https://www.googleapis.com/youtube/v3/search"
+    params = {
+        'key': api_key,
+        'q': query,
+        'part': 'snippet',
+        'type': 'video',
+        'maxResults': 1,
+        'relevanceLanguage': 'en'
+    }
+
+    try:
+         response = requests.get(url, params=params)
+         data = response.json()
+
+         items = data.get('items', [])
+         if items:
+             video_id = items[0]['id']['videoId']
+             return f"https://www.youtube.com/watch?v={video_id}"
+         return None
+    except Exception as e:
+
+        return None
+
+class FormulaAnimationView(View):
+
+    def get(self, request, formula_id):
+        formula = get_object_or_404(Formula, pk=formula_id)
+
+        prebuilt = self.get_prebuilt_animation(formula)
+        if prebuilt:
+            return JsonResponse({
+                'html': prebuilt,
+                'title': formula.title,
+                'source': 'prebuilt'
+            })
+
+        # Groq API call
+        try:
+            response = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {os.environ.get('GROQ_ANIMATION_KEY')}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": "llama-3.3-70b-versatile",  # free & fast
+                    "max_tokens": 2000,
+                    "messages": [{
+                        "role": "user",
+                        "content": f"""
+                        Create a beautiful SVG + JavaScript animation explaining:
+                        Formula: {formula.title}
+                        Expression: {formula.formula_text}
+                        Category: {formula.category.name}
+
+                        Return ONLY an HTML snippet (no DOCTYPE, no <html> tags) with:
+                        - SVG animation demonstrating this formula visually
+                        - Clear variable labels
+                        - Smooth animation using requestAnimationFrame or CSS
+                        - Dark theme (#0d1117 background)
+                        - Max 400px height
+                        - Physically accurate
+                        """
+                    }]
+                }
+            )
+
+            data = response.json()
+            animation_html = data['choices'][0]['message']['content']
+
+            return JsonResponse({
+                'html': animation_html,
+                'title': formula.title,
+                'source': 'ai'
+            })
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+def privacy(request):
+    return render(request, "formulas/privacy.html")

@@ -31,7 +31,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #path("accounts/", include("django.contrib.auth.urls")),
     path("", include("formulas.urls")),
-    path('account/', include('allauth.urls')),
     path('sw.js', serve_sw),
 
 

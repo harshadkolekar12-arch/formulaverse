@@ -24,6 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
+YOUTUBE_API_KEY = os.getenv('YOUTUBE_API_KEY')
+GROQ_CHATBOT_KEY = os.getenv('GROQ_CHATBOT_API')
+GROQ_PRACTICE_KEY = os.getenv('GROQ_PRACTICE_KEY')
+GROQ_ANIMATION_KEY = os.getenv('GROQ_ANIMATION_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -42,6 +46,10 @@ ALLOWED_HOSTS = [
 'emory-unstultified-staunchly.ngrok-free.dev',
 'overcaustically-straticulate-darin.ngrok-free.dev',
 'harshadkolekar.pythonanywhere.com',
+"*",
+'formulaverse.onrender.com',
+'formulaverse.in',
+'www.formulaverse.in'
 
 ]
 
@@ -57,14 +65,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
 
 ]
 
 SITE_ID = 1
+
 
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -77,6 +82,11 @@ SOCIALACCOUNT_PROVIDERS = {
             }
             }
 SOCIALACCOUNT_QUERY_EMAIL = True
+
+
+
+
+# This makes allauth respect the 'next' parameter
 
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
@@ -93,7 +103,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
+
 
 ]
 
@@ -119,7 +129,6 @@ WSGI_APPLICATION = 'physics.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
@@ -148,14 +157,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS=[
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+
 
 
 ]
 
-LOGIN_REDIRECT_URL = '/index'
-SOCIALACCOUNT_LOGIN_ON_GET = True
 
+
+APPEND_SLASH = True
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -189,8 +198,7 @@ CSRF_TRUSTED_ORIGINS = [
 MEDIA_URL= "/files/"
 MEDIA_ROOT= BASE_DIR/ "uploads"
 
-LOGIN_REDIRECT_URL="base-page"
-LOGOUT_REDIRECT_URL="login"
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

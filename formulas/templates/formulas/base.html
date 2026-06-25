@@ -6,17 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FormulaVerse — Explore Physics</title>
 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
+     crossorigin="anonymous"></script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YHLZCEHWF7');
+</script>
+
     <title>FormulaVerse — Physics Formulas</title>
 <meta name="description" content="FormulaVerse — All Physics Formulas for JEE, NEET and Class 11-12">
 <meta property="og:title" content="FormulaVerse"/>
 <meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/base"/>
+<meta name="keywords" content="{{ formula.title }},
+JEE formula, NEET formula, physics formula">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-        font-family: 'Crimson Text', Georgia, serif;
+        font-family: 'Outfit', sans-serif;
         background-color: #1a1408;
         background-image:
             radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212,175,55,0.08) 0%, transparent 70%),
@@ -187,7 +201,7 @@
 
 <body>
 
-    <a href="/me"><p class="about-me">
+    <a href="{% url "me" %}"><p class="about-me">
         💡About me
     </p>
     </a>
@@ -244,7 +258,7 @@
 
 </div>
 
-<a href="/index" class="explore-btn">Begin Your Journey →</a>
+<a href="{% url "index-page" %}" class="explore-btn">Begin Your Journey →</a>
 
 <p class="bottom-note">Knowledge is the compass. Physics is the universe.</p>
 

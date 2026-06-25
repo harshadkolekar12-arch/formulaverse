@@ -23,13 +23,15 @@ class Formula(models.Model):
     given_by=models.CharField(blank=True, null=True, max_length=50, default='Unknown')
     question=models.CharField(max_length=600)
     answer=models.CharField(max_length=50, null=True)
-    solve=models.CharField(max_length=200, null=True)
-    correct_answer=models.CharField(null=True, max_length=500)
-    explanation=models.ImageField(upload_to="posts", null=True)
+    solve=models.CharField(blank=True, null=True, max_length=200)
+    correct_answer=models.CharField(null=True, blank=True, max_length=500)
+    explanation=models.ImageField(upload_to="posts", blank=True, null=True)
     form_info=models.CharField(max_length=200, null=True)
-    category=models.ForeignKey(Category, on_delete=models.CASCADE, related_name="fomulas", null=True)
+    category=models.ForeignKey(Category, on_delete=models.SET_NULL, related_name="fomulas", null=True)
     is_saved=models.BooleanField(default=False)
+    session_key = models.CharField(max_length = 100, null = True, blank = True)
     user=models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    video_url = models.URLField(blank = True, null = True)
 
 
 
