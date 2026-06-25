@@ -20,6 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import FileResponse
 from django.views.generic import RedirectView
+from django.contrib.sitemaps.views import sitemap
+from formulas.sitemap import FomulaSitemap, StaticSitemap
 import os
 
 
@@ -27,9 +29,13 @@ def serve_sw(request):
     sw_path = os.path.join(settings.STATIC_ROOT, 'formulas/sw.js')
     return FileResponse(open(sw_path, 'rb'), content_type='application/javascript')
 
+sitemaps = {
+    'formulas' : FormulaSitemap,
+    'static' : StaticSitemap
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('sitemap.xml', sitemap, {'sitemaps' : sitemaps}),
     #path("accounts/", include("django.contrib.auth.urls")),
     path("", include("formulas.urls")),
     path('sw.js', serve_sw),
