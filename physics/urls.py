@@ -19,6 +19,7 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import FileResponse
+from django.views.generic import RedirectView
 import os
 
 
@@ -32,6 +33,7 @@ urlpatterns = [
     #path("accounts/", include("django.contrib.auth.urls")),
     path("", include("formulas.urls")),
     path('sw.js', serve_sw),
+    path('favion.ico', RedirectView.as_view(url='/static/images/favion.ico'))
 
 
 ]
