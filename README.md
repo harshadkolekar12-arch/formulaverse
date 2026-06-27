@@ -2,8 +2,8 @@
 
 A Physics Formula Web App for JEE, NEET and Class 11-12 students.
 
-## 🌐 Live Demo
-https://harshadkolekar.pythonanywhere.com
+## 🌐 Live Demo:
+https://formulaverse.in
 
 ## ✨ Features
 - 41+ Physics Formulas with MathJax rendering
