@@ -1,0 +1,210 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ exam_label }} Formulas — FormulaVerse</title>
+
+
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+
+    <meta name="description"
+    content="{{ total }} Physics formulas for {{ exam_label }} — FormulaVerse">
+<meta name="keywords"
+    content="{{ exam_label }} physics formulas, {{ exam_label }} formula list">
+
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: linear-gradient(180deg, #ffb6c1 0%, #ffcba4 50%, #fff5e6 100%);
+            min-height: 100vh;
+            font-family: 'Outfit', sans-serif;
+        }
+        .header {
+            text-align: center;
+            padding: 20px 16px 10px;
+        }
+        .back-btn {
+            position: fixed;
+            top: 3px; left: 8px;
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #7b2d3e;
+            text-decoration: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4)
+        }
+        .total-pill {
+            position: fixed;
+            top: 8px; right: 8px;
+            background: #F4EFEB;
+            border: 1px solid rgba(255,100,100,0.3);
+            border-radius: 20px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #2B2321;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #7b2d3e;
+            margin-top: 40px;
+        }
+        .subtitle {
+            color: #7b2d3e;
+            font-size: 0.9rem;
+            margin-top: 4px;
+            opacity: 0.7;
+        }
+
+        /* Search */
+        .search-wrapper {
+            margin: 16px 18px;
+        }
+        .search-wrapper input {
+            width: 100%;
+            padding: 10px 16px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 105, 135, 0.4);
+            background: white;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .search-wrapper input:focus {
+            border-color: #ff6b9d;
+        }
+
+        /* Formula cards */
+        .container { padding: 0 18px 20px; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        .formula-card {
+            background: rgba(255,255,255,0.85);
+            border-radius: 12px;
+            padding: 12px 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 105, 135, 0.3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: visible;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+        .formula-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(255, 105, 135, 0.3);
+        }
+        .formula-title {
+            color: #7b2d3e;
+            font-weight: bold;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            white-space: normal;
+            overflow: visible;
+            line-height: 1.15;
+            font-size: 0.68rem;
+        }
+        .formula-form {
+            text-align: center;
+            color: #c9184a;
+            margin: 8px 0;
+        }
+        .formula-author {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .hanging-badge-wrapper {
+            position: absolute;
+            top: 8px; right: 10px;
+        }
+        .hanging-badge {
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+        }
+        .hanging-badge.jee {
+            background: linear-gradient(135deg, #ff6b9d, #c9184a);
+        }
+        .hanging-badge.neet {
+            background: linear-gradient(135deg, #ff85a1, #ff4d6d);
+        }
+        .hanging-badge.both {
+            background: linear-gradient(135deg, #ff4d6d, #c9184a);
+        }
+        a { text-decoration: none; }
+    </style>
+</head>
+<body>
+
+       <a class="back-btn" href="{% url 'index-page' %}">←</a>
+
+   <a href="https://wa.me/?text=Check out this Physics Formula on FormulaVerse! 📐%0A%0A{{ formula.title }}%0A{{ request.build_absolute_uri }}"
+       target="_blank"
+       style="background:#25D366; color:white;
+              padding:7px 14px; border-radius:20px;
+              font-size:12px; font-weight:750;
+              text-decoration:none; display: flex; position: fixed; top: 5px; right: 2px">
+        📲 Share this page
+    </a>
+
+
+    <div class="header">
+        <h1>{{ exam_label }} Formulas</h1>
+        <p class="subtitle">Showing all formulas for {{ exam_label }}</p>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrapper">
+        <input type="text" id="searchBar"
+            placeholder="🔍 Search {{ exam_label }} formulas..."
+            oninput="searchFormulas()">
+    </div>
+
+    <!-- Formula Cards -->
+    <div class="container">
+        {% for formula in formulas %}
+        <ul>
+            <li>
+                <div class="formula-card">
+                    {% if formula.exam_tag != 'none' %}
+                    <div class="hanging-badge-wrapper">
+                        <div class="hanging-badge {{ formula.exam_tag }}">
+                            {{ formula.get_exam_tag_display }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <a href="{{ formula.get_absolute_url }}">
+                        <div class="formula-title">{{ formula.title }}</div>
+                        <div class="formula-form">$$ {{ formula.form }} $$</div>
+                    </a>
+
+                    {% if formula.given_by %}
+                    <div class="formula-author">
+                        (Given by: {{ formula.given_by }})
+                    </div>
+                    {% endif %}
+                </div>
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+
+    <script>
+        function searchFormulas() {
+            const query = document.getElementById('searchBar')
+                                  .value.toLowerCase();
+            document.querySelectorAll('.formula-card').forEach(card => {
+                const title = card.querySelector('.formula-title')
+                                  .innerText.toLowerCase();
+                const ul = card.closest('ul');
+                ul.style.display = title.includes(query) ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>

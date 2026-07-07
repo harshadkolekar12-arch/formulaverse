@@ -8,6 +8,13 @@ urlpatterns=[
     path("index/", views.IndexView.as_view(), name="index-page"),
     path('privacy/', views.privacy, name="privacy"),
     path("chatbot/", views.ChatbotView.as_view(), name="chatbot"),
+    path('jee/', views.ExamFilterView.as_view(), name='jee-formulas'),
+    path('neet/', views.ExamFilterView.as_view(), name='neet-formulas'),
+    path('both/', views.ExamFilterView.as_view(), name='both-formulas'),
+    path('dashboard/', views.progress_dashboard, name='dashboard'),
+    path('constants/', views.ConstantsView.as_view(), name='constants'),
+    path('pyq-papers/', views.pyq_papers, name="pyq-papers"),
+    path('units-dimensions/', views.UnitsDimensionsView.as_view(), name="units-dimensions"),
     path("saved/<int:pk>/", views.SavedFormulasView.as_view(), name="saved-page"),
     path("formula/<int:pk>", views.SingleFormulaView.as_view(), name="single-formula-page"),
     path('unsave/<int:pk>/', views.unsave,  name ="unsave-formula"),
@@ -20,7 +27,8 @@ urlpatterns=[
     path('panel/add-category/', views.add_category, name='add_category'),
     path('practice/<int:formula_id>/', views.practice_question,
      name='practice_question'),
-    path('formula/<int:formula_id>/animation', views.FormulaAnimationView.as_view(), name='formula_animation')
+    path('formula/<int:formula_id>/animation', views.FormulaAnimationView.as_view(), name='formula_animation'),
+    path('save-fcm-token/', views.save_fcm_token, name='save_fcm_token')
 
 
 ]

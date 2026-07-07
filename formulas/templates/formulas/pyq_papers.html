@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PYQ Papers | FormulaVerse</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(160deg, #1e293b 0%, #24304a 50%, #1a2438 100%);
+    color: #f1f5f9;
+    min-height: 100vh;
+  }
+  header {
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(16px);
+    z-index: 10;
+  }
+  .back-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05);
+    color: #f1f5f9;
+    text-decoration: none;
+    display: grid; place-items: center;
+    font-size: 20px;
+  }
+  .header-title { font-size: 17px; font-weight: 700; }
+  .hero { text-align: center; padding: 40px 24px 24px; }
+  .hero h1 { font-size: clamp(24px, 6vw, 32px); margin-bottom: 8px; }
+  .hero p { color: #94a3b8; font-size: 14px; max-width: 340px; margin: 0 auto; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    padding: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .paper-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background .2s, transform .2s;
+  }
+  .paper-card:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+  }
+  .paper-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: rgba(56,189,248,0.15);
+    display: grid; place-items: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .paper-info { flex: 1; min-width: 0; }
+  .paper-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .paper-meta { font-size: 11px; color: #94a3b8; }
+  .download-btn {
+    background: rgba(56,189,248,0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56,189,248,0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .download-btn:hover { background: #38bdf8; color: white; }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 24px;
+    color: #94a3b8;
+    grid-column: 1/-1;
+  }
+</style>
+</head>
+<body>
+
+<header>
+    <a href="{% url 'index-page' %}" class="back-btn"> < </a>
+    <span class="header-title">📄 PYQ Papers</span>
+</header>
+
+<div class="hero">
+    <h1>Previous Year Papers</h1>
+    <p>JEE & NEET question papers, sorted by chapter — download and practice.</p>
+</div>
+
+<div class="grid">
+    {% for paper in papers %}
+    <div class="paper-card">
+        <div class="paper-icon">📄</div>
+        <div class="paper-info">
+            <div class="paper-name">{{ paper.display_name }}</div>
+            <div class="paper-meta">JEE & NEET PYQ</div>
+        </div>
+        <a href="{% static 'formulas/pyq_pdfs/' %}{{ paper.filename }}" download class="download-btn">Download</a>
+    </div>
+    {% empty %}
+    <div class="empty-state">No PYQ papers uploaded yet. Check back soon!</div>
+    {% endfor %}
+</div>
+
+<div style="margin-top:24px; padding:14px 18px; border-radius:12px;
+            background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.3);
+            text-align:center; font-family:inherit;">
+  <span style="color:#94a3b8; font-size:14px;">Found this useful?</span>
+  <a href="https://buymeachai.ezee.li/formulaverse" target="_blank" rel="noopener noreferrer"
+     style="color:#f97316; font-weight:600; text-decoration:none; margin-left:6px;">
+    ☕ Buy me a chai
+  </a>
+</div>
+
+</body>
+</html>

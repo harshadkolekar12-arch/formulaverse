@@ -4,14 +4,14 @@ from django.views.generic import ListView
 from django.views.generic import DetailView,TemplateView, CreateView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
-from .models import Formula, Profile
+from .models import Formula, Category
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import RegisterForm, FormulaForm, CategoryForm
+from .forms import  FormulaForm, CategoryForm
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -25,6 +25,10 @@ import random
 from datetime import date
 import requests
 import os
+from django.db.models import Count
+from django.conf import settings
+from django.templatetags.static import static
+
 #from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 #from allauth.account.adapter import DefaultAccountAdapter
@@ -53,6 +57,11 @@ class IndexView(ListView):
                 user=request.user
             ).count()
 
+        category_counts = {
+            cat.name.lower().replace(' ', '_'): cat.formula_count
+            for cat in Category.objects.annotate(formula_count=Count('fomulas'))
+            }
+
 
         formula_of_day = random.choice(list(formulas)) if formulas.exists() else None
 
@@ -63,6 +72,7 @@ class IndexView(ListView):
             "saved_count": saved_count,
             "user": request.user,
             "formula_of_day": formula_of_day,
+            "count" : category_counts,
         })
 
 
@@ -75,16 +85,9 @@ class SingleFormulaView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        formula = self.object
-
-        if not formula.video_url:
-            url = get_youtube_video(formula.title)
-            if url:
-                formula.video_url = url
-                formula.save(update_fields=['video_url'])
-
-        context['video_url'] = formula.video_url
+        context['similar_formulas'] = Formula.objects.filter(
+            category = self.object.category
+            ).exclude(pk=self.object.pk)[:5]
         return context
 
     def post(self, request, *args, **kwargs):
@@ -184,10 +187,9 @@ class ChatbotView(View):
 
 class CategoryView(ListView):
     model = Formula
-    fields = "__all__"
-    template_name= "formulas/categories.html"
+    fields = "_all_"
+    template_name = "formulas/categories.html"
     context_object_name = "formulas"
-
 
     def get_queryset(self):
         return Formula.objects.filter(category__name__iexact=self.kwargs['category'])
@@ -195,7 +197,13 @@ class CategoryView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category_name'] = self.kwargs['category'].title()
+
+        category_obj = Category.objects.filter(name__iexact=self.kwargs['category']).first()
+        context['category'] = category_obj
         return context
+
+
+
 
 class AboutMeView(TemplateView):
     template_name = "formulas/me.html"
@@ -355,3 +363,122 @@ class FormulaAnimationView(View):
 
 def privacy(request):
     return render(request, "formulas/privacy.html")
+
+
+
+class ExamFilterView(View):
+    def get(self, request, *args, **kwargs):
+        # Get exam type from URL
+        path = request.path.strip('/')  # 'jee', 'neet', or 'both'
+
+        if path == 'jee':
+            formulas = Formula.objects.filter(
+                exam_tag__in=['jee', 'both']
+            )
+            exam_label = 'JEE'
+        elif path == 'neet':
+            formulas = Formula.objects.filter(
+                exam_tag__in=['neet', 'both']
+            )
+            exam_label = 'NEET'
+        elif path == 'both':
+            formulas = Formula.objects.filter(
+                exam_tag='both'
+            )
+            exam_label = 'JEE + NEET'
+        else:
+            formulas = Formula.objects.none()
+            exam_label = ''
+
+        return render(request, 'formulas/exam_filter.html', {
+            'formulas': formulas,
+            'exam_label': exam_label,
+            'total': formulas.count(),
+        })
+
+
+
+
+def progress_dashboard(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.create()
+        session_key = request.session.session_key
+
+    # Get all saved formulas for this session
+    saved_formulas = Formula.objects.filter(
+        is_saved=True,
+        session_key=session_key
+    )
+
+    total_saved = saved_formulas.count()
+    total_formulas = Formula.objects.count()
+
+    # Category breakdown
+    from collections import Counter
+    category_counts = Counter(
+        saved_formulas.values_list('category__name', flat=True)
+    )
+    favourite_chapter = max(category_counts, key=category_counts.get) if category_counts else "None"
+
+    # JEE vs NEET breakdown
+    jee_count = saved_formulas.filter(exam_tag='jee').count()
+    neet_count = saved_formulas.filter(exam_tag='neet').count()
+    both_count = saved_formulas.filter(exam_tag='both').count()
+
+    context = {
+        'total_saved': total_saved,
+        'total_formulas': total_formulas,
+        'favourite_chapter': favourite_chapter,
+        'category_counts': dict(category_counts),
+        'jee_count': jee_count,
+        'neet_count': neet_count,
+        'both_count': both_count,
+        'saved_formulas': saved_formulas,
+        'completion_percent': round((total_saved / total_formulas) * 100) if total_formulas else 0,
+    }
+    return render(request, 'formulas/dashboard.html', context)
+
+
+
+
+@csrf_exempt
+def save_fcm_token(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        token = data.get('token')
+        # Save to session
+        request.session['fcm_token'] = token
+        return JsonResponse({'status': 'saved'})
+    return JsonResponse({'error': 'Invalid'}, status=400)
+
+
+
+
+class ConstantsView(TemplateView):
+    template_name = "formulas/constants.html"
+
+
+class UnitsDimensionsView(TemplateView):
+    template_name = "formulas/units_dimensions.html"
+
+
+def pyq_papers(request):
+    pdf_dir = os.path.join(settings.BASE_DIR, 'formulas', 'static', 'formulas', 'pyq_pdfs')
+
+    papers = []
+    if os.path.exists(pdf_dir):
+        for filename in sorted(os.listdir(pdf_dir)):
+            if filename.endswith('.pdf'):
+                # Turn "electromagnetism_pyq_formulas.pdf" into "Electromagnetism"
+                display_name = (
+                    filename.replace('_pyq_formulas.pdf', '')
+                            .replace('_', ' ')
+                            .title()
+                )
+                papers.append({
+                    'display_name': display_name,
+                    'filename': filename,
+                })
+
+    return render(request, 'formulas/pyq_papers.html', {'papers': papers})

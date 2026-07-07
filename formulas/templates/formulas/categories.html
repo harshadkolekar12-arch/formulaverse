@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ category.name }} — FormulaVerse</title>
 
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
      crossorigin="anonymous"></script>
     <!-- Google tag (gtag.js) -->
@@ -89,7 +91,7 @@ JEE formula, NEET formula, physics formula">
         background: #1a1535;
         border: 1px solid rgba(255,255,255,0.1);  /* ← fixed missing ) */
         border-radius: 12px;
-        padding: 14px 16px;
+        padding: 14px 3px;
         margin: 8px 0;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         transition: transform 0.3s ease,
@@ -125,7 +127,7 @@ JEE formula, NEET formula, physics formula">
     /* Formula Expression */
     .formula-form {
         color: #f97316;
-        max-width: 200px;
+        max-width: 400px;
         max-height: 80px;
         overflow: hidden;
         transform: scale(0.85);
@@ -140,6 +142,50 @@ JEE formula, NEET formula, physics formula">
         color: #94a3b8;
         margin-top: 8px;
     }
+
+    .hanging-badge-wrapper {
+    position: absolute;
+    top: -22px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+}
+
+/* The clip circle on top */
+.clip {
+    width: 8px;
+    height: 8px;
+    background: #b0b0b0;
+    border-radius: 50%;
+    border: 2px solid #888;
+    margin-bottom: 2px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* The hanging badge */
+.hanging-badge {
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Colors matching your pink theme */
+.hanging-badge.jee {
+    background: linear-gradient(135deg, #ff6b9d, #c9184a);
+}
+.hanging-badge.neet {
+    background: linear-gradient(135deg, #ff85a1, #ff4d6d);
+}
+.hanging-badge.both {
+    background: linear-gradient(135deg, #ff4d6d, #c9184a);
+}
+
     </style>
 </head>
 
@@ -150,7 +196,6 @@ JEE formula, NEET formula, physics formula">
         </div>
     </a>
 
-
     <div class="container">
 
         <!-- Header -->
@@ -160,6 +205,49 @@ JEE formula, NEET formula, physics formula">
                 {{ formulas.count }}
             </div>
         </div>
+
+
+ <div style="display: flex; justify-content: center; padding: 0 12px 16px;">
+    <input
+        type="text"
+        id="searchBar"
+        placeholder="🔍 Search formulas...."
+        oninput="searchFormulas()"
+        style="width:100%; padding:12px 16px; border-radius:25px;
+               border:2px solid rgba(180,50,80,0.3);
+               background:rgba(255,255,255,0.8);
+               font-size:15px; color:#4a0e1a;
+               outline:none; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+</div>
+
+{% if category.simulation_url %}
+<div style="
+    margin: 8px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,165,0,0.3);
+    background: rgba(255,255,255,0.05);
+">
+    <p style="
+        color: #FFA500;
+        font-size: 11px;
+        font-weight: bold;
+        padding: 6px 12px 4px;
+        margin: 0;
+        letter-spacing: 0.08em;
+    ">🎮 INTERACTIVE SIMULATION</p>
+    <iframe
+        src="{{ category.simulation_url }}"
+        width="100%"
+        height="220px"
+        style="border: none; display: block;"
+        allowfullscreen>
+    </iframe>
+</div>
+
+{% endif %}
+
+
 
         <!-- Formula Cards -->
         {% for formula in formulas %}
@@ -185,5 +273,21 @@ JEE formula, NEET formula, physics formula">
         {% endfor %}
 
     </div>
+
+    <script>
+
+    function searchFormulas() {
+    const query = document.getElementById('searchBar')
+                          .value.toLowerCase();
+    document.querySelectorAll('.formula-card')
+            .forEach(card => {
+        const title = card.querySelector('.formula-title')
+                          .innerText.toLowerCase();
+        card.closest('li').style.display =
+            title.includes(query) ? 'block' : 'none';
+    });
+}
+
+</script>
 </body>
 </html>

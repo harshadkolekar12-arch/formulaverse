@@ -5,7 +5,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FORMULA</title>
+    <title>{{ formula.title }} | Formulaverse</title>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+    apiKey: "AIzaSyDEO2NDNQZgt9NshLFIhYntGOafMQtdQBA",
+    authDomain: "formulaverse-afaf2.firebaseapp.com",
+    projectId: "formulaverse-afaf2",
+    storageBucket: "formulaverse-afaf2.firebasestorage.app",
+    messagingSenderId: "472325603873",
+    appId: "1:472325603873:web:06fbd627b03c3d0c3b5960"
+};
+
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
+// Request permission
+async function requestPermission() {
+    try {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+            const token = await messaging.getToken({
+                vapidKey: 'BMD65Lhf-odwE-rVU08G4MpOUvwOXIUmaPTv_SAYxTLo3e6IsUgiPKqbXBimwgl-Zlkuyxm4nqciABwklelr4g4'
+            });
+            console.log('FCM Token:', token);
+            // Save token to server
+            fetch('/save-fcm-token/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ token: token })
+            });
+        }
+    } catch (err) {
+        console.error('Notification permission error:', err);
+    }
+}
+
+// Ask after 3 seconds
+setTimeout(requestPermission, 3000);
+</script>
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
      crossorigin="anonymous"></script>
@@ -40,7 +85,7 @@ JEE formula, NEET formula, physics formula">
 
 
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static "formulas/single_formula.css" %}">
+
 
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -99,7 +144,7 @@ JEE formula, NEET formula, physics formula">
             background: var(--cyan-dim);
             border: 1px solid rgba(6,182,212,0.35);
             border-radius: var(--radius);
-            padding: 32px 10px;
+            padding: 32px 3px;
             margin: 24px auto 0;
             max-width: 540px;
             text-align: center;
@@ -107,7 +152,7 @@ JEE formula, NEET formula, physics formula">
         .formula-hero .MJXc-display,
         .formula-hero mjx-container {
             color: var(--cyan) !important;
-            font-size: 1.3em !important;
+            font-size: 1em !important;
         }
 
         .content-wrapper {
@@ -318,6 +363,13 @@ JEE formula, NEET formula, physics formula">
         📋 Copy
     </button>
 
+    <a href="https://buymeachai.ezee.li/formulaverse" target="_blank" rel="noopener noreferrer"
+   style="display:inline-flex; align-items:center; gap:6px; padding:6px 14px;
+          border-radius:8px; border:1px solid #f97316; color:#f97316;
+          font-size:14px; font-weight:600; text-decoration:none; font-family:inherit;">
+  ☕ Chai
+</a>
+
     <!-- Share Button - Top Right -->
     <a href="https://wa.me/?text=Check out this Physics Formula on FormulaVerse! 📐%0A%0A{{ formula.title }}%0A{{ request.build_absolute_uri }}"
        target="_blank"
@@ -497,6 +549,37 @@ JEE formula, NEET formula, physics formula">
     </div>
 </div>
 
+<div style="padding: 16px 12px;">
+    <h3 style="color: #f97316; font-size: 15px; font-weight: 700;
+               letter-spacing: 2px; margin-bottom: 14px;">
+        ✦ SIMILAR FORMULAS
+    </h3>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+        {% for similar in similar_formulas %}
+        <a href="{{ similar.get_absolute_url }}"
+           style="text-decoration: none;">
+            <div style="background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(249,115,22,0.05));
+                        border: 1px solid rgba(56,189,248,0.2);
+                        border-left: 3px solid #f97316;
+                        border-radius: 10px; padding: 12px 16px;
+                        display: flex; justify-content: space-between;
+                        align-items: center;">
+                <div>
+                    <div style="color: #38bdf8; font-weight: 600; font-size: 14px;">
+                        {{ similar.title }}
+                    </div>
+                    <div style="color: #f97316; font-size: 12px; margin-top: 4px;">
+                        ${{ similar.form }}$
+                    </div>
+                </div>
+                <div style="color: #94a3b8; font-size: 18px;">→</div>
+            </div>
+        </a>
+        {% empty %}
+        <p style="color: #94a3b8; font-size: 13px;">No similar formulas found.</p>
+        {% endfor %}
+    </div>
+</div>
 
 
 <script>
@@ -515,7 +598,16 @@ function loadQuestion(difficulty) {
         .then(data => {
             correctAnswer = data.correct;
             currentExplanation = data.explanation;
-            document.getElementById('question-text').innerText = data.question;
+
+            if (!data.question || !data.options) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('question-box').style.display = 'block';
+    document.getElementById('question-text').innerText =
+        '⚠️ Network issue! Please reload';
+    return; // stop further execution
+}
+
+            document.getElementById('question-text').innerText = data.question || '⚠️ Network issue! Please reload';
 
             const optionsBox = document.getElementById('options-box');
             optionsBox.innerHTML = '';
@@ -544,7 +636,7 @@ function loadQuestion(difficulty) {
                                cursor:pointer; line-height:1.5;">
                         <span style="font-weight:700;
                               color:${borderColors[key]};">${key}.</span>
-                        ${data.options[key]}
+                        ${data.options[key] || '⚠️ Network issue! Please reload'}
                     </button>`;
             }
 
@@ -552,9 +644,12 @@ function loadQuestion(difficulty) {
             document.getElementById('question-box').style.display = 'block';
         })
         .catch(err => {
-            document.getElementById('loading').innerText =
-                '❌ Error: ' + err.message + ' — Try again!';
-        });
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('question-box').style.display = 'block';
+    document.getElementById('question-box').innerHTML =
+        '⚠️ Network issue! Please reload.';
+});
+
 }
 
 function checkAnswer(selected) {
@@ -580,75 +675,103 @@ function checkAnswer(selected) {
 }
 
 
-
-function copyFormula() {
-    try{
-         let formula = "{{ formula.form|escapejs }}";
-
-     formula = formula
-        .replace(/\\frac{([^}])}{([^}])}/g, '($1)/($2)')
-        .replace(/\\frac{([^}])}{([^}])}/g, '($1)/($2)') // run twice for nested
-        .replace(/\\times/g, '×')
-        .replace(/\\cdot/g, '·')
-        .replace(/\\sqrt{([^}]*)}/g, '√($1)')
-        .replace(/\\sqrt/g, '√')
-        .replace(/\^{([^}]*)}/g, '^($1)')
-        .replace(/\^2/g, '²')
-        .replace(/\^3/g, '³')
-        .replace(/{([^}]*)}/g, '$1')
-        .replace(/\\alpha/g, 'α')
-        .replace(/\\beta/g, 'β')
-        .replace(/\\gamma/g, 'γ')
-        .replace(/\\theta/g, 'θ')
-        .replace(/\\omega/g, 'ω')
-        .replace(/\\mu/g, 'μ')
-        .replace(/\\lambda/g, 'λ')
-        .replace(/\\pi/g, 'π')
-        .replace(/\\sigma/g, 'σ')
-        .replace(/\\Delta/g, 'Δ')
-        .replace(/\\delta/g, 'δ')
-        .replace(/\\epsilon/g, 'ε')
-        .replace(/\\rho/g, 'ρ')
-        .replace(/\\phi/g, 'φ')
-        .replace(/\\vec{([^}]*)}/g, '$1→')
-        .replace(/\\sin/g, 'sin')
-        .replace(/\\cos/g, 'cos')
-        .replace(/\\tan/g, 'tan')
-        .replace(/\\log/g, 'log')
-        .replace(/\\ln/g, 'ln')
-        .replace(/\\infty/g, '∞')
-        .replace(/\\pm/g, '±')
-        .replace(/\\approx/g, '≈')
-        .replace(/\\neq/g, '≠')
-        .replace(/\\leq/g, '≤')
-        .replace(/\\geq/g, '≥')
-        .replace(/\\\\/g, '')
-        .replace(/[{}]/g, '')
-        .replace(/\\/g, '')
-        .trim();
-
-
-
-    navigator.clipboard.writeText('{{ formula.form }}')
-    .then(() => {
-        const btn = document.getElementById('copyBtn');
-        btn.innerText = '✅ Copied!';
-        btn.style.color = '#22c55e';
-        btn.style.borderColor = '#22c55e';
-        setTimeout(() => {
-            btn.innerText = '📋 Copy Formula';
-            btn.style.color = '#38bdf8';
-            btn.style.borderColor = '#38bdf8';
-        }, 2000);
-    });
-
-    } catch(e) {
-        navigator.clipboard.writeText(
-            document.getElementById('formula-data').innerText
-            );
+function convertFrac(str) {
+  let result = '';
+  let i = 0;
+  while (i < str.length) {
+    if (str.startsWith('\\frac{', i)) {
+      i += 6;
+      let num = '', depth = 1;
+      while (depth > 0) {
+        if (str[i] === '{') depth++;
+        else if (str[i] === '}') { depth--; if (depth === 0) { i++; break; } }
+        num += str[i]; i++;
+      }
+      i++;
+      let den = ''; depth = 1;
+      while (depth > 0) {
+        if (str[i] === '{') depth++;
+        else if (str[i] === '}') { depth--; if (depth === 0) { i++; break; } }
+        den += str[i]; i++;
+      }
+      result += `(${convertFrac(num)})/(${convertFrac(den)})`;
+    } else {
+      result += str[i]; i++;
     }
+  }
+  return result;
 }
 
+function copyFormula() {
+    try {
+        let formula = "{{ formula.form|escapejs }}";
+
+        formula = convertFrac(formula)
+            .replace(/\\times/g, '×')
+            .replace(/\\cdot/g, '·')
+            .replace(/\\sqrt\{([^}]*)\}/g, '√($1)')
+            .replace(/\\sqrt/g, '√')
+            .replace(/\^\{([^}]*)\}/g, '^($1)')
+            .replace(/\{([^}]*)\}/g, '$1')
+            .replace(/\\alpha/g, 'α')
+            .replace(/\\beta/g, 'β')
+            .replace(/\\gamma/g, 'γ')
+            .replace(/\\theta/g, 'θ')
+            .replace(/\\omega/g, 'ω')
+            .replace(/\\mu/g, 'μ')
+            .replace(/\\lambda/g, 'λ')
+            .replace(/\\eta/g, 'η')
+            .replace(/\\tau/g, 'τ')
+            .replace(/\\nu/g, 'ν')
+            .replace(/\\chi/g, 'χ')
+            .replace(/\\psi/g, 'ψ')
+            .replace(/\\Omega/g, 'Ω')
+            .replace(/\\Gamma/g, 'Γ')
+            .replace(/\\Sigma/g, 'Σ')
+            .replace(/\\pi/g, 'π')
+            .replace(/\\sigma/g, 'σ')
+            .replace(/\\Delta/g, 'Δ')
+            .replace(/\\delta/g, 'δ')
+            .replace(/\\epsilon/g, 'ε')
+            .replace(/\\rho/g, 'ρ')
+            .replace(/\\phi/g, 'φ')
+            .replace(/\\vec\{([^}]*)\}/g, '$1→')
+            .replace(/\\sin/g, 'sin')
+            .replace(/\\cos/g, 'cos')
+            .replace(/\\tan/g, 'tan')
+            .replace(/\\log/g, 'log')
+            .replace(/\\ln/g, 'ln')
+            .replace(/\\infty/g, '∞')
+            .replace(/\\pm/g, '±')
+            .replace(/\\approx/g, '=')
+            .replace(/\\neq/g, '≠')
+            .replace(/\\leq/g, '≤')
+            .replace(/\\geq/g, '≥')
+            .replace(/\\\\/g, '')
+            .replace(/[{}]/g, '')
+            .replace(/\\/g, '')
+            .trim();
+
+        const superscripts = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+        formula = formula.replace(/\^\((\d+)\)/g, (_, d) => d.split('').map(x => superscripts[x]).join(''));
+        formula = formula.replace(/\^(\d+)/g, (_, d) => d.split('').map(x => superscripts[x]).join(''));
+
+        navigator.clipboard.writeText(formula)
+        .then(() => {
+            const btn = document.getElementById('copyBtn');
+            btn.innerText = '✅ Copied!';
+            btn.style.color = '#22c55e';
+            btn.style.borderColor = '#22c55e';
+            setTimeout(() => {
+                btn.innerText = '📋 Copy Formula';
+                btn.style.color = '#38bdf8';
+                btn.style.borderColor = '#38bdf8';
+            }, 2000);
+        });
+    } catch(e) {
+        navigator.clipboard.writeText(document.getElementById('formula-data').innerText);
+    }
+}
 
 const prebuiltAnimations = {
   // Add formula IDs that have pre-built ones

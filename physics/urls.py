@@ -19,10 +19,10 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import FileResponse
-from django.views.generic import RedirectView
 from django.contrib.sitemaps.views import sitemap
-from formulas.sitemap import FomulaSitemap, StaticSitemap
+from formulas.sitemap import FormulaSitemap, StaticSitemap
 import os
+from django.http import HttpResponse
 
 
 def serve_sw(request):
@@ -32,14 +32,14 @@ def serve_sw(request):
 sitemaps = {
     'formulas' : FormulaSitemap,
     'static' : StaticSitemap
+    }
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ads.txt', lambda r: HttpResponse("google.com, pub-2098916755752141, DIRECT, f08c47fec0942fa0", content_type="text/plain")),
     path('sitemap.xml', sitemap, {'sitemaps' : sitemaps}),
-    #path("accounts/", include("django.contrib.auth.urls")),
-    path("", include("formulas.urls")),
     path('sw.js', serve_sw),
-    path('favion.ico', RedirectView.as_view(url='/static/images/favion.ico'))
+    path("", include("formulas.urls")),
 
 
 ]

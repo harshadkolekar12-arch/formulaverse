@@ -53,6 +53,8 @@ ALLOWED_HOSTS = [
 
 ]
 
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
@@ -89,7 +91,7 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 
 # This makes allauth respect the 'next' parameter
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
@@ -131,10 +133,11 @@ WSGI_APPLICATION = 'physics.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
+    'default' : {
+        'ENGINE' : 'django.db.backends.sqlite3',
+        'NAME' : '/home/HarshadKolekar/formulaverse/db.sqlite3',
+        }
 
-    )
 }
 
 
@@ -165,7 +168,7 @@ AUTHENTICATION_BACKENDS=[
 
 
 
-APPEND_SLASH = True
+APPEND_SLASH = False
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -193,6 +196,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_TRUSTED_ORIGINS = [
     "https://*.ngrok-free.dev",
     "https://harshadkolekar.pythonanywhere.com",
+    "https://formulaverse.in",
+    "https://www.formulaverse.in",
+
 
 ]
 
@@ -202,4 +208,4 @@ MEDIA_ROOT= BASE_DIR/ "uploads"
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'

@@ -2,7 +2,7 @@
     "name": "FormulaVerse",
     "short_name": "FormulaVerse",
     "description": "All Physics Formulas for JEE and NEET",
-    "start_url": "/base",
+    "start_url": "",
     "display": "standalone",
     "background_color": "#0f172a",
     "theme_color": "#38bdf8",

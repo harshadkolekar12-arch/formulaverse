@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> SAVED </title>
 
+
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
      crossorigin="anonymous"></script>
     <!-- Google tag (gtag.js) -->
@@ -52,65 +55,6 @@ p{
     margin-bottom:40px;
 }
 
-
-    .formula-card{
-    background: rgba(255, 255, 255, 0.88);
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin: 8px 0;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease,
-    box-shadow 0.3s ease,
-    background 0.3s ease;
-
-
-
-
-}
-
-.formula-card:hover{
-    transform: translateY(-7px) scale(1.02);
-    box-shadow:
-    0 0 15px rgba(231, 76, 60, 0.6),
-    0 20px 40px rgba(0,0,0,0.4);
-    background:  rgba(255, 255, 255, 0.95);
-
-
-
-
-}
-
-.formula-title{
-    font-size: 20px;
-    font-weight: bold;
-    color: #2c5364;
-    margin-bottom: 6px;
-    transition: color 0.3s ease;
-
-}
-
-.formula-title:hover{
-    color: #c0392c;
-}
-
-.formula-form {
-    color: red;
-    max-width: 120px;
-    max-height: 80px;
-    overflow: hidden;
-    transform: scale(0.8);
-    transform-origin: left center;
-    font-size: 1rem;
-}
-
-.formula-author{
-    font-size: 18px;
-    color: blue;
-    margin-top: 5px;
-
-}
-
-
 ul{
     list-style:none;
     padding:0;
@@ -119,28 +63,76 @@ ul{
 }
 
 li{
-    background:white;
-    color:black;
-    margin-bottom:20px;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.25);
-    transition:0.3s;
+    background: transparent;
+    margin-bottom: 18px;
+    padding: 0;
+    border-radius: 16px;
+    box-shadow: none;
+    transition: transform 0.3s ease;
 }
 
 li:hover{
-    transform:translateY(-3px);
+    transform: translateY(-3px);
 }
 
 a{
-    text-decoration:none;
-    font-size:1.3rem;
-    font-weight:bold;
-    color:#0f172a;
+    text-decoration: none;
 }
 
-a:hover{
-    color:#0284c7;
+.formula-card{
+    background: linear-gradient(180deg, rgba(15,23,42,0.9), rgba(23,32,56,0.9));
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    border-radius: 16px;
+    padding: 20px 22px;
+    margin: 0;
+    box-shadow:
+        0 1px 0 rgba(255,255,255,0.04) inset,
+        0 10px 30px rgba(0,0,0,0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.formula-card:hover{
+    transform: translateY(-4px);
+    border-color: rgba(56, 189, 248, 0.45);
+    box-shadow:
+        0 0 0 1px rgba(56,189,248,0.15),
+        0 18px 40px rgba(0,0,0,0.5),
+        0 0 25px rgba(56,189,248,0.15);
+}
+
+.formula-title{
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #38bdf8;
+    margin-bottom: 10px;
+    letter-spacing: 0.2px;
+    transition: color 0.3s ease;
+}
+
+.formula-card:hover .formula-title{
+    color: #7dd3fc;
+}
+
+.formula-form{
+    color: #fb923c;
+    max-width: 100%;
+    max-height: 90px;
+    overflow: hidden;
+    transform: none;
+    font-size: 1.05rem;
+    padding: 10px 14px;
+    background: rgba(251, 146, 60, 0.06);
+    border: 1px solid rgba(251, 146, 60, 0.15);
+    border-radius: 10px;
+    margin: 6px 0 12px;
+    text-align: center;
+}
+
+.formula-author{
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-top: 6px;
+    font-style: italic;
 }
 
 
@@ -175,6 +167,10 @@ a:hover{
             color: #0F172A;
         }
 
+        .formula-card a{
+            text-decoration: none;
+        }
+
 </style>
 
 
@@ -201,6 +197,20 @@ a:hover{
     <h1>🚀 Saved Formulas</h1>
 <p>Your Personal FormulaVault</p>
 
+ <div style="display: flex; justify-content: center; padding: 0 12px 16px;">
+    <input
+        type="text"
+        id="searchBar"
+        placeholder="🔍 Search your saved formulas...."
+        oninput="searchFormulas()"
+        style="width:100%; padding:12px 16px; border-radius:25px;
+               border:2px solid rgba(180,50,80,0.3);
+               background:rgba(255,255,255,0.8);
+               font-size:15px; color:#4a0e1a;
+               outline:none; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+</div>
+
+
 
 {% if savedformulas %}
 
@@ -210,6 +220,7 @@ a:hover{
 
             <li>
                 <div class="formula-card">
+                    <a href="{% url "single-formula-page" pk=formula.id %}">
                         <div class="formula-title">{{ formula.title }}</div>
 
                     <div class="formula-form">
@@ -218,6 +229,7 @@ a:hover{
                     <div class="formula-author">
                         (Given by: {{ formula.given_by }})
                     </div>
+                    </a>
 
                     <form method="POST" action="{% url "unsave-formula" pk=formula.id  %}">
                         {% csrf_token %}
@@ -238,7 +250,21 @@ a:hover{
 
 {% endif %}
 
+<script>
 
+    function searchFormulas() {
+    const query = document.getElementById('searchBar')
+                          .value.toLowerCase();
+    document.querySelectorAll('.formula-card')
+            .forEach(card => {
+        const title = card.querySelector('.formula-title')
+                          .innerText.toLowerCase();
+        card.closest('li').style.display =
+            title.includes(query) ? 'block' : 'none';
+    });
+}
+
+</script>
 
  </body>
 </html>
