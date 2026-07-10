@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ exam_label }} Formulas — FormulaVerse</title>
 
-
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
 
     <meta name="description"
@@ -14,12 +13,11 @@
 <meta name="keywords"
     content="{{ exam_label }} physics formulas, {{ exam_label }} formula list">
 
-
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background: linear-gradient(180deg, #ffb6c1 0%, #ffcba4 50%, #fff5e6 100%);
+            background: #0d1524;
             min-height: 100vh;
             font-family: 'Outfit', sans-serif;
         }
@@ -32,31 +30,32 @@
             top: 3px; left: 8px;
             font-size: 2.4rem;
             font-weight: 900;
-            color: #7b2d3e;
+            color: #e8ecf4;
             text-decoration: none;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.4)
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            z-index: 10;
         }
         .total-pill {
             position: fixed;
             top: 8px; right: 8px;
-            background: #F4EFEB;
-            border: 1px solid rgba(255,100,100,0.3);
+            background: #1a2438;
+            border: 1px solid rgba(90,160,255,0.3);
             border-radius: 20px;
             padding: 5px 10px;
             font-size: 12px;
             font-weight: bold;
-            color: #2B2321;
+            color: #cdd6e6;
         }
         h1 {
             font-size: 2rem;
-            color: #7b2d3e;
+            color: #ffffff;
             margin-top: 40px;
         }
         .subtitle {
-            color: #7b2d3e;
+            color: #8b96ab;
             font-size: 0.9rem;
             margin-top: 4px;
-            opacity: 0.7;
+            opacity: 0.9;
         }
 
         /* Search */
@@ -67,25 +66,32 @@
             width: 100%;
             padding: 10px 16px;
             border-radius: 20px;
-            border: 2px solid rgba(255, 105, 135, 0.4);
-            background: white;
+            border: 1px solid rgba(90,160,255,0.25);
+            background: #131c30;
+            color: #e8ecf4;
             font-size: 0.9rem;
             outline: none;
         }
+        .search-wrapper input::placeholder {
+            color: #6b7690;
+        }
         .search-wrapper input:focus {
-            border-color: #ff6b9d;
+            border-color: #3ea6ff;
         }
 
         /* Formula cards */
         .container { padding: 0 18px 20px; }
         ul { list-style: none; padding: 0; margin: 0; }
         .formula-card {
-            background: rgba(255,255,255,0.85);
+            background: #0b132b;
             border-radius: 12px;
-            padding: 12px 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
             margin-bottom: 10px;
-            border: 1px solid rgba(255, 105, 135, 0.3);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             position: relative;
             overflow: visible;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -93,10 +99,11 @@
         }
         .formula-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(255, 105, 135, 0.3);
+            box-shadow: 0 8px 20px rgba(62, 166, 255, 0.15);
+            border-color: rgba(62, 166, 255, 0.3);
         }
         .formula-title {
-            color: #7b2d3e;
+            color: #ffffff;
             font-weight: bold;
             text-decoration: none;
             display: block;
@@ -108,12 +115,14 @@
         }
         .formula-form {
             text-align: center;
-            color: #c9184a;
+            color: #3ea6ff;
             margin: 8px 0;
         }
         .formula-author {
-            font-size: 0.85rem;
-            color: #888;
+            font-size: 13px;
+            color: #a0aec0;
+            margin-top: auto;
+            padding-top: 4px;
         }
         .hanging-badge-wrapper {
             position: absolute;
@@ -127,30 +136,29 @@
             color: white;
         }
         .hanging-badge.jee {
-            background: linear-gradient(135deg, #ff6b9d, #c9184a);
+            background: linear-gradient(135deg, #ff9d3f, #d97706);
         }
         .hanging-badge.neet {
-            background: linear-gradient(135deg, #ff85a1, #ff4d6d);
+            background: linear-gradient(135deg, #3ea6ff, #1d6fd6);
         }
         .hanging-badge.both {
-            background: linear-gradient(135deg, #ff4d6d, #c9184a);
+            background: linear-gradient(135deg, #d94dff, #9b2fd6);
         }
         a { text-decoration: none; }
     </style>
 </head>
 <body>
 
-       <a class="back-btn" href="{% url 'index-page' %}">←</a>
+    <a class="back-btn" href="{% url 'index-page' %}">←</a>
 
-   <a href="https://wa.me/?text=Check out this Physics Formula on FormulaVerse! 📐%0A%0A{{ formula.title }}%0A{{ request.build_absolute_uri }}"
+    <a href="https://wa.me/?text=Check out this Physics Formula on FormulaVerse! 📐%0A%0A{{ formula.title }}%0A{{ request.build_absolute_uri }}"
        target="_blank"
        style="background:#25D366; color:white;
               padding:7px 14px; border-radius:20px;
               font-size:12px; font-weight:750;
-              text-decoration:none; display: flex; position: fixed; top: 5px; right: 2px">
+              text-decoration:none; display: flex; position: fixed; top: 5px; right: 2px; z-index: 10;">
         📲 Share this page
     </a>
-
 
     <div class="header">
         <h1>{{ exam_label }} Formulas</h1>

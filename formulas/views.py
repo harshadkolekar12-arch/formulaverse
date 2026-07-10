@@ -4,14 +4,14 @@ from django.views.generic import ListView
 from django.views.generic import DetailView,TemplateView, CreateView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
-from .models import Formula, Category
+from .models import Formula, Chapter
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import  FormulaForm, CategoryForm
+from .forms import  FormulaForm, ChapterForm
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -19,7 +19,7 @@ from .chatbot import ask_chatbot
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 from .chatbot import generate_practice_question
 import random
 from datetime import date
@@ -28,6 +28,8 @@ import os
 from django.db.models import Count
 from django.conf import settings
 from django.templatetags.static import static
+from .chatbot import get_daily_physics_fact
+from django.db.models import Case, When, Value, IntegerField
 
 #from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
@@ -58,8 +60,8 @@ class IndexView(ListView):
             ).count()
 
         category_counts = {
-            cat.name.lower().replace(' ', '_'): cat.formula_count
-            for cat in Category.objects.annotate(formula_count=Count('fomulas'))
+            cat.name.lower().replace(' ', '_').replace('&', 'and'): cat.formula_count
+            for cat in Chapter.objects.annotate(formula_count=Count('formula'))
             }
 
 
@@ -86,7 +88,7 @@ class SingleFormulaView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['similar_formulas'] = Formula.objects.filter(
-            category = self.object.category
+            chapter = self.object.chapter
             ).exclude(pk=self.object.pk)[:5]
         return context
 
@@ -192,13 +194,13 @@ class CategoryView(ListView):
     context_object_name = "formulas"
 
     def get_queryset(self):
-        return Formula.objects.filter(category__name__iexact=self.kwargs['category'])
+        return Formula.objects.filter(chapter__name__iexact=self.kwargs['chapter'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['category_name'] = self.kwargs['category'].title()
+        context['chapter_name'] = self.kwargs['chapter'].title()
 
-        category_obj = Category.objects.filter(name__iexact=self.kwargs['category']).first()
+        category_obj = Chapter.objects.filter(name__iexact=self.kwargs['chapter']).first()
         context['category'] = category_obj
         return context
 
@@ -365,7 +367,6 @@ def privacy(request):
     return render(request, "formulas/privacy.html")
 
 
-
 class ExamFilterView(View):
     def get(self, request, *args, **kwargs):
         # Get exam type from URL
@@ -374,17 +375,31 @@ class ExamFilterView(View):
         if path == 'jee':
             formulas = Formula.objects.filter(
                 exam_tag__in=['jee', 'both']
-            )
+            ).annotate(
+                tag_priority=Case(
+                    When(exam_tag='jee', then=Value(0)),
+                    When(exam_tag='both', then=Value(1)),
+                    default=Value(2),
+                    output_field=IntegerField(),
+                )
+            ).order_by('tag_priority', 'title')
             exam_label = 'JEE'
         elif path == 'neet':
             formulas = Formula.objects.filter(
                 exam_tag__in=['neet', 'both']
-            )
+            ).annotate(
+                tag_priority=Case(
+                    When(exam_tag='neet', then=Value(0)),
+                    When(exam_tag='both', then=Value(1)),
+                    default=Value(2),
+                    output_field=IntegerField(),
+                )
+            ).order_by('tag_priority', 'title')
             exam_label = 'NEET'
         elif path == 'both':
             formulas = Formula.objects.filter(
                 exam_tag='both'
-            )
+            ).order_by('title')
             exam_label = 'JEE + NEET'
         else:
             formulas = Formula.objects.none()
@@ -395,7 +410,6 @@ class ExamFilterView(View):
             'exam_label': exam_label,
             'total': formulas.count(),
         })
-
 
 
 
@@ -417,7 +431,7 @@ def progress_dashboard(request):
     # Category breakdown
     from collections import Counter
     category_counts = Counter(
-        saved_formulas.values_list('category__name', flat=True)
+        saved_formulas.values_list('chapter__name', flat=True)
     )
     favourite_chapter = max(category_counts, key=category_counts.get) if category_counts else "None"
 
@@ -482,3 +496,15 @@ def pyq_papers(request):
                 })
 
     return render(request, 'formulas/pyq_papers.html', {'papers': papers})
+
+
+@require_GET
+def daily_physics_fact_view(request):
+    """
+    API endpoint that returns the daily dynamic physics fact.
+    """
+    fact_text = get_daily_physics_fact()
+    return JsonResponse({
+        "success": True,
+        "fact": fact_text
+    })

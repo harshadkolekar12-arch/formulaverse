@@ -93,9 +93,43 @@
     color: #94a3b8;
     grid-column: 1/-1;
   }
+
+
+  .tg-join-btn {
+    display: inline-flex;
+    align-items: center;
+    background: #24A1DE; /* Official Telegram Blue */
+    color: #ffffff !important;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none !important;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 10px rgba(36, 161, 222, 0.2);
+}
+
+.tg-join-btn:hover {
+    background: #1d82b3;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(36, 161, 222, 0.3);
+}
+
+ .top-nav {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            align-items: center;
+            z-index: 100;
+ }
+
 </style>
 </head>
 <body>
+
+     <div class="top-nav">
+        <a href="https://t.me/formulaverse" target="_blank" class="tg-join-btn">Join Telegram</a>
+    </div>
 
 <header>
     <a href="{% url 'index-page' %}" class="back-btn"> < </a>
@@ -105,6 +139,12 @@
 <div class="hero">
     <h1>Previous Year Papers</h1>
     <p>JEE & NEET question papers, sorted by chapter — download and practice.</p>
+</div>
+
+<div class="resource-box" style="background: #1e2230; padding: 15px; border-radius: 8px; margin: 10px 4px 0 4px;">
+    <a href="https://amzn.to/44QrFdw" target="_blank" style="color: #1abfde; font-weight: bold; font-size: 12.65px; text-decoration: none;">
+        Prefer practicing offline? 📖 Get Solved Papers on Amazon ↗
+    </a>
 </div>
 
 <div class="grid">
@@ -131,6 +171,9 @@
     ☕ Buy me a chai
   </a>
 </div>
+
+
+
 
 </body>
 </html>

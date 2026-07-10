@@ -5,13 +5,13 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Category(models.Model):
+class Chapter(models.Model):
     name=models.CharField(max_length=100, null=True)
     explain=models.TextField(max_length=450, blank=True)
     simulation_url = models.URLField(blank = True, null = True)
 
     class Meta:
-        verbose_name_plural="Categories"
+        verbose_name_plural="Chapters"
 
     def __str__(self):
         return self.name
@@ -25,25 +25,29 @@ EXAM_CHOICES = [
 
 
 class Formula(models.Model):
-    title=models.CharField(max_length=80, null=True)
-    form=models.CharField(null=True, max_length=100)
-    chapter=models.CharField(max_length=50, null=True)
-    description=models.CharField(max_length=200)
-    given_by=models.CharField(blank=True, null=True, max_length=50, default='Derived')
-    question=models.CharField(max_length=600)
-    answer=models.CharField(max_length=100, null=True)
-    form_info=models.CharField(max_length=200, null=True)
-    category=models.ForeignKey(Category, on_delete=models.SET_NULL, related_name="fomulas", null=True)
-    is_saved=models.BooleanField(default=False)
-    session_key = models.CharField(max_length = 100, null = True, blank = True)
-    user=models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    exam_tag = models.CharField(max_length = 10, choices=EXAM_CHOICES, default='none')
+    # --- Essential ---
+    title = models.CharField(max_length=80, blank=True, null=True)
+    form = models.CharField(max_length=150, blank=True, null=True)  # renamed from 'form' for clarity
+    variables = models.CharField(max_length=200, blank=True, null=True)  # e.g. "E = Energy, m = Mass, c = Speed of light"
+    chapter = models.ForeignKey(Chapter, on_delete=models.SET_NULL, max_length=50, blank=True, null=True)  # single source of truth, replaces category+chapter split
+    description = models.CharField(max_length=200, blank=True, null=True)
+    units = models.CharField(max_length=100, blank=True, null=True)  # e.g. "E: Joules, m: kg, c: m/s"
+    when_to_use = models.CharField(max_length=200, blank=True, null=True)  # e.g. "Use when converting rest mass to energy"
+    example = models.TextField(max_length=600, blank=True, null=True)
+    answer = models.CharField(max_length=100, blank=True, null=True)
+    given_by = models.CharField(max_length=100, blank=True, default='Derived')
+    is_saved = models.BooleanField(default=False)
+    session_key = models.CharField(max_length=100, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    exam_tag = models.CharField(max_length=10, choices=EXAM_CHOICES, default='none')
 
     def get_absolute_url(self):
         return reverse("single-formula-page", args=[self.id])
 
-    def __str__(self):
-        return f"{self.form} ({self.given_by})"
+    def _str_(self):
+        return f"{self.title} ({self.given_by})"
+
+
 
 
 class PYQ(models.Model):

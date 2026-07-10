@@ -54,7 +54,7 @@ JEE formula, NEET formula, physics formula">
         justify-content: center;
         align-items: center;
         font-size: 0.8rem;
-        color: #FFD700;
+        color: #FFF5F5;
         letter-spacing: 0.1em;
         text-transform: uppercase;
         margin: 20px 3px 14px;
@@ -220,32 +220,54 @@ JEE formula, NEET formula, physics formula">
                outline:none; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
 </div>
 
+
 {% if category.simulation_url %}
 <div style="
-    margin: 8px 0;
+    margin: 16px 0;
     border-radius: 12px;
     overflow: hidden;
-    border: 1px solid rgba(255,165,0,0.3);
-    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    background: rgba(255, 255, 255, 0.05);
 ">
     <p style="
         color: #FFA500;
         font-size: 11px;
         font-weight: bold;
-        padding: 6px 12px 4px;
+        padding: 8px 12px 4px;
         margin: 0;
         letter-spacing: 0.08em;
     ">🎮 INTERACTIVE SIMULATION</p>
-    <iframe
-        src="{{ category.simulation_url }}"
-        width="100%"
-        height="220px"
-        style="border: none; display: block;"
-        allowfullscreen>
-    </iframe>
+
+    <!-- Modern aspect ratio container forces the iframe to scale like a responsive video -->
+    <div style="position: relative; width: 100%; aspect-ratio: 16 / 9;">
+        <iframe
+            src="{{ category.simulation_url }}"
+            width="100%"
+            height="100%"
+            style="border: none; position: absolute; top: 0; left: 0;"
+            allowfullscreen>
+        </iframe>
+    </div>
+</div>
+{% endif %}
+
+<div class="resource-box" style="background: #1e2230; padding: 16px; border-radius: 12px; margin: 16px 0; border: 1px solid rgba(255,255,255,0.05);">
+    <!-- Small non-clickable label to establish hierarchy -->
+    <div style="color: #a0aec0; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">
+        Recommended Reference Book
+    </div>
+
+    {% if category.name == "Semiconductor" or category.name == "Optics" or category.name == "Quantum & Modern Physics" or category.name == "Electrostatics" %}
+        <a href="https://amzn.to/3QH3Vp3" target="_blank" style="color: #1abfde; font-size: 15px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            📚 Concepts of Physics by HC Verma (Vol 2) <span style="font-size: 12px;">↗</span>
+        </a>
+    {% else %}
+        <a href="https://amzn.to/4wryYUG" target="_blank" style="color: #1abfde; font-size: 15px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            📚 Concepts of Physics by HC Verma (Vol 1) <span style="font-size: 12px;">↗</span>
+        </a>
+    {% endif %}
 </div>
 
-{% endif %}
 
 
 

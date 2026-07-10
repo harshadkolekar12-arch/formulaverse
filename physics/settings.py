@@ -29,6 +29,8 @@ GROQ_CHATBOT_KEY = os.getenv('GROQ_CHATBOT_API')
 GROQ_PRACTICE_KEY = os.getenv('GROQ_PRACTICE_KEY')
 GROQ_ANIMATION_KEY = os.getenv('GROQ_ANIMATION_KEY')
 
+GROQ_FACTS_KEY = os.getenv('GROQ_FACTS_API')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 

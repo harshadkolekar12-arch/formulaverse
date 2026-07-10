@@ -171,44 +171,52 @@ JEE formula, NEET formula, physics formula">
         font-weight: 700;
     }
 
-    .filter-buttons {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
-        margin: 0;
-        padding: 10px 3px 12px 6px;
-        flex-wrap: wrap;
+    .filter-buttons a{
+        text-decoration: none;
     }
 
-    .filter-buttons-sticky {
-        position: sticky;
-        top: 0;
-        z-index: 400;
-        background: linear-gradient(180deg, #20242f 65%, rgba(32,36,47,0.7));
-        backdrop-filter: blur(8px);
-        padding-bottom: 4px;
-    }
 
-    .filter-btn {
-        padding: 8px 20px;
-        border-radius: 20px;
-        color: #e7e7ea;
-        font-weight: 700;
-        font-size: 0.85rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-    }
+    /* Container for the segmented layout */
+.filter-buttons {
+  display: flex;
+  background-color: #1a1f2c; /* Match your card background color */
+  padding: 4px;
+  border-radius: 30px; /* Gives it the round capsule shape */
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Very subtle boundary */
+  max-width: 360px;
+  margin: 16px auto; /* Centers it on mobile screens */
+}
 
-    .filter-btn:hover { background: rgba(255,255,255,0.1); }
-     .filter-btn.jee  { background: rgba(0, 184, 148, 0.14); border: #2C3148; }
-    .filter-btn.neet { background: rgba(56, 189, 248, 0.14); border: #2C3148; }
-    .filter-btn.both { background: rgba(195, 166, 255, 0.16); border: #2C3148; }
+/* Base button styling */
+.filter-btn {
+  flex: 1; /* Makes all 3 buttons exactly equal width */
+  text-align: center;
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 14px;
+  color: #a0aec0; /* Subdued gray text for unselected state */
+  text-decoration: none;
+  border-radius: 26px; /* Slightly smaller than container radius for inner fit */
+  transition: all 0.25s ease-in-out;
+}
 
-    .filter-btn.jee.active  { background: rgba(0, 184, 148, 0.28); }
-    .filter-btn.neet.active { background: rgba(56, 189, 248, 0.28); }
-    .filter-btn.both.active { background: rgba(195, 166, 255, 0.32); }
+/* Hover state for desktop users */
+.filter-btn:hover {
+  color: #ffffff;
+}
+
+/* The Active/Selected State */
+.filter-btn.active {
+  color: #ffffff;
+  /* Option A: Using your theme's purple gradient */
+  background: linear-gradient(135deg, #7928ca, #b83280);
+
+  /* Option B: Alternative subtle blue/indigo if you prefer a cooler tone */
+  /* background-color: #2b364e; */
+
+  box-shadow: 0px 4px 12px rgba(121, 40, 202, 0.2);
+}
+
 
     .privacy {
         margin-top: 20px;
@@ -408,61 +416,68 @@ JEE formula, NEET formula, physics formula">
     </div>
 
     <div class="filter-buttons-sticky">
-        <div class="filter-buttons">
-            <a href="{% url "jee-formulas" %}">
-                 <button class="filter-btn jee" onclick="filterFormulas('jee', this)">JEE</button>
-            </a>
-            <a href="{% url "neet-formulas" %}">
-                  <button class="filter-btn neet" onclick="filterFormulas('neet', this)">NEET</button>
-            </a>
-            <a href="{% url "both-formulas" %}">
-                 <button class="filter-btn both" onclick="filterFormulas('both', this)">JEE/NEET</button>
-            </a>
-        </div>
+    <div class="filter-buttons">
+        <!-- Add 'active' class dynamically depending on which page is loaded -->
+        <a href="{% url 'jee-formulas' %}" class="filter-btn jee active" onclick="filterFormulas('jee', this)">JEE</a>
+        <a href="{% url 'neet-formulas' %}" class="filter-btn neet" onclick="filterFormulas('neet', this)">NEET</a>
+        <a href="{% url 'both-formulas' %}" class="filter-btn both" onclick="filterFormulas('both', this)">JEE/NEET</a>
     </div>
+</div>
 
 
     <!-- Category Cards -->
     <div class="cards-grid">
-      <div class="topic-card"><div class="card-icon">🏃</div><a href="/kinematics/"><p class="card-title">Kinematics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.kinematics }} </span></div>
 
-  <div class="topic-card"><div class="card-icon">🪐</div><a href="/gravitation/"><p class="card-title">Gravitation</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.gravitation }} </span></div>
-
-  <div class="topic-card"><div class="card-icon">💻</div><a href="/semiconductor/"><p class="card-title">Semiconductor</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.semiconductor }} </span></div>
+     <div class="topic-card"><div class="card-icon">🏃</div><a href="/kinematics/"><p class="card-title">Kinematics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.kinematics }} </span></div>
 
 
-  <div class="topic-card"><div class="card-icon">📳</div><a href="/oscillations/"><p class="card-title">Oscillations</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.oscillations }} </span></div>
-
-  <div class="topic-card"><div class="card-icon">🔍</div><a href="/optics/"><p class="card-title">Optics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.optics }} </span></div>
+  <div class="topic-card"><div class="card-icon">🧲</div><a href="/magnetism/"><p class="card-title">Magnetism</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.magnetism }} </span></div>
 
 
-  <div class="topic-card"><div class="card-icon">⚛️</div><a href="/quantum physics/"><p class="card-title" style="white-space: normal; overflow: visible; line-height: 1.15;">Quantum & Modern Physics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.quantum_physics }} </span></div>
+  <div class="topic-card"><div class="card-icon">🪐</div><a href="/gravitation/"><p class="card-title">Gravitation</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.gravitation }} </span></div>
+
+  <div class="topic-card"><div class="card-icon">💻</div><a href="/semiconductor/"><p class="card-title">Semiconductor</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.semiconductor }} </span></div>
+
+
+  <div class="topic-card"><div class="card-icon">📳</div><a href="/oscillations/"><p class="card-title">Oscillations</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.oscillations }} </span></div>
+
+  <div class="topic-card"><div class="card-icon">🔍</div><a href="/optics/"><p class="card-title">Optics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.optics }} </span></div>
+
+
+  <div class="topic-card"><div class="card-icon">⚛️</div><a href="/quantum & modern physics/"><p class="card-title" style="white-space: normal; overflow: visible; line-height: 1.15;">Quantum & Modern Physics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.quantum_and_modern_physics }} </span></div>
+
+
+  <div class="topic-card"><div class="card-icon">💧</div><a href="/fluid mechanics/"><p class="card-title">Fluid Mechanics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.fluid_mechanics }} </span></div>
+
+
+  <div class="topic-card"><div class="card-icon">🌡️</div><a href="/thermodynamics/"><p class="card-title">Thermodynamics</p></a><span style="color:  #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.thermodynamics }} </span></div>
+
+  <div class="topic-card"><div class="card-icon">🌊</div><a href="/waves/"><p class="card-title">Waves</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.waves }} </span></div>
+
+
+  <div class="topic-card"><div class="card-icon">🔥</div><a href="/work and energy/"><p class="card-title">Work & Energy</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.work_and_energy }} </span></div>
+
+  <div class="topic-card"><div class="card-icon">🔋</div><a href="/current electricity/"><p class="card-title">Current Electricity</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.current_electricity }} </span></div>
+
+
+  <div class="topic-card"><div class="card-icon">⚡</div><a href="/electrostatics/"><p class="card-title">Electrostatics</p></a><span style="color: #ffffff;width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;   margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.electrostatics }} </span></div>
 
 
 
-  <div class="topic-card"><div class="card-icon">🧲</div><a href="/magnetism/"><p class="card-title">Magnetism</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.magnetism }} </span></div>
 
 
-  <div class="topic-card"><div class="card-icon">💧</div><a href="/fluid mechanics/"><p class="card-title">Fluid Mechanics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.fluid_mechanics }} </span></div>
-
-  <div class="topic-card"><div class="card-icon">🌡️</div><a href="/thermodynamics/"><p class="card-title">Thermodynamics</p></a><span style="color:  #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.thermodynamics }} </span></div>
-
-  <div class="topic-card"><div class="card-icon">🌊</div><a href="/waves/"><p class="card-title">Waves</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.waves }} </span></div>
+  <div class="topic-card"><div class="card-icon">🚀</div><a href="/dynamics/"><p class="card-title">Dynamics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.dynamics }} </span></div>
 
 
 
-  <div class="topic-card"><div class="card-icon">⚙️</div><a href="/mechanics/"><p class="card-title">Mechanics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.mechanics }} </span></div>
-
-  <div class="topic-card"><div class="card-icon">⚡</div><a href="/electrostatics/"><p class="card-title">Electrostatics</p></a><span style="color: #ffffff;width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%;   margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.electrostatics }} </span></div>
-
-  <div class="topic-card"><div class="card-icon">🔋</div><a href="/current electricity/"><p class="card-title">Current Electricity</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.current_electricity }} </span></div>
-
-  <div class="topic-card"><div class="card-icon">📡</div><a href="/electromagnetism/"><p class="card-title">Electromagnetism</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.electromagnetism }} </span></div>
-
-  <div class="topic-card"><div class="card-icon">🔥</div><a href="/work energy/"><p class="card-title">Work & Energy</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.work_energy }} </span></div>
+  <div class="topic-card"><div class="card-icon">⚙️</div><a href="/mechanics/"><p class="card-title">Mechanics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.mechanics }} </span></div>
 
 
-  <div class="topic-card"><div class="card-icon">🚀</div><a href="/dynamics/"><p class="card-title">Dynamics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.1); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 700;"> {{ count.dynamics }} </span></div>
+
+  <div class="topic-card"><div class="card-icon">📡</div><a href="/electromagnetism/"><p class="card-title">Electromagnetism</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.electromagnetism }} </span></div>
+
+
+
 
 
 

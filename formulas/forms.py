@@ -1,12 +1,12 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Formula, Category
+from .models import Formula, Chapter
 
 
-class CategoryForm(forms.ModelForm):
+class ChapterForm(forms.ModelForm):
     class Meta:
-        model = Category
+        model = Chapter
         fields = ['name', 'explain']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'e.g. Physics'}),
@@ -18,8 +18,9 @@ class FormulaForm(forms.ModelForm):
         model = Formula
         fields = [
             'title', 'form', 'chapter', 'description', 'given_by',
-            'question', 'answer', 'form_info', 'category', 'is_saved'
-        ]
+            'example', 'answer', 'variables', 'units',  'is_saved', 'when_to_use'
+
+            ]
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'e.g. Newton\'s Second Law'}),
             'form': forms.TextInput(attrs={'placeholder': 'e.g. F = ma'}),
@@ -28,5 +29,5 @@ class FormulaForm(forms.ModelForm):
             'given_by': forms.TextInput(attrs={'placeholder': 'e.g. Isaac Newton'}),
             'question': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Practice question...'}),
             'answer': forms.TextInput(attrs={'placeholder': 'e.g. 10 N'}),
-            'form_info': forms.TextInput(attrs={'placeholder': 'Extra formula info...'}),
+            'variables': forms.TextInput(attrs={'placeholder': 'Extra formula info...'}),
         }

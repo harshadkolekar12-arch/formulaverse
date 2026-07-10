@@ -8,153 +8,224 @@
     <title>{{ formula.title }} | Formulaverse</title>
 
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js"></script>
 
-<script>
-const firebaseConfig = {
-    apiKey: "AIzaSyDEO2NDNQZgt9NshLFIhYntGOafMQtdQBA",
-    authDomain: "formulaverse-afaf2.firebaseapp.com",
-    projectId: "formulaverse-afaf2",
-    storageBucket: "formulaverse-afaf2.firebasestorage.app",
-    messagingSenderId: "472325603873",
-    appId: "1:472325603873:web:06fbd627b03c3d0c3b5960"
-};
+    <script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDEO2NDNQZgt9NshLFIhYntGOafMQtdQBA",
+        authDomain: "formulaverse-afaf2.firebaseapp.com",
+        projectId: "formulaverse-afaf2",
+        storageBucket: "formulaverse-afaf2.firebasestorage.app",
+        messagingSenderId: "472325603873",
+        appId: "1:472325603873:web:06fbd627b03c3d0c3b5960"
+    };
 
-firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
 
-// Request permission
-async function requestPermission() {
-    try {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-            const token = await messaging.getToken({
-                vapidKey: 'BMD65Lhf-odwE-rVU08G4MpOUvwOXIUmaPTv_SAYxTLo3e6IsUgiPKqbXBimwgl-Zlkuyxm4nqciABwklelr4g4'
-            });
-            console.log('FCM Token:', token);
-            // Save token to server
-            fetch('/save-fcm-token/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ token: token })
-            });
+    async function requestPermission() {
+        try {
+            const permission = await Notification.requestPermission();
+            if (permission === 'granted') {
+                const token = await messaging.getToken({
+                    vapidKey: 'BMD65Lhf-odwE-rVU08G4MpOUvwOXIUmaPTv_SAYxTLo3e6IsUgiPKqbXBimwgl-Zlkuyxm4nqciABwklelr4g4'
+                });
+                console.log('FCM Token:', token);
+                fetch('/save-fcm-token/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ token: token })
+                });
+            }
+        } catch (err) {
+            console.error('Notification permission error:', err);
         }
-    } catch (err) {
-        console.error('Notification permission error:', err);
     }
-}
+    setTimeout(requestPermission, 3000);
+    </script>
 
-// Ask after 3 seconds
-setTimeout(requestPermission, 3000);
-</script>
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
      crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-YHLZCEHWF7');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YHLZCEHWF7');
+    </script>
 
     <title>{{ formula.title }} — FormulaVerse</title>
-<meta name="description" content="{{ formula.title }} formula by {{ formula.given_by }} on FormulaVerse">
-<meta name="keywords" content="{{ formula.title }}, physics formula, JEE, NEET">
-<meta property="og:title" content="{{ formula.title }} — FormulaVerse"/>
-<meta property="og:description" content="{{ formula.title }} by {{ formula.given_by }}"/>
-<meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/formula/{{ formula.id }}"/>
-<meta name="keywords" content="{{ formula.title }},
-JEE formula, NEET formula, physics formula">
+    <meta name="description" content="{{ formula.title }} formula by {{ formula.given_by }} on FormulaVerse">
+    <meta name="keywords" content="{{ formula.title }}, physics formula, JEE, NEET">
+    <meta property="og:title" content="{{ formula.title }} — FormulaVerse"/>
+    <meta property="og:description" content="{{ formula.title }} by {{ formula.given_by }}"/>
+    <meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/formula/{{ formula.id }}"/>
+    <meta name="keywords" content="{{ formula.title }}, JEE formula, NEET formula, physics formula">
+
     <script>
     MathJax = {
         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
         svg: { fontCache: 'global' }
     };
     </script>
-    <script  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg:        #0F172A;
-            --surface:   #1E293B;
-            --border:    #334155;
-            --cyan:      #06B6D4;
-            --cyan-dim:  rgba(6,182,212,0.12);
-            --amber:     #F59E0B;
-            --text:      #F1F5F9;
-            --muted:     #94A3B8;
-            --radius:    12px;
+            /* -- Base: deep-space ink, not a generic black -- */
+            --ink:        #0B1120;
+            --surface:    #141B2E;
+            --surface-2:  #1B2438;
+            --line:       #262F46;
+
+            /* -- Spectrum: light through a prism, used as the signature -- */
+            --violet:  #7C6CF2;
+            --cyan:    #35C7E0;
+            --gold:    #F0B429;
+            --coral:   #F2617A;
+
+            /* -- Exam identity colors -- */
+            --jee:   #5B8DEF;
+            --neet:  #34C77B;
+
+            --paper:  #EDEFF7;
+            --muted:  #8891A8;
+            --faint:  #545E78;
+
+            --radius: 14px;
             --font-display: 'Space Grotesk', sans-serif;
-            --font-body:    'Outfit', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --spectrum-gradient: linear-gradient(90deg, var(--violet), var(--cyan) 38%, var(--gold) 68%, var(--coral));
         }
 
         body {
-            background: var(--bg);
-            color: var(--text);
+            background: var(--ink);
+            color: var(--paper);
             font-family: var(--font-body);
             min-height: 100vh;
             padding: 0 0 60px;
             line-height: 1.6;
         }
 
+        /* ===== Top utility bar ===== */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            gap: 8px;
+        }
+        .util-btn {
+            background: transparent;
+            border: 1px solid var(--line);
+            color: var(--paper);
+            padding: 7px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: var(--font-body);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: border-color .2s, transform .15s;
+        }
+        .util-btn:active { transform: scale(0.96); }
+        .util-copy  { border-color: var(--cyan); color: var(--cyan); }
+        .util-chai  { border-color: var(--gold); color: var(--gold); }
+        .util-share { background: #25D366; border-color: #25D366; color: #06210f; font-weight: 700; }
+
+        /* ===== Hero ===== */
         .page-header {
-            background: linear-gradient(135deg, #0F172A 0%, #1a2744 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 40px 24px 32px;
-            text-align: center;
             position: relative;
+            padding: 30px 20px 34px;
+            text-align: center;
             overflow: hidden;
         }
         .page-header::before {
             content: '';
             position: absolute;
-            top: -60px; left: 50%;
+            top: -80px; left: 50%;
             transform: translateX(-50%);
-            width: 400px; height: 200px;
-            background: radial-gradient(ellipse, rgba(6,182,212,0.18) 0%, transparent 70%);
+            width: 460px; height: 240px;
+            background: radial-gradient(ellipse, rgba(124,108,242,0.16) 0%, transparent 70%);
             pointer-events: none;
         }
 
+        .exam-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-display);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 999px;
+            margin-bottom: 14px;
+        }
+        .exam-jee   { background: rgba(91,141,239,0.14); border: 1px solid rgba(91,141,239,0.5); color: var(--jee); }
+        .exam-neet  { background: rgba(52,199,123,0.14); border: 1px solid rgba(52,199,123,0.5); color: var(--neet); }
+        .exam-both  { background: linear-gradient(90deg, rgba(91,141,239,0.16), rgba(52,199,123,0.16)); border: 1px solid rgba(140,170,180,0.5); color: var(--paper); }
+        .exam-none  { background: rgba(136,145,168,0.1); border: 1px solid var(--line); color: var(--muted); }
+
         .formula-title {
             font-family: var(--font-display);
-            font-size: clamp(2rem, 6vw, 3.2rem);
+            font-size: clamp(2rem, 6vw, 3rem);
             font-weight: 700;
             color: #fff;
             letter-spacing: -0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
+        .given-by {
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            letter-spacing: 0.02em;
+        }
+        .given-by span { color: var(--cyan); }
+
         .formula-hero {
-            background: var(--cyan-dim);
-            border: 1px solid rgba(6,182,212,0.35);
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--line);
             border-radius: var(--radius);
-            padding: 32px 3px;
+            padding: 34px 20px 28px;
             margin: 24px auto 0;
             max-width: 540px;
             text-align: center;
         }
-        .formula-hero .MJXc-display,
+        .formula-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 12px; right: 12px;
+            height: 3px;
+            border-radius: 0 0 3px 3px;
+            background: var(--spectrum-gradient);
+        }
         .formula-hero mjx-container {
-            color: var(--cyan) !important;
-            font-size: 1em !important;
+            color: var(--paper) !important;
+            font-size: 1.15em !important;
         }
 
+        /* ===== Layout ===== */
         .content-wrapper {
             max-width: 680px;
             margin: 0 auto;
@@ -162,425 +233,421 @@ JEE formula, NEET formula, physics formula">
         }
 
         .card {
+            position: relative;
             background: var(--surface);
-            border: 1px solid var(--border);
+            border: 1px solid var(--line);
             border-radius: var(--radius);
-            padding: 20px 24px;
-            margin-top: 16px;
+            padding: 20px 22px;
+            margin-top: 14px;
+            padding-left: 26px;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 14px; bottom: 14px;
+            width: 3px;
+            border-radius: 3px;
+            background: var(--tick, var(--cyan));
         }
         .card-label {
             font-family: var(--font-display);
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--cyan);
+            color: var(--tick, var(--cyan));
             margin-bottom: 8px;
         }
         .card-content {
             font-size: 0.97rem;
-            color: var(--text);
+            color: var(--paper);
+            display: flex;
+            justify-content: left;
         }
 
+        /* color-code each field so the eye learns the pattern fast */
+        .card-variables    { --tick: var(--violet); }
+        .card-description  { --tick: var(--cyan); }
+        .card-units        { --tick: var(--gold); }
+        .card-when         { --tick: var(--coral); }
+        .card-example      { --tick: var(--cyan); }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (max-width: 480px) {
+            .two-col { grid-template-columns: 1fr; }
+        }
+
+        .chapter-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
         .chapter-pill {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(245,158,11,0.12);
-            border: 1px solid rgba(245,158,11,0.35);
+            background: rgba(240,180,41,0.1);
+            border: 1px solid rgba(240,180,41,0.35);
             border-radius: 999px;
-            padding: 6px 16px;
-            margin-top: 20px;
+            padding: 7px 16px;
             font-family: var(--font-display);
             font-size: 0.85rem;
             font-weight: 600;
-            color: var(--amber);
+            color: var(--gold);
         }
-        .chapter-pill span { color: var(--muted); font-weight: 400; }
+        .chapter-pill span { color: var(--muted); font-weight: 400; margin-right: 4px; }
+
+        .sim-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            border: 1px solid var(--violet);
+            color: var(--violet);
+            border-radius: 999px;
+            padding: 7px 16px;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background .2s, color .2s;
+        }
+        .sim-link:hover { background: var(--violet); color: #0B1120; }
 
         .answer-value {
             font-family: var(--font-display);
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--cyan);
+            color: var(--gold);
         }
-
-        .solve-card {
-            background: rgba(6,182,212,0.06);
-            border-left: 3px solid var(--cyan);
-        }
-
-        .answer-section {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            margin-top: 16px;
-        }
-        .answer-section label {
-            display: block;
-            font-family: var(--font-display);
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 12px;
-        }
-        .answer-section input[type="text"] {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-family: var(--font-display);
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .answer-section input[type="text"]:focus {
-            border-color: var(--cyan);
-            box-shadow: 0 0 0 3px rgba(6,182,212,0.15);
-        }
-        .btn-submit {
-            margin-top: 14px;
-            margin-right: 4px ;
-            padding: 12px 48px;
-            background: var(--cyan);
-            color: #0F172A;
-            border: none;
-            border-radius: 8px;
-            font-family: var(--font-display);
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-            letter-spacing: 0.02em;
-            text-align: center;
-        }
-        .btn-submit:hover  { background: #22D3EE; }
-        .btn-submit:active { transform: scale(0.97); }
 
         .result-badge {
             margin-top: 16px;
             padding: 14px 18px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-family: var(--font-display);
             font-weight: 600;
-            background: rgba(6,182,212,0.12);
-            border: 1px solid rgba(6,182,212,0.3);
+            background: rgba(53,199,224,0.1);
+            border: 1px solid rgba(53,199,224,0.3);
             color: var(--cyan);
         }
 
         .explanation img {
             width: 100%;
             border-radius: var(--radius);
-            border: 1px solid var(--border);
+            border: 1px solid var(--line);
             margin-top: 16px;
-        }
-
-        .category-card {
-            margin-top: 16px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px 24px;
-        }
-        .category-card h3 {
-            font-family: var(--font-display);
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--amber);
-            margin-bottom: 8px;
-        }
-        .category-card p {
-            font-size: 0.93rem;
-            color: var(--muted);
-        }
-
-        .btn-save {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-            margin-right: 5px;
-            padding: 12px 43px;
-            background: transparent;
-            border: 1px solid var(--amber);
-            border-radius: 8px;
-            color: var(--amber);
-            font-family: var(--font-display);
-            font-size: 0.65rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-            text-align: center;
-        }
-        .btn-save:hover {
-            background: var(--amber);
-            color: #0F172A;
         }
 
         .divider {
             height: 1px;
-            background: var(--border);
-            margin: 24px 0;
+            background: var(--spectrum-gradient);
+            opacity: 0.25;
+            margin: 28px 0;
         }
 
-        .video-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 9.5px;
-  background-color: black;
-  color: #ffffff;
-  padding: 9px 18px;
-  margin-left: 13px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 15px;
-  text-decoration: none;
+        /* ===== Save button ===== */
+        .btn-save {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 18px;
+            padding: 12px 30px;
+            background: #FAF6EE;
+            border: 1px solid var(--gold);
+            border-radius: 10px;
+            color: #1a1408;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .15s;
+        }
+        .btn-save:active { transform: scale(0.97); }
+
+        /* ===== Practice section ===== */
+        .practice-section {
+            padding: 18px 0 0;
+            margin-top: 22px;
+        }
+        .practice-heading {
+            color: var(--paper);
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+        .diff-row { display: flex; gap: 10px; margin-bottom: 16px; }
+        .diff-btn {
+            flex: 1;
+            padding: 11px;
+            border-radius: 10px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            border: 1px solid;
+        }
+        .diff-easy   { background: rgba(52,199,123,0.12); color: var(--neet);  border-color: rgba(52,199,123,0.5); }
+        .diff-medium { background: rgba(240,180,41,0.12); color: var(--gold); border-color: rgba(240,180,41,0.5); }
+        .diff-hard   { background: rgba(242,97,122,0.12); color: var(--coral); border-color: rgba(242,97,122,0.5); }
+
+        .loading-text {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        #question-box { display: none; }
+        .question-card {
+            background: var(--surface-2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 14px;
+            border-left: 4px solid var(--cyan);
+        }
+        .question-card p { color: var(--paper); font-size: 15px; line-height: 1.6; }
+
+        #options-box { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+
+        #feedback-box {
+            display: none;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 14px;
+        }
+
+        .next-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            background: var(--surface);
+            color: var(--cyan);
+            border: 1px solid var(--cyan);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* ===== Similar formulas ===== */
+        .similar-list { display: flex; flex-direction: column; gap: 8px; margin-top: 22px; }
+        .similar-card {
+            background: linear-gradient(135deg, rgba(124,108,242,0.06), rgba(53,199,224,0.05));
+            border: 1px solid rgba(124,108,242,0.2);
+            border-left: 3px solid var(--coral);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+        }
+        .similar-title { color: var(--cyan); font-weight: 600; font-size: 14px; }
+        .similar-formula { color: var(--gold); font-size: 13px; font-weight: 500; }
+        .similar-arrow { color: var(--muted); font-size: 16px; font-weight: bold; }
+
+        /* ===== Telegram CTA ===== */
+        .tg-join-btn {
+            display: inline-flex;
+            align-items: center;
+            background: #24A1DE;
+            color: #ffffff !important;
+            padding: 10px 16px;
+            margin-top: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none !important;
+            box-shadow: 0 4px 10px rgba(36, 161, 222, 0.25);
+        }
+
+        /* ===== Animation modal ===== */
+        #animationModal {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.85); z-index: 9999;
+            align-items: center; justify-content: center;
+        }
+        .modal-box {
+            background: var(--surface); border: 1px solid var(--violet);
+            border-radius: 16px; width: 90%; max-width: 600px;
+            padding: 24px; position: relative;
+        }
+        .modal-close {
+            position: absolute; top: 12px; right: 16px;
+            background: none; border: none; color: #fff;
+            font-size: 22px; cursor: pointer;
+        }
+
+          .formula-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 6vw, 2.56rem);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .given-by {
+    text-align: center;
+    color: lightpink;
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.01em;
+    line-height: 1.5;
+    padding: 0 16px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.video-btn:hover {
-  background-color: #cc0000;
+.given-by span {
+    color: var(--muted);
+    white-space: nowrap;
 }
+
+        .formula-hero {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 34px 20px 28px;
+            margin: 24px auto 0;
+            max-width: 540px;
+            text-align: center;
+        }
+
+
     </style>
 </head>
 <body>
 
-    <div style="display:flex; justify-content:space-between;
-            align-items:center; padding:10px 16px;
-            margin-bottom:10px;">
+    <div class="top-bar">
+        <button onclick="copyFormula()" id="copyBtn" class="util-btn util-copy">📋 Copy</button>
 
-    <!-- Copy Button - Top Left -->
-    <button onclick="copyFormula()" id="copyBtn"
-        style="background:transparent;
-               border:1px solid #38bdf8;
-               color:#38bdf8; padding:7px 14px;
-               border-radius:20px; cursor:pointer;
-               font-size:12px; font-weight:600; display: flex; align-items: center; gap: 5px">
-        📋 Copy
-    </button>
+        <a href="https://buymeachai.ezee.li/formulaverse" target="_blank" rel="noopener noreferrer" class="util-btn util-chai">☕ Chai</a>
 
-    <a href="https://buymeachai.ezee.li/formulaverse" target="_blank" rel="noopener noreferrer"
-   style="display:inline-flex; align-items:center; gap:6px; padding:6px 14px;
-          border-radius:8px; border:1px solid #f97316; color:#f97316;
-          font-size:14px; font-weight:600; text-decoration:none; font-family:inherit;">
-  ☕ Chai
-</a>
+        <a href="https://wa.me/?text=Check out this Physics Formula on FormulaVerse! 📐%0A%0A{{ formula.title }}%0A{{ request.build_absolute_uri }}"
+           target="_blank" class="util-btn util-share">📲 Share</a>
+    </div>
 
-    <!-- Share Button - Top Right -->
-    <a href="https://wa.me/?text=Check out this Physics Formula on FormulaVerse! 📐%0A%0A{{ formula.title }}%0A{{ request.build_absolute_uri }}"
-       target="_blank"
-       style="background:#25D366; color:white;
-              padding:7px 14px; border-radius:20px;
-              font-size:12px; font-weight:750;
-              text-decoration:none;">
-        📲 Share
-    </a>
+     <div class="formula-title">{{ formula.title }}</div>
 
-</div>
+        {% if formula.given_by %}
+        <div class="given-by"><span>Given-by: </span> {{ formula.given_by }} </div>
+        {% endif %}
 
-    <div class="page-header">
-        <div class="formula-title">{{ formula.title }}</div>
         <div class="formula-hero">
             $$ {{ formula.form }} $$
         </div>
     </div>
 
+
+
     <div class="content-wrapper">
 
-        <div class="card" style="margin-top: 24px;">
+        <div class="chapter-row">
+            <div class="chapter-pill"><span>Chapter</span> {{ formula.chapter }}</div>
+        </div>
+
+        <div class="card card-variables">
             <div class="card-label">Variables</div>
-            <div class="card-content">{{ formula.form_info }}</div>
+            <div class="card-content">{{ formula.variables }}</div>
         </div>
 
-        <div>
-            <div class="chapter-pill">
-                <span>Chapter</span> {{ formula.chapter }}
-            </div>
-        </div>
-
-        <div class="card">
+        <div class="card card-description">
             <div class="card-label">Description</div>
             <div class="card-content">{{ formula.description }}</div>
         </div>
 
-        <div class="divider"></div>
+        <div class="two-col">
+            <div class="card card-units">
+                <div class="card-label">Units</div>
+                <div class="card-content"> $$ {{ formula.units }} $$</div>
+            </div>
 
-        <div class="card">
-            <div class="card-label">Example</div>
-            <div class="card-content">{{ formula.question }}</div>
+            <div class="card card-when">
+                <div class="card-label">When to Use</div>
+                <div class="card-content">{{ formula.when_to_use }}</div>
+            </div>
         </div>
 
-        <div class="card">
-            <div class="card-label">Answer</div>
-            <div class="answer-value">{{ formula.answer }}</div>
-        </div>
 
+        {% if result %}
+        <div class="result-badge">{{ result }}</div>
+        {% endif %}
 
-
-            {% if result %}
-            <div class="result-badge">{{ result }}</div>
+        <div class="explanation">
+            {% if explanation %}
+            <img src="{{ formula.explanation.url }}" alt="Explanation">
             {% endif %}
+        </div>
 
-            <div class="explanation">
-                {% if explanation %}
-                <img src="{{ formula.explanation.url }}" alt="Explanation">
-                {% endif %}
+        <form method="POST" action="{% url 'saved-page' pk=formula.id %}">
+            {% csrf_token %}
+            <button type="submit" name="save" class="btn-save">★ Save</button>
+        </form>
+
+        <div id="animationModal">
+            <div class="modal-box">
+                <button onclick="closeAnimation()" class="modal-close">✕</button>
+                <h3 id="animTitle" style="color:var(--violet); margin:0 0 16px 0; font-family:var(--font-display);"></h3>
+                <div id="loadingAnim" style="text-align:center; color:var(--muted); padding:40px;">⚙️ Generating animation...</div>
+                <div id="animationContent"></div>
             </div>
         </div>
 
-        <div class="category-card">
-            <h3>Category: {{ formula.category }}</h3>
-            <p>{{ formula.category.explain }}</p>
-        </div>
+        <!-- Practice Section -->
+        <div class="practice-section">
+            <div class="practice-heading">⚡ Practice Questions — Difficulty</div>
 
-       <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 5px;">
+            <div class="diff-row">
+                <button onclick="loadQuestion('easy')" class="diff-btn diff-easy">🟢 Easy</button>
+                <button onclick="loadQuestion('medium')" class="diff-btn diff-medium">🟡 Medium</button>
+                <button onclick="loadQuestion('hard')" class="diff-btn diff-hard">🔴 Hard</button>
+            </div>
 
-   <form method="POST" action="{% url 'saved-page' pk=formula.id %}">
-    {% csrf_token %}
+            <div id="loading" class="loading-text">⏳ Generating question...</div>
 
-
-    <button type="submit" name="save"
-        style="background:#FAF6EE; color: #212529; border:1px solid #fbbf24;
-        padding:10px 20px; border-radius:8px; cursor:pointer;
-        font-size:14px; font-weight: bold; display:flex; align-items:center; gap:6px;">
-        ★ Save
-    </button>
-</form>
-</div>
-
-
-<div id="animationModal" style="display:none; position:fixed; inset:0;
-     background:rgba(0,0,0,0.85); z-index:9999; align-items:center;
-     justify-content:center;">
-  <div style="background:#0d1117; border:1px solid #38bdf8; border-radius:16px;
-              width:90%; max-width:600px; padding:24px; position:relative;">
-
-    <button onclick="closeAnimation()"
-      style="position:absolute; top:12px; right:16px; background:none;
-             border:none; color:#fff; font-size:22px; cursor:pointer;">✕</button>
-
-    <h3 id="animTitle" style="color:#38bdf8; margin:0 0 16px 0;"></h3>
-
-    <div id="loadingAnim" style="text-align:center; color:#aaa; padding:40px;">
-      ⚙️ Generating animation...
-    </div>
-
-    <div id="animationContent"></div>
-  </div>
-</div>
-
-
-    <!-- Practice Section -->
-<!-- Practice Section -->
-<div style="padding: 16px; margin-top: 20px;">
-    <h3 style="color:#f1f5f9; font-size:16px; font-weight:600; margin-bottom:14px;">
-        ⚡ Practice Questions — Difficulty:
-    </h3>
-
-    <!-- Difficulty Buttons -->
-    <div style="display:flex; gap:10px; margin-bottom:16px;">
-        <button onclick="loadQuestion('easy')"
-            style="flex:1; padding:10px; border-radius:10px;
-                   background:#166534; color:#86efac;
-                   border:1px solid #16a34a; font-weight:600;
-                   font-size:14px; cursor:pointer;">
-            🟢 Easy
-        </button>
-        <button onclick="loadQuestion('medium')"
-            style="flex:1; padding:10px; border-radius:10px;
-                   background:#854d0e; color:#fde68a;
-                   border:1px solid #d97706; font-weight:600;
-                   font-size:14px; cursor:pointer;">
-            🟡 Medium
-        </button>
-        <button onclick="loadQuestion('hard')"
-            style="flex:1; padding:10px; border-radius:10px;
-                   background:#7f1d1d; color:#fca5a5;
-                   border:1px solid #dc2626; font-weight:600;
-                   font-size:14px; cursor:pointer;">
-            🔴 Hard
-        </button>
-    </div>
-
-    <!-- Loading -->
-    <div id="loading" style="display:none; text-align:center;
-         padding:20px; color:#94a3b8; font-size:14px;">
-        ⏳ Generating question...
-    </div>
-
-    <!-- Question Box -->
-    <div id="question-box" style="display:none;">
-
-        <!-- Question Text -->
-        <div style="background:#1e293b; border-radius:12px;
-                    padding:16px; margin-bottom:14px;
-                    border-left:4px solid #38bdf8;">
-            <p id="question-text"
-               style="color:#f1f5f9; font-size:15px;
-                      line-height:1.6; margin:0;">
-            </p>
-        </div>
-
-        <!-- Options -->
-        <div id="options-box"
-             style="display:flex; flex-direction:column; gap:10px; margin-bottom:14px;">
-        </div>
-
-        <!-- Feedback -->
-        <div id="feedback-box" style="display:none;
-             border-radius:12px; padding:14px; margin-bottom:14px;">
-            <p id="feedback-text"
-               style="margin:0; font-size:14px; line-height:1.6;">
-            </p>
-        </div>
-
-        <!-- Next Button -->
-        <button onclick="loadQuestion(currentDifficulty)"
-            style="width:100%; padding:12px; border-radius:10px;
-                   background:#0f172a; color:#38bdf8;
-                   border:1px solid #38bdf8; font-weight:600;
-                   font-size:14px; cursor:pointer;">
-            ➡️ Next Question
-        </button>
-    </div>
-</div>
-
-<div style="padding: 16px 12px;">
-    <h3 style="color: #f97316; font-size: 15px; font-weight: 700;
-               letter-spacing: 2px; margin-bottom: 14px;">
-        ✦ SIMILAR FORMULAS
-    </h3>
-    <div style="display: flex; flex-direction: column; gap: 10px;">
-        {% for similar in similar_formulas %}
-        <a href="{{ similar.get_absolute_url }}"
-           style="text-decoration: none;">
-            <div style="background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(249,115,22,0.05));
-                        border: 1px solid rgba(56,189,248,0.2);
-                        border-left: 3px solid #f97316;
-                        border-radius: 10px; padding: 12px 16px;
-                        display: flex; justify-content: space-between;
-                        align-items: center;">
-                <div>
-                    <div style="color: #38bdf8; font-weight: 600; font-size: 14px;">
-                        {{ similar.title }}
-                    </div>
-                    <div style="color: #f97316; font-size: 12px; margin-top: 4px;">
-                        ${{ similar.form }}$
-                    </div>
+            <div id="question-box">
+                <div class="question-card">
+                    <p id="question-text"></p>
                 </div>
-                <div style="color: #94a3b8; font-size: 18px;">→</div>
+                <div id="options-box"></div>
+                <div id="feedback-box">
+                    <p id="feedback-text" style="margin:0; font-size:14px; line-height:1.6;"></p>
+                </div>
+                <button onclick="loadQuestion(currentDifficulty)" class="next-btn">➡️ Next Question</button>
             </div>
-        </a>
-        {% empty %}
-        <p style="color: #94a3b8; font-size: 13px;">No similar formulas found.</p>
-        {% endfor %}
-    </div>
-</div>
+        </div>
 
+        <div class="similar-list">
+            {% for similar in similar_formulas %}
+            <a href="{{ similar.get_absolute_url }}" class="similar-card">
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <div class="similar-title">{{ similar.title }}</div>
+                    <span style="color:var(--faint); font-size:12px;">•</span>
+                    <div class="similar-formula">${{ similar.form }}$</div>
+                </div>
+                <div class="similar-arrow">➔</div>
+            </a>
+            {% empty %}
+            <p style="color:var(--muted); font-size:13px;">No similar formulas found.</p>
+            {% endfor %}
+        </div>
+
+        <a href="https://t.me/formulaverse" target="_blank" class="tg-join-btn">📢 Loved this explanation? Join our Telegram for daily physics shortcuts &amp; cheat sheets!</a>
+
+    </div>
 
 <script>
 let currentDifficulty = 'medium';
@@ -600,30 +667,19 @@ function loadQuestion(difficulty) {
             currentExplanation = data.explanation;
 
             if (!data.question || !data.options) {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('question-box').style.display = 'block';
-    document.getElementById('question-text').innerText =
-        '⚠️ Network issue! Please reload';
-    return; // stop further execution
-}
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('question-box').style.display = 'block';
+                document.getElementById('question-text').innerText = '⚠️ Network issue! Please reload';
+                return;
+            }
 
             document.getElementById('question-text').innerText = data.question || '⚠️ Network issue! Please reload';
 
             const optionsBox = document.getElementById('options-box');
             optionsBox.innerHTML = '';
 
-            const colors = {
-                'A': '#1e3a5f',
-                'B': '#1a3a2a',
-                'C': '#3a1a2a',
-                'D': '#2a1a3a'
-            };
-            const borderColors = {
-                'A': '#3b82f6',
-                'B': '#22c55e',
-                'C': '#ec4899',
-                'D': '#a855f7'
-            };
+            const colors = { 'A': '#1e3a5f', 'B': '#1a3a2a', 'C': '#3a1a2a', 'D': '#2a1a3a' };
+            const borderColors = { 'A': '#5B8DEF', 'B': '#34C77B', 'C': '#F2617A', 'D': '#7C6CF2' };
 
             for (let key in data.options) {
                 optionsBox.innerHTML += `
@@ -634,8 +690,7 @@ function loadQuestion(difficulty) {
                                border:1px solid ${borderColors[key]};
                                color:#f1f5f9; font-size:14px;
                                cursor:pointer; line-height:1.5;">
-                        <span style="font-weight:700;
-                              color:${borderColors[key]};">${key}.</span>
+                        <span style="font-weight:700; color:${borderColors[key]};">${key}.</span>
                         ${data.options[key] || '⚠️ Network issue! Please reload'}
                     </button>`;
             }
@@ -644,12 +699,10 @@ function loadQuestion(difficulty) {
             document.getElementById('question-box').style.display = 'block';
         })
         .catch(err => {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('question-box').style.display = 'block';
-    document.getElementById('question-box').innerHTML =
-        '⚠️ Network issue! Please reload.';
-});
-
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('question-box').style.display = 'block';
+            document.getElementById('question-box').innerHTML = '⚠️ Network issue! Please reload.';
+        });
 }
 
 function checkAnswer(selected) {
@@ -657,23 +710,20 @@ function checkAnswer(selected) {
     const feedbackText = document.getElementById('feedback-text');
 
     if (selected === correctAnswer) {
-        feedback.style.background = '#14532d';
-        feedback.style.border = '1px solid #16a34a';
+        feedback.style.background = 'rgba(52,199,123,0.14)';
+        feedback.style.border = '1px solid #34C77B';
         feedbackText.style.color = '#86efac';
         feedbackText.innerText = '✅ Correct! ' + currentExplanation;
     } else {
-        feedback.style.background = '#7f1d1d';
-        feedback.style.border = '1px solid #dc2626';
+        feedback.style.background = 'rgba(242,97,122,0.14)';
+        feedback.style.border = '1px solid #F2617A';
         feedbackText.style.color = '#fca5a5';
         feedbackText.innerText = `❌ Wrong! Correct answer: ${correctAnswer}. ${currentExplanation}`;
     }
     feedback.style.display = 'block';
 
-    // disable all option buttons after answering
-    document.querySelectorAll('#options-box button')
-            .forEach(btn => btn.disabled = true);
+    document.querySelectorAll('#options-box button').forEach(btn => btn.disabled = true);
 }
-
 
 function convertFrac(str) {
   let result = '';
@@ -760,12 +810,12 @@ function copyFormula() {
         .then(() => {
             const btn = document.getElementById('copyBtn');
             btn.innerText = '✅ Copied!';
-            btn.style.color = '#22c55e';
-            btn.style.borderColor = '#22c55e';
+            btn.style.color = '#34C77B';
+            btn.style.borderColor = '#34C77B';
             setTimeout(() => {
-                btn.innerText = '📋 Copy Formula';
-                btn.style.color = '#38bdf8';
-                btn.style.borderColor = '#38bdf8';
+                btn.innerText = '📋 Copy';
+                btn.style.color = '';
+                btn.style.borderColor = '';
             }, 2000);
         });
     } catch(e) {
@@ -774,7 +824,6 @@ function copyFormula() {
 }
 
 const prebuiltAnimations = {
-  // Add formula IDs that have pre-built ones
   // e.g. 5: '<svg>...</svg>'
 };
 
@@ -784,14 +833,12 @@ async function openAnimation(formulaId) {
   document.getElementById('loadingAnim').style.display = 'block';
   document.getElementById('animationContent').innerHTML = '';
 
-  // Check pre-built first
   if (prebuiltAnimations[formulaId]) {
     document.getElementById('loadingAnim').style.display = 'none';
     document.getElementById('animationContent').innerHTML = prebuiltAnimations[formulaId];
     return;
   }
 
-  // Else call AI
   try {
     const res = await fetch(`/formula/${formulaId}/animation/`);
     const data = await res.json();
@@ -799,7 +846,6 @@ async function openAnimation(formulaId) {
     document.getElementById('loadingAnim').style.display = 'none';
     document.getElementById('animationContent').innerHTML = data.html;
 
-    // Execute any scripts in the returned HTML
     document.getElementById('animationContent')
       .querySelectorAll('script')
       .forEach(s => eval(s.innerHTML));
@@ -815,3 +861,5 @@ function closeAnimation() {
 }
 </script>
 
+</body>
+</html>
