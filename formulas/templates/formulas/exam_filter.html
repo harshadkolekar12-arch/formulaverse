@@ -8,161 +8,274 @@
 
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
 
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+
+    <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
+    <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
+
     <meta name="description"
     content="{{ total }} Physics formulas for {{ exam_label }} — FormulaVerse">
-<meta name="keywords"
+    <meta name="keywords"
     content="{{ exam_label }} physics formulas, {{ exam_label }} formula list">
 
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <style>
+        :root {
+            --bg: #0d1524;
+            --card-bg: #0f1830;
+            --card-bg-2: #131f3d;
+            --border: rgba(255,255,255,0.07);
+            --text: #eef1f8;
+            --text-dim: #8b96ab;
+            --text-faint: #5c6883;
+            --accent-blue: #3ea6ff;
+            --accent-purple: #a855f7;
+            --jee: #ff9d3f;
+            --jee-2: #d97706;
+            --neet: #3ea6ff;
+            --neet-2: #1d6fd6;
+            --both: #d94dff;
+            --both-2: #9b2fd6;
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background: #0d1524;
+            background: var(--bg);
+            background-image:
+                radial-gradient(circle at 12% 0%, rgba(62,166,255,0.10), transparent 45%),
+                radial-gradient(circle at 88% 8%, rgba(168,85,247,0.09), transparent 40%);
             min-height: 100vh;
-            font-family: 'Outfit', sans-serif;
-        }
-        .header {
-            text-align: center;
-            padding: 20px 16px 10px;
-        }
-        .back-btn {
-            position: fixed;
-            top: 3px; left: 8px;
-            font-size: 2.4rem;
-            font-weight: 900;
-            color: #e8ecf4;
-            text-decoration: none;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            z-index: 10;
-        }
-        .total-pill {
-            position: fixed;
-            top: 8px; right: 8px;
-            background: #1a2438;
-            border: 1px solid rgba(90,160,255,0.3);
-            border-radius: 20px;
-            padding: 5px 10px;
-            font-size: 12px;
-            font-weight: bold;
-            color: #cdd6e6;
-        }
-        h1 {
-            font-size: 2rem;
-            color: #ffffff;
-            margin-top: 40px;
-        }
-        .subtitle {
-            color: #8b96ab;
-            font-size: 0.9rem;
-            margin-top: 4px;
-            opacity: 0.9;
+            font-family: 'Outfit', -apple-system, sans-serif;
+            color: var(--text);
+            padding-bottom: 40px;
         }
 
-        /* Search */
+        /* ---------- Top bar ---------- */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            background: rgba(13,21,36,0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: #fff;
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(62,166,255,0.4); }
+
+        .share-btn {
+            background: linear-gradient(135deg, #2fd67a, #17a85c);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 3px 10px rgba(47,214,122,0.25);
+        }
+
+        /* ---------- Header ---------- */
+        .header {
+            text-align: center;
+            padding: 30px 16px 6px;
+        }
+        h1 {
+            font-size: clamp(1.7rem, 6vw, 2.2rem);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(120deg, #ffffff 40%, #9fc9ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-top: 6px;
+        }
+        .count-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 14px;
+            background: rgba(62,166,255,0.10);
+            border: 1px solid rgba(62,166,255,0.30);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #bfe0ff;
+        }
+
+        /* ---------- Search ---------- */
         .search-wrapper {
-            margin: 16px 18px;
+            margin: 22px 18px 6px;
         }
         .search-wrapper input {
             width: 100%;
-            padding: 10px 16px;
-            border-radius: 20px;
-            border: 1px solid rgba(90,160,255,0.25);
-            background: #131c30;
-            color: #e8ecf4;
-            font-size: 0.9rem;
+            padding: 12px 18px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 0.92rem;
             outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .search-wrapper input::placeholder {
-            color: #6b7690;
-        }
+        .search-wrapper input::placeholder { color: var(--text-faint); }
         .search-wrapper input:focus {
-            border-color: #3ea6ff;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(62,166,255,0.15);
         }
 
-        /* Formula cards */
-        .container { padding: 0 18px 20px; }
-        ul { list-style: none; padding: 0; margin: 0; }
+        /* ---------- Cards ---------- */
+        .container { padding: 10px 18px 20px; }
+        ul { list-style: none; }
+        li { margin-bottom: 14px; }
+
         .formula-card {
-            background: #0b132b;
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 10px;
-            border: 1px solid rgba(255,255,255,0.06);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             position: relative;
-            overflow: visible;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            cursor: pointer;
+            display: block;
+            background: linear-gradient(165deg, var(--card-bg-2), var(--card-bg));
+            border-radius: 16px;
+            padding: 18px 18px 14px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            text-decoration: none;
         }
+        .formula-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
+        }
+        .formula-card.jee::before  { background: linear-gradient(180deg, var(--jee), var(--jee-2)); }
+        .formula-card.neet::before { background: linear-gradient(180deg, var(--neet), var(--neet-2)); }
+        .formula-card.both::before { background: linear-gradient(180deg, var(--both), var(--both-2)); }
+
         .formula-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(62, 166, 255, 0.15);
-            border-color: rgba(62, 166, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(62, 166, 255, 0.18);
+            border-color: rgba(62, 166, 255, 0.35);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
         }
         .formula-title {
             color: #ffffff;
-            font-weight: bold;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-            white-space: normal;
-            overflow: visible;
-            line-height: 1.15;
-            font-size: 0.68rem;
+            font-weight: 700;
+            font-size: 1.05rem;
+            line-height: 1.3;
         }
+        .exam-badge {
+            flex: 0 0 auto;
+            padding: 4px 11px;
+            border-radius: 7px;
+            font-size: 0.66rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            color: white;
+            text-transform: uppercase;
+        }
+        .exam-badge.jee  { background: linear-gradient(135deg, var(--jee), var(--jee-2)); }
+        .exam-badge.neet { background: linear-gradient(135deg, var(--neet), var(--neet-2)); }
+        .exam-badge.both { background: linear-gradient(135deg, var(--both), var(--both-2)); }
+
         .formula-form {
             text-align: center;
-            color: #3ea6ff;
-            margin: 8px 0;
+            color: #cfe6ff;
+            background: rgba(62,166,255,0.06);
+            border: 1px solid rgba(62,166,255,0.12);
+            border-radius: 10px;
+            padding: 12px 8px;
+            margin: 12px 0 10px;
+            font-size: 1.05rem;
+            overflow-x: auto;
         }
+
         .formula-author {
-            font-size: 13px;
-            color: #a0aec0;
-            margin-top: auto;
+            font-size: 12.5px;
+            color: var(--text-dim);
             padding-top: 4px;
+            border-top: 1px dashed var(--border);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .hanging-badge-wrapper {
-            position: absolute;
-            top: 8px; right: 10px;
+        .formula-author::before {
+            content: "✎";
+            color: var(--text-faint);
         }
-        .hanging-badge {
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            color: white;
+
+        .empty-state {
+            text-align: center;
+            color: var(--text-faint);
+            padding: 60px 20px;
+            font-size: 0.9rem;
+            display: none;
         }
-        .hanging-badge.jee {
-            background: linear-gradient(135deg, #ff9d3f, #d97706);
+
+        .container .chapter-badge{
+            margin-top: 2px;
+            margin-right: 2px;
         }
-        .hanging-badge.neet {
-            background: linear-gradient(135deg, #3ea6ff, #1d6fd6);
-        }
-        .hanging-badge.both {
-            background: linear-gradient(135deg, #d94dff, #9b2fd6);
-        }
+
+        .chapter-badge {
+    background: rgba(6, 182, 212, 0.12); /* Minimal subtle overlay */
+    color: #22d3ee;                         /* Clean muted grey/blue text */
+    font-size: 0.65rem;                     /* Small crisp font size */
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 3px 8px;
+    border-radius: 4px;                     /* Nice clean curved corners */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    white-space: nowrap;                    /* Keeps it on a single line */
+    display: inline-block;
+}
+
         a { text-decoration: none; }
     </style>
 </head>
 <body>
 
-    <a class="back-btn" href="{% url 'index-page' %}">←</a>
-
-    <a href="https://wa.me/?text=Check out this Physics Formula on FormulaVerse! 📐%0A%0A{{ formula.title }}%0A{{ request.build_absolute_uri }}"
-       target="_blank"
-       style="background:#25D366; color:white;
-              padding:7px 14px; border-radius:20px;
-              font-size:12px; font-weight:750;
-              text-decoration:none; display: flex; position: fixed; top: 5px; right: 2px; z-index: 10;">
-        📲 Share this page
-    </a>
+    <div class="topbar">
+        <a class="back-btn" href="{% url 'index-page' %}">←</a>
+        <a class="share-btn"
+           href="https://wa.me/?text=Check out {{ exam_label }} Physics Formulas on FormulaVerse! 📐%0A%0A{{ request.build_absolute_uri }}"
+           target="_blank">
+            📲 Share
+        </a>
+    </div>
 
     <div class="header">
         <h1>{{ exam_label }} Formulas</h1>
         <p class="subtitle">Showing all formulas for {{ exam_label }}</p>
+        <div class="count-pill">📐 {{ total }} formulas</div>
     </div>
 
     <!-- Search -->
@@ -174,43 +287,67 @@
 
     <!-- Formula Cards -->
     <div class="container">
-        {% for formula in formulas %}
         <ul>
-            <li>
-                <div class="formula-card">
-                    {% if formula.exam_tag != 'none' %}
-                    <div class="hanging-badge-wrapper">
-                        <div class="hanging-badge {{ formula.exam_tag }}">
-                            {{ formula.get_exam_tag_display }}
-                        </div>
-                    </div>
-                    {% endif %}
+            {% for formula in formulas %}
+            <li data-tag="{{ formula.exam_tag }}">
+                <a class="formula-card {{ formula.exam_tag }}" href="{{ formula.get_absolute_url }}">
+                     <!-- Modernized top header layout inside the card -->
+        <div class="card-top" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
 
-                    <a href="{{ formula.get_absolute_url }}">
-                        <div class="formula-title">{{ formula.title }}</div>
-                        <div class="formula-form">$$ {{ formula.form }} $$</div>
-                    </a>
+            <!-- Title on the left -->
+            <div class="formula-title" style="margin: 0; flex: 1;">
+                {{ formula.title }}
+            </div>
+
+            <!-- Badges grouped together nicely on the top right -->
+            <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
+
+                <!-- Fixed Chapter Badge: Text is now properly inside the tag -->
+                <span class="chapter-badge">
+                    {{ formula.chapter.name }}
+                </span>
+
+                {% if formula.exam_tag != 'none' %}
+                <div class="exam-badge {{ formula.exam_tag }}">
+                    {{ formula.get_exam_tag_display }}
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+                    <div class="formula-form">$$ {{ formula.form }} $$</div>
 
                     {% if formula.given_by %}
-                    <div class="formula-author">
-                        (Given by: {{ formula.given_by }})
-                    </div>
+                    <div class="formula-author">Given by {{ formula.given_by }}</div>
                     {% endif %}
-                </div>
+                </a>
             </li>
+            {% endfor %}
         </ul>
-        {% endfor %}
+        <div class="empty-state" id="emptyState">No formulas match your search.</div>
     </div>
 
     <script>
         function searchFormulas() {
-            const query = document.getElementById('searchBar')
-                                  .value.toLowerCase();
-            document.querySelectorAll('.formula-card').forEach(card => {
-                const title = card.querySelector('.formula-title')
-                                  .innerText.toLowerCase();
-                const ul = card.closest('ul');
-                ul.style.display = title.includes(query) ? 'block' : 'none';
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            let visibleCount = 0;
+
+            document.querySelectorAll('.container li').forEach(li => {
+                const title = li.querySelector('.formula-title').innerText.toLowerCase();
+                const show = title.includes(query);
+                li.style.display = show ? 'block' : 'none';
+                if (show) visibleCount++;
+            });
+
+            document.getElementById('emptyState').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('SW registered!'))
+                .catch(err => console.log('SW failed:', err));
             });
         }
     </script>

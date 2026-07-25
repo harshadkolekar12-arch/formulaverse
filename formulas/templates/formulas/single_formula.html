@@ -5,10 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ formula.title }} | Formulaverse</title>
+    <title>{{ formula.title }} — FormulaVerse</title>
 
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js"></script>
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+    <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
+    <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
+
+    <script src=https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js></script>
+    <script src=https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js></script>
 
     <script>
     const firebaseConfig = {
@@ -49,10 +53,10 @@
 
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
+    <script async src=https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141
      crossorigin="anonymous"></script>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+    <script async src=https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -60,13 +64,11 @@
       gtag('config', 'G-YHLZCEHWF7');
     </script>
 
-    <title>{{ formula.title }} — FormulaVerse</title>
-    <meta name="description" content="{{ formula.title }} formula by {{ formula.given_by }} on FormulaVerse">
-    <meta name="keywords" content="{{ formula.title }}, physics formula, JEE, NEET">
+    <meta name="description" content="{{ formula.title }} formula by {{ formula.given_by }} on FormulaVerse — meaning, variables, units, worked example and practice questions.">
+    <meta name="keywords" content="{{ formula.title }}, JEE formula, NEET formula, physics formula, derivation, units, practice questions">
     <meta property="og:title" content="{{ formula.title }} — FormulaVerse"/>
     <meta property="og:description" content="{{ formula.title }} by {{ formula.given_by }}"/>
-    <meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/formula/{{ formula.id }}"/>
-    <meta name="keywords" content="{{ formula.title }}, JEE formula, NEET formula, physics formula">
+    <meta property="og:url" content=https://formulaverse.in/formula/{{ formula.id }}/>
 
     <script>
     MathJax = {
@@ -74,34 +76,33 @@
         svg: { fontCache: 'global' }
     };
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href=https://fonts.googleapis.com>
+    <link rel="preconnect" href=https://fonts.gstatic.com crossorigin>
+    <link href=https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap rel="stylesheet">
 
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            /* -- Base: deep-space ink, not a generic black -- */
-            --ink:        #0B1120;
-            --surface:    #141B2E;
-            --surface-2:  #1B2438;
-            --line:       #262F46;
+            --ink:        #0A0F1D;
+            --surface:    #131A2C;
+            --surface-2:  #1A2338;
+            --line:       #232D46;
 
-            /* -- Spectrum: light through a prism, used as the signature -- */
-            --violet:  #7C6CF2;
-            --cyan:    #35C7E0;
-            --gold:    #F0B429;
-            --coral:   #F2617A;
+            --violet:  #8B7FF5;
+            --indigo:  #5B7CF5;
+            --cyan:    #2FD3E6;
+            --gold:    #F5B841;
+            --coral:   #FF6E86;
+            --danger:  #E5484D;
 
-            /* -- Exam identity colors -- */
             --jee:   #5B8DEF;
             --neet:  #34C77B;
 
-            --paper:  #EDEFF7;
-            --muted:  #8891A8;
+            --paper:  #EEF1F9;
+            --muted:  #8A93AB;
             --faint:  #545E78;
 
             --radius: 14px;
@@ -109,16 +110,48 @@
             --font-body: 'Outfit', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
 
-            --spectrum-gradient: linear-gradient(90deg, var(--violet), var(--cyan) 38%, var(--gold) 68%, var(--coral));
+            --spectrum-gradient: linear-gradient(90deg, var(--violet), var(--indigo) 25%, var(--cyan) 50%, var(--gold) 75%, var(--coral));
         }
 
+        html { scroll-behavior: smooth; }
+
         body {
-            background: var(--ink);
+            background:
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 1px) 0 0/26px 26px,
+                var(--ink);
             color: var(--paper);
             font-family: var(--font-body);
             min-height: 100vh;
             padding: 0 0 60px;
             line-height: 1.6;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%; left: 50%;
+            transform: translateX(-50%);
+            width: 900px; height: 620px;
+            background: radial-gradient(ellipse, rgba(139,127,245,0.10) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== Prism hairline ===== */
+        .spectrum-thread {
+            position: sticky;
+            top: 0;
+            height: 3px;
+            width: 100%;
+            background: var(--spectrum-gradient);
+            background-size: 200% 100%;
+            animation: thread-flow 8s linear infinite;
+            z-index: 30;
+        }
+        @keyframes thread-flow {
+            0%   { background-position: 0% 0; }
+            100% { background-position: 200% 0; }
         }
 
         /* ===== Top utility bar ===== */
@@ -126,8 +159,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 16px;
+            padding: 16px;
             gap: 8px;
+            position: sticky;
+            top: 3px;
+            z-index: 29;
+            background: rgba(10,15,29,0.75);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
         }
         .util-btn {
             background: transparent;
@@ -143,200 +182,406 @@
             align-items: center;
             gap: 6px;
             text-decoration: none;
-            transition: border-color .2s, transform .15s;
+            transition: border-color .2s, transform .15s, background .2s;
         }
         .util-btn:active { transform: scale(0.96); }
         .util-copy  { border-color: var(--cyan); color: var(--cyan); }
-        .util-chai  { border-color: var(--gold); color: var(--gold); }
+        .util-copy:hover  { background: rgba(47,211,230,0.1); }
         .util-share { background: #25D366; border-color: #25D366; color: #06210f; font-weight: 700; }
+        .util-share:hover { filter: brightness(1.08); }
 
         /* ===== Hero ===== */
         .page-header {
             position: relative;
-            padding: 30px 20px 34px;
+            padding: 30px 20px 4px;
             text-align: center;
             overflow: hidden;
-        }
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: -80px; left: 50%;
-            transform: translateX(-50%);
-            width: 460px; height: 240px;
-            background: radial-gradient(ellipse, rgba(124,108,242,0.16) 0%, transparent 70%);
-            pointer-events: none;
+            z-index: 1;
         }
 
-        .exam-badge {
+        .chapter-eyebrow {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-family: var(--font-display);
+            gap: 7px;
+            font-family: var(--font-mono);
             font-size: 0.68rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.16em;
             text-transform: uppercase;
-            padding: 5px 12px;
+            color: var(--gold);
+            background: rgba(245,184,65,0.09);
+            border: 1px solid rgba(245,184,65,0.3);
             border-radius: 999px;
+            padding: 5px 14px;
             margin-bottom: 14px;
         }
-        .exam-jee   { background: rgba(91,141,239,0.14); border: 1px solid rgba(91,141,239,0.5); color: var(--jee); }
-        .exam-neet  { background: rgba(52,199,123,0.14); border: 1px solid rgba(52,199,123,0.5); color: var(--neet); }
-        .exam-both  { background: linear-gradient(90deg, rgba(91,141,239,0.16), rgba(52,199,123,0.16)); border: 1px solid rgba(140,170,180,0.5); color: var(--paper); }
-        .exam-none  { background: rgba(136,145,168,0.1); border: 1px solid var(--line); color: var(--muted); }
+        .chapter-eyebrow b { color: var(--muted); font-weight: 500; }
 
         .formula-title {
             font-family: var(--font-display);
-            font-size: clamp(2rem, 6vw, 3rem);
             font-weight: 700;
             color: #fff;
             letter-spacing: -0.5px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            font-size: clamp(1.4rem, 5vw, 2.3rem);
+            line-height: 1.22;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            text-wrap: balance;
         }
 
         .given-by {
-            color: var(--muted);
-            font-size: 0.85rem;
+            text-align: center;
+            color: var(--coral);
+            opacity: 0.85;
+            font-size: 0.76rem;
             font-family: var(--font-mono);
-            letter-spacing: 0.02em;
+            line-height: 1.5;
+            padding: 0 16px;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .given-by span { color: var(--cyan); }
+        .given-by span { color: var(--muted); }
 
-        .formula-hero {
+        /* ===== Formula showcase — now the undisputed hero, everything else is secondary ===== */
+        .formula-card {
             position: relative;
             background: var(--surface);
+            background-image:
+                linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+            background-size: 22px 22px;
             border: 1px solid var(--line);
-            border-radius: var(--radius);
-            padding: 34px 20px 28px;
-            margin: 24px auto 0;
-            max-width: 540px;
-            text-align: center;
+            border-radius: 18px;
+            margin: 22px auto 0;
+            max-width: 420px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px -12px rgba(0,0,0,0.55);
+            z-index: 1;
         }
-        .formula-hero::before {
-            content: '';
+
+        .formula-ribbon {
             position: absolute;
-            top: 0; left: 12px; right: 12px;
-            height: 3px;
-            border-radius: 0 0 3px 3px;
+            top: 14px;
+            left: -34px;
+            width: 130px;
+            transform: rotate(-45deg);
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 7.5px;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #0A0F1D;
             background: var(--spectrum-gradient);
+            padding: 3px 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
         }
-        .formula-hero mjx-container {
-            color: var(--paper) !important;
-            font-size: 1.15em !important;
+
+        .formula-card-inner {
+            padding: 2rem 1.5rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
+        .formula-container {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #ffffff;
+            text-align: center;
+            width: 100%;
+            padding: 0.4rem 0.5rem 0.3rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .formula-container::-webkit-scrollbar { display: none; }
+
+        .formula-subline {
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-align: center;
+            max-width: 320px;
+            margin: 4px 0 16px;
+        }
+
+        /* --- Diagram is now opt-in, not a full-width block dominating the fold --- */
+        .diagram-toggle-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+        .diagram-toggle-btn {
+            flex: 1;
+            padding: 9px 14px;
+            border-radius: 10px;
+            background: var(--surface-2);
+            border: 1px solid var(--line);
+            color: var(--cyan);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: border-color .2s, transform .15s;
+        }
+        .diagram-toggle-btn:active { transform: scale(0.97); }
+        .diagram-toggle-btn.open { border-color: var(--cyan); }
+
+        .diagram-panel {
+            display: none;
+            width: 100%;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--line);
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .diagram-panel.open { display: flex; }
+
+        .derivation-label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--coral);
+            font-weight: 600;
+        }
+
+        .derivation-thumbnail-container {
+            position: relative;
+            cursor: pointer;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.1);
+            max-width: 280px;
+            width: 100%;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow .25s ease;
+        }
+        .derivation-thumbnail-container:hover {
+            transform: scale(1.03);
+            border-color: var(--coral);
+            box-shadow: 0 8px 24px rgba(255,110,134,0.25);
+        }
+        .derivation-thumbnail {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 160px;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .zoom-hint {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            color: #fff;
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 4px 0;
+        }
+
+        .desmos-embed-container {
+            width: 100%;
+            max-width: 320px;
+            aspect-ratio: 4 / 3;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.1);
+
+            background: #ffffff;
+        }
+        .desmos-embed-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            background: #ffffff;
+        }
+
+        .derivation-pdf-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #ff5e62, #ff9966);
+            color: #ffffff !important;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(255,94,98,0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .derivation-pdf-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,94,98,0.5);
+        }
+
+        /* ===== Image zoom modal ===== */
+        .zoom-overlay {
+            position: fixed; inset: 0;
+            background-color: rgba(6,8,14,0.95);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .zoom-overlay.active { opacity: 1; pointer-events: auto; }
+        .zoom-img {
+            max-width: 90%; max-height: 85%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .zoom-overlay.active .zoom-img { transform: scale(1); }
+        .close-zoom-btn {
+            position: absolute; top: 20px; right: 25px;
+            color: #fff; font-size: 40px; font-weight: bold;
+            cursor: pointer; transition: color 0.2s;
+        }
+        .close-zoom-btn:hover { color: var(--coral); }
 
         /* ===== Layout ===== */
         .content-wrapper {
             max-width: 680px;
             margin: 0 auto;
             padding: 0 20px;
-        }
-
-        .card {
             position: relative;
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            padding: 20px 22px;
-            margin-top: 14px;
-            padding-left: 26px;
-        }
-        .card::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 14px; bottom: 14px;
-            width: 3px;
-            border-radius: 3px;
-            background: var(--tick, var(--cyan));
-        }
-        .card-label {
-            font-family: var(--font-display);
-            font-size: 0.68rem;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--tick, var(--cyan));
-            margin-bottom: 8px;
-        }
-        .card-content {
-            font-size: 0.97rem;
-            color: var(--paper);
-            display: flex;
-            justify-content: left;
+            z-index: 1;
         }
 
-        /* color-code each field so the eye learns the pattern fast */
-        .card-variables    { --tick: var(--violet); }
-        .card-description  { --tick: var(--cyan); }
-        .card-units        { --tick: var(--gold); }
-        .card-when         { --tick: var(--coral); }
-        .card-example      { --tick: var(--cyan); }
-
-        .two-col {
+        /* ===== Quick-info: two chips side by side instead of two full-width cards ===== */
+        .quick-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-        @media (max-width: 480px) {
-            .two-col { grid-template-columns: 1fr; }
-        }
-
-        .chapter-row {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
             gap: 10px;
-            margin-top: 20px;
+            margin-top: 22px;
         }
-        .chapter-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(240,180,41,0.1);
-            border: 1px solid rgba(240,180,41,0.35);
-            border-radius: 999px;
-            padding: 7px 16px;
+        .quick-chip {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 13px 14px;
+            border: 1px solid var(--line);
+        }
+        .quick-chip.when { border-color: rgba(255,110,134,0.35); background: rgba(255,110,134,0.06); }
+        .quick-chip.recall { border-color: rgba(47,211,230,0.35); background: rgba(47,211,230,0.06); }
+        .quick-label {
             font-family: var(--font-display);
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--gold);
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
-        .chapter-pill span { color: var(--muted); font-weight: 400; margin-right: 4px; }
+        .quick-chip.when .quick-label { color: var(--coral); }
+        .quick-chip.recall .quick-label { color: var(--cyan); }
+        .quick-body { font-size: 0.82rem; color: var(--paper); line-height: 1.45; }
 
-        .sim-link {
-            display: inline-flex;
+        /* ===== Worked example — the section people actually reread, so it stays full weight ===== */
+        .example-card {
+            margin-top: 14px;
+            background: rgba(245,184,65,0.07);
+            border: 1px solid rgba(245,184,65,0.35);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+        }
+        .example-label {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+            display: flex;
             align-items: center;
             gap: 6px;
-            background: transparent;
-            border: 1px solid var(--violet);
-            color: var(--violet);
-            border-radius: 999px;
-            padding: 7px 16px;
-            font-family: var(--font-display);
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: background .2s, color .2s;
         }
-        .sim-link:hover { background: var(--violet); color: #0B1120; }
-
-        .answer-value {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gold);
-        }
-
+        .example-card .card-content { font-size: 0.95rem; }
         .result-badge {
-            margin-top: 16px;
+            margin-top: 14px;
             padding: 14px 18px;
             border-radius: 10px;
             font-family: var(--font-display);
             font-weight: 600;
-            background: rgba(53,199,224,0.1);
-            border: 1px solid rgba(53,199,224,0.3);
+            background: rgba(47,211,230,0.1);
+            border: 1px solid rgba(47,211,230,0.3);
             color: var(--cyan);
         }
+
+        /* ===== PYQ pills — kept compact, right under the example ===== */
+        .pyq-row { margin-top: 14px; }
+        .pyq-pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .pyq-pill {
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            color: var(--violet);
+            background: rgba(139,127,245,0.1);
+            border: 1px solid rgba(139,127,245,0.35);
+            border-radius: 999px;
+            padding: 5px 14px;
+        }
+        .pyq-heading {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--violet);
+        }
+
+        /* ===== Details accordion — description, variables, units, mistakes: on demand, not by default ===== */
+        .accordion {
+            margin-top: 16px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--surface);
+        }
+        .accordion-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: transparent;
+            border: none;
+            color: var(--paper);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .accordion-chevron { transition: transform .2s ease; color: var(--muted); font-size: 1rem; }
+        .accordion-header.open .accordion-chevron { transform: rotate(180deg); }
+        .accordion-body {
+            display: none;
+            padding: 0 18px 18px;
+        }
+        .accordion-body.open { display: block; }
+        .detail-block { margin-bottom: 16px; }
+        .detail-block:last-child { margin-bottom: 0; }
+        .detail-label {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--indigo);
+            margin-bottom: 6px;
+        }
+        .detail-block.mistakes .detail-label { color: var(--danger); }
+        .detail-body { font-size: 0.88rem; color: var(--paper); line-height: 1.55; }
+        .detail-body ol, .detail-body ul { margin-top: 6px; padding-left: 1.2em; }
+        .detail-body li { margin-bottom: 4px; }
 
         .explanation img {
             width: 100%;
@@ -345,19 +590,12 @@
             margin-top: 16px;
         }
 
-        .divider {
-            height: 1px;
-            background: var(--spectrum-gradient);
-            opacity: 0.25;
-            margin: 28px 0;
-        }
-
         /* ===== Save button ===== */
         .btn-save {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            margin-top: 18px;
+            margin-top: 20px;
             padding: 12px 30px;
             background: #FAF6EE;
             border: 1px solid var(--gold);
@@ -367,21 +605,23 @@
             font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
-            transition: transform .15s;
+            transition: transform .15s, box-shadow .2s;
         }
+        .btn-save:hover { box-shadow: 0 6px 18px rgba(245,184,65,0.25); }
         .btn-save:active { transform: scale(0.97); }
 
-        /* ===== Practice section ===== */
+        /* ===== Practice section — moved up in visual priority, right after the save button ===== */
         .practice-section {
-            padding: 18px 0 0;
-            margin-top: 22px;
+            padding: 20px 0 0;
+            margin-top: 20px;
+            border-top: 1px dashed var(--line);
         }
         .practice-heading {
             color: var(--paper);
             font-family: var(--font-display);
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             font-weight: 600;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
         .diff-row { display: flex; gap: 10px; margin-bottom: 16px; }
         .diff-btn {
@@ -393,10 +633,13 @@
             font-size: 13px;
             cursor: pointer;
             border: 1px solid;
+            transition: transform .15s ease, box-shadow .2s ease;
         }
+        .diff-btn:active { transform: scale(0.97); }
         .diff-easy   { background: rgba(52,199,123,0.12); color: var(--neet);  border-color: rgba(52,199,123,0.5); }
-        .diff-medium { background: rgba(240,180,41,0.12); color: var(--gold); border-color: rgba(240,180,41,0.5); }
-        .diff-hard   { background: rgba(242,97,122,0.12); color: var(--coral); border-color: rgba(242,97,122,0.5); }
+        .diff-medium { background: rgba(245,184,65,0.12); color: var(--gold); border-color: rgba(245,184,65,0.5); }
+        .diff-hard   { background: rgba(255,110,134,0.12); color: var(--coral); border-color: rgba(255,110,134,0.5); }
+        .diff-btn.active { box-shadow: 0 0 0 2px currentColor inset; }
 
         .loading-text {
             display: none;
@@ -435,24 +678,35 @@
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
+            transition: background .2s ease;
         }
+        .next-btn:hover { background: rgba(47,211,230,0.1); }
 
-        /* ===== Similar formulas ===== */
-        .similar-list { display: flex; flex-direction: column; gap: 8px; margin-top: 22px; }
-        .similar-card {
-            background: linear-gradient(135deg, rgba(124,108,242,0.06), rgba(53,199,224,0.05));
-            border: 1px solid rgba(124,108,242,0.2);
+        /* ===== Similar formulas — horizontal scroll strip instead of a stacked list ===== */
+        .similar-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 4px 2px 8px;
+            margin-top: 12px;
+            scrollbar-width: thin;
+        }
+        .similar-card-mini {
+            flex: 0 0 auto;
+            min-width: 190px;
+            max-width: 220px;
+            background: linear-gradient(135deg, rgba(139,127,245,0.08), rgba(47,211,230,0.06));
+            border: 1px solid rgba(139,127,245,0.25);
             border-left: 3px solid var(--coral);
             border-radius: 10px;
             padding: 12px 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             text-decoration: none;
+            display: block;
+            transition: transform .2s ease, border-color .2s ease;
         }
-        .similar-title { color: var(--cyan); font-weight: 600; font-size: 14px; }
-        .similar-formula { color: var(--gold); font-size: 13px; font-weight: 500; }
-        .similar-arrow { color: var(--muted); font-size: 16px; font-weight: bold; }
+        .similar-card-mini:hover { transform: translateY(-2px); border-color: rgba(139,127,245,0.5); }
+        .similar-title { color: var(--cyan); font-weight: 600; font-size: 13px; display: block; margin-bottom: 4px; }
+        .similar-formula { color: var(--gold); font-size: 12.5px; font-weight: 500; }
 
         /* ===== Telegram CTA ===== */
         .tg-join-btn {
@@ -466,8 +720,10 @@
             font-weight: 600;
             border-radius: 8px;
             text-decoration: none !important;
-            box-shadow: 0 4px 10px rgba(36, 161, 222, 0.25);
+            box-shadow: 0 4px 10px rgba(36,161,222,0.25);
+            transition: transform .15s ease;
         }
+        .tg-join-btn:hover { transform: translateY(-1px); }
 
         /* ===== Animation modal ===== */
         #animationModal {
@@ -486,105 +742,275 @@
             font-size: 22px; cursor: pointer;
         }
 
-          .formula-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-display);
-            font-size: clamp(1.5rem, 6vw, 2.56rem);
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: -0.5px;
-            margin-bottom: 6px;
+        @media (prefers-reduced-motion: reduce) {
+            .spectrum-thread { animation: none; }
         }
 
-        .given-by {
-    text-align: center;
-    color: lightpink;
-    font-size: 0.8rem;
-    font-family: var(--font-mono);
-    letter-spacing: 0.01em;
-    line-height: 1.5;
-    padding: 0 16px;
-    max-width: 600px;
-    margin: 0 auto;
+        .login-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.login-modal.hidden { display: none; }
+
+.login-modal-content {
+  background: #12121a;
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
 
-.given-by span {
-    color: var(--muted);
-    white-space: nowrap;
+.login-icon { font-size: 2.5rem; margin-bottom: 8px; }
+
+.login-modal-content h3 {
+  color: white;
+  margin-bottom: 4px;
 }
 
-        .formula-hero {
-            position: relative;
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            padding: 34px 20px 28px;
-            margin: 24px auto 0;
-            max-width: 540px;
-            text-align: center;
-        }
+.login-modal-content p {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
 
+.login-modal-content label {
+  display: block;
+  text-align: left;
+  color: #d1d5db;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
 
+.login-modal-content input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #2a2a35;
+  background: #1a1a24;
+  color: white;
+  font-size: 1rem;
+}
+
+.verify-btn {
+  width: 100%;
+  margin-top: 22px;
+  padding: 12px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 1.2rem;
+}
+
+.error-text {
+  color: #f87171;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  min-height: 18px;
+}
     </style>
 </head>
 <body>
 
+    <div id="loginModal" class="login-modal hidden">
+  <div class="login-modal-content">
+    <button class="close-btn" onclick="closeLoginModal()">✕</button>
+    <div class="login-icon">🔐</div>
+    <h3>Quick verification</h3>
+    <p>Just two quick things to save or share formulas</p>
+
+    <label>Date of Birth</label>
+    <input type="date" id="dobInput" required />
+
+    <label id="captchaLabel">Loading...</label>
+    <input type="number" id="captchaInput" placeholder="Your answer" required />
+
+    <button class="verify-btn" onclick="submitSimpleLogin()">Continue</button>
+    <p id="loginError" class="error-text"></p>
+  </div>
+</div>
+
+    <div class="spectrum-thread"></div>
+
     <div class="top-bar">
         <button onclick="copyFormula()" id="copyBtn" class="util-btn util-copy">📋 Copy</button>
-
-        <a href="https://buymeachai.ezee.li/formulaverse" target="_blank" rel="noopener noreferrer" class="util-btn util-chai">☕ Chai</a>
-
-        <a href="https://wa.me/?text=Check out this Physics Formula on FormulaVerse! 📐%0A%0A{{ formula.title }}%0A{{ request.build_absolute_uri }}"
-           target="_blank" class="util-btn util-share">📲 Share</a>
+        <button onclick="handleShareClick()" class="util-btn util-share">📱 Share</button>
     </div>
 
-     <div class="formula-title">{{ formula.title }}</div>
-
-        {% if formula.given_by %}
-        <div class="given-by"><span>Given-by: </span> {{ formula.given_by }} </div>
+    <div class="page-header">
+        {% if formula.chapter %}
+        <div class="chapter-eyebrow"><b>Chapter</b> {{ formula.chapter }}</div>
         {% endif %}
+        <div class="formula-title">{{ formula.title }}</div>
+        {% if formula.given_by %}
+        <div class="given-by"><span>Given by </span>{{ formula.given_by }}</div>
+        {% endif %}
+    </div>
 
-        <div class="formula-hero">
-            $$ {{ formula.form }} $$
+    <!-- Formula is the hero. Diagram/derivation is opt-in via toggle instead of a full-width block pushing everything else below the fold. -->
+    <div class="formula-card">
+        <div class="formula-ribbon">FormulaVerse</div>
+
+        <div class="formula-card-inner">
+            <div class="formula-container">
+                $$ {{ formula.form }} $$
+            </div>
+
+            {% if formula.description %}
+            <p class="formula-subline">{{ formula.description }}</p>
+            {% endif %}
+
+            {% if formula.diagram_url or formula.desmos_graph_id or formula.derivation_image %}
+            <div class="diagram-toggle-row">
+                <button type="button" class="diagram-toggle-btn" id="diagramToggleBtn" onclick="toggleDiagram()">
+                    <span>📈 Diagram &amp; derivation</span>
+                </button>
+            </div>
+
+            <div class="diagram-panel" id="diagramPanel">
+
+                {% if formula.diagram_url %}
+                <p class="derivation-label">— Diagram —</p>
+                <div class="derivation-thumbnail-container">
+                    <img src="{{ formula.diagram_url }}"
+                         alt="Diagram"
+                         class="derivation-thumbnail"
+                         onclick="openZoom(this.src)">
+                    <span class="zoom-hint">🔍 Tap to zoom</span>
+                </div>
+                {% endif %}
+
+                {% if formula.desmos_graph_id %}
+                <p class="derivation-label">— Graph —</p>
+                <div class="desmos-embed-container">
+                    <iframe src="https://www.desmos.com/calculator/{{ formula.desmos_graph_id }}?embed"
+                            title="Interactive graph"
+                            loading="lazy"
+                            frameborder="0"></iframe>
+                </div>
+                {% endif %}
+
+                {% if formula.derivation_image %}
+                <p class="derivation-label">— Derivation —</p>
+                {% if formula.derivation_image.url|lower|slice:"-4:" == ".pdf" %}
+                    <a href="{{ formula.derivation_image.url }}" target="_blank" class="derivation-pdf-btn">
+                        <span class="pdf-icon">📄</span> Open PDF Derivation
+                    </a>
+                {% else %}
+                    <div class="derivation-thumbnail-container">
+                        <img src="{{ formula.derivation_image.url }}"
+                             alt="Derivation Thumbnail"
+                             class="derivation-thumbnail"
+                             onclick="openZoom(this.src)">
+                        <span class="zoom-hint">🔍 Tap to zoom</span>
+                    </div>
+                {% endif %}
+                {% endif %}
+
+            </div>
+            {% endif %}
         </div>
     </div>
 
-
+    <!-- IMAGE ZOOM MODAL OVERLAY -->
+    <div id="zoomOverlay" class="zoom-overlay" onclick="closeZoom()">
+        <img id="zoomImg" src="" class="zoom-img" alt="Zoomed View">
+        <span class="close-zoom-btn">&times;</span>
+    </div>
 
     <div class="content-wrapper">
 
-        <div class="chapter-row">
-            <div class="chapter-pill"><span>Chapter</span> {{ formula.chapter }}</div>
-        </div>
-
-        <div class="card card-variables">
-            <div class="card-label">Variables</div>
-            <div class="card-content">{{ formula.variables }}</div>
-        </div>
-
-        <div class="card card-description">
-            <div class="card-label">Description</div>
-            <div class="card-content">{{ formula.description }}</div>
-        </div>
-
-        <div class="two-col">
-            <div class="card card-units">
-                <div class="card-label">Units</div>
-                <div class="card-content"> $$ {{ formula.units }} $$</div>
+        <!-- Quick info: the two things read at a glance sit side by side, not stacked full-width -->
+        {% if formula.when_to_use or formula.mnemonic %}
+        <div class="quick-grid">
+            {% if formula.when_to_use %}
+            <div class="quick-chip when">
+                <div class="quick-label">🎯 When to use</div>
+                <div class="quick-body">{{ formula.when_to_use }}</div>
             </div>
-
-            <div class="card card-when">
-                <div class="card-label">When to Use</div>
-                <div class="card-content">{{ formula.when_to_use }}</div>
+            {% endif %}
+            {% if formula.mnemonic %}
+            <div class="quick-chip recall">
+                <div class="quick-label">💡 Quick recall</div>
+                <div class="quick-body">{{ formula.mnemonic }}</div>
             </div>
+            {% endif %}
         </div>
+        {% endif %}
 
+        <!-- Worked example keeps full visual weight — it's what people re-read mid-problem -->
+        {% if formula.worked_example %}
+        <div class="example-card">
+            <div class="example-label">🧮 Worked example</div>
+            <div class="card-content">{{ formula.example }}</div>
+            <div class="card-content" style="overflow-x: auto; max-width: 100%; margin-top: 6px;"> $$ {{ formula.answer }} $$ </div>
+        </div>
+        {% endif %}
 
         {% if result %}
         <div class="result-badge">{{ result }}</div>
         {% endif %}
+
+        {% if formula.pyq_appearances %}
+        <div class="pyq-row">
+            <div class="pyq-heading">📄 Appeared in</div>
+            <div class="pyq-pill-row">
+                {% for appearance in formula.pyq_appearances %}
+                <span class="pyq-pill">{{ appearance }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Description, variables, units and common mistakes: useful, but not needed on every visit — collapsed by default -->
+        <div class="accordion">
+            <button type="button" class="accordion-header" id="detailsToggleBtn" onclick="toggleDetails()">
+                <span>📐 Variables, units &amp; common mistakes</span>
+                <span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-body" id="detailsBody">
+                {% if formula.variables %}
+                <div class="detail-block">
+                    <div class="detail-label">Variables</div>
+                    <div class="detail-body">{{ formula.variables }}</div>
+                </div>
+                {% endif %}
+
+                {% if formula.units %}
+                <div class="detail-block">
+                    <div class="detail-label">Units</div>
+                    <div class="detail-body" style="display: flex; justify-content: left; align-items: left;">$$ {{ formula.units }} $$</div>
+                </div>
+                {% endif %}
+
+                {% if formula.common_mistakes %}
+                <div class="detail-block mistakes">
+                    <div class="detail-label">⚠️ Common mistakes</div>
+                    <div class="detail-body">{{ formula.common_mistakes|linebreaks }}</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
 
         <div class="explanation">
             {% if explanation %}
@@ -592,10 +1018,10 @@
             {% endif %}
         </div>
 
-        <form method="POST" action="{% url 'saved-page' pk=formula.id %}">
-            {% csrf_token %}
-            <button type="submit" name="save" class="btn-save">★ Save</button>
-        </form>
+       <form method="POST" action="{% url 'saved-page' pk=formula.id %}" id="saveForm" onsubmit="return handleSaveSubmit(event)">
+  {% csrf_token %}
+  <button type="submit" name="save" class="btn-save">★ Save</button>
+</form>
 
         <div id="animationModal">
             <div class="modal-box">
@@ -606,14 +1032,14 @@
             </div>
         </div>
 
-        <!-- Practice Section -->
+        <!-- Practice section — pulled up next to the content it tests, right after Save -->
         <div class="practice-section">
             <div class="practice-heading">⚡ Practice Questions — Difficulty</div>
 
             <div class="diff-row">
-                <button onclick="loadQuestion('easy')" class="diff-btn diff-easy">🟢 Easy</button>
-                <button onclick="loadQuestion('medium')" class="diff-btn diff-medium">🟡 Medium</button>
-                <button onclick="loadQuestion('hard')" class="diff-btn diff-hard">🔴 Hard</button>
+                <button onclick="loadQuestion('easy')" id="diffEasyBtn" class="diff-btn diff-easy">🟢 Easy</button>
+                <button onclick="loadQuestion('medium')" id="diffMediumBtn" class="diff-btn diff-medium active">🟡 Medium</button>
+                <button onclick="loadQuestion('hard')" id="diffHardBtn" class="diff-btn diff-hard">🔴 Hard</button>
             </div>
 
             <div id="loading" class="loading-text">⏳ Generating question...</div>
@@ -630,22 +1056,21 @@
             </div>
         </div>
 
-        <div class="similar-list">
+        <div>
+             <div class="practice-heading" style="margin-top:22px;"> --Similar Formulas-- </div>
+            <div class="similar-scroll">
             {% for similar in similar_formulas %}
-            <a href="{{ similar.get_absolute_url }}" class="similar-card">
-                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <div class="similar-title">{{ similar.title }}</div>
-                    <span style="color:var(--faint); font-size:12px;">•</span>
-                    <div class="similar-formula">${{ similar.form }}$</div>
-                </div>
-                <div class="similar-arrow">➔</div>
+            <a href="{{ similar.get_absolute_url }}" class="similar-card-mini">
+                <span class="similar-title">{{ similar.title }}</span>
+                <span class="similar-formula">${{ similar.form }}$</span>
             </a>
             {% empty %}
             <p style="color:var(--muted); font-size:13px;">No similar formulas found.</p>
             {% endfor %}
+            </div>
         </div>
 
-        <a href="https://t.me/formulaverse" target="_blank" class="tg-join-btn">📢 Loved this explanation? Join our Telegram for daily physics shortcuts &amp; cheat sheets!</a>
+        <a href=https://t.me/formulaverse target="_blank" class="tg-join-btn">📢 Loved this explanation? Join our Telegram for daily physics shortcuts &amp; cheat sheets!</a>
 
     </div>
 
@@ -654,8 +1079,38 @@ let currentDifficulty = 'medium';
 let correctAnswer = '';
 let currentExplanation = '';
 
+function toggleDiagram() {
+    const panel = document.getElementById('diagramPanel');
+    const btn = document.getElementById('diagramToggleBtn');
+    const opening = !panel.classList.contains('open');
+    panel.classList.toggle('open');
+    btn.classList.toggle('open');
+    if (opening && window.MathJax) {
+        MathJax.typesetPromise([panel]);
+    }
+}
+
+function toggleDetails() {
+    const body = document.getElementById('detailsBody');
+    const header = document.getElementById('detailsToggleBtn');
+    const opening = !body.classList.contains('open');
+    body.classList.toggle('open');
+    header.classList.toggle('open');
+    if (opening && window.MathJax) {
+        MathJax.typesetPromise([body]);
+    }
+}
+
+function setActiveDiffButton(difficulty) {
+    document.querySelectorAll('.diff-btn').forEach(btn => btn.classList.remove('active'));
+    const map = { easy: 'diffEasyBtn', medium: 'diffMediumBtn', hard: 'diffHardBtn' };
+    const btn = document.getElementById(map[difficulty]);
+    if (btn) btn.classList.add('active');
+}
+
 function loadQuestion(difficulty) {
     currentDifficulty = difficulty;
+    setActiveDiffButton(difficulty);
     document.getElementById('loading').style.display = 'block';
     document.getElementById('question-box').style.display = 'none';
     document.getElementById('feedback-box').style.display = 'none';
@@ -679,7 +1134,7 @@ function loadQuestion(difficulty) {
             optionsBox.innerHTML = '';
 
             const colors = { 'A': '#1e3a5f', 'B': '#1a3a2a', 'C': '#3a1a2a', 'D': '#2a1a3a' };
-            const borderColors = { 'A': '#5B8DEF', 'B': '#34C77B', 'C': '#F2617A', 'D': '#7C6CF2' };
+            const borderColors = { 'A': '#5B8DEF', 'B': '#34C77B', 'C': '#FF6E86', 'D': '#8B7FF5' };
 
             for (let key in data.options) {
                 optionsBox.innerHTML += `
@@ -715,8 +1170,8 @@ function checkAnswer(selected) {
         feedbackText.style.color = '#86efac';
         feedbackText.innerText = '✅ Correct! ' + currentExplanation;
     } else {
-        feedback.style.background = 'rgba(242,97,122,0.14)';
-        feedback.style.border = '1px solid #F2617A';
+        feedback.style.background = 'rgba(255,110,134,0.14)';
+        feedback.style.border = '1px solid #FF6E86';
         feedbackText.style.color = '#fca5a5';
         feedbackText.innerText = `❌ Wrong! Correct answer: ${correctAnswer}. ${currentExplanation}`;
     }
@@ -858,6 +1313,98 @@ async function openAnimation(formulaId) {
 function closeAnimation() {
   document.getElementById('animationModal').style.display = 'none';
   document.getElementById('animationContent').innerHTML = '';
+}
+
+function openZoom(imageSrc) {
+    const overlay = document.getElementById('zoomOverlay');
+    const zoomImg = document.getElementById('zoomImg');
+
+    zoomImg.src = imageSrc;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeZoom() {
+    const overlay = document.getElementById('zoomOverlay');
+    overlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('SW registered!'))
+        .catch(err => console.log('SW failed:', err));
+    });
+}
+
+let pendingAction = null;
+
+function openLoginModal(formulaId, action) {
+  sessionStorage.setItem('pendingAction', JSON.stringify({formulaId, action}));
+  document.getElementById('loginModal').classList.remove('hidden');
+  loadCaptcha();
+}
+
+function closeLoginModal() {
+  document.getElementById('loginModal').classList.add('hidden');
+}
+
+function loadCaptcha() {
+  fetch('/get-captcha/')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('captchaLabel').innerText = data.question;
+    });
+}
+
+function submitSimpleLogin() {
+  const dob = document.getElementById('dobInput').value;
+  const answer = document.getElementById('captchaInput').value;
+  const errorEl = document.getElementById('loginError');
+
+  if (!dob || !answer) {
+    errorEl.innerText = "Please fill both fields.";
+    return;
+  }
+
+  fetch('/simple-login/', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({dob, answer})
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      closeLoginModal();
+      const pending = JSON.parse(sessionStorage.getItem('pendingAction'));
+      if (pending.action === 'save') saveFormula(pending.formulaId);
+      if (pending.action === 'share') shareFormula(pending.formulaId);
+      location.reload(); // so button states update to "logged in"
+    } else {
+      errorEl.innerText = data.error || "Something went wrong.";
+      loadCaptcha(); // refresh captcha on wrong answer
+    }
+  });
+}
+
+const shareText = "Check out this Physics Formula on FormulaVerse! 📐%0A%0A{{ formula.title }}%0A{{ request.build_absolute_uri }}";
+
+function handleShareClick() {
+  {% if request.session.user_session_id %}
+    window.open(`https://wa.me/?text=${shareText}`, '_blank');
+  {% else %}
+    openLoginModal('share');
+  {% endif %}
+}
+
+function handleSaveSubmit(event) {
+  {% if not request.session.user_session_id %}
+    event.preventDefault();
+    openLoginModal('save');
+    return false;
+  {% endif %}
+  return true; // logged in, let form submit normally
 }
 </script>
 

@@ -6,6 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> MY DASHBOARD- FormulaVerse</title>
 
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+    <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
+    <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755..."></script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YHLZCEHWF7');
+</script>
+
+<meta name="description" content="Your FormulaVerse Dashboard — browse 158+ physics formulas by chapter, track saved formulas, and access practice questions for JEE and NEET.">
+<meta property="og:title" content="Dashboard | FormulaVerse"/>
+<meta property="og:url" content="https://formulaverse.in/dashboard/"/>
+<meta name="keywords" content="physics formula dashboard, JEE physics chapters, NEET physics chapters, formula categories">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cri..." rel="stylesheet">
+
 
 
 </head>
@@ -172,5 +197,18 @@
 
 
 </div>
+
+
+<script>
+
+
+      if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('SW registered!'))
+        .catch(err => console.log('SW failed:', err));
+    });
+}
+</script>
 
 </body>

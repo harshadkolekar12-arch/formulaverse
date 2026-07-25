@@ -8,6 +8,10 @@
 
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
 
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+    <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
+    <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
      crossorigin="anonymous"></script>
     <!-- Google tag (gtag.js) -->
@@ -25,7 +29,7 @@
 <meta name="keywords" content="FormulaVerse creator, Harshad Kolekar, physics app developer">
 <meta property="og:title" content="About — FormulaVerse"/>
 <meta property="og:description" content="Meet the creator of FormulaVerse!"/>
-<meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/me"/>
+<meta property="og:url" content="https://formulaverse.in/me"/>
 <meta name="keywords" content="{{ formula.title }},
 JEE formula, NEET formula, physics formula">
 
@@ -354,5 +358,16 @@ JEE formula, NEET formula, physics formula">
           text-decoration:none; font-family:inherit;">
   ☕ Buy me a chai
 </a>
+
+<script>
+
+      if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('SW registered!'))
+        .catch(err => console.log('SW failed:', err));
+    });
+}
+</script>
 
 </body>

@@ -29,6 +29,17 @@ def serve_sw(request):
     sw_path = os.path.join(settings.STATIC_ROOT, 'formulas/sw.js')
     return FileResponse(open(sw_path, 'rb'), content_type='application/javascript')
 
+def serve_assetlinks(request):
+    content = '''[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "in.formulaverse.app",
+    "sha256_cert_fingerprints": ["97:68:FF:24:F5:93:04:4B:5C:52:87:30:8F:42:4D:E0:47:0D:AB:1F:EB:4A:B1:99:D5:04:16:F4:E6:AC:BE:88"]
+  }
+}]'''
+    return HttpResponse(content, content_type='application/json')
+
 sitemaps = {
     'formulas' : FormulaSitemap,
     'static' : StaticSitemap
@@ -39,6 +50,7 @@ urlpatterns = [
     path('ads.txt', lambda r: HttpResponse("google.com, pub-2098916755752141, DIRECT, f08c47fec0942fa0", content_type="text/plain")),
     path('sitemap.xml', sitemap, {'sitemaps' : sitemaps}),
     path('sw.js', serve_sw),
+    path('.well-known/assetlinks.json', serve_assetlinks),
     path("", include("formulas.urls")),
 
 

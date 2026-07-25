@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.views.generic import DetailView,TemplateView, CreateView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
-from .models import Formula, Chapter
+from .models import Formula, Chapter, SimpleUser
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -50,6 +50,7 @@ class IndexView(ListView):
     def get(self, request):
         formulas = Formula.objects.all()
         total = formulas.count()
+        formula= formulas.filter(derivation_image__isnull=False)
 
         # Saved count
         saved_count = 0
@@ -64,8 +65,17 @@ class IndexView(ListView):
             for cat in Chapter.objects.annotate(formula_count=Count('formula'))
             }
 
+        visited_ids= request.session.get("visited_formulas", [])
 
-        formula_of_day = random.choice(list(formulas)) if formulas.exists() else None
+        visited_counts= {
+            cat.name.lower().replace(' ', '_').replace('&', 'and'):
+                Formula.objects.filter(chapter=cat, id__in=visited_ids).count()
+            for cat in Chapter.objects.all()
+            }
+
+
+
+        formula_of_day = random.choice(list(formula)) if formula.exists() else None
 
 
         return render(request, "formulas/index.html", {
@@ -75,6 +85,7 @@ class IndexView(ListView):
             "user": request.user,
             "formula_of_day": formula_of_day,
             "count" : category_counts,
+            "visited" : visited_counts,
         })
 
 
@@ -91,6 +102,17 @@ class SingleFormulaView(DetailView):
             chapter = self.object.chapter
             ).exclude(pk=self.object.pk)[:5]
         return context
+
+    def get(self, request, *args, **kwargs):
+        response= super().get(request, *args, **kwargs)
+
+        visited= request.session.get("visited_formulas", [])
+        if self.object.id not in visited:
+            visited.append(self.object.id)
+            request.session['visited_formulas']= visited
+            request.session.modified= True
+
+        return response
 
     def post(self, request, *args, **kwargs):
         self.object=self.get_object()
@@ -126,6 +148,9 @@ class SingleFormulaView(DetailView):
 
 class SavedFormulasView(View):
     def post(self, request, pk, *args, **kwargs):
+        if not request.session.get('user_session_id'):
+            return redirect('single-formula-page', pk=pk)
+
         formula_id = request.POST.get("formula_id")
         formula = get_object_or_404(Formula, id=pk)
 
@@ -375,7 +400,7 @@ class ExamFilterView(View):
         if path == 'jee':
             formulas = Formula.objects.filter(
                 exam_tag__in=['jee', 'both']
-            ).annotate(
+            ).select_related('chapter').annotate(
                 tag_priority=Case(
                     When(exam_tag='jee', then=Value(0)),
                     When(exam_tag='both', then=Value(1)),
@@ -508,3 +533,45 @@ def daily_physics_fact_view(request):
         "success": True,
         "fact": fact_text
     })
+
+
+
+class SimGuide(DetailView):
+    model=Chapter
+    pk_url_kwarg="pk"
+    template_name="formulas/sim_guide.html"
+    context_object_name="chapter"
+
+
+
+
+@csrf_exempt
+def simple_login(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        dob = data.get("dob")
+        answer = data.get("answer")
+        correct_answer = request.session.get("captcha_answer")
+
+        if str(answer) != str(correct_answer):
+            return JsonResponse({"success": False, "error": "Wrong answer, try again."})
+
+        user = SimpleUser.objects.create(date_of_birth=dob)
+        request.session['user_session_id'] = str(user.session_id)
+        request.session['user_dob'] = dob
+        return JsonResponse({"success": True})
+
+    return JsonResponse({"success": False}, status=400)
+
+
+def get_captcha(request):
+    import random
+    a, b = random.randint(1, 10), random.randint(1, 10)
+    request.session['captcha_answer'] = a + b
+    return JsonResponse({"question": f"{a} + {b} = ?"})
+
+
+
+def logout_view(request):
+    request.session.flush()
+    return redirect('/')

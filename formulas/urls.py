@@ -16,10 +16,14 @@ urlpatterns=[
     path('pyq-papers/', views.pyq_papers, name="pyq-papers"),
     path('units-dimensions/', views.UnitsDimensionsView.as_view(), name="units-dimensions"),
     path('api/daily-facts/', views.daily_physics_fact_view, name="daily_fact"),
+    path('simple-login/', views.simple_login, name='simple_login'),
+    path('get-captcha/', views.get_captcha, name='get_captcha'),
+    path('logout/', views.logout_view, name='logout'),
     path("saved/<int:pk>/", views.SavedFormulasView.as_view(), name="saved-page"),
     path("formula/<int:pk>", views.SingleFormulaView.as_view(), name="single-formula-page"),
     path('unsave/<int:pk>/', views.unsave,  name ="unsave-formula"),
     path("try", views.TryView.as_view()),
+    path('sim-guide/<int:pk>/', views.SimGuide.as_view(),  name="sim-guide"),
     path("<str:chapter>/", views.CategoryView.as_view(), name="category"),
     path('panel/', views.mini_panel, name='mini_panel'),
     path('panel/add-formula/', views.add_formula, name='add_formula'),
@@ -29,7 +33,7 @@ urlpatterns=[
     path('practice/<int:formula_id>/', views.practice_question,
      name='practice_question'),
     path('formula/<int:formula_id>/animation', views.FormulaAnimationView.as_view(), name='formula_animation'),
-    path('save-fcm-token/', views.save_fcm_token, name='save_fcm_token')
+    path('save-fcm-token/', views.save_fcm_token, name='save_fcm_token'),
 
 
 ]

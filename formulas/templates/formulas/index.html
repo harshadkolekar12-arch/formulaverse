@@ -7,70 +7,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> 💗FORMULAVERSE </title>
 
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js"></script>
+    <script src=https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js></script>
+    <script src=https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js></script>
 
-<script>
-const firebaseConfig = {
-    apiKey: "AIzaSyDEO2NDNQZgt9NshLFIhYntGOafMQtdQBA",
-    authDomain: "formulaverse-afaf2.firebaseapp.com",
-    projectId: "formulaverse-afaf2",
-    storageBucket: "formulaverse-afaf2.firebasestorage.app",
-    messagingSenderId: "472325603873",
-    appId: "1:472325603873:web:06fbd627b03c3d0c3b5960"
-};
+    <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
+    <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
 
-firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
+    <script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDEO2NDNQZgt9NshLFIhYntGOafMQtdQBA",
+        authDomain: "formulaverse-afaf2.firebaseapp.com",
+        projectId: "formulaverse-afaf2",
+        storageBucket: "formulaverse-afaf2.firebasestorage.app",
+        messagingSenderId: "472325603873",
+        appId: "1:472325603873:web:06fbd627b03c3d0c3b5960"
+    };
 
-async function requestPermission() {
-    try {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-            const token = await messaging.getToken({
-                vapidKey: 'BMD65Lhf-odwE-rVU08G4MpOUvwOXIUmaPTv_SAYxTLo3e6IsUgiPKqbXBimwgl-Zlkuyxm4nqciABwklelr4g4'
-            });
-            console.log('FCM Token:', token);
-            fetch('/save-fcm-token/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({ token: token })
-            });
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    async function requestPermission() {
+        try {
+            const permission = await Notification.requestPermission();
+            if (permission === 'granted') {
+                const token = await messaging.getToken({
+                    vapidKey: 'BMD65Lhf-odwE-rVU08G4MpOUvwOXIUmaPTv_SAYxTLo3e6IsUgiPKqbXBimwgl-Zlkuyxm4nqciABwklelr4g4'
+                });
+                console.log('FCM Token:', token);
+                fetch('/save-fcm-token/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ token: token })
+                });
+            }
+        } catch (err) {
+            console.error('Notification permission error:', err);
         }
-    } catch (err) {
-        console.error('Notification permission error:', err);
     }
-}
 
-setTimeout(requestPermission, 3000);
-</script>
+    setTimeout(requestPermission, 3000);
+    </script>
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
+    <script async src=https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141
      crossorigin="anonymous"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-YHLZCEHWF7');
-</script>
+    <script async src=https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YHLZCEHWF7');
+    </script>
 
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
-<meta name="theme-color" content="#38bdf8">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="FormulaVerse">
-<meta name="keywords" content="{{ formula.title }},
-JEE formula, NEET formula, physics formula">
-
+    <meta name="theme-color" content="#38bdf8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="FormulaVerse">
+    <meta name="keywords" content="{{ formula.title }}, JEE formula, NEET formula, physics formula">
 
     <meta name="description" content="Browse Physics formulas by category — Kinematics, Mechanics, Electrostatics and more on FormulaVerse">
-<meta name="keywords" content="physics categories, kinematics formulas, mechanics formulas, electrostatics formulas">
-<meta property="og:title" content="Physics Categories — FormulaVerse"/>
-<meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/index"/>
+    <meta name="keywords" content="physics categories, kinematics formulas, mechanics formulas, electrostatics formulas">
+    <meta property="og:title" content="Physics Categories — FormulaVerse"/>
+    <meta property="og:url" content=https://formulaverse.in/index/>
 
     <script>
     MathJax = {
@@ -78,448 +78,637 @@ JEE formula, NEET formula, physics formula">
         svg: { fontCache: 'global' }
     };
     </script>
-    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js></script>
 
-      <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    <style>
+        :root {
+            /* Base surfaces — matches landing page */
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #0f172a;
+            --bg-card: #1E2235;
+            --bg-card-hover: rgba(255,255,255,0.07);
+            --border-subtle: rgba(255,255,255,0.06);
 
-    body {
-        background: linear-gradient(165deg, #1a1d27 0%, #20242f 50%, #23222b 100%);
-        min-height: 100vh;
-        font-family: 'Outfit', sans-serif;
-        color: #e7e7ea;
-    }
+            /* Text */
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
 
-    h1 { color: #f4c9d6; }
+            /* Content accent (site-wide primary) */
+            --accent-blue: #38bdf8;
+            --accent-purple: #a855f7;
 
-    .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
-    padding: 10px 14px 24px;
-    max-width: 560px;
-    margin: 0 auto;
-}
+            /* Brand accent — from the heart logo, used ONLY for wordmark/tagline */
+            --brand-pink: #f4c9d6;
+            --brand-pink-muted: #b98ba0;
 
-@media (max-width: 600px) {
-    .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
+            /* Reference-tool chip colors (one per tool, intentional) */
+            --chip-purple: #7c4dff;
+            --chip-purple-text: #c4b5fd;
+            --chip-gold: #e0b94f;
+            --chip-gold-text: #f4c869;
+            --chip-blue: #38bdf8;
+            --chip-blue-text: #7dd3fc;
 
-.topic-card {
-    min-width: 0;
-    padding: 12px 12px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    width: 100%;
-    box-sizing: border-box;
-    background: #1E2235;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    border-right: 1px solid rgba(255,255,255,0.06);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
+            /* Filter active state */
+            --filter-active: linear-gradient(135deg, #7928ca, #b83280);
+        }
 
-.topic-card a {
-    text-decoration: none;
-    color: #00F5D4;
-    min-width: 0; /* add this too — the <a> is flex:1, same issue applies */
-    flex: 1;
-}
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: linear-gradient(135deg, #0a0e1a, #0f172a, #0a0812, #05070f);
+            min-height: 100vh;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-primary);
+        }
+
+        h1 { color: var(--brand-pink); }
+
+        /* ============ Spectral topic grid ============
+           Every topic sits at its own point on a light-spectrum-inspired
+           hue wheel (--hue, set inline per card). One consistent treatment,
+           sixteen distinct identities — like a spectroscope for physics. */
+
+        .grid-heading {
+            max-width: 560px;
+            margin: 4px auto 10px;
+            padding: 0 16px;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+        }
+
+        .grid-heading .label {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .grid-heading .count {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            padding: 10px 14px 24px;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        .topic-card {
+            --glow: hsla(var(--hue), 85%, 65%, 0.55);
+            --tint: hsla(var(--hue), 70%, 62%, 0.16);
+            --tint-strong: hsla(var(--hue), 75%, 68%, 1);
+
+            position: relative;
+            min-width: 0;
+            min-height: 62px;
+            padding: 10px 10px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            text-decoration: none;
+            overflow: hidden;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+            opacity: 0;
+            animation: card-in 0.45s ease forwards;
+        }
+
+        /* faint spectral wash in the corner — the one bit of color-per-card richness */
+        .topic-card::before {
+            content: "";
+            position: absolute;
+            top: -30%; right: -20%;
+            width: 70px; height: 70px;
+            background: radial-gradient(circle, var(--tint), transparent 70%);
+            pointer-events: none;
+        }
+
+        .topic-card:hover,
+        .topic-card:focus-visible {
+            transform: translateY(-2px);
+            background: var(--bg-card-hover);
+            border-color: hsla(var(--hue), 70%, 60%, 0.45);
+            box-shadow: 0 8px 22px -6px rgba(0,0,0,0.5), 0 0 0 1px hsla(var(--hue), 70%, 60%, 0.15), 0 6px 18px -8px var(--glow);
+        }
+
+        .topic-card:focus-visible { outline: 2px solid var(--tint-strong); outline-offset: 2px; }
+
+        @keyframes card-in {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .topic-card { animation: none; opacity: 1; }
+        }
+
+        .card-icon {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: var(--tint);
+            box-shadow: inset 0 0 0 1px hsla(var(--hue), 70%, 65%, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .card-body {
+            min-width: 0;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: clamp(9.34px, 1.6vw, 11px);
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-primary);
+            line-height: 1.15;
+            /* allow up to 2 lines evenly instead of a lonely wrapped title */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-count {
+            color: var(--tint-strong);
+            min-width: 22px; height: 22px;
+            padding: 0 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: hsla(var(--hue), 70%, 60%, 0.14);
+            border: 1px solid hsla(var(--hue), 70%, 60%, 0.3);
+            border-radius: 999px;
+            font-size: 10.5px;
+            font-weight: 800;
+            z-index: 1;
+        }
+
+        .filter-buttons a { text-decoration: none; }
+
+        .filter-buttons {
+            display: flex;
+            background-color: var(--bg-card);
+            padding: 4px;
+            border-radius: 30px;
+            border: 1px solid var(--border-subtle);
+            max-width: 360px;
+            margin: 16px auto;
+        }
+
+        .filter-btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 26px;
+            transition: all 0.25s ease-in-out;
+        }
+
+        .filter-btn:hover { color: #ffffff; }
+
+        .filter-btn.active {
+            color: #ffffff;
+            background: var(--filter-active);
+            box-shadow: 0px 4px 12px rgba(121, 40, 202, 0.2);
+        }
+
+        .privacy {
+            margin-top: 20px;
+            padding: 15px 0 32px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .privacy a { text-decoration: none; color: inherit; }
+
+        .app-header {
+            padding: 16px 14px 4px 14px;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .app-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .app-header-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+            margin-left: auto;
+        }
+
+        .app-header-wordmark {
+            font-size: clamp(1.1rem, 5vw, 1.35rem);
+            font-weight: 900;
+            color: var(--brand-pink);
+            letter-spacing: 0.06em;
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+
+        .app-header-tagline {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--brand-pink-muted);
+            letter-spacing: 0.06em;
+            margin-top: 2px;
+            margin-right: 4px;
+            white-space: nowrap;
+        }
+
+        .app-header-back {
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px; height: 30px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            font-weight: 800;
+            font-size: 1.2rem;
+            text-decoration: none;
+            flex-shrink: 0;
+            margin-right: auto;
+            transition: background 0.15s ease;
+        }
+
+        .app-header-back:hover { background: rgba(255,255,255,0.14); }
+
+        .app-header-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .dashboard-btn {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: var(--bg-primary);
+            padding: 9px 6px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 12px;
+            text-align: center;
+            display: block;
+            box-shadow: 0 4px 14px -4px rgba(56,189,248,0.45);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .dashboard-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px -4px rgba(56,189,248,0.55);
+        }
+
+        /* Plain, non-interactive stat badge — deliberately quieter than the Dashboard button */
+        .total-pill {
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 9px 6px;
+            border-radius: 14px;
+            background: transparent;
+            border: 1px dashed var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: default;
+        }
+
+        .total-pill span.num { color: var(--text-primary); }
+
+        .reference-label {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--brand-pink);
+            margin: 6px 0 8px;
+        }
+
+        .reference-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            max-width: 560px;
+            margin: 0 auto 12px;
+            padding: 0 14px;
+        }
+
+        .reference-row .ref-btn {
+            text-align: center;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 9px 4px;
+            border-radius: 14px;
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+        }
+
+        .reference-row .ref-btn:hover { transform: translateY(-1px); }
+
+        .ref-btn.ref-purple { background: rgba(124,77,255,0.16); color: var(--chip-purple-text); border: 1px solid var(--border-subtle); }
+        .ref-btn.ref-purple:hover { background: var(--chip-purple); color: #fff; }
+
+        .ref-btn.ref-gold { background: rgba(224,185,79,0.16); color: var(--chip-gold-text); border: 1px solid var(--border-subtle); }
+        .ref-btn.ref-gold:hover { background: var(--chip-gold); color: #1a1508; }
+
+        .ref-btn.ref-blue { background: rgba(56,189,248,0.16); color: var(--chip-blue-text); border: 1px solid var(--border-subtle); }
+        .ref-btn.ref-blue:hover { background: var(--chip-blue); color: var(--bg-secondary); }
+
+        .proto-banner {
+            max-width: 560px;
+            margin: 0 auto;
+            padding: 6px 14px;
+            text-align: center;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--chip-gold-text);
+            letter-spacing: 0.4px;
+        }
 
 
-    .topic-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-        background: rgba(255,255,255,0.07);
-    }
-
-
-    .card-icon {
-        width: 30px; height: 30px;
-        border-radius: 9px;
-        background: rgba(255,255,255,0.08);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 15px;
-        flex-shrink: 0;
-    }
-
-    .card-title {
-        font-size: clamp(9.34px, 1.6vw, 11px);
-        font-weight: 700;
-        margin: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        color: #eceef1;
-    }
-
-    .card-count {
-        color: #eceef1;
-        width: 24px; height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        background: rgba(255,255,255,0.10);
-        border-radius: 50%;
-        font-size: 10.5px;
-        font-weight: 700;
-    }
-
-    .filter-buttons a{
-        text-decoration: none;
-    }
-
-
-    /* Container for the segmented layout */
-.filter-buttons {
+        .login-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
   display: flex;
-  background-color: #1a1f2c; /* Match your card background color */
-  padding: 4px;
-  border-radius: 30px; /* Gives it the round capsule shape */
-  border: 1px solid rgba(255, 255, 255, 0.05); /* Very subtle boundary */
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.login-modal.hidden { display: none; }
+
+.login-modal-content {
+  background: #12121a;
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 90%;
   max-width: 360px;
-  margin: 16px auto; /* Centers it on mobile screens */
-}
-
-/* Base button styling */
-.filter-btn {
-  flex: 1; /* Makes all 3 buttons exactly equal width */
   text-align: center;
-  padding: 10px 0;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.login-icon { font-size: 2.5rem; margin-bottom: 8px; }
+.login-modal-content h3 { color: white; margin-bottom: 4px; }
+.login-modal-content p { color: #9ca3af; font-size: 0.9rem; margin-bottom: 20px; }
+.login-modal-content label { display: block; text-align: left; color: #d1d5db; font-size: 0.85rem; margin-bottom: 6px; margin-top: 14px; }
+.login-modal-content input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid #2a2a35; background: #1a1a24; color: white; font-size: 1rem; }
+.verify-btn { width: 100%; margin-top: 22px; padding: 12px; border: none; border-radius: 999px; background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; font-weight: 600; font-size: 1rem; }
+.modal-close { position: absolute; top: 14px; right: 16px; background: none; border: none; color: #9ca3af; font-size: 1.2rem; }
+.error-text { color: #f87171; font-size: 0.85rem; margin-top: 10px; min-height: 18px; }
+
+
+.cancel-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid #2a2a35;
+  border-radius: 999px;
+  background: transparent;
+  color: #9ca3af;
   font-weight: 600;
-  font-size: 14px;
-  color: #a0aec0; /* Subdued gray text for unselected state */
-  text-decoration: none;
-  border-radius: 26px; /* Slightly smaller than container radius for inner fit */
-  transition: all 0.25s ease-in-out;
+  font-size: 0.95rem;
 }
-
-/* Hover state for desktop users */
-.filter-btn:hover {
-  color: #ffffff;
-}
-
-/* The Active/Selected State */
-.filter-btn.active {
-  color: #ffffff;
-  /* Option A: Using your theme's purple gradient */
-  background: linear-gradient(135deg, #7928ca, #b83280);
-
-  /* Option B: Alternative subtle blue/indigo if you prefer a cooler tone */
-  /* background-color: #2b364e; */
-
-  box-shadow: 0px 4px 12px rgba(121, 40, 202, 0.2);
-}
-
-
-    .privacy {
-        margin-top: 20px;
-        padding: 15px 0 32px;
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .privacy a { text-decoration: none; color: inherit; }
-
-    .app-header {
-        padding: 16px 14px 4px 14px;
-        max-width: 560px;
-        margin: 0 auto;
-    }
-
-    .app-header-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        margin-bottom: 14px;
-    }
-
-    .app-header-brand {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        min-width: 0;
-    }
-
-    .app-header-wordmark {
-        font-size: clamp(1.1rem, 5vw, 1.35rem);
-        font-weight: 900;
-        color: #f4c9d6;
-        letter-spacing: 0.02em;
-        line-height: 1.1;
-        white-space: nowrap;
-    }
-
-    .app-header-tagline {
-        font-size: 0.68rem;
-        font-weight: 700;
-        color: #b98ba0;
-        letter-spacing: 0.06em;
-        margin-top: 2px;
-        white-space: nowrap;
-    }
-
-    .app-header-back {
-        color: #e7e7ea;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 34px; height: 30px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.08);
-        font-weight: 800;
-        font-size: 1.2rem;
-        text-decoration: none;
-        flex-shrink: 0;
-    }
-
-    .app-header-actions {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-    }
-
-    .dashboard-btn {
-        background: linear-gradient(135deg, #38bdf8, #a855f7);
-        color: #12141c;
-        padding: 9px 6px;
-        border-radius: 14px;
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 12px;
-        text-align: center;
-        display: block;
-    }
-
-    .total-pill {
-        color: #e7e7ea;
-        font-size: 12px;
-        font-weight: 700;
-        padding: 9px 6px;
-        border-radius: 14px;
-        background: rgba(255,255,255,0.07);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .reference-label {
-        text-align: center;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 1.5px;
-        color: #f4c9d6;
-        margin: 6px 0 8px;
-    }
-
-      .reference-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 8px;
-        max-width: 560px;
-        margin: 0 auto 12px;
-        padding: 0 14px;
-    }
-
-    .reference-row .ref-btn {
-        text-align: center;
-        justify-content: center;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        padding: 9px 4px;
-        border-radius: 14px;
-        font-size: 11px;
-        font-weight: 700;
-        text-decoration: none;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .ref-btn.ref-purple { background: rgba(124,77,255,0.16); color: #c4b5fd; border: #2C3148; }
-    .ref-btn.ref-purple:hover { background: #7c4dff; color: #fff; }
-
-    .ref-btn.ref-gold { background: rgba(224,185,79,0.16); color: #f4c869; border: #2C3148; }
-    .ref-btn.ref-gold:hover { background: #e0b94f; color: #1a1508; }
-
-    .ref-btn.ref-blue { background: rgba(56, 189, 248, 0.16); color: #7dd3fc; border: #2C3148; }
-    .ref-btn.ref-blue:hover { background: #38bdf8; color: #0f172a; }
-
-    .proto-banner {
-        max-width: 560px;
-        margin: 0 auto;
-        padding: 6px 14px;
-        text-align: center;
-        font-size: 10.5px;
-        font-weight: 700;
-        color: #d9a441;
-        letter-spacing: 0.4px;
-    }
 
     </style>
-
-
 </head>
 <body>
 
-    <div class="app-header">
-        <div class="app-header-top">
-            <div class="app-header-brand">
-                <svg width="23" height="23" viewBox="0 0 120 90" style="flex-shrink:0; margin-top: -14px; margin-left: 4px">
-                  <defs>
-                    <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#e8729a"/>
-                      <stop offset="100%" stop-color="#9b5de5"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M60,85 C60,85 10,55 10,28 A25,25,0,0,1,60,20 A25,25,0,0,1,110,28 C110,55 60,85 60,85 Z"
-                        fill="url(#hg)"/>
-                  <text x="60" y="48"
-                        text-anchor="middle"
-                        font-size="28"
-                        font-weight="700"
-                        fill="white"
-                        font-family="Georgia,serif">F</text>
+<div class="app-header">
+    <div class="app-header-top" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+
+        <a href="{% url 'base-page' %}" class="app-header-back" style="order: 1;"> ← </a>
+
+        <div class="app-header-brand" style="order: 2; display: flex; flex-direction: column; align-items: center; text-align: center; flex: 2;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <svg width="23" height="23" viewBox="0 0 120 90" style="flex-shrink:0;">
+                    <defs>
+                        <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e8729a"/>
+                            <stop offset="100%" stop-color="#9b5de5"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M60,85 C60,85 10,55 10,28 A25,25,0,0,1,60,20 A25,25,0,0,1,110,28 C110,55 60,85 60,85 Z" fill="url(#hg)"/>
+                    <text x="60" y="48" text-anchor="middle" font-size="28" font-weight="700" fill="white" font-family="Georgia,serif">F</text>
                 </svg>
-                <div style="min-width:0;">
-                    <div class="app-header-wordmark"><i>FORMULAVERSE</i></div>
-                    <div class="app-header-tagline">• Learn &nbsp; • Grow</div>
-                </div>
+                <div class="app-header-wordmark"><i>formulaverse</i></div>
             </div>
-
-            <a href="{% url "base-page" %}" class="app-header-back"> < </a>
         </div>
 
-        <div class="app-header-actions">
-            <a href="{% url 'dashboard' %}" class="dashboard-btn">📊 Dashboard</a>
-            <div class="total-pill">📐 {{ total }} formulas</div>
-        </div>
+
+        {% if request.session.user_dob %}
+    <div onclick="toggleProfileMenu()" style="order: 3; background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; margin-left: auto;  cursor: pointer;">
+        👤 {{ request.session.user_dob }}
+    </div>
+{% else %}
+    <a href="#" onclick="openLoginModal('login')" style="order: 3; background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; padding: 2px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; margin-left: auto;">
+        👤 Login
+    </a>
+{% endif %}
     </div>
 
-    <div class="reference-label">REFERENCE TOOLS</div>
-    <div class="reference-row">
-        <a href="/constants/" class="ref-btn ref-purple">⚛️ Constants</a>
-        <a href="/units-dimensions/" class="ref-btn ref-gold">⚖️ Units</a>
-        <a href="{% url "pyq-papers" %}" class="ref-btn ref-blue">📄 PYQ</a>
-    </div>
 
-    <div class="filter-buttons-sticky">
+
+    <div class="app-header-actions">
+        <a href="{% url 'dashboard' %}" class="dashboard-btn">📊 Dashboard</a>
+        <div class="total-pill" title="Total formulas across all topics">📐 <span class="num">{{ total }}</span>&nbsp;formulas</div>
+    </div>
+</div>
+
+<div class="reference-label">REFERENCE TOOLS</div>
+<div class="reference-row">
+    <a href="/constants/" class="ref-btn ref-purple">⚛️ Constants</a>
+    <a href="/units-dimensions/" class="ref-btn ref-gold">⚖️ Units</a>
+    <a href="{% url "pyq-papers" %}" class="ref-btn ref-blue">📄 PYQ</a>
+</div>
+
+<div class="filter-buttons-sticky">
     <div class="filter-buttons">
-        <!-- Add 'active' class dynamically depending on which page is loaded -->
         <a href="{% url 'jee-formulas' %}" class="filter-btn jee active" onclick="filterFormulas('jee', this)">JEE</a>
         <a href="{% url 'neet-formulas' %}" class="filter-btn neet" onclick="filterFormulas('neet', this)">NEET</a>
         <a href="{% url 'both-formulas' %}" class="filter-btn both" onclick="filterFormulas('both', this)">JEE/NEET</a>
     </div>
 </div>
 
+<div class="grid-heading">
+    <span class="label">Browse by topic</span>
+    <span class="count">16 topics</span>
+</div>
 
-    <!-- Category Cards -->
-    <div class="cards-grid">
-
-     <div class="topic-card"><div class="card-icon">🏃</div><a href="/kinematics/"><p class="card-title">Kinematics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.kinematics }} </span></div>
-
-
-  <div class="topic-card"><div class="card-icon">🧲</div><a href="/magnetism/"><p class="card-title">Magnetism</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.magnetism }} </span></div>
-
-
-  <div class="topic-card"><div class="card-icon">🪐</div><a href="/gravitation/"><p class="card-title">Gravitation</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.gravitation }} </span></div>
-
-  <div class="topic-card"><div class="card-icon">💻</div><a href="/semiconductor/"><p class="card-title">Semiconductor</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.semiconductor }} </span></div>
+<!-- Category Cards — each --hue places the topic on a light-spectrum wheel (0–360°) -->
+<div class="cards-grid">
 
 
-  <div class="topic-card"><div class="card-icon">📳</div><a href="/oscillations/"><p class="card-title">Oscillations</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.oscillations }} </span></div>
+    <a href="/optics/" class="topic-card" style="--hue:46; animation-delay:0.10s" title="{{ count.optics }} formulas">
+        <div class="card-icon">🔍</div>
+        <div class="card-body"><p class="card-title">Optics</p><span class="card-count">{{ visited.optics|default:0 }}/{{ count.optics }}</span></div>
+    </a>
 
-  <div class="topic-card"><div class="card-icon">🔍</div><a href="/optics/"><p class="card-title">Optics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.optics }} </span></div>
+    <a href="/kinematics/" class="topic-card" style="--hue:18; animation-delay:0.00s" title="{{ count.kinematics }} formulas">
+        <div class="card-icon">🏃</div>
+        <div class="card-body"><p class="card-title">Kinematics</p><span class="card-count">{{ visited.kinematics|default:0 }}/{{ count.kinematics }}</span></div>
+    </a>
 
+    <a href="/magnetism/" class="topic-card" style="--hue:355; animation-delay:0.02s" title="{{ count.magnetism }} formulas">
+        <div class="card-icon">🧲</div>
+        <div class="card-body"><p class="card-title">Magnetism</p><span class="card-count">{{ visited.magnetism|default:0 }}/{{ count.magnetism }}</span></div>
+    </a>
 
-  <div class="topic-card"><div class="card-icon">⚛️</div><a href="/quantum & modern physics/"><p class="card-title" style="white-space: normal; overflow: visible; line-height: 1.15;">Quantum & Modern Physics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.quantum_and_modern_physics }} </span></div>
+    <a href="/gravitation/" class="topic-card" style="--hue:255; animation-delay:0.04s" title="{{ count.gravitation }} formulas">
+        <div class="card-icon">🪐</div>
+        <div class="card-body"><p class="card-title">Gravitation</p><span class="card-count">{{ visited.gravitation|default:0 }}/{{ count.gravitation }}</span></div>
+    </a>
 
+    <a href="/semiconductor/" class="topic-card" style="--hue:190; animation-delay:0.06s" title="{{ count.semiconductor }} formulas">
+        <div class="card-icon">💻</div>
+        <div class="card-body"><p class="card-title">Semiconductor</p><span class="card-count">{{ visited.semiconductor|default:0 }}/{{ count.semiconductor }}</span></div>
+    </a>
 
-  <div class="topic-card"><div class="card-icon">💧</div><a href="/fluid mechanics/"><p class="card-title">Fluid Mechanics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.fluid_mechanics }} </span></div>
-
-
-  <div class="topic-card"><div class="card-icon">🌡️</div><a href="/thermodynamics/"><p class="card-title">Thermodynamics</p></a><span style="color:  #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.thermodynamics }} </span></div>
-
-  <div class="topic-card"><div class="card-icon">🌊</div><a href="/waves/"><p class="card-title">Waves</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.waves }} </span></div>
-
-
-  <div class="topic-card"><div class="card-icon">🔥</div><a href="/work and energy/"><p class="card-title">Work & Energy</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.work_and_energy }} </span></div>
-
-  <div class="topic-card"><div class="card-icon">🔋</div><a href="/current electricity/"><p class="card-title">Current Electricity</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.current_electricity }} </span></div>
-
-
-  <div class="topic-card"><div class="card-icon">⚡</div><a href="/electrostatics/"><p class="card-title">Electrostatics</p></a><span style="color: #ffffff;width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;   margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.electrostatics }} </span></div>
-
-
-
-
-
-  <div class="topic-card"><div class="card-icon">🚀</div><a href="/dynamics/"><p class="card-title">Dynamics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.dynamics }} </span></div>
-
-
-
-  <div class="topic-card"><div class="card-icon">⚙️</div><a href="/mechanics/"><p class="card-title">Mechanics</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%;  margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.mechanics }} </span></div>
+    <a href="/oscillations/" class="topic-card" style="--hue:168; animation-delay:0.08s" title="{{ count.oscillations }} formulas">
+        <div class="card-icon">📳</div>
+        <div class="card-body"><p class="card-title">Oscillations</p><span class="card-count">{{ visited.oscillations|default:0 }}/{{ count.oscillations }}</span></div>
+    </a>
 
 
+    <a href="/quantum & modern physics/" class="topic-card" style="--hue:275; animation-delay:0.12s" title="{{ count.quantum_and_modern_physics }} formulas">
+        <div class="card-icon">⚛️</div>
+        <div class="card-body"><p class="card-title">Quantum &amp; Modern Physics</p><span class="card-count">{{ visited.quantum_and_modern_physics|default:0 }}/{{ count.quantum_and_modern_physics }}</span></div>
+    </a>
 
-  <div class="topic-card"><div class="card-icon">📡</div><a href="/electromagnetism/"><p class="card-title">Electromagnetism</p></a><span style="color: #ffffff; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(255, 255, 255, 0.06); border-radius: 50%; margin-left: auto; font-size: 11px; font-weight: 600;"> {{ count.electromagnetism }} </span></div>
+    <a href="/fluid mechanics/" class="topic-card" style="--hue:200; animation-delay:0.14s" title="{{ count.fluid_mechanics }} formulas">
+        <div class="card-icon">💧</div>
+        <div class="card-body"><p class="card-title">Fluid Mechanics</p><span class="card-count">{{ visited.fluid_mechanics|default:0 }}/{{ count.fluid_mechanics }}</span></div>
+    </a>
+
+    <a href="/thermodynamics/" class="topic-card" style="--hue:8; animation-delay:0.16s" title="{{ count.thermodynamics }} formulas">
+        <div class="card-icon">🌡️</div>
+        <div class="card-body"><p class="card-title">Thermodynamics</p><span class="card-count">{{ visited.thermodynamics|default:0 }}/{{ count.thermodynamics }}</span></div>
+    </a>
+
+    <a href="/waves/" class="topic-card" style="--hue:210; animation-delay:0.18s" title="{{ count.waves }} formulas">
+        <div class="card-icon">🌊</div>
+        <div class="card-body"><p class="card-title">Waves</p><span class="card-count">{{ visited.waves|default:0 }}/{{ count.waves }}</span></div>
+    </a>
+
+    <a href="/work and energy/" class="topic-card" style="--hue:30; animation-delay:0.20s" title="{{ count.work_and_energy }} formulas">
+        <div class="card-icon">🔥</div>
+        <div class="card-body"><p class="card-title">Work &amp; Energy</p><span class="card-count">{{ visited.work_and_energy|default:0 }}/{{ count.work_and_energy }}</span></div>
+    </a>
+
+    <a href="/current electricity/" class="topic-card" style="--hue:142; animation-delay:0.22s" title="{{ count.current_electricity }} formulas">
+        <div class="card-icon">🔋</div>
+        <div class="card-body"><p class="card-title">Current Electricity</p><span class="card-count">{{ visited.current_electricity|default:0 }}/{{ count.current_electricity }}</span></div>
+    </a>
+
+    <a href="/electrostatics/" class="topic-card" style="--hue:52; animation-delay:0.24s" title="{{ count.electrostatics }} formulas">
+        <div class="card-icon">⚡</div>
+        <div class="card-body"><p class="card-title">Electrostatics</p><span class="card-count">{{ visited.electrostatics|default:0 }}/{{ count.electrostatics }}</span></div>
+    </a>
+
+    <a href="/dynamics/" class="topic-card" style="--hue:330; animation-delay:0.26s" title="{{ count.dynamics }} formulas">
+        <div class="card-icon">🚀</div>
+        <div class="card-body"><p class="card-title">Dynamics</p><span class="card-count">{{ visited.dynamics|default:0 }}/{{ count.dynamics }}</span></div>
+    </a>
 
 
+    <a href="/electromagnetism/" class="topic-card" style="--hue:265; animation-delay:0.30s" title="{{ count.electromagnetism }} formulas">
+        <div class="card-icon">📡</div>
+        <div class="card-body"><p class="card-title">Electromagnetism</p><span class="card-count">{{ visited.electromagnetism|default:0 }}/{{ count.electromagnetism }}</span></div>
+    </a>
+
+    <a href="/mechanics/" class="topic-card" style="--hue:222; animation-delay:0.28s" title="{{ count.mechanics }} formulas">
+        <div class="card-icon">⚙️</div>
+        <div class="card-body"><p class="card-title">Mechanics</p><span class="card-count">{{ visited.mechanics|default:0 }}/{{ count.mechanics }}</span></div>
+    </a>
 
 
+</div>
 
+<!-- Chatbot Button -->
+<div id="chat-icon" onclick="toggleChat()" style="position:fixed;bottom:30px;right:30px;
+    background:#00bcd4;color:white;width:60px;height:60px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:28px;
+    cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:1000;">💬</div>
 
+<!-- Chatbot Box -->
+<div id="chat-box" style="display:none;position:fixed;bottom:100px;right:30px;
+    width:350px;height:480px;background:#1e1e2e;border-radius:16px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.4);flex-direction:column;z-index:1000;overflow:hidden;">
+    <div style="background:#00bcd4;padding:14px 18px;color:white;font-weight:bold;
+        font-size:16px;display:flex;justify-content:space-between;align-items:center;">
+        🤖 Physics AI Tutor
+        <span onclick="toggleChat()" style="cursor:pointer;font-size:20px;">✕</span>
     </div>
-
-
-
-    <!-- Chatbot Button -->
-    <div id="chat-icon" onclick="toggleChat()" style="position:fixed;bottom:30px;right:30px;
-        background:#00bcd4;color:white;width:60px;height:60px;border-radius:50%;
-        display:flex;align-items:center;justify-content:center;font-size:28px;
-        cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:1000;">💬</div>
-
-    <!-- Chatbot Box -->
-    <div id="chat-box" style="display:none;position:fixed;bottom:100px;right:30px;
-        width:350px;height:480px;background:#1e1e2e;border-radius:16px;
-        box-shadow:0 8px 24px rgba(0,0,0,0.4);flex-direction:column;z-index:1000;overflow:hidden;">
-        <div style="background:#00bcd4;padding:14px 18px;color:white;font-weight:bold;
-            font-size:16px;display:flex;justify-content:space-between;align-items:center;">
-            🤖 Physics AI Tutor
-            <span onclick="toggleChat()" style="cursor:pointer;font-size:20px;">✕</span>
-        </div>
-        <div id="chat-messages" style="flex:1;overflow-y:auto;padding:14px;
-            display:flex;flex-direction:column;gap:10px;height:340px;">
-            <div style="background:#2a2a3e;color:#ccc;padding:10px 14px;
-                border-radius:12px;font-size:14px;max-width:85%;">
-                👋 Hi! I'm your Physics tutor. Ask me anything!
-            </div>
-        </div>
-        <div style="padding:12px;display:flex;gap:8px;border-top:1px solid #333;">
-            <input id="chat-input" type="text" placeholder="Ask a physics doubt..."
-                onkeypress="if(event.key==='Enter') sendMessage()"
-                style="flex:1;padding:10px 14px;border-radius:20px;border:none;
-                    background:#2a2a3e;color:white;font-size:14px;outline:none;">
-            <button onclick="sendMessage()" style="background:#00bcd4;color:white;
-                border:none;border-radius:50%;width:40px;height:40px;
-                cursor:pointer;font-size:18px;">➤</button>
+    <div id="chat-messages" style="flex:1;overflow-y:auto;padding:14px;
+        display:flex;flex-direction:column;gap:10px;height:340px;">
+        <div style="background:#2a2a3e;color:#ccc;padding:10px 14px;
+            border-radius:12px;font-size:14px;max-width:85%;">
+            👋 Hi! I'm your Physics tutor. Ask me anything!
         </div>
     </div>
+    <div style="padding:12px;display:flex;gap:8px;border-top:1px solid #333;">
+        <input id="chat-input" type="text" placeholder="Ask a physics doubt..."
+            onkeypress="if(event.key==='Enter') sendMessage()"
+            style="flex:1;padding:10px 14px;border-radius:20px;border:none;
+                background:#2a2a3e;color:white;font-size:14px;outline:none;">
+        <button onclick="sendMessage()" style="background:#00bcd4;color:white;
+            border:none;border-radius:50%;width:40px;height:40px;
+            cursor:pointer;font-size:18px;">➤</button>
+    </div>
+</div>
 
-
-    <div id="fotd-popup" style="
+<div id="fotd-popup" style="
     display:none;
     position:fixed;
     top:50%; left:50%;
@@ -620,103 +809,131 @@ JEE formula, NEET formula, physics formula">
   </div>
 </div>
 
+<div id="loginModal" class="login-modal hidden">
+  <div class="login-modal-content">
+    <button class="modal-close" onclick="closeLoginModal()">✕</button>
+    <div class="login-icon">🔐</div>
+    <h3>Quick verification</h3>
+    <p>Just two quick things to save or share formulas</p>
+
+    <label>Date of Birth</label>
+    <input type="date" id="dobInput" required />
+
+    <label id="captchaLabel">Loading...</label>
+    <input type="number" id="captchaInput" placeholder="Your answer" required />
+
+    <button class="verify-btn" onclick="submitSimpleLogin()">Continue</button>
+    <p id="loginError" class="error-text"></p>
+  </div>
+</div>
+
+<div id="logoutModal" class="login-modal hidden">
+  <div class="login-modal-content">
+    <button class="modal-close" onclick="closeLogoutModal()">✕</button>
+    <div class="login-icon">👋</div>
+    <h3>Log out?</h3>
+    <p>You're logged in as <strong style="color:#e9d5ff;">{{ request.session.user_dob }}</strong></p>
+
+    <button class="verify-btn" onclick="confirmLogout()">Yes, log out</button>
+    <button class="cancel-btn" onclick="closeLogoutModal()">Cancel</button>
+  </div>
+</div>
+
 <div class="privacy">
     <a href="{% url "privacy" %}">
         Privacy Policy
     </a>
-
 </div>
 
+<script>
 
-    <script>
-
-    if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/static/formulas/sw.js')
+        navigator.serviceWorker.register('/sw.js')
         .then(reg => console.log('SW registered!'))
         .catch(err => console.log('SW failed:', err));
     });
 }
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-            document.getElementById('overlay').classList.toggle('open');
-            document.getElementById('hamburger').classList.toggle('open');
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+}
+
+let chatHistory = [];
+
+function toggleChat() {
+    const box = document.getElementById('chat-box');
+    box.style.display = box.style.display === 'none' ? 'flex' : 'none';
+    box.style.flexDirection = 'column';
+}
+
+function addMessage(text, isUser) {
+    const messagesDiv = document.getElementById('chat-messages');
+    const msg = document.createElement('div');
+    msg.style.cssText = `padding:10px 14px;border-radius:12px;font-size:14px;
+        max-width:85%;line-height:1.5;
+        ${isUser ? 'background:#00bcd4;color:white;align-self:flex-end;margin-left:auto;'
+                 : 'background:#2a2a3e;color:#ccc;align-self:flex-start;'}`;
+    msg.innerText = text;
+    messagesDiv.appendChild(msg);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function addTypingIndicator() {
+    const messagesDiv = document.getElementById('chat-messages');
+    const typing = document.createElement('div');
+    typing.id = 'typing-indicator';
+    typing.style.cssText = `background:#2a2a3e;color:#aaa;padding:10px 14px;
+        border-radius:12px;font-size:14px;max-width:85%;`;
+    typing.innerText = '⏳ Thinking...';
+    messagesDiv.appendChild(typing);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function removeTypingIndicator() {
+    const typing = document.getElementById('typing-indicator');
+    if (typing) typing.remove();
+}
+
+async function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const message = input.value.trim();
+    if (!message) return;
+    addMessage(message, true);
+    input.value = '';
+    addTypingIndicator();
+    chatHistory.push({ role: "user", content: message });
+    try {
+       const csrfToken = document.cookie.split(';')
+            .find(c => c.trim().startsWith('csrftoken='))
+            ?.split('=')[1];
+
+        const response = await fetch('/chatbot/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({ message, history: chatHistory.slice(-6) })
+        });
+
+        const data = await response.json();
+        removeTypingIndicator();
+        if (data.response) {
+            addMessage(data.response, false);
+            chatHistory.push({ role: "assistant", content: data.response });
+        } else {
+            addMessage("Sorry, something went wrong. Try again!", false);
         }
+    } catch (error) {
+        removeTypingIndicator();
+        addMessage("Connection error. Please try again!", false);
+    }
+}
 
-        let chatHistory = [];
-
-        function toggleChat() {
-            const box = document.getElementById('chat-box');
-            box.style.display = box.style.display === 'none' ? 'flex' : 'none';
-            box.style.flexDirection = 'column';
-        }
-
-        function addMessage(text, isUser) {
-            const messagesDiv = document.getElementById('chat-messages');
-            const msg = document.createElement('div');
-            msg.style.cssText = `padding:10px 14px;border-radius:12px;font-size:14px;
-                max-width:85%;line-height:1.5;
-                ${isUser ? 'background:#00bcd4;color:white;align-self:flex-end;margin-left:auto;'
-                         : 'background:#2a2a3e;color:#ccc;align-self:flex-start;'}`;
-            msg.innerText = text;
-            messagesDiv.appendChild(msg);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        function addTypingIndicator() {
-            const messagesDiv = document.getElementById('chat-messages');
-            const typing = document.createElement('div');
-            typing.id = 'typing-indicator';
-            typing.style.cssText = `background:#2a2a3e;color:#aaa;padding:10px 14px;
-                border-radius:12px;font-size:14px;max-width:85%;`;
-            typing.innerText = '⏳ Thinking...';
-            messagesDiv.appendChild(typing);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        function removeTypingIndicator() {
-            const typing = document.getElementById('typing-indicator');
-            if (typing) typing.remove();
-        }
-
-        async function sendMessage() {
-            const input = document.getElementById('chat-input');
-            const message = input.value.trim();
-            if (!message) return;
-            addMessage(message, true);
-            input.value = '';
-            addTypingIndicator();
-            chatHistory.push({ role: "user", content: message });
-            try {
-               const csrfToken = document.cookie.split(';')
-    .find(c => c.trim().startsWith('csrftoken='))
-    ?.split('=')[1];
-
-const response = await fetch('/chatbot/', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken
-    },
-    body: JSON.stringify({ message, history: chatHistory.slice(-6) })
-});
-
-                const data = await response.json();
-                removeTypingIndicator();
-                if (data.response) {
-                    addMessage(data.response, false);
-                    chatHistory.push({ role: "assistant", content: data.response });
-                } else {
-                    addMessage("Sorry, something went wrong. Try again!", false);
-                }
-            } catch (error) {
-                removeTypingIndicator();
-                addMessage("Connection error. Please try again!", false);
-            }
-        }
-
-
-        let currentFilter = 'all';
+let currentFilter = 'all';
 
 function filterFormulas(exam, btn) {
     if (currentFilter === exam) {
@@ -776,11 +993,8 @@ function clearFilter() {
     document.getElementById('searchBar').value = '';
 }
 
-
-
 window.addEventListener('load', function() {
     setTimeout(() => {
-
         if (window.MathJax) {
             MathJax.typesetPromise([
                 document.getElementById('fotd-popup')
@@ -790,7 +1004,6 @@ window.addEventListener('load', function() {
         } else {
             showPopup();
         }
-
     }, 1500);
 });
 
@@ -813,29 +1026,27 @@ function closePopup() {
     maybeShowInstallPrompt();
 }
 
-document.getElementById('fotd-overlay')
-        .addEventListener('click', closePopup);
+document.getElementById('fotd-overlay').addEventListener('click', closePopup);
 
+let deferredPrompt;
+let installPromptReady = false;
 
-        let deferredPrompt;
-  let installPromptReady = false;
+const REVISIT_GAP = 10;
 
-  const REVISIT_GAP = 10;
+let visitCount = parseInt(localStorage.getItem('fv_visit_count') || '0');
+visitCount += 1;
+localStorage.setItem('fv_visit_count', visitCount);
 
-  let visitCount = parseInt(localStorage.getItem('fv_visit_count') || '0');
-  visitCount += 1;
-  localStorage.setItem('fv_visit_count', visitCount);
+const lastDismissedVisit = parseInt(localStorage.getItem('fv_install_dismissed_visit') || '0');
 
-  const lastDismissedVisit = parseInt(localStorage.getItem('fv_install_dismissed_visit') || '0');
-
-  window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     installPromptReady = true;
     maybeShowInstallPrompt();
-  });
+});
 
-  function maybeShowInstallPrompt() {
+function maybeShowInstallPrompt() {
     if (!installPromptReady) return;
     if (visitCount < 3) return;
 
@@ -848,25 +1059,84 @@ document.getElementById('fotd-overlay')
     }
 
     document.getElementById('install-popup').style.display = 'flex';
-  }
+}
 
-  function installApp() {
+function installApp() {
     document.getElementById('install-popup').style.display = 'none';
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((result) => {
-      if (result.outcome === 'accepted') {
-        console.log('App installed');
-        localStorage.setItem('fv_install_accepted', 'true');
-      }
-      deferredPrompt = null;
+        if (result.outcome === 'accepted') {
+            console.log('App installed');
+            localStorage.setItem('fv_install_accepted', 'true');
+        }
+        deferredPrompt = null;
     });
-  }
+}
 
-  function dismissPopup() {
+function dismissPopup() {
     document.getElementById('install-popup').style.display = 'none';
     localStorage.setItem('fv_install_dismissed_visit', visitCount);
+}
+
+let pendingAction = null;
+
+function openLoginModal(action) {
+  pendingAction = action;
+  document.getElementById('loginModal').classList.remove('hidden');
+  loadCaptcha();
+}
+
+function closeLoginModal() {
+  document.getElementById('loginModal').classList.add('hidden');
+}
+
+function loadCaptcha() {
+  fetch('/get-captcha/')
+    .then(res => res.json())
+    .then(data => document.getElementById('captchaLabel').innerText = data.question);
+}
+
+function submitSimpleLogin() {
+  const dob = document.getElementById('dobInput').value;
+  const answer = document.getElementById('captchaInput').value;
+  const errorEl = document.getElementById('loginError');
+
+  if (!dob || !answer) {
+    errorEl.innerText = "Please fill both fields.";
+    return;
   }
-    </script>
+
+  fetch('/simple-login/', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({dob, answer})
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      closeLoginModal();
+      location.reload(); // refresh so "Login" button can update to show logged-in state
+    } else {
+      errorEl.innerText = data.error || "Something went wrong.";
+      loadCaptcha();
+    }
+  });
+}
+
+function toggleProfileMenu() {
+  document.getElementById('logoutModal').classList.remove('hidden');
+}
+
+function closeLogoutModal() {
+  document.getElementById('logoutModal').classList.add('hidden');
+}
+
+function confirmLogout() {
+  window.location.href = "/logout/";
+}
+
+</script>
 
 </body>
 </html>
+

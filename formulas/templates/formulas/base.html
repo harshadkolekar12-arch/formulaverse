@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,11 +8,15 @@
     <title>FormulaVerse — Explore Physics</title>
 
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+    <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
+    <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+
+    <script async src=https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141 crossorigin="anonymous"></script>
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+    <script async src=https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -21,18 +26,40 @@
 
     <meta name="description" content="FormulaVerse — All Physics Formulas for JEE, NEET and Class 11-12">
     <meta property="og:title" content="FormulaVerse"/>
-    <meta property="og:url" content="https://harshadkolekar.pythonanywhere.com/base"/>
+    <meta property="og:url" content=https://formulaverse.in/base/>
     <meta name="keywords" content="{{ formula.title }}, JEE formula, NEET formula, physics formula">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href=https://fonts.googleapis.com>
+    <link rel="preconnect" href=https://fonts.gstatic.com crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            /* Base surfaces */
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #0f172a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-subtle: #1e293b;
+            --border-glow: rgba(56, 189, 248, 0.15);
+
+            /* Text */
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+
+            /* Accent (primary brand color) */
+            --accent-blue: #38bdf8;
+            --accent-purple: #818cf8;
+
+            /* Gold — reserved ONLY for CTAs / badges / "featured" moments */
+            --gold: #FFD700;
+            --gold-deep: #FFA500;
+        }
+
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: linear-gradient(135deg, #1a0a00, #2d1200, #1a0008, #0a001a);
+            background: linear-gradient(135deg, #0a0e1a, #0f172a, #0a0812, #05070f);
             background-size: 400% 400%;
             animation: gradientShift 8s ease infinite;
             font-family: 'Outfit', sans-serif;
@@ -62,7 +89,7 @@
 
         .about-me {
             font-size: 0.8rem;
-            color: white;
+            color: var(--text-primary);
             font-weight: bold;
             text-decoration: none;
             opacity: 0.8;
@@ -98,7 +125,7 @@
         }
 
         .ornament {
-            color: #d4af37;
+            color: var(--accent-blue);
             font-size: 1.1rem;
             letter-spacing: 0.4rem;
             margin-bottom: 0.3rem;
@@ -109,7 +136,7 @@
             font-size: 0.95rem;
             font-weight: 600;
             letter-spacing: 0.05em;
-            background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700);
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #38bdf8);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -117,7 +144,7 @@
         }
 
         @keyframes shine {
-            0%   { background-position: 0% center; }
+            0% { background-position: 0% center; }
             100% { background-position: 200% center; }
         }
 
@@ -126,9 +153,9 @@
             font-size: clamp(1.8rem, 6vw, 2.6rem);
             font-weight: 900;
             line-height: 1.2;
-            color: #f5e9cc;
+            color: var(--text-primary);
             margin: 0.5rem 0;
-            text-shadow: 0 2px 20px rgba(212,175,55,0.15);
+            text-shadow: 0 2px 20px rgba(56, 189, 248, 0.15);
         }
 
         .divider {
@@ -141,14 +168,14 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: linear-gradient(to right, transparent, #d4af37, transparent);
+            background: linear-gradient(to right, transparent, var(--accent-blue), transparent);
         }
         .divider-diamond {
-            color: #d4af37;
+            color: var(--accent-blue);
             font-size: 0.6rem;
         }
 
-        /* ── Feature Cards (Fixed Layout) ── */
+        /* ── Feature Cards ── */
         .features {
             display: flex;
             flex-direction: column;
@@ -160,18 +187,18 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--bg-card);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            border-left: 4px solid #FFD700;
+            border: 1px solid var(--border-subtle);
+            border-left: 4px solid var(--accent-blue);
             border-radius: 14px;
             padding: 12px 16px;
             text-align: left;
             transition: all 0.3s ease;
         }
         .feature-item:hover {
-            background: rgba(212,175,55,0.06);
+            background: rgba(56, 189, 248, 0.06);
             transform: translateY(-2px);
         }
 
@@ -195,23 +222,23 @@
             font-family: 'Playfair Display', serif;
             font-size: 1rem;
             font-weight: 700;
-            color: #f5e9cc;
+            color: var(--text-primary);
             margin-bottom: 0.1rem;
         }
         .feature-text span {
             display: block;
             font-size: 0.8rem;
-            color: #b8a98a;
+            color: var(--text-secondary);
             line-height: 1.3;
         }
 
-        /* ── CTA Button ── */
+        /* ── CTA Button (kept gold — deliberate contrast against blue theme) ── */
         .explore-btn-wrapper {
             margin: 1.5rem auto 0.5rem;
         }
         .explore-btn {
             display: inline-block;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
+            background: linear-gradient(135deg, var(--gold), var(--gold-deep));
             border-radius: 50px;
             padding: 14px 40px;
             font-size: 16px;
@@ -223,7 +250,7 @@
         }
         .explore-btn a {
             text-decoration: none;
-            color: #1a0a00 !important;
+            color: #0a0e1a !important;
         }
         .explore-btn:hover {
             transform: scale(1.03);
@@ -232,14 +259,14 @@
 
         @keyframes pulse {
             0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
-            50%       { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
+            50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
         }
 
         .bottom-note {
             margin-top: 0.8rem;
             font-size: 0.7rem;
             font-style: italic;
-            color: #6b5e45;
+            color: var(--text-muted);
             letter-spacing: 0.05em;
         }
 
@@ -249,130 +276,122 @@
             width: 100%; height: 100%;
             object-fit: cover;
             z-index: -1;
-            opacity: 0.25;
+            opacity: 0.2;
         }
 
-
+        /* ── Physics History Banner ── */
         .physics-history-banner {
-    /* Matches your dark, warm dashboard background */
-    background: #140d0a;
-    /* A subtle, premium gold border matching your card outlines */
-    border-bottom: 1px solid #d4af37;
-    padding: 10px 20px;
-    /* Soft cream/white text color */
-    color: #f5f0eb;
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 14px;
-    z-index: 999;
-}
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 10px 20px;
+            color: var(--text-primary);
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 14px;
+            z-index: 999;
+        }
 
-.banner-btn {
-    /* Matches your prominent yellow/gold 'Begin Your Journey' button */
-    background: #ffcc00;
-    /* Dark text for crisp contrast on a bright button */
-    color: #140d0a;
-    border: none;
-    padding: 4px 14px;
-    border-radius: 20px; /* Rounded pill style like your other buttons */
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 700;
-    transition: all 0.2s ease;
-    box-shadow: 0 0 8px rgba(255, 204, 0, 0.3); /* Subtle glow effect */
-}
+        .banner-btn {
+            background: var(--gold);
+            color: #0a0e1a;
+            border: none;
+            padding: 4px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
+        }
 
-.banner-btn:hover {
-    background: #ffe066;
-    transform: scale(1.03);
-}
+        .banner-btn:hover {
+            background: #ffe066;
+            transform: scale(1.03);
+        }
 
+        .banner-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .banner-text {
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-.banner-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-.banner-text {
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+        /* ── Modal Styles ── */
+        .history-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000;
+        }
+        .modal-overlay {
+            position: absolute; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+        }
+        .modal-box {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            width: 90%; max-width: 500px;
+            padding: 24px; color: var(--text-primary);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5);
+            animation: slideUp 0.3s ease-out;
+        }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;
+        }
+        .modal-title { font-weight: 700; color: var(--accent-blue); font-size: 16px; }
+        .modal-close {
+            background: none; border: none; color: var(--text-muted);
+            font-size: 24px; cursor: pointer; line-height: 1;
+        }
+        .modal-close:hover { color: var(--text-primary); }
+        .modal-body { font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
 
-/* Modal Styles */
-.history-modal {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 1000;
-}
-.modal-overlay {
-    position: absolute; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(4px);
-}
-.modal-box {
-    position: relative;
-    background: #0f172a;
-    border: 1px solid #1e293b;
-    border-radius: 12px;
-    width: 90%; max-width: 500px;
-    padding: 24px; color: #f8fafc;
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5);
-    animation: slideUp 0.3s ease-out;
-}
-.modal-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 10px;
-}
-.modal-title { font-weight: 700; color: #38bdf8; font-size: 16px; }
-.modal-close {
-    background: none; border: none; color: #64748b;
-    font-size: 24px; cursor: pointer; line-height: 1;
-}
-.modal-close:hover { color: #f1f5f9; }
-.modal-body { font-size: 15px; line-height: 1.6; color: #cbd5e1; }
-
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
     </style>
 </head>
 
 <body>
 
-
     <div id="historyBanner" class="physics-history-banner" style="display: none;">
-    <div class="banner-content">
-        <span class="banner-icon">💡</span>
-        <span id="bannerSnippet" class="banner-text">Loading today's physics milestone...</span>
-        <button id="readMoreBtn" class="banner-btn">Read Story</button>
+        <div class="banner-content">
+            <span class="banner-icon">💡</span>
+            <span id="bannerSnippet" class="banner-text">Loading today's physics milestone...</span>
+            <button id="readMoreBtn" class="banner-btn">Read Story</button>
+        </div>
     </div>
-</div>
 
-<!-- Clean Modal for Full Fact Description -->
-<div id="factModal" class="history-modal" style="display: none;">
-    <div class="modal-overlay" onclick="closeHistoryModal()"></div>
-    <div class="modal-box">
-        <div class="modal-header">
-            <span class="modal-title">🌌 Today in Physics History</span>
-            <button class="modal-close" onclick="closeHistoryModal()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <p id="fullFactText">Loading the multiverse timeline...</p>
+    <!-- Clean Modal for Full Fact Description -->
+    <div id="factModal" class="history-modal" style="display: none;">
+        <div class="modal-overlay" onclick="closeHistoryModal()"></div>
+        <div class="modal-box">
+            <div class="modal-header">
+                <span class="modal-title">🌌 Today in Physics History</span>
+                <button class="modal-close" onclick="closeHistoryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="fullFactText">Loading the multiverse timeline...</p>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- Unified navigation wrapper preventing text displacement -->
     <div class="top-nav">
         <a href="{% url 'me' %}" class="about-me">💡 About me</a>
-        <a href="https://t.me/formulaverse" target="_blank" class="tg-join-btn">Join Telegram</a>
+        <a href=https://t.me/formulaverse target="_blank" class="tg-join-btn">Join Telegram</a>
     </div>
 
     <div class="page-wrap">
@@ -438,58 +457,58 @@
         <source src="{% static 'videos/stars.mp4' %}" type="video/mp4">
     </video>
 
-
     <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('SW registered!'))
+            .catch(err => console.log('SW failed:', err));
+        });
+      }
 
-        let cachedFactString = "";
+      let cachedFactString = "";
 
-document.addEventListener("DOMContentLoaded", function () {
-    const banner = document.getElementById("historyBanner");
-    const snippetSpan = document.getElementById("bannerSnippet");
-    const readMoreBtn = document.getElementById("readMoreBtn");
+      document.addEventListener("DOMContentLoaded", function () {
+          const banner = document.getElementById("historyBanner");
+          const snippetSpan = document.getElementById("bannerSnippet");
+          const readMoreBtn = document.getElementById("readMoreBtn");
 
-    // Change the URL inside your fetch from '/api/daily-fact/' to '/api/daily-facts/'
-fetch('/api/daily-facts/')
-    .then(response => response.json())
-    .then(data => {
-        if (data.success && data.fact && !data.fact.includes("NO_VERIFIED_FACT")) {
-            cachedFactString = data.fact;
+          fetch('/api/daily-facts/')
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success && data.fact && !data.fact.includes("NO_VERIFIED_FACT")) {
+                      cachedFactString = data.fact;
 
-            const lines = cachedFactString.split('\n');
-            let cleanTitle = "An amazing discovery happened on this day in physics!";
+                      const lines = cachedFactString.split('\n');
+                      let cleanTitle = "An amazing discovery happened on this day in physics!";
 
-            // Your API is returning unicode emojis like \ud83d\udcc5.
-            // This safely checks for the title line regardless of how the emoji renders.
-            if (lines.length > 0 && lines[0].includes("On This Day:")) {
-                cleanTitle = lines[0].replace(/.*On This Day:/, "").trim();
-            }
+                      if (lines.length > 0 && lines[0].includes("On This Day:")) {
+                          cleanTitle = lines[0].replace(/.*On This Day:/, "").trim();
+                      }
 
-            snippetSpan.innerText = cleanTitle;
-            banner.style.display = "block"; // This will now execute cleanly!
-        } else {
-            banner.style.display = "none"; // No verified fact — hide banner gracefully
-        }
-    })
-    .catch(error => {
-        console.error("History engine sync failed:", error);
-        banner.style.display = "none";
-    });
+                      snippetSpan.innerText = cleanTitle;
+                      banner.style.display = "block";
+                  } else {
+                      banner.style.display = "none";
+                  }
+              })
+              .catch(error => {
+                  console.error("History engine sync failed:", error);
+                  banner.style.display = "none";
+              });
 
-    // Wire up button click to launch modal layout
-    readMoreBtn.addEventListener("click", function() {
-        if (cachedFactString) {
-            const modalBody = document.getElementById("fullFactText");
-            // Convert standard raw linebreaks to clear HTML breaks
-            modalBody.innerHTML = cachedFactString.replace(/\n/g, '<br>');
-            document.getElementById("factModal").style.display = "flex";
-        }
-    });
-});
+          readMoreBtn.addEventListener("click", function() {
+              if (cachedFactString) {
+                  const modalBody = document.getElementById("fullFactText");
+                  modalBody.innerHTML = cachedFactString.replace(/\n/g, '<br>');
+                  document.getElementById("factModal").style.display = "flex";
+              }
+          });
+      });
 
-// Safe global toggle controls to close view state
-function closeHistoryModal() {
-    document.getElementById("factModal").style.display = "none";
-}
-</script>
+      function closeHistoryModal() {
+          document.getElementById("factModal").style.display = "none";
+      }
+    </script>
 </body>
 </html>

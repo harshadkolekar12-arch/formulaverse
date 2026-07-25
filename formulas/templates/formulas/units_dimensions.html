@@ -1,9 +1,40 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Units & Dimensions | Formulaverse</title>
+
+
+
+<link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+<link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+
+<link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
+<meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755..."></script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YHLZCEHWF7');
+</script>
+
+<meta name="description" content="Units and Dimensions Reference — SI units, dimensional formulas, and conversion tables for every physics quantity, JEE and NEET ready.">
+<meta property="og:title" content="Units & Dimensions | FormulaVerse"/>
+<meta property="og:url" content="https://formulaverse.in/units_dimensions/"/>
+<meta name="keywords" content="units and dimensions, SI units physics, dimensional formula, physics unit conversion, JEE units dimensions">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cri..." rel="stylesheet">
+
 <style>
   :root{
     --bg: #16130d;
@@ -364,6 +395,15 @@ filterRow.addEventListener('click', (e) => {
 searchInput.addEventListener('input', render);
 
 render();
+
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('SW registered!'))
+        .catch(err => console.log('SW failed:', err));
+    });
+}
 </script>
 
 </body>

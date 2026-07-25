@@ -4,7 +4,7 @@ from .models import Formula
 import json
 import re
 from datetime import datetime
-import random, math
+import random, math, time
 
 
 def get_all_formulas_text():
@@ -31,6 +31,7 @@ def ask_chatbot(user_message, chat_history=[]):
         max_tokens=500
     )
     return response.choices[0].message.content
+
 
 SAFE_FUNCS = {
     "sin": math.sin,
@@ -62,7 +63,7 @@ def safe_eval(expr: str) -> float:
     if re.search(r'(__|import|lambda|;|\[|\]|=[^=])', expr):
         raise ValueError(f"Unsafe expression rejected: {expr}")
 
-    return float(eval(expr, {"__builtins__": {}}, SAFE_FUNCS))
+    return float(eval(expr, {"_builtins_": {}}, SAFE_FUNCS))
 
 
 def extract_number(text: str):
@@ -85,6 +86,30 @@ def values_match(computed: float, stated: float, rel_tol: float = 0.05, abs_tol:
 
 
 # ---------------------------------------------------------------------------
+# GROQ MODEL CHAIN
+# ---------------------------------------------------------------------------
+# Tried in order. If one model is congested/erroring, we hop to the next
+# instead of hammering the same queue repeatedly.
+MODEL_CHAIN = [
+    "openai/gpt-oss-120b",
+    "openai/gpt-oss-20b",
+    "llama-3.3-70b-versatile",
+]
+
+# How many attempts to spend on a single model before moving to the next one.
+# Total attempts = ATTEMPTS_PER_MODEL * len(MODEL_CHAIN).
+ATTEMPTS_PER_MODEL = 2
+
+
+def _groq_client():
+    return Groq(
+        api_key=settings.GROQ_PRACTICE_KEY,
+        timeout=15.0,      # don't let a hung request block silently for 60s+
+        max_retries=0,     # we handle retries/backoff ourselves below
+    )
+
+
+# ---------------------------------------------------------------------------
 # MAIN GENERATOR
 # ---------------------------------------------------------------------------
 SCENARIOS = [
@@ -98,8 +123,6 @@ AI_DISCLAIMER = (
     "\n\n Note: This problem is AI-generated. Please verify the steps and "
     "final calculations independently."
 )
-
-MAX_ATTEMPTS = 5
 
 
 def build_system_prompt(formula_eq: str) -> str:
@@ -139,8 +162,22 @@ Return ONLY this exact JSON structure:
 }}"""
 
 
+def _call_model(client, model_name, system_prompt, user_prompt):
+    response = client.chat.completions.create(
+        model=model_name,
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ],
+        max_tokens=800,
+        temperature=0.1,
+        response_format={"type": "json_object"},
+    )
+    return response.choices[0].message.content.strip()
+
+
 def generate_practice_question(formula_title, formula_eq, chapter, description, difficulty="medium"):
-    client = Groq(api_key=settings.GROQ_PRACTICE_KEY)
+    client = _groq_client()
 
     chosen_scenario = random.choice(SCENARIOS)
     system_prompt = build_system_prompt(formula_eq)
@@ -149,73 +186,69 @@ def generate_practice_question(formula_title, formula_eq, chapter, description, 
     )
 
     last_error = None
+    global_attempt = 0
 
-    for attempt in range(1, MAX_ATTEMPTS + 1):
-        try:
-            response = client.chat.completions.create(
-                model="openai/gpt-oss-120b",
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
-                max_tokens=800,
-                temperature=0.1,
-                response_format={"type": "json_object"},
-            )
-
-            raw = response.choices[0].message.content.strip()
-            print(f"[Attempt {attempt}] RAW GROQ RESPONSE:", raw)
-
-            # In case the model wraps JSON in stray text despite instructions
-            match = re.search(r'\{.*\}', raw, re.DOTALL)
-            if match:
-                raw = match.group()
-
-            result = json.loads(raw)
-
-            required_keys = ["question", "options", "correct", "explanation", "calculation_expression"]
-            if not all(k in result for k in required_keys):
-                print(f"[Attempt {attempt}] Missing required keys, retrying.")
-                continue
-
-            if result["correct"] not in result["options"]:
-                print(f"[Attempt {attempt}] 'correct' letter not found in options, retrying.")
-                continue
-
-            # --- Independent verification step -------------------------------
+    for model_name in MODEL_CHAIN:
+        for local_attempt in range(1, ATTEMPTS_PER_MODEL + 1):
+            global_attempt += 1
             try:
-                computed_value = safe_eval(result["calculation_expression"])
-            except Exception as calc_err:
-                print(f"[Attempt {attempt}] calculation_expression failed to evaluate: {calc_err}")
+                raw = _call_model(client, model_name, system_prompt, user_prompt)
+                print(f"[{model_name} attempt {local_attempt}] RAW GROQ RESPONSE:", raw)
+
+                # In case the model wraps JSON in stray text despite instructions
+                match = re.search(r'\{.*\}', raw, re.DOTALL)
+                if match:
+                    raw = match.group()
+
+                result = json.loads(raw)
+
+                required_keys = ["question", "options", "correct", "explanation", "calculation_expression"]
+                if not all(k in result for k in required_keys):
+                    print(f"[{model_name} attempt {local_attempt}] Missing required keys, retrying.")
+                    continue
+
+                if result["correct"] not in result["options"]:
+                    print(f"[{model_name} attempt {local_attempt}] 'correct' letter not found in options, retrying.")
+                    continue
+
+                # --- Independent verification step -------------------------------
+                try:
+                    computed_value = safe_eval(result["calculation_expression"])
+                except Exception as calc_err:
+                    print(f"[{model_name} attempt {local_attempt}] calculation_expression failed to evaluate: {calc_err}")
+                    continue
+
+                stated_text = result["options"][result["correct"]]
+                stated_value = extract_number(stated_text)
+
+                if stated_value is None:
+                    print(f"[{model_name} attempt {local_attempt}] Could not extract a number from correct option: {stated_text!r}")
+                    continue
+
+                if not values_match(computed_value, stated_value):
+                    print(
+                        f"[{model_name} attempt {local_attempt}] MISMATCH -- independently computed "
+                        f"{computed_value}, model's stated correct option = {stated_value}. Rejecting."
+                    )
+                    continue
+
+                # Passed verification -- safe to ship
+                result["explanation"] = result["explanation"] + AI_DISCLAIMER
+                print(f"[{model_name} attempt {local_attempt}] Verified OK: computed={computed_value}, stated={stated_value}")
+                return result
+
+            except Exception as e:
+                last_error = e
+                print(f"[{model_name} attempt {local_attempt}] failed with exception: {e}")
+                # Small jittered backoff so we don't immediately re-hit a congested queue
+                time.sleep(min(2 ** local_attempt, 6) + random.uniform(0, 0.5))
                 continue
 
-            stated_text = result["options"][result["correct"]]
-            stated_value = extract_number(stated_text)
-
-            if stated_value is None:
-                print(f"[Attempt {attempt}] Could not extract a number from correct option: {stated_text!r}")
-                continue
-
-            if not values_match(computed_value, stated_value):
-                print(
-                    f"[Attempt {attempt}] MISMATCH -- independently computed "
-                    f"{computed_value}, model's stated correct option = {stated_value}. Rejecting."
-                )
-                continue
-
-            # Passed verification -- safe to ship
-            result["explanation"] = result["explanation"] + AI_DISCLAIMER
-            print(f"[Attempt {attempt}] Verified OK: computed={computed_value}, stated={stated_value}")
-            return result
-
-        except Exception as e:
-            last_error = e
-            print(f"[Attempt {attempt}] failed with exception: {e}")
-            continue
+        print(f"[{model_name}] exhausted {ATTEMPTS_PER_MODEL} attempts, hopping to next model.")
 
     raise ValueError(
         f"Failed to generate a verified question for '{formula_title}' "
-        f"after {MAX_ATTEMPTS} attempts. Last error: {last_error}"
+        f"after {global_attempt} attempts across all models. Last error: {last_error}"
     )
 
 

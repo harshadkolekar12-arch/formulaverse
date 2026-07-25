@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+import uuid
+from django.core.validators import FileExtensionValidator
 
 
 # Create your models here.
@@ -9,6 +11,8 @@ class Chapter(models.Model):
     name=models.CharField(max_length=100, null=True)
     explain=models.TextField(max_length=450, blank=True)
     simulation_url = models.URLField(blank = True, null = True)
+    sim_video=models.URLField(null=True, blank=True)
+    sim_thumbnail=models.ImageField(upload_to="sim_video/thumbnail/", null=True, blank=True)
 
     class Meta:
         verbose_name_plural="Chapters"
@@ -33,13 +37,23 @@ class Formula(models.Model):
     description = models.CharField(max_length=200, blank=True, null=True)
     units = models.CharField(max_length=100, blank=True, null=True)  # e.g. "E: Joules, m: kg, c: m/s"
     when_to_use = models.CharField(max_length=200, blank=True, null=True)  # e.g. "Use when converting rest mass to energy"
-    example = models.TextField(max_length=600, blank=True, null=True)
-    answer = models.CharField(max_length=100, blank=True, null=True)
-    given_by = models.CharField(max_length=100, blank=True, default='Derived')
+    given_by = models.CharField(max_length=300, blank=True, default='Derived')
     is_saved = models.BooleanField(default=False)
     session_key = models.CharField(max_length=100, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     exam_tag = models.CharField(max_length=10, choices=EXAM_CHOICES, default='none')
+    derivation_image = models.FileField(
+        upload_to='derivation/', null=True, blank=True,
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'png', 'jpg', 'jpeg'])]
+    )
+    mnemonic=models.TextField(blank=True, null=True)
+    worked_example=models.TextField(blank=True, null=True)
+    example = models.TextField(blank=True, null=True)
+    answer = models.CharField(max_length=500, blank=True, null=True)
+    common_mistakes=models.TextField(blank=True, null=True)
+    desmos_graph_id=models.CharField(max_length=200, null=True, blank=True)
+    diagram_url=models.URLField(blank=True, null=True)
+
 
     def get_absolute_url(self):
         return reverse("single-formula-page", args=[self.id])
@@ -74,7 +88,16 @@ class PYQ(models.Model):
 
 
 
+class SimpleUser(models.Model):
+    session_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    date_of_birth = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def _str_(self):
+        return f"User (DOB: {self.date_of_birth}) - {self.created_at.strftime('%d %b %Y')}"
+
+    class Meta:
+        ordering = ['-created_at']
 
 
 

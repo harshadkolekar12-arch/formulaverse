@@ -21,3 +21,42 @@ messaging.onBackgroundMessage((payload) => {
         vibrate: [200, 100, 200],
     });
 });
+
+// --- Offline caching ---
+const CACHE_NAME = 'formulaverse-' + Date.now();
+const urlsToCache = [
+    '/',
+    '/static/formulas/index.css',
+];
+
+// Install: cache initial assets
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(urlsToCache))
+    );
+});
+
+// Activate: clean up old caches from previous deployments
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames
+                    .filter(name => name.startsWith('formulaverse-') && name !== CACHE_NAME)
+                    .map(name => caches.delete(name))
+            );
+        })
+    );
+});
+
+// Fetch: serve from cache first, fall back to network
+self.addEventListener('fetch', event => {
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => {
+                if (response) return response;
+                return fetch(event.request);
+            })
+    );
+});
