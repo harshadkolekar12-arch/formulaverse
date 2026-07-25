@@ -52,7 +52,10 @@ class Formula(models.Model):
     answer = models.CharField(max_length=500, blank=True, null=True)
     common_mistakes=models.TextField(blank=True, null=True)
     desmos_graph_id=models.CharField(max_length=200, null=True, blank=True)
-    diagram_url=models.URLField(blank=True, null=True)
+    diagram_url=models.FileField(
+        upload_to='diagram/', null=True, blank=True,
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'png', 'jpg', 'jpeg'])]
+        )
 
 
     def get_absolute_url(self):

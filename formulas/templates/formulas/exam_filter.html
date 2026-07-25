@@ -259,17 +259,115 @@
 }
 
         a { text-decoration: none; }
+
+        .login-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.login-modal.hidden { display: none; }
+
+.login-modal-content {
+  background: #12121a;
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.login-icon { font-size: 2.5rem; margin-bottom: 8px; }
+
+.login-modal-content h3 {
+  color: white;
+  margin-bottom: 4px;
+}
+
+.login-modal-content p {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.login-modal-content label {
+  display: block;
+  text-align: left;
+  color: #d1d5db;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+
+.login-modal-content input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #2a2a35;
+  background: #1a1a24;
+  color: white;
+  font-size: 1rem;
+}
+
+.verify-btn {
+  width: 100%;
+  margin-top: 22px;
+  padding: 12px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 1.2rem;
+}
+
+.error-text {
+  color: #f87171;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  min-height: 18px;
+}
+
     </style>
 </head>
 <body>
 
+    <div id="loginModal" class="login-modal hidden">
+  <div class="login-modal-content">
+    <button class="close-btn" onclick="closeLoginModal()">✕</button>
+    <div class="login-icon">🔐</div>
+    <h3>Quick verification</h3>
+    <p>Just two quick things to save or share formulas</p>
+
+    <label>Date of Birth</label>
+    <input type="date" id="dobInput" required />
+
+    <label id="captchaLabel">Loading...</label>
+    <input type="number" id="captchaInput" placeholder="Your answer" required />
+
+    <button class="verify-btn" onclick="submitSimpleLogin()">Continue</button>
+    <p id="loginError" class="error-text"></p>
+  </div>
+</div>
+
     <div class="topbar">
         <a class="back-btn" href="{% url 'index-page' %}">←</a>
-        <a class="share-btn"
-           href="https://wa.me/?text=Check out {{ exam_label }} Physics Formulas on FormulaVerse! 📐%0A%0A{{ request.build_absolute_uri }}"
-           target="_blank">
-            📲 Share
-        </a>
+        <button onclick="handleShareClick()" class="share-btn">📱 Share</button>
     </div>
 
     <div class="header">
@@ -350,6 +448,79 @@
                 .catch(err => console.log('SW failed:', err));
             });
         }
+
+        let pendingAction = null;
+
+function openLoginModal(formulaId, action) {
+  sessionStorage.setItem('pendingAction', JSON.stringify({formulaId, action}));
+  document.getElementById('loginModal').classList.remove('hidden');
+  loadCaptcha();
+}
+
+function closeLoginModal() {
+  document.getElementById('loginModal').classList.add('hidden');
+}
+
+function loadCaptcha() {
+  fetch('/get-captcha/')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('captchaLabel').innerText = data.question;
+    });
+}
+
+function submitSimpleLogin() {
+  const dob = document.getElementById('dobInput').value;
+  const answer = document.getElementById('captchaInput').value;
+  const errorEl = document.getElementById('loginError');
+
+  if (!dob || !answer) {
+    errorEl.innerText = "Please fill both fields.";
+    return;
+  }
+
+  fetch('/simple-login/', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({dob, answer})
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      closeLoginModal();
+      const pending = JSON.parse(sessionStorage.getItem('pendingAction'));
+      if (pending.action === 'save') saveFormula(pending.formulaId);
+      if (pending.action === 'share') shareFormula(pending.formulaId);
+      location.reload(); // so button states update to "logged in"
+    } else {
+      errorEl.innerText = data.error || "Something went wrong.";
+      loadCaptcha(); // refresh captcha on wrong answer
+    }
+  });
+}
+
+const examLabel = "{{ exam_label|escapejs }}";
+const formula_path = "https://formulaverse.in{{ formula_path }}";
+
+function handleShareClick() {
+  const message = `Check out ${examLabel} Physics Formulas on FormulaVerse! 📐\n\n${formula_path}`;
+  const encodedMessage = encodeURIComponent(message);
+
+  {% if request.session.user_session_id %}
+    window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+  {% else %}
+    openLoginModal('share');
+  {% endif %}
+}
+
+function handleSaveSubmit(event) {
+  {% if not request.session.user_session_id %}
+    event.preventDefault();
+    openLoginModal('save');
+    return false;
+  {% endif %}
+  return true; // logged in, let form submit normally
+}
     </script>
 </body>
 </html>

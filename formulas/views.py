@@ -3,7 +3,7 @@ from django.views import View
 from django.views.generic import ListView
 from django.views.generic import DetailView,TemplateView, CreateView
 from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .models import Formula, Chapter, SimpleUser
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import authenticate, login
@@ -395,7 +395,15 @@ def privacy(request):
 class ExamFilterView(View):
     def get(self, request, *args, **kwargs):
         # Get exam type from URL
-        path = request.path.strip('/')  # 'jee', 'neet', or 'both'
+        path = request.path.strip('/')  # 'jee', 'neet',
+
+        if path == 'neet':
+            formula_path = reverse('neet-formulas')
+        elif path == 'jee':
+            formula_path = reverse('jee-formulas')
+        else:
+            formula_path = reverse('both-formulas')
+
 
         if path == 'jee':
             formulas = Formula.objects.filter(
@@ -434,6 +442,7 @@ class ExamFilterView(View):
             'formulas': formulas,
             'exam_label': exam_label,
             'total': formulas.count(),
+            'formula_path' : formula_path,
         })
 
 
