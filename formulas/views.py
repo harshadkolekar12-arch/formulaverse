@@ -30,6 +30,10 @@ from django.conf import settings
 from django.templatetags.static import static
 from .chatbot import get_daily_physics_fact
 from django.db.models import Case, When, Value, IntegerField
+from django.http import FileResponse, Http404
+from django.template.loader import render_to_string
+from .pdf_utils import render_formula_media_url
+from weasyprint import HTML
 
 #from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
@@ -227,6 +231,7 @@ class CategoryView(ListView):
 
         category_obj = Chapter.objects.filter(name__iexact=self.kwargs['chapter']).first()
         context['category'] = category_obj
+        context['chapter_slug'] = self.kwargs['chapter']
         return context
 
 
@@ -584,3 +589,69 @@ def get_captcha(request):
 def logout_view(request):
     request.session.flush()
     return redirect('/')
+
+
+
+class TopicCheatsheetPDFView(View):
+
+    CACHE_DIR = os.path.join(settings.MEDIA_ROOT, "cheatsheets")
+
+    def get(self, request, *args, **kwargs):
+        topic_slug = request.GET.get("topic")
+        if not topic_slug:
+            raise Http404("Missing ?topic= query parameter.")
+
+        formulas = Formula.objects.filter(chapter__name__iexact=topic_slug)
+
+        if not formulas.exists():
+            raise Http404("No formulas found for this topic.")
+
+        cache_path = self.get_cache_path(topic_slug)
+        force_regen = request.GET.get("regen") == "1"
+
+        if force_regen or not os.path.exists(cache_path):
+            self.build_pdf(topic_slug, formulas, cache_path, request)
+
+        response = FileResponse(
+            open(cache_path, "rb"),
+            as_attachment=True,
+            filename=f"formulaverse-{topic_slug}-cheatsheet.pdf",
+        )
+        return response
+
+    def get_formulas_for_topic(self, topic_slug):
+        return (
+            Formula.objects
+            .filter(topic=topic_slug)
+            .order_by("order")  # adjust to whatever ordering your model uses
+        )
+
+    def get_cache_path(self, topic_slug):
+        os.makedirs(self.CACHE_DIR, exist_ok=True)
+        # sanitize just in case — topic comes from a query param, not a
+        # validated path converter, so don't trust it blindly for a filename
+        safe_slug = "".join(c for c in topic_slug if c.isalnum() or c in "-_")
+        return os.path.join(self.CACHE_DIR, f"{safe_slug}.pdf")
+
+    def build_pdf(self, topic_slug, formulas, cache_path, request):
+        # Pre-render each formula's LaTeX to a cached PNG for the template
+        entries = []
+        for f in formulas:
+            entries.append({
+                "obj": f,
+                "formula_img": render_formula_media_url(f.form),
+            })
+
+        html_string = render_to_string("formulas/cheatsheet.html", {
+            "topic": topic_slug,
+            "entries": entries,
+            "formula_count": formulas.count(),
+            "today": date.today().strftime("%d %b %Y"),
+            "site_url": "formulaverse.in",
+        })
+
+        HTML(
+            string=html_string,
+            base_url=request.build_absolute_uri("/"),
+        ).write_pdf(cache_path)
+

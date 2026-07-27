@@ -256,19 +256,33 @@
             overflow: hidden;
         }
 
-        .card-count {
-            color: var(--tint-strong);
-            min-width: 22px; height: 22px;
-            padding: 0 6px;
+        /* ===== Progress ring (replaces the old .card-count fraction pill) ===== */
+        .card-ring {
+            position: relative;
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: conic-gradient(var(--tint-strong) calc(var(--pct, 0) * 1%), hsla(var(--hue), 70%, 60%, 0.16) 0);
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .card-ring::before {
+            content: "";
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+            background: var(--bg-card);
+        }
+
+        .ring-label {
+            position: absolute;
+            inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-            background: hsla(var(--hue), 70%, 60%, 0.14);
-            border: 1px solid hsla(var(--hue), 70%, 60%, 0.3);
-            border-radius: 999px;
-            font-size: 10.5px;
+            font-size: 8px;
             font-weight: 800;
+            color: var(--text-primary);
             z-index: 1;
         }
 
@@ -342,7 +356,7 @@
         .app-header-wordmark {
             font-size: clamp(1.1rem, 5vw, 1.35rem);
             font-weight: 900;
-            color: var(--brand-pink);
+            color: #ffffff;
             letter-spacing: 0.06em;
             line-height: 1.1;
             white-space: nowrap;
@@ -542,7 +556,7 @@
                     <path d="M60,85 C60,85 10,55 10,28 A25,25,0,0,1,60,20 A25,25,0,0,1,110,28 C110,55 60,85 60,85 Z" fill="url(#hg)"/>
                     <text x="60" y="48" text-anchor="middle" font-size="28" font-weight="700" fill="white" font-family="Georgia,serif">F</text>
                 </svg>
-                <div class="app-header-wordmark"><i>formulaverse</i></div>
+                <div class="app-header-wordmark">formulaverse</div>
             </div>
         </div>
 
@@ -592,84 +606,132 @@
 
     <a href="/optics/" class="topic-card" style="--hue:46; animation-delay:0.10s" title="{{ count.optics }} formulas">
         <div class="card-icon">🔍</div>
-        <div class="card-body"><p class="card-title">Optics</p><span class="card-count">{{ visited.optics|default:0 }}/{{ count.optics }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Optics</p>
+            <div class="card-ring" data-visited="{{ visited.optics|default:0 }}" data-total="{{ count.optics }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/kinematics/" class="topic-card" style="--hue:18; animation-delay:0.00s" title="{{ count.kinematics }} formulas">
         <div class="card-icon">🏃</div>
-        <div class="card-body"><p class="card-title">Kinematics</p><span class="card-count">{{ visited.kinematics|default:0 }}/{{ count.kinematics }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Kinematics</p>
+            <div class="card-ring" data-visited="{{ visited.kinematics|default:0 }}" data-total="{{ count.kinematics }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/magnetism/" class="topic-card" style="--hue:355; animation-delay:0.02s" title="{{ count.magnetism }} formulas">
         <div class="card-icon">🧲</div>
-        <div class="card-body"><p class="card-title">Magnetism</p><span class="card-count">{{ visited.magnetism|default:0 }}/{{ count.magnetism }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Magnetism</p>
+            <div class="card-ring" data-visited="{{ visited.magnetism|default:0 }}" data-total="{{ count.magnetism }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/gravitation/" class="topic-card" style="--hue:255; animation-delay:0.04s" title="{{ count.gravitation }} formulas">
         <div class="card-icon">🪐</div>
-        <div class="card-body"><p class="card-title">Gravitation</p><span class="card-count">{{ visited.gravitation|default:0 }}/{{ count.gravitation }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Gravitation</p>
+            <div class="card-ring" data-visited="{{ visited.gravitation|default:0 }}" data-total="{{ count.gravitation }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/semiconductor/" class="topic-card" style="--hue:190; animation-delay:0.06s" title="{{ count.semiconductor }} formulas">
         <div class="card-icon">💻</div>
-        <div class="card-body"><p class="card-title">Semiconductor</p><span class="card-count">{{ visited.semiconductor|default:0 }}/{{ count.semiconductor }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Semiconductor</p>
+            <div class="card-ring" data-visited="{{ visited.semiconductor|default:0 }}" data-total="{{ count.semiconductor }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/oscillations/" class="topic-card" style="--hue:168; animation-delay:0.08s" title="{{ count.oscillations }} formulas">
         <div class="card-icon">📳</div>
-        <div class="card-body"><p class="card-title">Oscillations</p><span class="card-count">{{ visited.oscillations|default:0 }}/{{ count.oscillations }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Oscillations</p>
+            <div class="card-ring" data-visited="{{ visited.oscillations|default:0 }}" data-total="{{ count.oscillations }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
 
     <a href="/quantum & modern physics/" class="topic-card" style="--hue:275; animation-delay:0.12s" title="{{ count.quantum_and_modern_physics }} formulas">
         <div class="card-icon">⚛️</div>
-        <div class="card-body"><p class="card-title">Quantum &amp; Modern Physics</p><span class="card-count">{{ visited.quantum_and_modern_physics|default:0 }}/{{ count.quantum_and_modern_physics }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Quantum &amp; Modern Physics</p>
+            <div class="card-ring" data-visited="{{ visited.quantum_and_modern_physics|default:0 }}" data-total="{{ count.quantum_and_modern_physics }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/fluid mechanics/" class="topic-card" style="--hue:200; animation-delay:0.14s" title="{{ count.fluid_mechanics }} formulas">
         <div class="card-icon">💧</div>
-        <div class="card-body"><p class="card-title">Fluid Mechanics</p><span class="card-count">{{ visited.fluid_mechanics|default:0 }}/{{ count.fluid_mechanics }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Fluid Mechanics</p>
+            <div class="card-ring" data-visited="{{ visited.fluid_mechanics|default:0 }}" data-total="{{ count.fluid_mechanics }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/thermodynamics/" class="topic-card" style="--hue:8; animation-delay:0.16s" title="{{ count.thermodynamics }} formulas">
         <div class="card-icon">🌡️</div>
-        <div class="card-body"><p class="card-title">Thermodynamics</p><span class="card-count">{{ visited.thermodynamics|default:0 }}/{{ count.thermodynamics }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Thermodynamics</p>
+            <div class="card-ring" data-visited="{{ visited.thermodynamics|default:0 }}" data-total="{{ count.thermodynamics }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/waves/" class="topic-card" style="--hue:210; animation-delay:0.18s" title="{{ count.waves }} formulas">
         <div class="card-icon">🌊</div>
-        <div class="card-body"><p class="card-title">Waves</p><span class="card-count">{{ visited.waves|default:0 }}/{{ count.waves }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Waves</p>
+            <div class="card-ring" data-visited="{{ visited.waves|default:0 }}" data-total="{{ count.waves }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/work and energy/" class="topic-card" style="--hue:30; animation-delay:0.20s" title="{{ count.work_and_energy }} formulas">
         <div class="card-icon">🔥</div>
-        <div class="card-body"><p class="card-title">Work &amp; Energy</p><span class="card-count">{{ visited.work_and_energy|default:0 }}/{{ count.work_and_energy }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Work &amp; Energy</p>
+            <div class="card-ring" data-visited="{{ visited.work_and_energy|default:0 }}" data-total="{{ count.work_and_energy }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/current electricity/" class="topic-card" style="--hue:142; animation-delay:0.22s" title="{{ count.current_electricity }} formulas">
         <div class="card-icon">🔋</div>
-        <div class="card-body"><p class="card-title">Current Electricity</p><span class="card-count">{{ visited.current_electricity|default:0 }}/{{ count.current_electricity }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Current Electricity</p>
+            <div class="card-ring" data-visited="{{ visited.current_electricity|default:0 }}" data-total="{{ count.current_electricity }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/electrostatics/" class="topic-card" style="--hue:52; animation-delay:0.24s" title="{{ count.electrostatics }} formulas">
         <div class="card-icon">⚡</div>
-        <div class="card-body"><p class="card-title">Electrostatics</p><span class="card-count">{{ visited.electrostatics|default:0 }}/{{ count.electrostatics }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Electrostatics</p>
+            <div class="card-ring" data-visited="{{ visited.electrostatics|default:0 }}" data-total="{{ count.electrostatics }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/dynamics/" class="topic-card" style="--hue:330; animation-delay:0.26s" title="{{ count.dynamics }} formulas">
         <div class="card-icon">🚀</div>
-        <div class="card-body"><p class="card-title">Dynamics</p><span class="card-count">{{ visited.dynamics|default:0 }}/{{ count.dynamics }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Dynamics</p>
+            <div class="card-ring" data-visited="{{ visited.dynamics|default:0 }}" data-total="{{ count.dynamics }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
 
     <a href="/electromagnetism/" class="topic-card" style="--hue:265; animation-delay:0.30s" title="{{ count.electromagnetism }} formulas">
         <div class="card-icon">📡</div>
-        <div class="card-body"><p class="card-title">Electromagnetism</p><span class="card-count">{{ visited.electromagnetism|default:0 }}/{{ count.electromagnetism }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Electromagnetism</p>
+            <div class="card-ring" data-visited="{{ visited.electromagnetism|default:0 }}" data-total="{{ count.electromagnetism }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
     <a href="/mechanics/" class="topic-card" style="--hue:222; animation-delay:0.28s" title="{{ count.mechanics }} formulas">
         <div class="card-icon">⚙️</div>
-        <div class="card-body"><p class="card-title">Mechanics</p><span class="card-count">{{ visited.mechanics|default:0 }}/{{ count.mechanics }}</span></div>
+        <div class="card-body">
+            <p class="card-title">Mechanics</p>
+            <div class="card-ring" data-visited="{{ visited.mechanics|default:0 }}" data-total="{{ count.mechanics }}"><span class="ring-label"></span></div>
+        </div>
     </a>
 
 
@@ -814,7 +876,7 @@
     <button class="modal-close" onclick="closeLoginModal()">✕</button>
     <div class="login-icon">🔐</div>
     <h3>Quick verification</h3>
-    <p>Just two quick things to save or share formulas</p>
+    <p>Just two quick things to move further!</p>
 
     <label>Date of Birth</label>
     <input type="date" id="dobInput" required />
@@ -992,17 +1054,40 @@ function clearFilter() {
     document.getElementById('formula-container').style.display = 'none';
     document.getElementById('searchBar').value = '';
 }
+function shouldShowFotdNow() {
+    const today = new Date().toISOString().slice(0, 10); // "2026-07-27"
+    const lastShownDate = localStorage.getItem('fv_fotd_last_shown');
+    const shownThisSession = sessionStorage.getItem('fv_fotd_shown_session');
+
+    // Already shown once this browsing session — never re-show, even same day
+    if (shownThisSession) return false;
+
+    // Already shown today (e.g. earlier session) — don't show again till tomorrow
+    if (lastShownDate === today) return false;
+
+    return true;
+}
+
+function markFotdShown() {
+    const today = new Date().toISOString().slice(0, 10);
+    localStorage.setItem('fv_fotd_last_shown', today);
+    sessionStorage.setItem('fv_fotd_shown_session', 'true');
+}
 
 window.addEventListener('load', function() {
+    if (!shouldShowFotdNow()) return;
+
     setTimeout(() => {
         if (window.MathJax) {
             MathJax.typesetPromise([
                 document.getElementById('fotd-popup')
             ]).then(() => {
                 showPopup();
+                markFotdShown();
             });
         } else {
             showPopup();
+            markFotdShown();
         }
     }, 1500);
 });
@@ -1135,8 +1220,17 @@ function confirmLogout() {
   window.location.href = "/logout/";
 }
 
+/* ===== Progress ring fill — computes --pct and % label per card ===== */
+document.querySelectorAll('.card-ring').forEach(ring => {
+    const done = parseInt(ring.dataset.visited) || 0;
+    const total = parseInt(ring.dataset.total) || 1;
+    const pct = Math.round((done / total) * 100);
+    ring.style.setProperty('--pct', pct);
+    const label = ring.querySelector('.ring-label');
+    if (label) label.textContent = pct + '%';
+});
+
 </script>
 
 </body>
 </html>
-

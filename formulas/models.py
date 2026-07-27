@@ -54,7 +54,7 @@ class Formula(models.Model):
     desmos_graph_id=models.CharField(max_length=200, null=True, blank=True)
     diagram_url=models.FileField(
         upload_to='diagram/', null=True, blank=True,
-        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'png', 'jpg', 'jpeg'])]
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'png', 'jpg', 'jpeg', 'svg'])]
         )
 
 

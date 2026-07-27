@@ -526,6 +526,16 @@
             {% endif %}
         </div>
 
+    <a href="{% url 'topic-cheatsheet-pdf' %}?topic={{ chapter_slug }}"
+   style="display:flex; align-items:center; justify-content:center; gap:8px;
+          padding:12px; margin: 14px 0;
+          background: rgba(56,189,248,0.16); color:#7dd3fc;
+          border: 1px solid var(--border-subtle);
+          border-radius:14px; text-decoration:none; font-weight:700;
+          font-size: 13px;">
+    📄 Download full {{ chapter_name }} guide PDF
+</a>
+
         <!-- Formula Cards -->
         {% for formula in formulas %}
         <ul>

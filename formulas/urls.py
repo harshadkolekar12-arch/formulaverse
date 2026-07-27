@@ -23,6 +23,7 @@ urlpatterns=[
     path("formula/<int:pk>", views.SingleFormulaView.as_view(), name="single-formula-page"),
     path('unsave/<int:pk>/', views.unsave,  name ="unsave-formula"),
     path("try", views.TryView.as_view()),
+    path("cheatsheet.pdf/", views.TopicCheatsheetPDFView.as_view(), name="topic-cheatsheet-pdf"),
     path('sim-guide/<int:pk>/', views.SimGuide.as_view(),  name="sim-guide"),
     path("<str:chapter>/", views.CategoryView.as_view(), name="category"),
     path('panel/', views.mini_panel, name='mini_panel'),
@@ -30,8 +31,7 @@ urlpatterns=[
     path('panel/edit-formula/<int:pk>/', views.edit_formula, name='edit_formula'),
     path('panel/delete-formula/<int:pk>/', views.delete_formula, name='delete_formula'),
     path('panel/add-category/', views.add_category, name='add_category'),
-    path('practice/<int:formula_id>/', views.practice_question,
-     name='practice_question'),
+    path('practice/<int:formula_id>/', views.practice_question, name='practice_question'),
     path('formula/<int:formula_id>/animation', views.FormulaAnimationView.as_view(), name='formula_animation'),
     path('save-fcm-token/', views.save_fcm_token, name='save_fcm_token'),
 

@@ -1,0 +1,313 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+    @page {
+        size: A4;
+        margin: 1.6cm 1.5cm 2cm 1.5cm;
+        @bottom-center {
+            content: "formulaverse.in — page " counter(page) " of " counter(pages);
+            font-size: 8.5px;
+            color: #888;
+        }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Helvetica', 'Arial', sans-serif;
+        color: #1a1a2e;
+        font-size: 11.5px;
+        line-height: 1.5;
+    }
+
+    /* ---------- Cover page ---------- */
+    .cover {
+        height: 24cm;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        page-break-after: always;
+    }
+    .cover .brand {
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #7c4dff;
+        margin-bottom: 30px;
+    }
+    .cover h1 {
+        font-size: 34px;
+        margin: 0 0 8px;
+        color: #111;
+    }
+    .cover .count {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 30px;
+    }
+    .cover .tagline {
+        max-width: 380px;
+        font-size: 12.5px;
+        font-style: italic;
+        color: #555;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 14px 0;
+    }
+    .cover .meta {
+        margin-top: 40px;
+        font-size: 10px;
+        color: #999;
+    }
+
+    /* ---------- Formula page ---------- */
+    .formula-page {
+        page-break-before: always;
+        page-break-inside: avoid;
+    }
+
+    .chapter-tag {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        color: #999;
+        text-transform: uppercase;
+    }
+
+    .formula-title {
+        font-size: 22px;
+        font-weight: 700;
+        margin: 4px 0 2px;
+        color: #111;
+    }
+
+    .given-by {
+        font-size: 10px;
+        font-style: italic;
+        color: #777;
+        margin-bottom: 14px;
+    }
+
+    .formula-box {
+        text-align: center;
+        background: #f6f5fb;
+        border: 1px solid #e2e0f0;
+        border-radius: 8px;
+        padding: 18px 10px;
+        margin-bottom: 10px;
+    }
+    .formula-box img { height: 34px; }
+
+    .description {
+        text-align: center;
+        font-size: 11px;
+        color: #555;
+        margin-bottom: 16px;
+    }
+
+    .section-label {
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        color: #aaa;
+        text-align: center;
+        margin: 16px 0 6px;
+    }
+
+    .graph-img {
+        display: block;
+        margin: 0 auto 14px;
+        max-width: 100%;
+        max-height: 200px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .derivation-img {
+        display: block;
+        margin: 0 auto 14px;
+        max-width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .two-col {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+    .info-box {
+        flex: 1;
+        background: #fafafa;
+        border-left: 3px solid #7c4dff;
+        border-radius: 4px;
+        padding: 8px 10px;
+        font-size: 10.5px;
+    }
+    .info-box .label {
+        font-size: 9px;
+        font-weight: 700;
+        color: #7c4dff;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+    }
+    .info-box.recall { border-left-color: #38bdf8; }
+    .info-box.recall .label { color: #0891b2; }
+
+    .example-box {
+        background: #fdf8ee;
+        border: 1px solid #eee0c2;
+        border-radius: 4px;
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        font-size: 10.5px;
+    }
+    .example-box .label {
+        font-size: 9px;
+        font-weight: 700;
+        color: #b58900;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+    }
+
+    table.var-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10px;
+        margin-bottom: 12px;
+    }
+    table.var-table td {
+        border-bottom: 1px solid #eee;
+        padding: 4px 6px;
+        vertical-align: top;
+    }
+    table.var-table td:first-child {
+        font-weight: 700;
+        width: 30%;
+        color: #444;
+    }
+
+    .mistakes-box {
+        background: #fdf0f0;
+        border-left: 3px solid #e24b4a;
+        border-radius: 4px;
+        padding: 8px 12px;
+        font-size: 10.5px;
+    }
+    .mistakes-box .label {
+        font-size: 9px;
+        font-weight: 700;
+        color: #a32d2d;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+    }
+    .mistakes-box ul {
+        margin: 4px 0 0;
+        padding-left: 16px;
+    }
+    .mistakes-box li { margin-bottom: 3px; }
+
+</style>
+</head>
+<body>
+
+    <!-- ============ Cover page ============ -->
+    <div class="cover">
+        <div class="brand">💗 FORMULAVERSE</div>
+        <h1>{{ topic.name }}</h1>
+        <div class="count">{{ formula_count }} formulas — complete study booklet</div>
+        <div class="tagline">
+            Every formula here has shown up on an exam paper before
+            it showed up on this page.
+        </div>
+        <div class="meta">Generated {{ today }} &nbsp;·&nbsp; {{ site_url }}</div>
+    </div>
+
+    <!-- ============ One page per formula ============ -->
+    {% for entry in entries %}
+    {% with f=entry.obj %}
+    <div class="formula-page">
+        <div class="chapter-tag">{{ topic.name }}</div>
+        <div class="formula-title">{{ f.title }}</div>
+        {% if f.given_by %}
+        <div class="given-by">Given by: {{ f.given_by }}</div>
+        {% endif %}
+
+        <div class="formula-box">
+            <img src="{{ entry.formula_img }}" alt="{{ f.title }}">
+        </div>
+
+        {% if f.description %}
+        <div class="description">{{ f.description }}</div>
+        {% endif %}
+
+        {% if f.graph_image %}
+        <div class="section-label">— GRAPH —</div>
+        <img class="graph-img" src="{{ f.graph_image.url }}" alt="{{ f.title }} graph">
+        {% endif %}
+
+        {% if f.derivation_image %}
+        <div class="section-label">— DERIVATION —</div>
+        <img class="derivation-img" src="{{ f.derivation_image.url }}" alt="{{ f.title }} derivation">
+        {% endif %}
+
+        <div class="two-col">
+            {% if f.when_to_use %}
+            <div class="info-box">
+                <div class="label">When to use</div>
+                {{ f.when_to_use }}
+            </div>
+            {% endif %}
+            {% if f.quick_recall %}
+            <div class="info-box recall">
+                <div class="label">Quick recall</div>
+                {{ f.quick_recall }}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if f.worked_example_question %}
+        <div class="example-box">
+            <div class="label">Worked example</div>
+            {{ f.worked_example_question }}
+            {% if f.worked_example_solution_img %}
+            <div style="text-align:center; margin-top:6px;">
+                <img src="{{ f.worked_example_solution_img.url }}" style="height:26px;">
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if f.variables or f.units %}
+        <table class="var-table">
+            {% if f.variables %}
+            <tr><td>Variables</td><td>{{ f.variables }}</td></tr>
+            {% endif %}
+            {% if f.units %}
+            <tr><td>Units</td><td>{{ f.units }}</td></tr>
+            {% endif %}
+        </table>
+        {% endif %}
+
+        {% if f.common_mistakes %}
+        <div class="mistakes-box">
+            <div class="label">Common mistakes</div>
+            <ul>
+                {% for m in f.common_mistakes_list %}
+                <li>{{ m }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    {% endwith %}
+    {% endfor %}
+
+</body>
+</html>
