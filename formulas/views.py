@@ -32,7 +32,8 @@ from .chatbot import get_daily_physics_fact
 from django.db.models import Case, When, Value, IntegerField
 from django.http import FileResponse, Http404
 from django.template.loader import render_to_string
-from .pdf_utils import render_formula_media_url
+from .pdf_utils import render_formula_media_url, simplify_latex_for_text
+
 from weasyprint import HTML
 
 #from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
@@ -592,7 +593,25 @@ def logout_view(request):
 
 
 
+
+
+
+def hashlib_md5(s):
+    import hashlib
+    return hashlib.md5(s.encode("utf-8")).hexdigest()[:16]
+
+
+
 class TopicCheatsheetPDFView(View):
+    """
+    GET /cheatsheet.pdf/?topic=<chapter name, e.g. "optics">
+
+    Serves a cached PDF if one already exists for the chapter. Pass
+    &regen=1 to force a rebuild (e.g. after editing a formula in admin).
+
+    Example: /cheatsheet.pdf/?topic=optics
+             /cheatsheet.pdf/?topic=optics&regen=1
+    """
 
     CACHE_DIR = os.path.join(settings.MEDIA_ROOT, "cheatsheets")
 
@@ -601,10 +620,12 @@ class TopicCheatsheetPDFView(View):
         if not topic_slug:
             raise Http404("Missing ?topic= query parameter.")
 
-        formulas = Formula.objects.filter(chapter__name__iexact=topic_slug)
+        formulas = Formula.objects.filter(
+            chapter__name__iexact=topic_slug
+        ).order_by("id")
 
         if not formulas.exists():
-            raise Http404("No formulas found for this topic.")
+            raise Http404("No formulas found for this chapter.")
 
         cache_path = self.get_cache_path(topic_slug)
         force_regen = request.GET.get("regen") == "1"
@@ -615,37 +636,95 @@ class TopicCheatsheetPDFView(View):
         response = FileResponse(
             open(cache_path, "rb"),
             as_attachment=True,
-            filename=f"formulaverse-{topic_slug}-cheatsheet.pdf",
+            filename=f"formulaverse-{topic_slug.lower()}-cheatsheet.pdf",
         )
         return response
 
-    def get_formulas_for_topic(self, topic_slug):
-        return (
-            Formula.objects
-            .filter(topic=topic_slug)
-            .order_by("order")  # adjust to whatever ordering your model uses
-        )
-
     def get_cache_path(self, topic_slug):
         os.makedirs(self.CACHE_DIR, exist_ok=True)
-        # sanitize just in case — topic comes from a query param, not a
-        # validated path converter, so don't trust it blindly for a filename
-        safe_slug = "".join(c for c in topic_slug if c.isalnum() or c in "-_")
+        safe_slug = "".join(
+            c for c in topic_slug.lower() if c.isalnum() or c in "-_"
+        )
         return os.path.join(self.CACHE_DIR, f"{safe_slug}.pdf")
 
+    def _local_file_url(self, field_file):
+        """
+        Given a Django FieldFile (e.g. f.diagram_url, f.derivation_image),
+        return an absolute file:// URL pointing at a renderable IMAGE on
+        disk, or None if the field is empty or the file is missing.
+
+        Handles two cases:
+          - Already an image (png/jpg/jpeg) -> point straight at it.
+          - A PDF (allowed by the model's FileExtensionValidator) -> an
+            <img> tag can never render a PDF directly, so rasterize page
+            1 to a cached PNG with PyMuPDF and point at that instead.
+        """
+        if not field_file:
+            return None
+        try:
+            if not field_file.name:
+                return None
+            path = field_file.path
+            if not os.path.exists(path):
+                return None
+        except (ValueError, NotImplementedError):
+            return None
+
+        ext = os.path.splitext(path)[1].lower()
+        if ext == ".pdf":
+            png_path = self._rasterize_pdf_first_page(path)
+            if png_path is None:
+                return None
+            return f"file://{png_path}"
+
+        return f"file://{path}"
+
+    def _rasterize_pdf_first_page(self, pdf_path, dpi=150):
+        """
+        Convert page 1 of a PDF to a cached PNG using PyMuPDF (fitz).
+        Returns the PNG's filesystem path, or None on failure.
+        """
+        cache_dir = os.path.join(settings.MEDIA_ROOT, "pdf_page_cache")
+        os.makedirs(cache_dir, exist_ok=True)
+
+        mtime = os.path.getmtime(pdf_path)
+        key = f"{pdf_path}|{mtime}"
+        digest = hashlib_md5(key)
+        png_path = os.path.join(cache_dir, f"{digest}.png")
+
+        if os.path.exists(png_path):
+            return png_path
+
+        try:
+            import fitz  # PyMuPDF
+        except ImportError:
+            return None  # library not installed — caller treats as "no image"
+
+        try:
+            doc = fitz.open(pdf_path)
+            page = doc.load_page(0)
+            zoom = dpi / 72
+            pix = page.get_pixmap(matrix=fitz.Matrix(zoom, zoom))
+            pix.save(png_path)
+            doc.close()
+            return png_path
+        except Exception:
+            return None
+
     def build_pdf(self, topic_slug, formulas, cache_path, request):
-        # Pre-render each formula's LaTeX to a cached PNG for the template
         entries = []
         for f in formulas:
             entries.append({
                 "obj": f,
                 "formula_img": render_formula_media_url(f.form),
+                "diagram_path": self._local_file_url(f.diagram_url),
+                "derivation_path": self._local_file_url(f.derivation_image),
+                "answer_display": simplify_latex_for_text(f.answer),
             })
 
         html_string = render_to_string("formulas/cheatsheet.html", {
             "topic": topic_slug,
             "entries": entries,
-            "formula_count": formulas.count(),
             "today": date.today().strftime("%d %b %Y"),
             "site_url": "formulaverse.in",
         })
@@ -654,4 +733,3 @@ class TopicCheatsheetPDFView(View):
             string=html_string,
             base_url=request.build_absolute_uri("/"),
         ).write_pdf(cache_path)
-

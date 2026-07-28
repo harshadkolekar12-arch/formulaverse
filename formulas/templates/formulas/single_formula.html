@@ -885,7 +885,7 @@
             {% if formula.diagram_url or formula.desmos_graph_id or formula.derivation_image %}
             <div class="diagram-toggle-row">
                 <button type="button" class="diagram-toggle-btn" id="diagramToggleBtn" onclick="toggleDiagram()">
-                    <span>📈 Diagram &amp; derivation</span>
+                    <span>📈 Diagram/Graph &amp; derivation</span>
                 </button>
             </div>
 
@@ -903,7 +903,7 @@
                 {% endif %}
 
                 {% if formula.desmos_graph_id %}
-                <p class="derivation-label">— Graph —</p>
+                <p class="derivation-label">— Desmos-Graph —</p>
                 <div class="desmos-embed-container">
                     <iframe src="https://www.desmos.com/calculator/{{ formula.desmos_graph_id }}?embed"
                             title="Interactive graph"
@@ -913,7 +913,7 @@
                 {% endif %}
 
                 {% if formula.derivation_image %}
-                <p class="derivation-label">— Derivation —</p>
+                <p class="derivation-label">— Hand-written Derivation —</p>
                 {% if formula.derivation_image.url|lower|slice:"-4:" == ".pdf" %}
                     <a href="{{ formula.derivation_image.url }}" target="_blank" class="derivation-pdf-btn">
                         <span class="pdf-icon">📄</span> Open PDF Derivation
