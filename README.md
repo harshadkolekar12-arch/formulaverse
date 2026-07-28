@@ -6,7 +6,7 @@ A Physics Formula Web App for JEE, NEET and Class 11-12 students.
 https://formulaverse.in
 
 ## ✨ Features
-- 100+ Physics Formulas with MathJax rendering
+- 150+ Physics Formulas with MathJax rendering
 - AI Physics Tutor Chatbot (Groq LLaMA)
 - AI Practice Questions (Easy/Medium/Hard)
 - Save Formulas Feature
@@ -15,6 +15,13 @@ https://formulaverse.in
 - PWA - Installable as mobile app
 - Mobile Responsive Design
 - SEO Optimized
+- Interactive Simulations 
+- Clear explanations for each formulas with:
+  1) Diagrams/Graphs
+  2) Hand-written derivation 
+  3) Easy to remember mnemonic
+  4) Common mistakes to avoid 
+  5) Worked example
 
 ## 🛠️ Tech Stack
 - Python 3 / Django
