@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Formulaverse - {{ topic|title }} Cheatsheet</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         @page {
             size: A4;
@@ -15,8 +17,8 @@
             }
         }
 
-        * { 
-            box-sizing: border-box; 
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -111,7 +113,7 @@
             margin-bottom: 12px;
         }
 
-        .formula-box img { 
+        .formula-box img {
             max-height: 55px;
             max-width: 90%;
             display: inline-block;
@@ -175,12 +177,12 @@
             text-transform: uppercase;
         }
 
-        .info-box.recall { 
-            border-left-color: #38bdf8; 
+        .info-box.recall {
+            border-left-color: #38bdf8;
         }
 
-        .info-box.recall .label { 
-            color: #0891b2; 
+        .info-box.recall .label {
+            color: #0891b2;
         }
 
         .example-box {
@@ -259,7 +261,7 @@
     <div class="formula-page">
         <div class="chapter-tag">{{ topic|upper }}</div>
         <div class="formula-title">{{ f.title }}</div>
-        
+
         {% if f.given_by %}
         <div class="given-by">Given by: {{ f.given_by }}</div>
         {% endif %}
@@ -274,14 +276,16 @@
         <div class="description">{{ f.description }}</div>
         {% endif %}
 
-        {% if entry.diagram_path %}
-        <div class="section-label">— DIAGRAM —</div>
-        <img class="graph-img" src="{{ entry.diagram_path }}" alt="{{ f.title }} diagram">
-        {% endif %}
+      <!-- Render Diagram or Graph image (handles uploaded images & Desmos static thumbnails) -->
+{% if entry.diagram_path %}
+    <div class="section-label">DIAGRAM / GRAPH</div>
+    <img class="graph-img" src="{{ entry.diagram_path }}" alt="{{ f.title }} diagram">
+{% endif %}
 
+        <!-- Safely render Derivation if present; silently skip if missing -->
         {% if entry.derivation_path %}
-        <div class="section-label">— DERIVATION —</div>
-        <img class="derivation-img" src="{{ entry.derivation_path }}" alt="{{ f.title }} derivation">
+            <div class="section-label">— DERIVATION —</div>
+            <img class="derivation-img" src="{{ entry.derivation_path }}" alt="{{ f.title }} derivation">
         {% endif %}
 
         {% if f.when_to_use or f.mnemonic %}
@@ -312,11 +316,12 @@
         <div class="example-box">
             <div class="label">Worked example</div>
             {{ f.example }}
-            {% if entry.answer_display %}
-            <div style="margin-top: 6px; font-weight: bold; color: #444;">
-                Answer: {{ entry.answer_display }}
-            </div>
-            {% endif %}
+           {% if entry.answer_img %}
+<div style="margin-top: 8px; display: flex; align-items: center; gap: 6px;">
+    <span style="font-weight: bold; color: #444;">Answer:</span>
+    <img src="{{ entry.answer_img }}" style="height: 24px;" alt="answer">
+</div>
+{% endif %}
         </div>
         {% endif %}
 

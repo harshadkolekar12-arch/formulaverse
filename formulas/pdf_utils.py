@@ -107,7 +107,58 @@ def render_formula_media_url(latex_str, fontsize=26):
     """Same as render_formula_png but returns a file:// URL for use in WeasyPrint HTML."""
     path = render_formula_png(latex_str, fontsize=fontsize)
     return f"file://{path}"
+# --- Add this function to pdf_utils.py, below simplify_latex_for_text() ---
 
+def _prep_answer_for_mathtext(raw_answer):
+    """
+    Turn a stored 'answer' string (often already wrapped in literal $$,
+    using × and flat (a)/(b) division) into something matplotlib's
+    mathtext can actually typeset as a proper stacked fraction.
+
+    NOTE: matplotlib mathtext supports \\frac{}{} but NOT \\dfrac{}{} —
+    use \\frac here (unlike the earlier HTML/MathJax suggestion, which
+    doesn't apply to this WeasyPrint pipeline).
+    """
+    if not raw_answer:
+        return ""
+
+    s = raw_answer.strip()
+
+    # Strip literal $$ that may already be baked into the stored string
+    s = s.replace("$$", "").strip()
+
+    # Drop a leading "Answer:" label — template adds its own label
+    s = re.sub(r"^Answer:\s*", "", s, flags=re.IGNORECASE)
+
+    # × -> \times (mathtext-safe)
+    s = s.replace("×", r"\times ")
+
+    # Simple (a)/(b) -> \frac{a}{b}  (handles patterns like
+    # "((3×200)/(2×1))" -> "\frac{3\times 200}{2\times 1}")
+    # Run twice to catch nested/adjacent parens from double-wrapping.
+    for _ in range(2):
+        s = re.sub(r"\(([^()]+)\)\s*/\s*\(([^()]+)\)", r"\\frac{\1}{\2}", s)
+
+    # Strip any now-redundant leading/trailing bare parens left over
+    # from the original ((...)) wrapping, e.g. "(\frac{..}{..} = 300 Hz)"
+    s = s.strip()
+    if s.startswith("(") and s.endswith(")"):
+        s = s[1:-1]
+
+    return s
+
+
+def render_answer_media_url(raw_answer, fontsize=22):
+    """
+    Cleaned, typeset version of the worked-example answer, rendered
+    via the same PNG pipeline as render_formula_media_url — so
+    fractions actually stack instead of being flattened to (a/b).
+    Returns a file:// URL, or None if there's nothing to render.
+    """
+    cleaned = _prep_answer_for_mathtext(raw_answer)
+    if not cleaned:
+        return None
+    return render_formula_media_url(cleaned, fontsize=fontsize)
 
 # ---------------------------------------------------------------------
 # Plain-text LaTeX simplification, for short mixed text+math strings

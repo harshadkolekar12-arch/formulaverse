@@ -33,7 +33,7 @@ from django.db.models import Case, When, Value, IntegerField
 from django.http import FileResponse, Http404
 from django.template.loader import render_to_string
 from .pdf_utils import render_formula_media_url, simplify_latex_for_text
-
+import logging
 from weasyprint import HTML
 
 #from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
@@ -596,10 +596,12 @@ def logout_view(request):
 
 
 
+logger = logging.getLogger(__name__)
+
+
 def hashlib_md5(s):
     import hashlib
     return hashlib.md5(s.encode("utf-8")).hexdigest()[:16]
-
 
 
 class TopicCheatsheetPDFView(View):
@@ -647,27 +649,30 @@ class TopicCheatsheetPDFView(View):
         )
         return os.path.join(self.CACHE_DIR, f"{safe_slug}.pdf")
 
-    def _local_file_url(self, field_file):
+    def _local_file_url(self, field_file, formula_obj=None, field_name="file"):
         """
-        Given a Django FieldFile (e.g. f.diagram_url, f.derivation_image),
-        return an absolute file:// URL pointing at a renderable IMAGE on
-        disk, or None if the field is empty or the file is missing.
-
-        Handles two cases:
-          - Already an image (png/jpg/jpeg) -> point straight at it.
-          - A PDF (allowed by the model's FileExtensionValidator) -> an
-            <img> tag can never render a PDF directly, so rasterize page
-            1 to a cached PNG with PyMuPDF and point at that instead.
+        Handles both uploaded FileFields and plain text URL strings (e.g., Desmos URLs).
         """
         if not field_file:
             return None
+
+        # Convert field_file to string in case it's a FieldFile or CharField
+        val_str = str(field_file).strip()
+        if not val_str:
+            return None
+
+        # 1. If it's a web URL (Desmos, HTTP, HTTPS), return it directly!
+        if val_str.startswith("http://") or val_str.startswith("https://"):
+            return val_str
+
+        # 2. Otherwise, treat it as a file path on disk
         try:
-            if not field_file.name:
-                return None
-            path = field_file.path
+            path = field_file.path if hasattr(field_file, 'path') else val_str
             if not os.path.exists(path):
+                print(f"[PDF WARNING] Local file missing on disk for Formula ID {formula_obj.id if formula_obj else 'N/A'}: {path}")
                 return None
-        except (ValueError, NotImplementedError):
+        except (ValueError, NotImplementedError) as e:
+            print(f"[PDF ERROR] Field error: {e}")
             return None
 
         ext = os.path.splitext(path)[1].lower()
@@ -698,7 +703,8 @@ class TopicCheatsheetPDFView(View):
         try:
             import fitz  # PyMuPDF
         except ImportError:
-            return None  # library not installed — caller treats as "no image"
+            print("[PDF ERROR] PyMuPDF (fitz) is not installed! PDF rasterization failed.")
+            return None
 
         try:
             doc = fitz.open(pdf_path)
@@ -708,18 +714,28 @@ class TopicCheatsheetPDFView(View):
             pix.save(png_path)
             doc.close()
             return png_path
-        except Exception:
+        except Exception as e:
+            print(f"[PDF ERROR] Rasterization error for {pdf_path}: {e}")
             return None
 
     def build_pdf(self, topic_slug, formulas, cache_path, request):
         entries = []
         for f in formulas:
+            # 1. First choice: Use local uploaded diagram image file if available
+            diagram_file = self._local_file_url(f.diagram_url, formula_obj=f, field_name="diagram_url")
+
+            # 2. Fallback choice: If diagram_url is empty but desmos_graph_id exists,
+            # generate the static image URL from Desmos
+            if not diagram_file and getattr(f, 'desmos_graph_id', None):
+                # Desmos provides static PNG thumbnail exports for saved graph IDs
+                diagram_file = f"https://calc-images.desmos.com/calc_thumbs/{f.desmos_graph_id}.png"
+
             entries.append({
                 "obj": f,
                 "formula_img": render_formula_media_url(f.form),
-                "diagram_path": self._local_file_url(f.diagram_url),
-                "derivation_path": self._local_file_url(f.derivation_image),
-                "answer_display": simplify_latex_for_text(f.answer),
+                "diagram_path": diagram_file,
+                "derivation_path": self._local_file_url(f.derivation_image, formula_obj=f, field_name="derivation_image"),
+                "answer_img" : render_formula_media_url(f.answer) if hasattr(f, 'answer') and f.answer else None,
             })
 
         html_string = render_to_string("formulas/cheatsheet.html", {

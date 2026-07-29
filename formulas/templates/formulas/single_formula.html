@@ -892,7 +892,7 @@
             <div class="diagram-panel" id="diagramPanel">
 
                 {% if formula.diagram_url %}
-                <p class="derivation-label">— Diagram —</p>
+                <p class="derivation-label">— Diagram/Graph —</p>
                 <div class="derivation-thumbnail-container">
                     <img src="{{ formula.diagram_url.url }}"
                          alt="Diagram"
@@ -902,15 +902,7 @@
                 </div>
                 {% endif %}
 
-                {% if formula.desmos_graph_id %}
-                <p class="derivation-label">— Desmos-Graph —</p>
-                <div class="desmos-embed-container">
-                    <iframe src="https://www.desmos.com/calculator/{{ formula.desmos_graph_id }}?embed"
-                            title="Interactive graph"
-                            loading="lazy"
-                            frameborder="0"></iframe>
-                </div>
-                {% endif %}
+
 
                 {% if formula.derivation_image %}
                 <p class="derivation-label">— Hand-written Derivation —</p>
