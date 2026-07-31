@@ -40,6 +40,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
+RAZORPAY_KEY_ID = os.getenv("RAZORPAY_API")
+RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_SECRET_KEY")
+RAZORPAY_WEBHOOK_SECRET = os.environ.get("RAZORPAY_WEBHOOK_SECRET", "")
 
 
 ALLOWED_HOSTS = [

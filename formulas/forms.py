@@ -18,7 +18,7 @@ class FormulaForm(forms.ModelForm):
         model = Formula
         fields = [
             'title', 'form', 'chapter', 'description', 'given_by',
-            'example', 'answer', 'variables', 'units',  'is_saved', 'when_to_use'
+            'example', 'answer', 'variables', 'units', 'when_to_use'
 
             ]
         widgets = {

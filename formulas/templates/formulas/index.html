@@ -563,7 +563,7 @@
 
         {% if request.session.user_dob %}
     <div onclick="toggleProfileMenu()" style="order: 3; background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; margin-left: auto;  cursor: pointer;">
-        👤 {{ request.session.user_dob }}
+        👤 My Profile
     </div>
 {% else %}
     <a href="#" onclick="openLoginModal('login')" style="order: 3; background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; padding: 2px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 3px; margin-left: auto;">
@@ -611,6 +611,40 @@
             <div class="card-ring" data-visited="{{ visited.optics|default:0 }}" data-total="{{ count.optics }}"><span class="ring-label"></span></div>
         </div>
     </a>
+
+     <a href="/thermodynamics/" class="topic-card" style="--hue:8; animation-delay:0.16s" title="{{ count.thermodynamics }} formulas">
+        <div class="card-icon">🌡️</div>
+        <div class="card-body">
+            <p class="card-title">Thermodynamics</p>
+            <div class="card-ring" data-visited="{{ visited.thermodynamics|default:0 }}" data-total="{{ count.thermodynamics }}"><span class="ring-label"></span></div>
+        </div>
+    </a>
+
+    <a href="/current electricity/" class="topic-card" style="--hue:142; animation-delay:0.22s" title="{{ count.current_electricity }} formulas">
+        <div class="card-icon">🔋</div>
+        <div class="card-body">
+            <p class="card-title">Current Electricity</p>
+            <div class="card-ring" data-visited="{{ visited.current_electricity|default:0 }}" data-total="{{ count.current_electricity }}"><span class="ring-label"></span></div>
+        </div>
+    </a>
+
+    <a href="/electrostatics/" class="topic-card" style="--hue:52; animation-delay:0.24s" title="{{ count.electrostatics }} formulas">
+        <div class="card-icon">⚡</div>
+        <div class="card-body">
+            <p class="card-title">Electrostatics</p>
+            <div class="card-ring" data-visited="{{ visited.electrostatics|default:0 }}" data-total="{{ count.electrostatics }}"><span class="ring-label"></span></div>
+        </div>
+    </a>
+
+      <a href="/mechanics/" class="topic-card" style="--hue:222; animation-delay:0.28s" title="{{ count.mechanics }} formulas">
+        <div class="card-icon">⚙️</div>
+        <div class="card-body">
+            <p class="card-title">Mechanics</p>
+            <div class="card-ring" data-visited="{{ visited.mechanics|default:0 }}" data-total="{{ count.mechanics }}"><span class="ring-label"></span></div>
+        </div>
+    </a>
+
+
 
     <a href="/kinematics/" class="topic-card" style="--hue:18; animation-delay:0.00s" title="{{ count.kinematics }} formulas">
         <div class="card-icon">🏃</div>
@@ -669,13 +703,7 @@
         </div>
     </a>
 
-    <a href="/thermodynamics/" class="topic-card" style="--hue:8; animation-delay:0.16s" title="{{ count.thermodynamics }} formulas">
-        <div class="card-icon">🌡️</div>
-        <div class="card-body">
-            <p class="card-title">Thermodynamics</p>
-            <div class="card-ring" data-visited="{{ visited.thermodynamics|default:0 }}" data-total="{{ count.thermodynamics }}"><span class="ring-label"></span></div>
-        </div>
-    </a>
+
 
     <a href="/waves/" class="topic-card" style="--hue:210; animation-delay:0.18s" title="{{ count.waves }} formulas">
         <div class="card-icon">🌊</div>
@@ -693,21 +721,9 @@
         </div>
     </a>
 
-    <a href="/current electricity/" class="topic-card" style="--hue:142; animation-delay:0.22s" title="{{ count.current_electricity }} formulas">
-        <div class="card-icon">🔋</div>
-        <div class="card-body">
-            <p class="card-title">Current Electricity</p>
-            <div class="card-ring" data-visited="{{ visited.current_electricity|default:0 }}" data-total="{{ count.current_electricity }}"><span class="ring-label"></span></div>
-        </div>
-    </a>
 
-    <a href="/electrostatics/" class="topic-card" style="--hue:52; animation-delay:0.24s" title="{{ count.electrostatics }} formulas">
-        <div class="card-icon">⚡</div>
-        <div class="card-body">
-            <p class="card-title">Electrostatics</p>
-            <div class="card-ring" data-visited="{{ visited.electrostatics|default:0 }}" data-total="{{ count.electrostatics }}"><span class="ring-label"></span></div>
-        </div>
-    </a>
+
+
 
     <a href="/dynamics/" class="topic-card" style="--hue:330; animation-delay:0.26s" title="{{ count.dynamics }} formulas">
         <div class="card-icon">🚀</div>
@@ -726,13 +742,7 @@
         </div>
     </a>
 
-    <a href="/mechanics/" class="topic-card" style="--hue:222; animation-delay:0.28s" title="{{ count.mechanics }} formulas">
-        <div class="card-icon">⚙️</div>
-        <div class="card-body">
-            <p class="card-title">Mechanics</p>
-            <div class="card-ring" data-visited="{{ visited.mechanics|default:0 }}" data-total="{{ count.mechanics }}"><span class="ring-label"></span></div>
-        </div>
-    </a>
+
 
 
 </div>
@@ -876,10 +886,13 @@
     <button class="modal-close" onclick="closeLoginModal()">✕</button>
     <div class="login-icon">🔐</div>
     <h3>Quick verification</h3>
-    <p>Just two quick things to move further!</p>
+    <p>Just few things to move further!</p>
+
+    <label> Your Name </label>
+    <input type="text" id="nameInput" placeholder="e.g. Rahul" required />
 
     <label>Date of Birth</label>
-    <input type="date" id="dobInput" required />
+    <input type="date" id="dobInput" placeholder="e.g 14/05/2006" required />
 
     <label id="captchaLabel">Loading...</label>
     <input type="number" id="captchaInput" placeholder="Your answer" required />
@@ -894,7 +907,7 @@
     <button class="modal-close" onclick="closeLogoutModal()">✕</button>
     <div class="login-icon">👋</div>
     <h3>Log out?</h3>
-    <p>You're logged in as <strong style="color:#e9d5ff;">{{ request.session.user_dob }}</strong></p>
+    <p>You're logged in as <strong style="color:#e9d5ff;">{{ request.session.user_name }}</strong></p>
 
     <button class="verify-btn" onclick="confirmLogout()">Yes, log out</button>
     <button class="cancel-btn" onclick="closeLogoutModal()">Cancel</button>
@@ -1182,19 +1195,20 @@ function loadCaptcha() {
 }
 
 function submitSimpleLogin() {
+  const name = document.getElementById('nameInput').value;
   const dob = document.getElementById('dobInput').value;
   const answer = document.getElementById('captchaInput').value;
   const errorEl = document.getElementById('loginError');
 
-  if (!dob || !answer) {
-    errorEl.innerText = "Please fill both fields.";
+  if (!name || !dob || !answer) {
+    errorEl.innerText = "Please fill all fields.";
     return;
   }
 
   fetch('/simple-login/', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({dob, answer})
+    body: JSON.stringify({name, dob, answer})
   })
   .then(res => res.json())
   .then(data => {

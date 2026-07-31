@@ -13,5 +13,5 @@ admin.site.register(PYQ)
 
 @admin.register(SimpleUser)
 class SimpleUserAdmin(admin.ModelAdmin):
-    list_display = ('date_of_birth', 'session_id', 'created_at')
+    list_display = ('name', 'date_of_birth',  'session_id', 'created_at')
     readonly_fields = ('session_id', 'created_at')

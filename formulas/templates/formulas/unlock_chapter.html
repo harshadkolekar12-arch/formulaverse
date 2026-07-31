@@ -1,0 +1,118 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Full PDF Download | Formulaverse</title>
+
+</head>
+<body>
+
+   <div style="max-width: 480px; margin: 60px auto; text-align: center; padding: 24px;">
+
+    <div style="font-size: 40px; margin-bottom: 12px;">🔒</div>
+
+    <h1 style="font-size: 22px; margin-bottom: 8px;">{{ chapter.name }} — Full PDF</h1>
+
+    <p style="color: #888; font-size: 14px; margin-bottom: 24px;">
+        Unlock the complete {{ chapter.name }} formula guide —
+        every derivation, worked example, and common-mistake note in
+        one downloadable PDF.
+    </p>
+
+    <div style="font-size: 32px; font-weight: 800; margin-bottom: 24px;">
+        ₹{{ chapter.price_inr }}
+        <span style="font-size: 13px; color: #888; font-weight: 400;">/ one-time</span>
+    </div>
+
+    <button id="pay-btn"
+        style="background:#7c4dff; color:white; border:none; border-radius:12px;
+               padding:14px 28px; font-size:15px; font-weight:700; cursor:pointer; width:100%;">
+        Pay ₹{{ chapter.price_inr }} & Download
+    </button>
+
+    <p id="pay-status" style="margin-top: 14px; font-size: 13px; color: #888;"></p>
+
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+document.getElementById("pay-btn").addEventListener("click", async function () {
+    const btn = document.getElementById("pay-btn");
+    const status = document.getElementById("pay-status");
+    btn.disabled = true;
+    status.textContent = "Setting up payment...";
+
+    // FIXED: use topic_slug (matches your Chapter.name-based lookup),
+    // not chapter.slug — Chapter has no slug field, so that silently
+    // rendered as an empty string and broke the URL.
+    const orderResp = await fetch("{% url 'create-razorpay-order' topic_slug %}", {
+        method: "POST",
+        headers: { "X-CSRFToken": getCookie("csrftoken") },
+    });
+    const orderData = await orderResp.json();
+
+    if (orderData.already_purchased) {
+        window.location.href = "/cheatsheet.pdf/?topic={{ topic_slug }}";
+        return;
+    }
+
+    const options = {
+        key: orderData.key_id,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "FormulaVerse",
+        description: orderData.chapter_name + " — Full PDF",
+        order_id: orderData.order_id,
+        handler: async function (response) {
+            status.textContent = "Verifying payment...";
+
+            const verifyResp = await fetch("{% url 'verify-razorpay-payment' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCookie("csrftoken"),
+                },
+                body: JSON.stringify(response),
+            });
+            const verifyData = await verifyResp.json();
+
+            if (verifyData.success) {
+                status.textContent = "Payment confirmed — starting download...";
+                window.location.href = verifyData.redirect_url;
+            } else {
+                status.textContent = "Payment verification failed. Contact support if money was deducted.";
+                btn.disabled = false;
+            }
+        },
+        modal: {
+            ondismiss: function () {
+                btn.disabled = false;
+                status.textContent = "Payment cancelled.";
+            },
+        },
+        theme: { color: "#7c4dff" },
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+});
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+</body>

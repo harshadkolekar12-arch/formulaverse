@@ -210,3 +210,45 @@ def simplify_latex_for_text(s):
     s = re.sub(r'\\([a-zA-Z]+)', r'\1', s)
 
     return s
+
+
+
+# --- Paste this whole block into pdf_utils.py, anywhere after
+#     simplify_latex_for_text() is defined (it depends on it) ---
+
+_SUPERSCRIPT_MAP = {
+    "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴",
+    "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹",
+    "-": "⁻", "+": "⁺",
+}
+
+
+def _to_unicode_superscript(s):
+    """Convert LaTeX exponents (^{2}, ^2, ^{-1}) to unicode superscript chars."""
+
+    def repl(match):
+        exp = match.group(1)
+        return "".join(_SUPERSCRIPT_MAP.get(c, c) for c in exp)
+
+    # Braced form: ^{2}, ^{-1}
+    s = re.sub(r"\^\{([^}]+)\}", repl, s)
+    # Bare single-char form: ^2
+    s = re.sub(r"\^([0-9\-])", lambda m: _SUPERSCRIPT_MAP.get(m.group(1), m.group(1)), s)
+    return s
+
+
+def format_units_for_display(units_str):
+    """
+    Clean a stored 'units' string (often containing \\frac{}{} and ^{}
+    left over from hand-typed LaTeX) into short readable plain text,
+    e.g. 'g (\\frac{m}{s^{2}})' -> 'g (m/s²)'.
+
+    Reuses simplify_latex_for_text for \\frac, \\times, greek letters,
+    etc., then applies unicode superscript conversion on top.
+    """
+    if not units_str:
+        return units_str
+
+    s = simplify_latex_for_text(units_str)
+    s = _to_unicode_superscript(s)
+    return s

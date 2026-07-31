@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,205 +11,487 @@
     <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
     <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
 
-
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755..."></script>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-YHLZCEHWF7');
-</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YHLZCEHWF7');
+    </script>
 
-<meta name="description" content="Your FormulaVerse Dashboard — browse 158+ physics formulas by chapter, track saved formulas, and access practice questions for JEE and NEET.">
-<meta property="og:title" content="Dashboard | FormulaVerse"/>
-<meta property="og:url" content="https://formulaverse.in/dashboard/"/>
-<meta name="keywords" content="physics formula dashboard, JEE physics chapters, NEET physics chapters, formula categories">
+    <meta name="description" content="Your FormulaVerse Dashboard — browse 158+ physics formulas by chapter, track saved formulas, and access practice questions for JEE and NEET.">
+    <meta property="og:title" content="Dashboard | FormulaVerse"/>
+    <meta property="og:url" content="https://formulaverse.in/dashboard/"/>
+    <meta name="keywords" content="physics formula dashboard, JEE physics chapters, NEET physics chapters, formula categories">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cri..." rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
+    <style>
+        :root {
+            --void: #060a14;
+            --panel: #0e1524;
+            --panel-edge: rgba(148, 178, 224, 0.14);
+            --grid-line: rgba(103, 163, 217, 0.055);
+            --cyan: #4fd8ff;
+            --cyan-dim: rgba(79, 216, 255, 0.14);
+            --violet: #b58cff;
+            --violet-dim: rgba(181, 140, 255, 0.14);
+            --green: #34e0a1;
+            --green-dim: rgba(52, 224, 161, 0.14);
+            --amber: #ffc24b;
+            --amber-dim: rgba(255, 194, 75, 0.14);
+            --ink: #eaf1fb;
+            --muted: #7789a3;
+            --faint: #4c5b76;
+        }
 
+        * { box-sizing: border-box; }
 
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: var(--void);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--ink);
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 28px 28px;
+            background-position: center top;
+        }
+
+        .page {
+            position: relative;
+            max-width: 560px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding: 26px 18px 60px;
+            background:
+                radial-gradient(ellipse 480px 260px at 50% 0%, rgba(79,216,255,0.10), transparent 65%),
+                radial-gradient(ellipse 420px 300px at 90% 30%, rgba(181,140,255,0.08), transparent 60%);
+        }
+
+        /* ===== Back button ===== */
+        .back-link {
+            position: fixed;
+            top: 14px;
+            left: 14px;
+            z-index: 40;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(14, 21, 36, 0.75);
+            border: 1px solid var(--panel-edge);
+            backdrop-filter: blur(8px);
+            color: var(--ink);
+            font-size: 1.35rem;
+            text-decoration: none;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .back-link:hover { border-color: var(--cyan); transform: translateX(-2px); }
+        .back-link:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+        /* ===== Header ===== */
+        .header { text-align: center; padding-top: 34px; margin-bottom: 22px; }
+        .eyebrow {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.32em;
+            color: var(--cyan);
+            text-transform: uppercase;
+            margin: 0 0 10px;
+        }
+        .eyebrow::before, .eyebrow::after { content: '—'; opacity: 0.5; margin: 0 8px; }
+        h1.title {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 900;
+            font-size: 30px;
+            margin: 0 0 8px;
+            background: linear-gradient(90deg, #ffffff, var(--cyan) 70%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* ===== Shared panel look ===== */
+        .panel {
+            position: relative;
+            background: linear-gradient(160deg, rgba(255,255,255,0.035), rgba(255,255,255,0));
+            background-color: var(--panel);
+            border: 1px solid var(--panel-edge);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        }
+        .panel::before, .panel::after,
+        .stat::before, .stat::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-color: inherit;
+        }
+        .corner-brackets::before { top: 8px; left: 8px; border-top: 1.5px solid rgba(255,255,255,0.25); border-left: 1.5px solid rgba(255,255,255,0.25); }
+        .corner-brackets::after { bottom: 8px; right: 8px; border-bottom: 1.5px solid rgba(255,255,255,0.25); border-right: 1.5px solid rgba(255,255,255,0.25); }
+
+        .panel-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin: 0 0 14px;
+        }
+
+        /* ===== Lock overlay ===== */
+        .lock-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .lock-card {
+            background: rgba(9, 13, 24, 0.92);
+            border: 1px solid rgba(79,216,255,0.3);
+            border-radius: 16px;
+            padding: 30px 26px;
+            text-align: center;
+            max-width: 320px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+        .lock-card .lock-icon { font-size: 30px; margin-bottom: 12px; }
+        .lock-card p.lead {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 700;
+            color: var(--ink);
+            font-size: 18px;
+            margin: 0 0 8px;
+        }
+        .lock-card p.sub { color: var(--muted); font-size: 13px; margin: 0 0 20px; line-height: 1.5; }
+        .lock-cta {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--cyan), var(--violet));
+            color: #06101c;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            padding: 11px 26px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 14px;
+            box-shadow: 0 6px 20px rgba(79,216,255,0.25);
+        }
+        .lock-cta:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+        .blurred { filter: blur(7px); opacity: 0.45; pointer-events: none; }
+
+        /* ===== Hero gauge ===== */
+        .gauge-panel { text-align: center; padding: 26px 18px 22px; }
+        .gauge-wrap { position: relative; width: 168px; height: 168px; margin: 0 auto 14px; }
+        .gauge-ring {
+            width: 100%; height: 100%; border-radius: 50%;
+            background: conic-gradient(from -90deg, var(--cyan) 0% {{ completion_percent }}%, rgba(255,255,255,0.06) {{ completion_percent }}% 100%);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 26px rgba(79,216,255,0.18);
+        }
+        .gauge-ring::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px dashed rgba(148,178,224,0.22);
+            transform: scale(1.08);
+        }
+        .gauge-face {
+            width: 128px; height: 128px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #14213a, var(--panel) 70%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: inset 0 0 18px rgba(0,0,0,0.65), inset 0 0 0 1px rgba(255,255,255,0.04);
+        }
+        .gauge-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--green);
+            line-height: 1;
+        }
+        .gauge-sub {
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            color: var(--faint);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+        .gauge-caption { color: var(--muted); font-size: 13px; margin: 0; }
+        .gauge-caption strong { color: var(--ink); font-weight: 600; }
+
+        /* ===== Stat grid ===== */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .stat {
+            position: relative;
+            border-radius: 14px;
+            padding: 18px 14px;
+            text-align: center;
+            border: 1px solid;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .stat.cyan   { background: var(--cyan-dim);   border-color: rgba(79,216,255,0.28); }
+        .stat.violet { background: var(--violet-dim); border-color: rgba(181,140,255,0.28); }
+        .stat.green  { background: var(--green-dim);  border-color: rgba(52,224,161,0.28); }
+        .stat.amber  { background: var(--amber-dim);  border-color: rgba(255,194,75,0.28); }
+
+        .stat-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .stat.cyan .stat-value   { color: var(--cyan); }
+        .stat.violet .stat-value { color: var(--violet); }
+        .stat.green .stat-value  { color: var(--green); }
+        .stat.amber .stat-value  { color: var(--amber); font-size: 19px; }
+
+        .stat-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 10.5px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ===== Progress bar (linear) ===== */
+        .bar-track {
+            background: rgba(255,255,255,0.07);
+            border-radius: 50px;
+            height: 10px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 50px;
+            background: linear-gradient(90deg, var(--cyan), var(--violet));
+        }
+        .bar-caption { color: var(--muted); font-size: 12px; margin: 8px 0 0; }
+
+        /* ===== Exam breakdown ===== */
+        .exam-row { display: flex; justify-content: space-around; text-align: center; }
+        .exam-item .exam-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .exam-item .exam-label {
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+
+        /* ===== Chapter breakdown ===== */
+        .chapter-row { margin-bottom: 14px; }
+        .chapter-row:last-child { margin-bottom: 0; }
+        .chapter-top {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        .chapter-name { color: var(--ink); }
+        .chapter-count { font-family: 'Space Mono', monospace; color: var(--cyan); }
+        .chapter-bar-track {
+            background: rgba(255,255,255,0.07);
+            border-radius: 50px;
+            height: 6px;
+            overflow: hidden;
+        }
+        .chapter-bar-fill {
+            height: 100%;
+            border-radius: 50px;
+            background: linear-gradient(90deg, var(--cyan), var(--violet));
+        }
+        .empty-state { color: var(--muted); text-align: center; font-size: 13px; padding: 10px 0; }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .panel, .stat, .gauge-panel {
+                animation: rise 0.5s ease both;
+            }
+            .stat-grid .stat:nth-child(1) { animation-delay: 0.02s; }
+            .stat-grid .stat:nth-child(2) { animation-delay: 0.08s; }
+            .stat-grid .stat:nth-child(3) { animation-delay: 0.14s; }
+            .stat-grid .stat:nth-child(4) { animation-delay: 0.20s; }
+        }
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 380px) {
+            .gauge-wrap { width: 148px; height: 148px; }
+            .gauge-face { width: 112px; height: 112px; }
+            .gauge-num { font-size: 28px; }
+            .stat-value { font-size: 26px; }
+        }
+    </style>
 </head>
 
 <body>
 
-    <div style="padding: 20px; max-width: 600px; margin: 0 auto; min-height: 100vh; background: linear-gradient(135deg, #0f172a, #1e1b4b, #0f172a">
+    <a href="{% url 'index-page' %}" class="back-link" aria-label="Back to home">←</a>
 
+    <div class="page">
 
-         <a href="{% url "index-page" %}">
-        <div style="position: fixed; top: -3px; left: 4.2px; color: #ffff; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.4)">
-            ←
+        <div class="header">
+            <p class="eyebrow">Study Telemetry</p>
+            <h1 class="title">My Progress Dashboard</h1>
+            <p class="subtitle">Your Personal Study Stats</p>
         </div>
-    </a>
 
+        <!-- ===== Wrapper that holds the stats + lock overlay for logged-out users ===== -->
+        <div style="position: relative;">
 
-    <h1 style="color: #38bdf8; text-align: center; font-size: 24px;">
-        📊 My Progress Dashboard
-    </h1>
-    <p style="color: #7b8fa3; text-align: center; margin-bottom: 20px;">
-        Your Personal Study Stats
-    </p>
+            {% if not is_logged_in %}
+            <div class="lock-overlay">
+                <div class="lock-card">
+                    <div class="lock-icon">🔒</div>
+                    <p class="lead">Log in to see your progress</p>
+                    <p class="sub">Track saved formulas, completion %, and your favourite chapter.</p>
+                    <a href="{% url 'index-page' %}" class="lock-cta"> Login </a>
+                </div>
+            </div>
+            {% endif %}
 
+            <div class="{% if not is_logged_in %}blurred{% endif %}">
 
+                <!-- Hero gauge: completion at a glance -->
+                <div class="panel gauge-panel corner-brackets">
+                    <div class="gauge-wrap">
+                        <div class="gauge-ring">
+                            <div class="gauge-face">
+                                <span class="gauge-num">{{ completion_percent }}%</span>
+                                <span class="gauge-sub">Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="gauge-caption"><strong>{{ total_saved }}</strong> of <strong>{{ total_formulas }}</strong> formulas saved</p>
+                </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                <div class="stat-grid">
 
-    <!-- Total Saved -->
-    <div style="
-        background: rgba(56,189,248,0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(56,189,248,0.25);
-        border-radius: 16px;
-        padding: 16px;
-        text-align: center;
-        box-shadow: 0 4px 20px rgba(56,189,248,0.1);
-    ">
-        <div style="font-size: 36px; font-weight: bold; color: #38bdf8;">{{ total_saved }}</div>
-        <div style="color: #94a3b8; font-size: 13px;">Formulas Saved</div>
-    </div>
+                    <!-- Total Saved -->
+                    <div class="stat cyan corner-brackets">
+                        <div class="stat-value">{{ total_saved }}</div>
+                        <div class="stat-label">Formulas Saved</div>
+                    </div>
 
-    <!-- Total Formulas -->
-    <div style="
-        background: rgba(168,85,247,0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(168,85,247,0.25);
-        border-radius: 16px;
-        padding: 16px;
-        text-align: center;
-        box-shadow: 0 4px 20px rgba(168,85,247,0.1);
-    ">
-        <div style="font-size: 36px; font-weight: bold; color: #a855f7;">{{ total_formulas }}</div>
-        <div style="color: #94a3b8; font-size: 13px;">Total Formulas</div>
-    </div>
+                    <!-- Total Formulas -->
+                    <div class="stat violet corner-brackets">
+                        <div class="stat-value">{{ total_formulas }}</div>
+                        <div class="stat-label">Total Formulas</div>
+                    </div>
 
-    <!-- Completion -->
-    <div style="
-        background: rgba(34,197,94,0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(34,197,94,0.25);
-        border-radius: 16px;
-        padding: 16px;
-        text-align: center;
-        box-shadow: 0 4px 20px rgba(34,197,94,0.1);
-    ">
-        <div style="font-size: 36px; font-weight: bold; color: #22c55e;">{{ completion_percent }}%</div>
-        <div style="color: #94a3b8; font-size: 13px;">Completion</div>
-    </div>
+                    <!-- Completion -->
+                    <div class="stat green corner-brackets">
+                        <div class="stat-value">{{ completion_percent }}%</div>
+                        <div class="stat-label">Completion</div>
+                    </div>
 
-    <!-- Favourite Chapter -->
-    <div style="
-        background: rgba(251,191,36,0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(251,191,36,0.25);
-        border-radius: 16px;
-        padding: 16px;
-        text-align: center;
-        box-shadow: 0 4px 20px rgba(251,191,36,0.1);
-    ">
-        <div style="font-size: 18px; font-weight: bold; color: #fbbf24;">{{ favourite_chapter }}</div>
-        <div style="color: #94a3b8; font-size: 13px;">Favourite Chapter</div>
-    </div>
+                    <!-- Favourite Chapter -->
+                    <div class="stat amber corner-brackets">
+                        <div class="stat-value">{{ favourite_chapter }}</div>
+                        <div class="stat-label">Favourite Chapter</div>
+                    </div>
 
-</div>
+                </div>
 
-<div style="
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-">
-    <p style="color: #38bdf8; font-size: 13px; margin-bottom: 8px; font-weight: bold; letter-spacing: 0.08em;">OVERALL PROGRESS</p>
-    <div style="background: rgba(255,255,255,0.1); border-radius: 50px; height: 12px;">
-        <div style="background: linear-gradient(90deg, #38bdf8, #a855f7); width: {{ completion_percent }}%; height: 12px; border-radius: 50px;"></div>
-    </div>
-    <p style="color: #94a3b8; font-size: 12px; margin-top: 6px;">{{ total_saved }} of {{ total_formulas }} formulas saved</p>
-</div>
+                <div class="panel">
+                    <p class="panel-label">Overall Progress</p>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="width: {{ completion_percent }}%;"></div>
+                    </div>
+                    <p class="bar-caption">{{ total_saved }} of {{ total_formulas }} formulas saved</p>
+                </div>
 
-<div style="
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-">
-    <p style="color: #38bdf8; font-size: 13px; margin-bottom: 12px; font-weight: bold; letter-spacing: 0.08em;">EXAM BREAKDOWN</p>
-    <div style="display: flex; justify-content: space-around; text-align: center;">
-        <div>
-            <div style="font-size: 28px; font-weight: bold; color: #38bdf8;">{{ jee_count }}</div>
-            <div style="color: #94a3b8; font-size: 12px;">JEE</div>
+                <div class="panel">
+                    <p class="panel-label">Exam Breakdown</p>
+                    <div class="exam-row">
+                        <div class="exam-item">
+                            <div class="exam-value" style="color: var(--cyan);">{{ jee_count }}</div>
+                            <div class="exam-label">JEE</div>
+                        </div>
+                        <div class="exam-item">
+                            <div class="exam-value" style="color: var(--green);">{{ neet_count }}</div>
+                            <div class="exam-label">NEET</div>
+                        </div>
+                        <div class="exam-item">
+                            <div class="exam-value" style="color: var(--amber);">{{ both_count }}</div>
+                            <div class="exam-label">JEE/NEET</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <p class="panel-label">Chapter Breakdown</p>
+                    {% for category, count in category_counts.items %}
+                    <div class="chapter-row">
+                        <div class="chapter-top">
+                            <span class="chapter-name">{{ category }}</span>
+                            <span class="chapter-count">{{ count }}</span>
+                        </div>
+                        <div class="chapter-bar-track">
+                            <div class="chapter-bar-fill" style="width: {% widthratio count total_saved 100 %}%;"></div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="empty-state">No formulas saved yet!</p>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <!-- end blur wrapper -->
+
         </div>
-        <div>
-            <div style="font-size: 28px; font-weight: bold; color: #22c55e;">{{ neet_count }}</div>
-            <div style="color: #94a3b8; font-size: 12px;">NEET</div>
-        </div>
-        <div>
-            <div style="font-size: 28px; font-weight: bold; color: #fbbf24;">{{ both_count }}</div>
-            <div style="color: #94a3b8; font-size: 12px;">JEE/NEET</div>
-        </div>
+        <!-- end position:relative wrapper -->
+
     </div>
-</div>
 
-<div style="
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-">
-    <p style="color: #38bdf8; font-size: 13px; margin-bottom: 12px; font-weight: bold; letter-spacing: 0.08em;">CHAPTER BREAKDOWN</p>
-    {% for category, count in category_counts.items %}
-    <div style="margin-bottom: 10px;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-            <span style="color: #f1f5f9; font-size: 13px;">{{ category }}</span>
-            <span style="color: #38bdf8; font-size: 13px;">{{ count }}</span>
-        </div>
-        <div style="background: rgba(255,255,255,0.1); border-radius: 50px; height: 6px;">
-            <div style="background: linear-gradient(90deg, #38bdf8, #a855f7); width: {% widthratio count total_saved 100 %}%; height: 6px; border-radius: 50px;"></div>
-        </div>
-    </div>
-    {% empty %}
-    <p style="color: #94a3b8; text-align: center;">No formulas saved yet!</p>
-    {% endfor %}
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-<script>
-
-
-      if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('SW registered!'))
-        .catch(err => console.log('SW failed:', err));
-    });
-}
-</script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('SW registered!'))
+                .catch(err => console.log('SW failed:', err));
+            });
+        }
+    </script>
 
 </body>
+</html>

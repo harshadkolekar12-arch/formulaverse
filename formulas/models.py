@@ -13,6 +13,8 @@ class Chapter(models.Model):
     simulation_url = models.URLField(blank = True, null = True)
     sim_video=models.URLField(null=True, blank=True)
     sim_thumbnail=models.ImageField(upload_to="sim_video/thumbnail/", null=True, blank=True)
+    is_premium = models.BooleanField(default=False)
+    price_inr = models.PositiveIntegerField(default=49)  # ₹, editable per chapter
 
     class Meta:
         verbose_name_plural="Chapters"
@@ -38,8 +40,6 @@ class Formula(models.Model):
     units = models.CharField(max_length=100, blank=True, null=True)  # e.g. "E: Joules, m: kg, c: m/s"
     when_to_use = models.CharField(max_length=200, blank=True, null=True)  # e.g. "Use when converting rest mass to energy"
     given_by = models.CharField(max_length=300, blank=True, default='Derived')
-    is_saved = models.BooleanField(default=False)
-    session_key = models.CharField(max_length=100, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     exam_tag = models.CharField(max_length=10, choices=EXAM_CHOICES, default='none')
     derivation_image = models.FileField(
@@ -93,14 +93,58 @@ class PYQ(models.Model):
 
 class SimpleUser(models.Model):
     session_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    name = models.CharField(max_length=100, null=True, blank=True)
     date_of_birth = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def _str_(self):
-        return f"User (DOB: {self.date_of_birth}) - {self.created_at.strftime('%d %b %Y')}"
+        return f"User (Name: {self.name}) - {self.created_at.strftime('%d %b %Y')}"
 
     class Meta:
         ordering = ['-created_at']
 
 
 
+class PurchasedChapter(models.Model):
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name="purchases")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    session_key = models.CharField(max_length=100, null=True, blank=True)
+
+    razorpay_order_id = models.CharField(max_length=100)
+    razorpay_payment_id = models.CharField(max_length=100, blank=True, null=True)
+    amount_inr = models.PositiveIntegerField()
+    status = models.CharField(
+        max_length=20,
+        choices=[("created", "Created"), ("paid", "Paid"), ("failed", "Failed")],
+        default="created",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["session_key", "chapter"]),
+            models.Index(fields=["user", "chapter"]),
+        ]
+
+    def _str_(self):
+        return f"{self.chapter.name} — {self.status} — {self.razorpay_order_id}"
+
+
+def has_purchased(chapter, request):
+    qs = PurchasedChapter.objects.filter(chapter=chapter, status="paid")
+    if request.user.is_authenticated:
+        if qs.filter(user=request.user).exists():
+            return True
+    session_key = request.session.session_key
+    if session_key and qs.filter(session_key=session_key).exists():
+        return True
+    return False
+
+
+class SavedFormula(models.Model):
+    user = models.ForeignKey(SimpleUser, on_delete=models.CASCADE, related_name='saved_formulas')
+    formula = models.ForeignKey(Formula, on_delete=models.CASCADE)
+    saved_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'formula')  # prevents duplicate saves

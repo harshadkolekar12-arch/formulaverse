@@ -8,12 +8,12 @@
     <style>
         @page {
             size: A4;
-            margin: 1.6cm 1.5cm 2cm 1.5cm;
+            margin: 1.2cm 1.2cm 1.5cm 1.2cm;
             @bottom-center {
                 content: "{{ site_url }} — page " counter(page) " of " counter(pages);
-                font-size: 8.5px;
-                color: #888;
-                font-family: 'Helvetica', 'Arial', sans-serif;
+                font-size: 8px;
+                color: #94A3B8;
+                font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
             }
         }
 
@@ -22,219 +22,262 @@
         }
 
         body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            color: #1a1a2e;
-            font-size: 11.5px;
-            line-height: 1.5;
+            font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
+            color: #1E293B;
+            font-size: 10.5px;
+            line-height: 1.45;
             margin: 0;
             padding: 0;
+            background-color: #FFFFFF;
         }
 
-        /* ---------- Cover page ---------- */
+        /* ---------- Cover Page ---------- */
         .cover {
-            height: 24cm;
+            height: 25cm;
             text-align: center;
             page-break-after: always;
-            padding-top: 6cm;
+            padding-top: 7cm;
         }
 
         .cover .brand {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 800;
-            letter-spacing: 2px;
-            color: #7c4dff;
-            margin-bottom: 25px;
+            letter-spacing: 2.5px;
+            color: #0284C7;
+            margin-bottom: 20px;
+            text-transform: uppercase;
         }
 
         .cover h1 {
-            font-size: 34px;
-            margin: 0 0 10px;
-            color: #111;
+            font-size: 36px;
+            margin: 0 0 12px;
+            color: #0F172A;
+            letter-spacing: -0.5px;
             text-transform: capitalize;
         }
 
         .cover .count {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 30px;
+            font-size: 13px;
+            color: #64748B;
+            margin-bottom: 35px;
+            font-weight: 500;
         }
 
         .cover .tagline {
-            width: 380px;
+            width: 360px;
             margin: 0 auto;
-            font-size: 12.5px;
+            font-size: 12px;
             font-style: italic;
-            color: #555;
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-            padding: 14px 0;
+            color: #475569;
+            border-top: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 16px 0;
+            line-height: 1.6;
         }
 
         .cover .meta {
-            margin-top: 50px;
-            font-size: 10px;
-            color: #999;
+            margin-top: 60px;
+            font-size: 9.5px;
+            color: #94A3B8;
         }
 
-        /* ---------- Formula page ---------- */
+        /* ---------- Formula Page ---------- */
         .formula-page {
             page-break-before: always;
             page-break-inside: avoid;
         }
 
+        /* Top Header Bar */
+        .header-bar {
+            border-bottom: 2px solid #0F172A;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
         .chapter-tag {
-            font-size: 9px;
-            font-weight: 700;
+            font-size: 8.5px;
+            font-weight: 800;
             letter-spacing: 1.5px;
-            color: #999;
+            color: #0284C7;
             text-transform: uppercase;
+            margin-bottom: 2px;
         }
 
         .formula-title {
-            font-size: 22px;
-            font-weight: 700;
-            margin: 4px 0 2px;
-            color: #111;
+            font-size: 20px;
+            font-weight: 800;
+            margin: 0;
+            color: #0F172A;
+            line-height: 1.2;
         }
 
         .given-by {
-            font-size: 10px;
-            font-style: italic;
-            color: #777;
-            margin-bottom: 14px;
-        }
-
-        .formula-box {
-            text-align: center;
-            background: #f6f5fb;
-            border: 1px solid #e2e0f0;
-            border-radius: 8px;
-            padding: 16px 10px;
-            margin-bottom: 12px;
-        }
-
-        .formula-box img {
-            max-height: 55px;
-            max-width: 90%;
-            display: inline-block;
-        }
-
-        .description {
-            text-align: center;
-            font-size: 11px;
-            color: #555;
-            margin-bottom: 16px;
-        }
-
-        .section-label {
             font-size: 9.5px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            color: #aaa;
-            text-align: center;
-            margin: 16px 0 6px;
+            font-style: italic;
+            color: #64748B;
+            margin-top: 3px;
         }
 
-        .graph-img, .derivation-img {
-            display: block;
-            margin: 0 auto 14px;
-            max-width: 100%;
-            max-height: 180px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        /* WeasyPrint-friendly two-column table */
-        .two-col-table {
+        /* Main Two-Column Layout Grid */
+        .main-layout {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 8px 0;
-            margin-bottom: 12px;
-            margin-left: -8px;
-            margin-right: -8px;
+            border-spacing: 12px 0;
+            margin-left: -12px;
+            margin-right: -12px;
+            margin-bottom: 10px;
         }
 
-        .two-col-cell {
+        .col-left, .col-right {
             vertical-align: top;
             width: 50%;
         }
 
+        /* Hero Formula Box */
+        .formula-box {
+            text-align: center;
+            background: #F0F9FF;
+            border-radius: 6px;
+            padding: 14px 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            color: #ffffff;
+        }
+
+        .formula-box img {
+            max-height: 50px;
+            max-width: 90%;
+            filter: invert(1) hue-rotate(180deg); /* Adjusts dark formulas if needed */
+            display: inline-block;
+        }
+
+        .description {
+            font-size: 10px;
+            color: #475569;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .section-label {
+            font-size: 8.5px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            color: #64748B;
+            text-transform: uppercase;
+            margin: 10px 0 6px;
+        }
+
+        .media-container {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            padding: 8px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .graph-img, .derivation-img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 4px;
+        }
+
+        /* Info Boxes */
         .info-box {
-            background: #fafafa;
-            border-left: 3px solid #7c4dff;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-left: 3px solid #0284C7;
             border-radius: 4px;
             padding: 8px 10px;
-            font-size: 10.5px;
-            height: 100%;
+            font-size: 10px;
+            margin-bottom: 10px;
         }
 
         .info-box .label {
-            font-size: 9px;
-            font-weight: 700;
-            color: #7c4dff;
+            font-size: 8.5px;
+            font-weight: 800;
+            color: #0284C7;
             letter-spacing: 0.5px;
             margin-bottom: 4px;
             text-transform: uppercase;
         }
 
         .info-box.recall {
-            border-left-color: #38bdf8;
+            background: #F0F9FF;
+            border-color: #BAE6FD;
+            border-left-color: #0369A1;
         }
 
         .info-box.recall .label {
-            color: #0891b2;
+            color: #0369A1;
         }
 
-        .example-box {
-            background: #fdf8ee;
-            border: 1px solid #eee0c2;
+        /* Variables & Units Table */
+        table.var-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9.5px;
+            margin-bottom: 10px;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
             border-radius: 4px;
-            padding: 10px 12px;
-            margin-bottom: 12px;
-            font-size: 10.5px;
+        }
+
+        table.var-table td {
+            border-bottom: 1px solid #E2E8F0;
+            padding: 6px 8px;
+            vertical-align: top;
+        }
+
+        table.var-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table.var-table td:first-child {
+            font-weight: 700;
+            width: 28%;
+            color: #334155;
+            background: #F8FAFC;
+        }
+
+        /* Worked Example Box */
+        .example-box {
+            background: #FFFBEB;
+            border: 1px solid #FDE68A;
+            border-left: 3px solid #D97706;
+            border-radius: 4px;
+            padding: 9px 11px;
+            margin-bottom: 10px;
+            font-size: 10px;
+            color: #451A03;
         }
 
         .example-box .label {
-            font-size: 9px;
-            font-weight: 700;
-            color: #b58900;
+            font-size: 8.5px;
+            font-weight: 800;
+            color: #D97706;
             letter-spacing: 0.5px;
             margin-bottom: 4px;
             text-transform: uppercase;
         }
 
-        table.var-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 10px;
-            margin-bottom: 12px;
-        }
-
-        table.var-table td {
-            border-bottom: 1px solid #eee;
-            padding: 5px 6px;
-            vertical-align: top;
-        }
-
-        table.var-table td:first-child {
-            font-weight: 700;
-            width: 25%;
-            color: #444;
-        }
-
+        /* Common Mistakes Box */
         .mistakes-box {
-            background: #fdf0f0;
-            border-left: 3px solid #e24b4a;
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-left: 3px solid #EF4444;
             border-radius: 4px;
-            padding: 8px 12px;
-            font-size: 10.5px;
-            margin-top: 10px;
+            padding: 8px 11px;
+            font-size: 10px;
+            color: #7F1D1D;
         }
 
         .mistakes-box .label {
-            font-size: 9px;
-            font-weight: 700;
-            color: #a32d2d;
+            font-size: 8.5px;
+            font-weight: 800;
+            color: #EF4444;
             letter-spacing: 0.5px;
             margin-bottom: 4px;
             text-transform: uppercase;
@@ -245,7 +288,7 @@
 
     <!-- ============ Cover page ============ -->
     <div class="cover">
-        <div class="brand">💗 FORMULAVERSE</div>
+        <div class="brand"> 💗FORMULAVERSE</div>
         <h1>{{ topic|title }}</h1>
         <div class="count">{{ entries|length }} formulas — complete study booklet</div>
         <div class="tagline">
@@ -259,90 +302,105 @@
     {% for entry in entries %}
     {% with f=entry.obj %}
     <div class="formula-page">
-        <div class="chapter-tag">{{ topic|upper }}</div>
-        <div class="formula-title">{{ f.title }}</div>
 
-        {% if f.given_by %}
-        <div class="given-by">Given by: {{ f.given_by }}</div>
-        {% endif %}
-
-        {% if entry.formula_img %}
-        <div class="formula-box">
-            <img src="{{ entry.formula_img }}" alt="{{ f.title }}">
+        <!-- Header Section -->
+        <div class="header-bar">
+            <div class="chapter-tag">{{ topic|upper }}</div>
+            <div class="formula-title">{{ f.title }}</div>
+            {% if f.given_by %}
+            <div class="given-by">Given by: {{ f.given_by }}</div>
+            {% endif %}
         </div>
-        {% endif %}
 
-        {% if f.description %}
-        <div class="description">{{ f.description }}</div>
-        {% endif %}
-
-      <!-- Render Diagram or Graph image (handles uploaded images & Desmos static thumbnails) -->
-{% if entry.diagram_path %}
-    <div class="section-label">DIAGRAM / GRAPH</div>
-    <img class="graph-img" src="{{ entry.diagram_path }}" alt="{{ f.title }} diagram">
-{% endif %}
-
-        <!-- Safely render Derivation if present; silently skip if missing -->
-        {% if entry.derivation_path %}
-            <div class="section-label">— DERIVATION —</div>
-            <img class="derivation-img" src="{{ entry.derivation_path }}" alt="{{ f.title }} derivation">
-        {% endif %}
-
-        {% if f.when_to_use or f.mnemonic %}
-        <table class="two-col-table">
+        <!-- Two Column Main Layout -->
+        <table class="main-layout">
             <tr>
-                {% if f.when_to_use %}
-                <td class="two-col-cell">
+                <!-- Left Column: Primary Visuals & Math -->
+                <td class="col-left">
+                    {% if entry.formula_img %}
+                    <div class="formula-box">
+                        <img src="{{ entry.formula_img }}" alt="{{ f.title }}">
+                    </div>
+                    {% endif %}
+
+                    {% if f.description %}
+                    <div class="description">{{ f.description }}</div>
+                    {% endif %}
+
+                    {% if entry.diagram_path %}
+                    <div class="section-label">Diagram / Graph</div>
+                    <div class="media-container">
+                        <img class="graph-img" src="{{ entry.diagram_path }}" alt="{{ f.title }} diagram">
+                    </div>
+                    {% endif %}
+
+                    {% if entry.derivation_path %}
+                    <div class="section-label">Derivation</div>
+                    <div class="media-container">
+                        <img class="derivation-img" src="{{ entry.derivation_path }}" alt="{{ f.title }} derivation">
+                    </div>
+                    {% endif %}
+                </td>
+
+                <!-- Right Column: Metadata, Context & Definitions -->
+                <td class="col-right">
+                    {% if f.when_to_use %}
                     <div class="info-box">
                         <div class="label">When to use</div>
                         {{ f.when_to_use }}
                     </div>
-                </td>
-                {% endif %}
+                    {% endif %}
 
-                {% if f.mnemonic %}
-                <td class="two-col-cell">
+                    {% if f.mnemonic %}
                     <div class="info-box recall">
                         <div class="label">Quick recall</div>
                         {{ f.mnemonic }}
                     </div>
+                    {% endif %}
+
+                    {% if f.variables or entry.units_display %}
+                    <div class="section-label">Breakdown</div>
+                    <table class="var-table">
+                        {% if f.variables %}
+                        <tr>
+                            <td>Variables</td>
+                            <td>{{ f.variables }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if entry.units_display %}
+                        <tr>
+                            <td>Units</td>
+                            <td>{{ entry.units_display }}</td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                    {% endif %}
                 </td>
-                {% endif %}
             </tr>
         </table>
-        {% endif %}
 
+        <!-- Bottom Full-Width Cards Section -->
         {% if f.example %}
         <div class="example-box">
-            <div class="label">Worked example</div>
-            {{ f.example }}
-           {% if entry.answer_img %}
-<div style="margin-top: 8px; display: flex; align-items: center; gap: 6px;">
-    <span style="font-weight: bold; color: #444;">Answer:</span>
-    <img src="{{ entry.answer_img }}" style="height: 24px;" alt="answer">
-</div>
-{% endif %}
+            <div class="label">Worked Example</div>
+            <div>{{ f.example }}</div>
+            {% if entry.answer_img %}
+            <div style="margin-top: 8px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-weight: 700; color: #451A03;">Answer:</span>
+                <img src="{{ entry.answer_img }}" style="height: 22px; vertical-align: middle;" alt="answer">
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
-
-        {% if f.variables or f.units %}
-        <table class="var-table">
-            {% if f.variables %}
-            <tr><td>Variables</td><td>{{ f.variables }}</td></tr>
-            {% endif %}
-
-            {% if f.units %}
-            <tr><td>Units</td><td>{{ f.units }}</td></tr>
-            {% endif %}
-        </table>
         {% endif %}
 
         {% if f.common_mistakes %}
         <div class="mistakes-box">
-            <div class="label">Common mistakes</div>
+            <div class="label">Common Mistakes</div>
             <div>{{ f.common_mistakes }}</div>
         </div>
         {% endif %}
+
     </div>
     {% endwith %}
     {% endfor %}

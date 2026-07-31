@@ -841,6 +841,9 @@
     <h3>Quick verification</h3>
     <p>Just two quick things to save or share formulas</p>
 
+    <label> Your Name </label>
+    <input type="text" id="nameInput" placeholder="e.g. Rahul" required />
+
     <label>Date of Birth</label>
     <input type="date" id="dobInput" required />
 
@@ -1353,11 +1356,12 @@ function loadCaptcha() {
 }
 
 function submitSimpleLogin() {
+  const name = document.getElementById('nameInput').value;
   const dob = document.getElementById('dobInput').value;
   const answer = document.getElementById('captchaInput').value;
   const errorEl = document.getElementById('loginError');
 
-  if (!dob || !answer) {
+  if (!name || !dob || !answer) {
     errorEl.innerText = "Please fill both fields.";
     return;
   }
@@ -1365,7 +1369,7 @@ function submitSimpleLogin() {
   fetch('/simple-login/', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({dob, answer})
+    body: JSON.stringify({name, dob, answer})
   })
   .then(res => res.json())
   .then(data => {
