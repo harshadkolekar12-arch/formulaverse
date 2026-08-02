@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to use this simulation — FormulaVerse</title>
+    <title>How to use this simulation | Formulaverse</title>
 
      <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
 
@@ -288,6 +288,47 @@
   height: 100%;
   border: 0;
 }
+
+        /* ══════════════════════════════════════════════
+           NEW: DESKTOP POLISH (≥900px only)
+           Note: .content-wrapper stays a readable width on
+           purpose (a step-by-step guide reads better in a
+           constrained column, like the privacy policy page).
+           This block only adds spacing polish and enlarges
+           the icon glossary grid — nothing is restructured.
+           ══════════════════════════════════════════════ */
+        @media (min-width: 900px) {
+
+            .content-wrapper {
+                max-width: 760px;
+                padding: 0 24px;
+            }
+
+            .page-header {
+                padding: 44px 0 10px;
+            }
+
+            .section {
+                padding: 22px 26px;
+            }
+
+            .icon-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 12px;
+            }
+
+            .icon-chip {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+                padding: 16px 12px;
+            }
+
+            .icon-glyph {
+                font-size: 1.5rem;
+                margin-bottom: 4px;
+            }
+        }
 
     </style>
 </head>

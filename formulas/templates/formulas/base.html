@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FormulaVerse — Explore Physics</title>
+    <title> Explore Physics | Formulaverse </title>
 
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
     <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
@@ -33,335 +33,383 @@
     <link rel="preconnect" href=https://fonts.gstatic.com crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            /* Base surfaces */
-            --bg-primary: #0a0e1a;
-            --bg-secondary: #0f172a;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --border-subtle: #1e293b;
-            --border-glow: rgba(56, 189, 248, 0.15);
+  <style>
+    :root {
+        /* Base surfaces */
+        --bg-primary: #0a0e1a;
+        --bg-secondary: #0f172a;
+        --bg-card: rgba(255, 255, 255, 0.03);
+        --border-subtle: #1e293b;
+        --border-glow: rgba(56, 189, 248, 0.15);
 
-            /* Text */
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
+        /* Text */
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
 
-            /* Accent (primary brand color) */
-            --accent-blue: #38bdf8;
-            --accent-purple: #818cf8;
+        /* Accent (primary brand color) */
+        --accent-blue: #38bdf8;
+        --accent-purple: #818cf8;
 
-            /* Gold — reserved ONLY for CTAs / badges / "featured" moments */
-            --gold: #FFD700;
-            --gold-deep: #FFA500;
-        }
+        /* Gold — reserved ONLY for CTAs / badges / "featured" moments */
+        --gold: #FFD700;
+        --gold-deep: #FFA500;
+    }
 
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        background: linear-gradient(135deg, #0a0e1a, #0f172a, #0a0812, #05070f);
+        background-size: 400% 400%;
+        animation: gradientShift 8s ease infinite;
+        font-family: 'Outfit', sans-serif;
+        min-height: 100vh;
+        padding: 20px 14px;
+        overflow-x: hidden;
+        position: relative;
+        /* NEW: centers .page-wrap horizontally on any viewport width */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* ── Top Floating Header Navigation ── */
+    .top-nav {
+        position: relative;
+        top: -2px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 5px 0;
+        z-index: 100;
+    }
+
+    .about-me {
+        font-size: 0.8rem;
+        color: var(--text-primary);
+        font-weight: bold;
+        text-decoration: none;
+        opacity: 0.8;
+        transition: opacity 0.2s;
+        padding: 5px 9px;
+    }
+    .about-me:hover { opacity: 1; }
+
+    .tg-join-btn {
+        display: inline-flex;
+        align-items: center;
+        background: #24A1DE;
+        color: #ffffff !important;
+        padding: 5px 9px;
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 20px;
+        text-decoration: none !important;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 4px 10px rgba(36, 161, 222, 0.2);
+    }
+    .tg-join-btn:hover {
+        background: #1d82b3;
+        transform: translateY(-1px);
+    }
+
+    /* ── Core Container ── */
+    .page-wrap {
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+        /* FIX: was "margin-top: 20px auto 0;" — invalid shorthand, browser ignored it,
+           which is why this never centered on wide/laptop screens */
+        margin: 20px auto 0;
+    }
+
+    .ornament {
+        color: var(--accent-blue);
+        font-size: 1.1rem;
+        letter-spacing: 0.4rem;
+        margin-bottom: 0.3rem;
+        opacity: 0.7;
+    }
+
+    .eyebrow {
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        background: linear-gradient(90deg, #38bdf8, #818cf8, #38bdf8);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shine 3s linear infinite;
+    }
+
+    @keyframes shine {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
+    }
+
+    h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: clamp(1.8rem, 6vw, 2.6rem);
+        font-weight: 900;
+        line-height: 1.2;
+        color: var(--text-primary);
+        margin: 0.5rem 0;
+        text-shadow: 0 2px 20px rgba(56, 189, 248, 0.15);
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 1rem 0;
+    }
+    .divider::before, .divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(to right, transparent, var(--accent-blue), transparent);
+    }
+    .divider-diamond {
+        color: var(--accent-blue);
+        font-size: 0.6rem;
+    }
+
+    /* ── Feature Cards ── */
+    .features {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 1.2rem;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: var(--bg-card);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--border-subtle);
+        border-left: 4px solid var(--accent-blue);
+        border-radius: 14px;
+        padding: 12px 16px;
+        text-align: left;
+        transition: all 0.3s ease;
+    }
+    .feature-item:hover {
+        background: rgba(56, 189, 248, 0.06);
+        transform: translateY(-2px);
+    }
+
+    .feature-icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .feature-icon img {
+        width: 2.2rem;
+        height: 2.2rem;
+        object-fit: contain;
+    }
+
+    .feature-text {
+        flex-grow: 1;
+    }
+    .feature-text strong {
+        display: block;
+        font-family: 'Playfair Display', serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.1rem;
+    }
+    .feature-text span {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        line-height: 1.3;
+    }
+
+    /* ── CTA Button (kept gold — deliberate contrast against blue theme) ── */
+    .explore-btn-wrapper {
+        margin: 1.5rem auto 0.5rem;
+    }
+    .explore-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+        border-radius: 50px;
+        padding: 14px 40px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        transition: all 0.3s ease;
+        animation: pulse 2s ease-in-out infinite;
+        text-decoration: none;
+    }
+    .explore-btn a {
+        text-decoration: none;
+        color: #0a0e1a !important;
+    }
+    .explore-btn:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+    }
+
+    @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+        50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
+    }
+
+    .bottom-note {
+        margin-top: 0.8rem;
+        font-size: 0.7rem;
+        font-style: italic;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+    }
+
+    .bg-video {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+        z-index: -1;
+        opacity: 0.2;
+    }
+
+    /* ── Physics History Banner ── */
+    .physics-history-banner {
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 10px 20px;
+        color: var(--text-primary);
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 14px;
+        z-index: 999;
+        width: 100%;
+    }
+
+    .banner-btn {
+        background: var(--gold);
+        color: #0a0e1a;
+        border: none;
+        padding: 4px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 700;
+        transition: all 0.2s ease;
+        box-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
+    }
+
+    .banner-btn:hover {
+        background: #ffe066;
+        transform: scale(1.03);
+    }
+
+    .banner-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .banner-text {
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* ── Modal Styles ── */
+    .history-modal {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center;
+        z-index: 1000;
+    }
+    .modal-overlay {
+        position: absolute; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+    }
+    .modal-box {
+        position: relative;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        width: 90%; max-width: 500px;
+        padding: 24px; color: var(--text-primary);
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5);
+        animation: slideUp 0.3s ease-out;
+    }
+    .modal-header {
+        display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;
+    }
+    .modal-title { font-weight: 700; color: var(--accent-blue); font-size: 16px; }
+    .modal-close {
+        background: none; border: none; color: var(--text-muted);
+        font-size: 24px; cursor: pointer; line-height: 1;
+    }
+    .modal-close:hover { color: var(--text-primary); }
+    .modal-body { font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
+
+    @keyframes slideUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* ══════════════════════════════════════════════
+       DESKTOP / LAPTOP ENHANCEMENTS
+       Everything above is untouched mobile CSS.
+       Below only APPLIES on screens ≥ 900px wide.
+       ══════════════════════════════════════════════ */
+    @media (min-width: 900px) {
 
         body {
-            background: linear-gradient(135deg, #0a0e1a, #0f172a, #0a0812, #05070f);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-            font-family: 'Outfit', sans-serif;
-            min-height: 100vh;
-            padding: 20px 14px;
-            overflow-x: hidden;
-            position: relative;
+            padding: 32px 40px;
         }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* ── Top Floating Header Navigation ── */
         .top-nav {
-            position: relative;
-            top: -2px;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5px 0;
-            z-index: 100;
+            max-width: 900px;
         }
 
-        .about-me {
-            font-size: 0.8rem;
-            color: var(--text-primary);
-            font-weight: bold;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.2s;
-            padding: 5px 9px;
-        }
-        .about-me:hover { opacity: 1; }
-
-        .tg-join-btn {
-            display: inline-flex;
-            align-items: center;
-            background: #24A1DE;
-            color: #ffffff !important;
-            padding: 5px 9px;
-            font-size: 12px;
-            font-weight: 600;
-            border-radius: 20px;
-            text-decoration: none !important;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 10px rgba(36, 161, 222, 0.2);
-        }
-        .tg-join-btn:hover {
-            background: #1d82b3;
-            transform: translateY(-1px);
-        }
-
-        /* ── Core Container ── */
         .page-wrap {
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-            margin-top: 20px auto 0;
+            max-width: 640px;
+            margin-top: 30px;
         }
 
-        .ornament {
-            color: var(--accent-blue);
-            font-size: 1.1rem;
-            letter-spacing: 0.4rem;
-            margin-bottom: 0.3rem;
-            opacity: 0.7;
-        }
-
-        .eyebrow {
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            background: linear-gradient(90deg, #38bdf8, #818cf8, #38bdf8);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
-        }
-
-        @keyframes shine {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-
-        h1 {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: clamp(1.8rem, 6vw, 2.6rem);
-            font-weight: 900;
-            line-height: 1.2;
-            color: var(--text-primary);
-            margin: 0.5rem 0;
-            text-shadow: 0 2px 20px rgba(56, 189, 248, 0.15);
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        .divider::before, .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--accent-blue), transparent);
-        }
-        .divider-diamond {
-            color: var(--accent-blue);
-            font-size: 0.6rem;
-        }
-
-        /* ── Feature Cards ── */
         .features {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 1.2rem;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-subtle);
-            border-left: 4px solid var(--accent-blue);
-            border-radius: 14px;
-            padding: 12px 16px;
-            text-align: left;
-            transition: all 0.3s ease;
-        }
-        .feature-item:hover {
-            background: rgba(56, 189, 248, 0.06);
-            transform: translateY(-2px);
+            flex: 1 1 calc(50% - 16px);
+            min-width: 260px;
         }
 
-        .feature-icon {
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .feature-icon img {
-            width: 2.2rem;
-            height: 2.2rem;
-            object-fit: contain;
-        }
-
-        .feature-text {
-            flex-grow: 1;
-        }
-        .feature-text strong {
-            display: block;
-            font-family: 'Playfair Display', serif;
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.1rem;
-        }
-        .feature-text span {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            line-height: 1.3;
-        }
-
-        /* ── CTA Button (kept gold — deliberate contrast against blue theme) ── */
-        .explore-btn-wrapper {
-            margin: 1.5rem auto 0.5rem;
-        }
         .explore-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--gold), var(--gold-deep));
-            border-radius: 50px;
-            padding: 14px 40px;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-            transition: all 0.3s ease;
-            animation: pulse 2s ease-in-out infinite;
-            text-decoration: none;
-        }
-        .explore-btn a {
-            text-decoration: none;
-            color: #0a0e1a !important;
-        }
-        .explore-btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            padding: 16px 52px;
+            font-size: 17px;
         }
 
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
-            50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
-        }
-
-        .bottom-note {
-            margin-top: 0.8rem;
-            font-size: 0.7rem;
-            font-style: italic;
-            color: var(--text-muted);
-            letter-spacing: 0.05em;
-        }
-
-        .bg-video {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            opacity: 0.2;
-        }
-
-        /* ── Physics History Banner ── */
         .physics-history-banner {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-subtle);
-            padding: 10px 20px;
-            color: var(--text-primary);
-            font-family: system-ui, -apple-system, sans-serif;
-            font-size: 14px;
-            z-index: 999;
+            padding: 12px 20px;
         }
-
-        .banner-btn {
-            background: var(--gold);
-            color: #0a0e1a;
-            border: none;
-            padding: 4px 14px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 700;
-            transition: all 0.2s ease;
-            box-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
-        }
-
-        .banner-btn:hover {
-            background: #ffe066;
-            transform: scale(1.03);
-        }
-
-        .banner-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .banner-text {
-            font-weight: 500;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* ── Modal Styles ── */
-        .history-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 1000;
-        }
-        .modal-overlay {
-            position: absolute; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(4px);
-        }
-        .modal-box {
-            position: relative;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            width: 90%; max-width: 500px;
-            padding: 24px; color: var(--text-primary);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5);
-            animation: slideUp 0.3s ease-out;
-        }
-        .modal-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;
-        }
-        .modal-title { font-weight: 700; color: var(--accent-blue); font-size: 16px; }
-        .modal-close {
-            background: none; border: none; color: var(--text-muted);
-            font-size: 24px; cursor: pointer; line-height: 1;
-        }
-        .modal-close:hover { color: var(--text-primary); }
-        .modal-body { font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body>

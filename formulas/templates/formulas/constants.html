@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Physical Constants | FormulaVerse</title>
+<title>Physical Constants | Formulaverse</title>
 
 <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
 <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
@@ -325,6 +325,39 @@
     header { padding: 14px 16px; }
     .search-wrap { padding: 0 14px; }
     .filters { padding: 0 14px; }
+  }
+
+  /* ══════════════════════════════════════════════
+     DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
+     The .grid is already responsive (auto-fill) —
+     this just polishes the header/hero on wide screens.
+     ══════════════════════════════════════════════ */
+  @media (min-width: 900px) {
+
+    header {
+      padding: 20px 40px;
+    }
+
+    .hero {
+      padding: 56px 24px 36px;
+    }
+
+    .hero p {
+      max-width: 480px;
+    }
+
+    .search-wrap {
+      max-width: 480px;
+    }
+
+    .grid {
+      max-width: 1080px;
+      gap: 20px;
+    }
+
+    .card {
+      padding: 22px;
+    }
   }
 </style>
 

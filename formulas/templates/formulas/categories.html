@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ category.name }} — FormulaVerse</title>
+    <title>{{ category.name }} | FormulaVerse</title>
 
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
     <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
@@ -462,6 +462,52 @@
     border-radius: 10px;
 }
 
+
+/* ══════════════════════════════════════════════
+       DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
+       Nothing above is modified — mobile stays identical.
+       ══════════════════════════════════════════════ */
+    @media (min-width: 900px) {
+
+        .container {
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px 22px;
+            align-items: start;
+        }
+
+        /* These pieces are single full-width sections, not formula cards —
+           force them to span both grid columns */
+        .container > .section-label,
+        .container > .search-wrap,
+        .container > .sim-box,
+        .container > .resource-box,
+        .container > a {
+            grid-column: 1 / -1;
+        }
+
+        /* Each formula's <ul> collapses so its <li> becomes a real grid item */
+        .container > ul {
+            display: contents;
+        }
+
+        .formula-card {
+            height: 100%;
+        }
+
+        .formula-form {
+            max-width: 100%;
+        }
+
+        .category-title {
+            font-size: 2rem;
+        }
+
+        .tagline {
+            max-width: 640px;
+        }
+    }
     </style>
 </head>
 

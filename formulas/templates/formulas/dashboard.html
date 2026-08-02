@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> MY DASHBOARD- FormulaVerse</title>
+    <title> My Dashboard | Formulaverse</title>
 
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
     <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
@@ -360,6 +360,51 @@
             .gauge-num { font-size: 28px; }
             .stat-value { font-size: 26px; }
         }
+
+        /* ══════════════════════════════════════════════
+           NEW: DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
+           Nothing above this block was changed —
+           mobile layout is 100% identical to before.
+           ══════════════════════════════════════════════ */
+        @media (min-width: 900px) {
+
+            .page {
+                max-width: 920px;
+                padding: 26px 30px 60px;
+            }
+
+            .header {
+                padding-top: 20px;
+            }
+
+            /* Gauge panel becomes a centered hero card instead of full-width stack */
+            .gauge-panel {
+                max-width: 340px;
+                margin: 0 auto 20px;
+            }
+
+            /* Stat cards go from 2x2 to a single row of 4 */
+            .stat-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            /* Overall Progress + Exam Breakdown sit side by side,
+               Chapter Breakdown spans the full width beneath them */
+            .dashboard-lower {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+                align-items: start;
+            }
+
+            .dashboard-lower .panel {
+                margin-bottom: 0;
+            }
+
+            .chapter-panel {
+                grid-column: 1 / -1;
+            }
+        }
     </style>
 </head>
 
@@ -432,48 +477,60 @@
 
                 </div>
 
-                <div class="panel">
-                    <p class="panel-label">Overall Progress</p>
-                    <div class="bar-track">
-                        <div class="bar-fill" style="width: {{ completion_percent }}%;"></div>
-                    </div>
-                    <p class="bar-caption">{{ total_saved }} of {{ total_formulas }} formulas saved</p>
-                </div>
+                <!-- ═══════════════════════════════════════════
+                     NEW: this wrapper <div class="dashboard-lower">
+                     groups the 3 panels below so the desktop CSS
+                     above can arrange them into a grid.
+                     Nothing INSIDE these panels changed at all.
+                     ═══════════════════════════════════════════ -->
+                <div class="dashboard-lower">
 
-                <div class="panel">
-                    <p class="panel-label">Exam Breakdown</p>
-                    <div class="exam-row">
-                        <div class="exam-item">
-                            <div class="exam-value" style="color: var(--cyan);">{{ jee_count }}</div>
-                            <div class="exam-label">JEE</div>
+                    <div class="panel">
+                        <p class="panel-label">Overall Progress</p>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: {{ completion_percent }}%;"></div>
                         </div>
-                        <div class="exam-item">
-                            <div class="exam-value" style="color: var(--green);">{{ neet_count }}</div>
-                            <div class="exam-label">NEET</div>
-                        </div>
-                        <div class="exam-item">
-                            <div class="exam-value" style="color: var(--amber);">{{ both_count }}</div>
-                            <div class="exam-label">JEE/NEET</div>
-                        </div>
+                        <p class="bar-caption">{{ total_saved }} of {{ total_formulas }} formulas saved</p>
                     </div>
-                </div>
 
-                <div class="panel">
-                    <p class="panel-label">Chapter Breakdown</p>
-                    {% for category, count in category_counts.items %}
-                    <div class="chapter-row">
-                        <div class="chapter-top">
-                            <span class="chapter-name">{{ category }}</span>
-                            <span class="chapter-count">{{ count }}</span>
-                        </div>
-                        <div class="chapter-bar-track">
-                            <div class="chapter-bar-fill" style="width: {% widthratio count total_saved 100 %}%;"></div>
+                    <div class="panel">
+                        <p class="panel-label">Exam Breakdown</p>
+                        <div class="exam-row">
+                            <div class="exam-item">
+                                <div class="exam-value" style="color: var(--cyan);">{{ jee_count }}</div>
+                                <div class="exam-label">JEE</div>
+                            </div>
+                            <div class="exam-item">
+                                <div class="exam-value" style="color: var(--green);">{{ neet_count }}</div>
+                                <div class="exam-label">NEET</div>
+                            </div>
+                            <div class="exam-item">
+                                <div class="exam-value" style="color: var(--amber);">{{ both_count }}</div>
+                                <div class="exam-label">JEE/NEET</div>
+                            </div>
                         </div>
                     </div>
-                    {% empty %}
-                    <p class="empty-state">No formulas saved yet!</p>
-                    {% endfor %}
+
+                    <!-- NEW: added class="chapter-panel" so desktop CSS can make it full-width -->
+                    <div class="panel chapter-panel">
+                        <p class="panel-label">Chapter Breakdown</p>
+                        {% for category, count in category_counts.items %}
+                        <div class="chapter-row">
+                            <div class="chapter-top">
+                                <span class="chapter-name">{{ category }}</span>
+                                <span class="chapter-count">{{ count }}</span>
+                            </div>
+                            <div class="chapter-bar-track">
+                                <div class="chapter-bar-fill" style="width: {% widthratio count total_saved 100 %}%;"></div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="empty-state">No formulas saved yet!</p>
+                        {% endfor %}
+                    </div>
+
                 </div>
+                <!-- end .dashboard-lower -->
 
             </div>
             <!-- end blur wrapper -->

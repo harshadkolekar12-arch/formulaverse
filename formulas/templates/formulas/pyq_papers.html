@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PYQ Papers | FormulaVerse</title>
+<title>PYQ Papers | Formulaverse</title>
 
 
 
@@ -150,6 +150,44 @@
             right: 15px;
             align-items: center;
             z-index: 100;
+ }
+
+ /* ══════════════════════════════════════════════
+    NEW: DESKTOP ALIGNMENT FIX (≥900px only)
+    The .grid was already responsive (auto-fill).
+    This just aligns the hero text width and the
+    two banner divs (Amazon link, Buy me a chai) to
+    the same centered 900px column as the grid,
+    so nothing looks stretched or off-center.
+    No HTML structure changes needed.
+    ══════════════════════════════════════════════ */
+ @media (min-width: 900px) {
+
+    header {
+        padding: 20px 40px;
+    }
+
+    .hero {
+        padding: 48px 24px 28px;
+    }
+
+    .hero p {
+        max-width: 480px;
+    }
+
+    .grid {
+        gap: 20px;
+    }
+
+    /* These two banners use inline styles for background/padding/margin —
+       inline styles normally beat stylesheet rules, so !important is
+       needed here to actually win the centering override */
+    .resource-box,
+    body > div[style*="margin-top:24px"] {
+        max-width: 900px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
  }
 
 </style>

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> SAVED </title>
+    <title> Personal Formulavault | Formulaverse </title>
 
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
 
@@ -253,6 +253,39 @@
             text-shadow:1px 1px 2px rgba(0,0,0,0.5);
             z-index:10;
         }
+
+        /* ══════════════════════════════════════════════
+           NEW: DESKTOP GRID (≥900px only)
+           ul was already "display: grid" but had no
+           grid-template-columns, so it defaulted to a
+           single column at every screen width. This adds
+           a proper 2-column layout on desktop only.
+           No HTML changes needed.
+           ══════════════════════════════════════════════ */
+        @media (min-width: 900px) {
+
+            .container {
+                max-width: 960px;
+            }
+
+            ul {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+
+            .deposit-box {
+                height: 100%;
+            }
+
+            .box-body {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .box-body form {
+                margin-top: auto;
+            }
+        }
     </style>
 
     <script>
@@ -272,7 +305,7 @@
     {% endif %}
 
     <div class="vault-header">
-        <h1><span class="dial"></span> Formula vault</h1>
+        <h1><span class="dial"></span> Formulavault</h1>
         <p>Your personal deposit box</p>
     </div>
 

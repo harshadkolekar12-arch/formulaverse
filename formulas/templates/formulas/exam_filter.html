@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ exam_label }} Formulas — FormulaVerse</title>
+    <title>{{ exam_label }} Formulas | Formulaverse</title>
 
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
 
@@ -342,6 +342,47 @@
   margin-top: 10px;
   min-height: 18px;
 }
+
+        /* ══════════════════════════════════════════════
+           NEW: DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
+           No HTML changes were needed for this page —
+           the <ul> already wraps <li> cards directly,
+           so it becomes a grid container here.
+           Mobile layout below 900px is untouched.
+           ══════════════════════════════════════════════ */
+        @media (min-width: 900px) {
+
+            .header {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding-top: 40px;
+            }
+
+            .search-wrapper {
+                max-width: 560px;
+                margin: 22px auto 6px;
+            }
+
+            .container {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 10px 24px 20px;
+            }
+
+            .container ul {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .container li {
+                margin-bottom: 0;
+            }
+
+            .formula-card {
+                height: 100%;
+            }
+        }
 
     </style>
 </head>

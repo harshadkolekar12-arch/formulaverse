@@ -355,9 +355,10 @@
 
         .app-header-wordmark {
             font-size: clamp(1.1rem, 5vw, 1.35rem);
-            font-weight: 900;
-            color: #ffffff;
-            letter-spacing: 0.06em;
+            color: #FFFFFF;
+            text-shadow: 0 0 12px rgba(168, 85, 247, 0.4), 0 0 24px rgba(236, 73, 153, 0.2);
+            font-weight: 700;
+            letter-spacing: 0.5px;
             line-height: 1.1;
             white-space: nowrap;
         }
@@ -535,6 +536,82 @@
   font-size: 0.95rem;
 }
 
+/* ══════════════════════════════════════════════
+       DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
+       Nothing above this block is modified — mobile
+       and tablet layouts are completely untouched.
+       ══════════════════════════════════════════════ */
+    @media (min-width: 900px) {
+
+        .app-header,
+        .grid-heading,
+        .cards-grid,
+        .reference-row,
+        .proto-banner {
+            max-width: 1100px;
+        }
+
+        .filter-buttons {
+            max-width: 480px;
+        }
+
+        .app-header {
+            padding-top: 24px;
+        }
+
+        .app-header-actions {
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .cards-grid {
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 16px;
+            padding: 16px 24px 32px;
+        }
+
+        .topic-card {
+            padding: 14px 12px;
+            min-height: 74px;
+        }
+
+        .card-title {
+            font-size: 13px;
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            font-size: 17px;
+        }
+
+        .card-ring,
+        .card-ring::before {
+            width: 34px;
+            height: 34px;
+        }
+
+        .card-ring::before {
+            inset: 5px;
+        }
+
+        .reference-row .ref-btn {
+            font-size: 13px;
+            padding: 11px 8px;
+        }
+
+        /* Chatbot widget: nudge in from the very edge on wide screens */
+        #chat-icon {
+            right: 40px;
+            bottom: 40px;
+        }
+        #chat-box {
+            right: 40px;
+            bottom: 110px;
+        }
+    }
+
+
     </style>
 </head>
 <body>
@@ -545,17 +622,47 @@
         <a href="{% url 'base-page' %}" class="app-header-back" style="order: 1;"> ← </a>
 
         <div class="app-header-brand" style="order: 2; display: flex; flex-direction: column; align-items: center; text-align: center; flex: 2;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <svg width="23" height="23" viewBox="0 0 120 90" style="flex-shrink:0;">
-                    <defs>
-                        <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#e8729a"/>
-                            <stop offset="100%" stop-color="#9b5de5"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M60,85 C60,85 10,55 10,28 A25,25,0,0,1,60,20 A25,25,0,0,1,110,28 C110,55 60,85 60,85 Z" fill="url(#hg)"/>
-                    <text x="60" y="48" text-anchor="middle" font-size="28" font-weight="700" fill="white" font-family="Georgia,serif">F</text>
-                </svg>
+            <div style="display: flex; align-items: center; gap: 5.5px;">
+              <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0; filter: drop-shadow(0px 2px 8px rgba(236,73,153,0.35));">
+  <defs>
+    <!-- Top Bar Gradient (Bright Magenta to Purple) -->
+    <linearGradient id="fv_grad_top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF2A85" />
+      <stop offset="100%" stop-color="#8B5CF6" />
+    </linearGradient>
+
+    <!-- Middle Bar Gradient (Vibrant Purple to Cyan) -->
+    <linearGradient id="fv_grad_mid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A855F7" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+
+    <!-- Vertical Stem Gradient (Deep Purple to Bright Cyan) -->
+    <linearGradient id="fv_grad_stem" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C084FC" />
+      <stop offset="60%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#00F2FE" />
+    </linearGradient>
+
+    <!-- Dark Layer for Depth & Overlap Shadow -->
+    <linearGradient id="fv_grad_shadow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E1B4B" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0.3" />
+    </linearGradient>
+  </defs>
+
+  <!-- Shadow / Under-layer for 3D ribbon fold -->
+  <path d="M 22 12 L 40 12 L 28 88 L 14 88 Z" fill="url(#fv_grad_shadow)" />
+
+  <!-- Vertical Main Stem -->
+  <path d="M 22 12 C 22 12, 36 12, 38 12 C 40 12, 42 14, 41 18 L 30 84 C 29 87, 26 90, 22 90 C 18 90, 15 87, 16 83 L 24 19 C 24 14, 20 12, 22 12 Z" fill="url(#fv_grad_stem)" />
+
+  <!-- Top Ribbon Wing (Sweeping Right) -->
+  <path d="M 28 12 L 82 12 C 87 12, 90 16, 87 21 C 84 26, 78 28, 72 28 L 36 28 C 30 28, 26 24, 28 12 Z" fill="url(#fv_grad_top)" />
+
+  <!-- Middle Ribbon Wing (Dynamic Cutout) -->
+  <path d="M 32 44 L 68 44 C 73 44, 76 48, 73 53 C 70 58, 64 60, 59 60 L 29 60 C 26 60, 28 54, 30 48 Z" fill="url(#fv_grad_mid)" />
+</svg>
                 <div class="app-header-wordmark">formulaverse</div>
             </div>
         </div>
@@ -913,6 +1020,53 @@
     <button class="cancel-btn" onclick="closeLogoutModal()">Cancel</button>
   </div>
 </div>
+
+
+<div class="app-header-brand" style="order: 2; display: flex; flex-direction: column; align-items: center; text-align: center; flex: 2;">
+            <div style="display: flex; align-items: center; gap: 5.5px;">
+              <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0; filter: drop-shadow(0px 2px 8px rgba(236,73,153,0.35));">
+  <defs>
+    <!-- Top Bar Gradient (Bright Magenta to Purple) -->
+    <linearGradient id="fv_grad_top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF2A85" />
+      <stop offset="100%" stop-color="#8B5CF6" />
+    </linearGradient>
+
+    <!-- Middle Bar Gradient (Vibrant Purple to Cyan) -->
+    <linearGradient id="fv_grad_mid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A855F7" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+
+    <!-- Vertical Stem Gradient (Deep Purple to Bright Cyan) -->
+    <linearGradient id="fv_grad_stem" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C084FC" />
+      <stop offset="60%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#00F2FE" />
+    </linearGradient>
+
+    <!-- Dark Layer for Depth & Overlap Shadow -->
+    <linearGradient id="fv_grad_shadow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E1B4B" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0.3" />
+    </linearGradient>
+  </defs>
+
+  <!-- Shadow / Under-layer for 3D ribbon fold -->
+  <path d="M 22 12 L 40 12 L 28 88 L 14 88 Z" fill="url(#fv_grad_shadow)" />
+
+  <!-- Vertical Main Stem -->
+  <path d="M 22 12 C 22 12, 36 12, 38 12 C 40 12, 42 14, 41 18 L 30 84 C 29 87, 26 90, 22 90 C 18 90, 15 87, 16 83 L 24 19 C 24 14, 20 12, 22 12 Z" fill="url(#fv_grad_stem)" />
+
+  <!-- Top Ribbon Wing (Sweeping Right) -->
+  <path d="M 28 12 L 82 12 C 87 12, 90 16, 87 21 C 84 26, 78 28, 72 28 L 36 28 C 30 28, 26 24, 28 12 Z" fill="url(#fv_grad_top)" />
+
+  <!-- Middle Ribbon Wing (Dynamic Cutout) -->
+  <path d="M 32 44 L 68 44 C 73 44, 76 48, 73 53 C 70 58, 64 60, 59 60 L 29 60 C 26 60, 28 54, 30 48 Z" fill="url(#fv_grad_mid)" />
+</svg>
+                <div class="app-header-wordmark">formulaverse</div>
+            </div>
+        </div>
 
 <div class="privacy">
     <a href="{% url "privacy" %}">

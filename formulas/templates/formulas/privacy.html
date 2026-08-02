@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy — FormulaVerse</title>
+    <title>Privacy Policy | Formulaverse</title>
 
     <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
     <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
@@ -216,12 +216,49 @@
             font-size: 0.82rem;
         }
         .footer a { color: var(--brass); text-decoration: none; }
+
+        /* ══════════════════════════════════════════════
+           NEW: DESKTOP POLISH (≥900px only)
+           Note: .container stays at max-width: 720px on
+           purpose — long-form reading text (like a privacy
+           policy) is MORE readable in a constrained column,
+           even on a big screen. This block only adds a
+           little breathing room around it, nothing structural.
+           ══════════════════════════════════════════════ */
+        @media (min-width: 900px) {
+
+            .topbar {
+                padding: 16px 40px;
+            }
+
+            .hero {
+                padding: 64px 24px 48px;
+            }
+
+            .container {
+                padding: 56px 20px 80px;
+            }
+
+            .section {
+                padding: 26px 32px;
+            }
+        }
+
+        .footer p{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-dim);
+            font-size: 0.78rem;
+            margin-top: 6px;
+
+        }
     </style>
 </head>
 <body>
 
 <div class="topbar">
-    <a href="{% url "index-page" %}">&larr; FormulaVerse</a>
+    <a href="{% url "index-page" %}">&larr; formulaverse</a>
     <span>/ Privacy Policy</span>
 </div>
 
@@ -234,13 +271,13 @@
         </svg>
         Privacy policy
     </h1>
-    <p>Last updated: July 31, 2026</p>
+    <p>Last updated: August 01, 2026</p>
 </div>
 
 <div class="container">
 
     <div class="intro">
-        Welcome to <strong>FormulaVerse</strong> (formulaverse.in). This Privacy Policy explains how we collect, use, and protect your information when you visit our website. We believe in keeping things simple and transparent.
+        Welcome to <strong>formulaverse</strong> (formulaverse.in). This Privacy Policy explains how we collect, use, and protect your information when you visit our website. We believe in keeping things simple and transparent.
     </div>
 
     <div class="section">
@@ -263,7 +300,7 @@
             <div class="section-num">2</div>
             <h2>Cookies</h2>
         </div>
-        <p>FormulaVerse uses cookies to:</p>
+        <p>Formulaverse uses cookies to:</p>
         <ul>
             <li>Save your formula bookmarks (session cookies)</li>
             <li>Analyze site traffic via Google Analytics</li>
@@ -293,7 +330,7 @@
             <div class="section-num">5</div>
             <h2>Third-party links</h2>
         </div>
-        <p>FormulaVerse may contain links to external websites (GitHub, LinkedIn, etc.). We are not responsible for the privacy practices of those sites.</p>
+        <p>Formulaverse may contain links to external websites (GitHub, LinkedIn, etc.). We are not responsible for the privacy practices of those sites.</p>
     </div>
 
     <div class="section">
@@ -301,7 +338,7 @@
             <div class="section-num">6</div>
             <h2>Children's privacy</h2>
         </div>
-        <p>FormulaVerse is designed for students and does not knowingly collect personal information from children under 13. If you believe a child has provided personal information, please contact us.</p>
+        <p>Formulaverse is designed for students and does not knowingly collect personal information from children under 13. If you believe a child has provided personal information, please contact us.</p>
     </div>
 
     <div class="section">
@@ -323,8 +360,10 @@
 </div>
 
 <div class="footer">
-    &copy; 2026 FormulaVerse &middot; <a href="/">Home</a> &middot; <a href="/me">About</a>
+    &copy; 2026 formulaverse &middot; <a href="/">Home</a> &middot; <a href="/me">About</a>
+    <p class="hh"> formulaverse.in </p>
 </div>
+
 
 <script>
       if ('serviceWorker' in navigator) {

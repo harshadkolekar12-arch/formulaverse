@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ formula.title }} — FormulaVerse</title>
+    <title>{{ formula.title }} | Formulaverse</title>
 
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
     <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
@@ -830,6 +830,60 @@
   margin-top: 10px;
   min-height: 18px;
 }
+
+        /* ══════════════════════════════════════════════
+           NEW: DESKTOP ENHANCEMENTS (≥900px only)
+           Content stays single-column (this is a dense
+           reading page, not a card grid) — but widened
+           sensibly, and the "Similar Formulas" horizontal-
+           scroll strip becomes a proper grid since a big
+           screen has room to show them all at once instead
+           of forcing a sideways scroll.
+           No HTML changes needed.
+           ══════════════════════════════════════════════ */
+        @media (min-width: 900px) {
+
+            .content-wrapper {
+                max-width: 760px;
+                padding: 0 24px;
+            }
+
+            .formula-card {
+                max-width: 560px;
+            }
+
+            .formula-container {
+                font-size: 1.55rem;
+            }
+
+            .quick-grid {
+                gap: 14px;
+            }
+
+            .example-card,
+            .accordion,
+            .practice-section {
+                padding-left: 4px;
+                padding-right: 4px;
+            }
+
+            /* "Similar Formulas" becomes a wrap-friendly grid instead of
+               a sideways-scrolling strip — desktop has room to show them all */
+            .similar-scroll {
+                overflow-x: visible;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            .similar-card-mini {
+                min-width: 220px;
+                max-width: none;
+                flex: 1 1 calc(33.333% - 12px);
+            }
+
+            .diff-row {
+                max-width: 460px;
+            }
+        }
     </style>
 </head>
 <body>

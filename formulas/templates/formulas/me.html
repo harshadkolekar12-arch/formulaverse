@@ -394,6 +394,56 @@ JEE formula, NEET formula, physics formula">
             .me-image { width: 80px; height: 80px; }
         }
 
+        /* ══════════════════════════════════════════════
+           NEW: DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
+           No HTML changes needed for this page.
+           Mobile layout below 900px is untouched.
+           ══════════════════════════════════════════════ */
+        @media (min-width: 900px) {
+
+            .page {
+                max-width: 880px;
+                padding-top: 90px;
+            }
+
+            .intro-image {
+                gap: 28px;
+            }
+
+            .me-image {
+                width: 120px;
+                height: 120px;
+            }
+
+            .intro-text h1 {
+                font-size: 2.4rem;
+            }
+
+            /* "Why I built this" cards go from 1 column to 2 */
+            .why-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+
+            .description {
+                padding: 32px 40px;
+                font-size: 1.1rem;
+            }
+
+            .why-section {
+                padding: 44px 40px;
+            }
+
+            .video-frame {
+                max-width: 700px;
+                margin: 0 auto;
+            }
+
+            .btn-row {
+                gap: 14px;
+            }
+        }
+
     </style>
 
 </head>
