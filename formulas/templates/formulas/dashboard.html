@@ -405,6 +405,42 @@
                 grid-column: 1 / -1;
             }
         }
+
+        .saved-cta-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0;
+}
+
+.btn-view-saved {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 48px;      /* wider background, matches your "increase width" ask */
+    min-width: 260px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    color: #f5f5f0;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .2s, background .2s;
+}
+
+.btn-view-saved:hover {
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 6px 18px rgba(245, 184, 65, 0.2);
+}
+
+.btn-view-saved:active {
+    transform: scale(0.97);
+}
+
+
     </style>
 </head>
 
@@ -540,6 +576,13 @@
 
     </div>
 
+     <div class="saved-cta-wrapper">
+    <a href="{% url 'all-saved' %}" class="btn-view-saved">
+        ★ Your Saved Formulas →
+    </a>
+</div>
+
+
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -548,6 +591,17 @@
                 .catch(err => console.log('SW failed:', err));
             });
         }
+
+        function handleSaveSubmit(event) {
+  {% if not request.session.user_session_id %}
+    event.preventDefault();
+    openLoginModal('save');
+    return false;
+  {% endif %}
+  return true; // logged in, let form submit normally
+}
+
+
     </script>
 
 </body>

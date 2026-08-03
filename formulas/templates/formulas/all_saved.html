@@ -5,29 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Personal Formulavault | Formulaverse </title>
+    <title>All Saved Formulas | Formulaverse</title>
 
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
-
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
-
     <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
-    <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
-    <script async src=https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141
-     crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src=https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-YHLZCEHWF7');
-    </script>
+    <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
 
-    <meta name="description" content="Your saved Physics formulas on FormulaVerse">
-    <meta property="og:title" content="Saved Formulas — FormulaVerse"/>
-    <meta property="og:url" content=https://formulaverse.in/saved/>
-    <meta name="keywords" content="{{ formula.title }}, JEE formula, NEET formula, physics formula">
+    <meta name="description" content="All your saved Physics formulas on FormulaVerse">
+    <meta property="og:title" content="All Saved Formulas — FormulaVerse"/>
+    <meta property="og:url" content="https://formulaverse.in/all-saved/"/>
 
     <style>
         :root{
@@ -55,10 +42,7 @@
             min-height:100vh;
         }
 
-        .vault-header{
-            text-align:center;
-            margin-bottom:6px;
-        }
+        .vault-header{ text-align:center; margin-bottom:6px; }
 
         .vault-header h1{
             font-size:1.9rem;
@@ -96,11 +80,7 @@
             margin-bottom:34px;
         }
 
-        .search-wrap{
-            display:flex;
-            justify-content:center;
-            padding:0 12px 30px;
-        }
+        .search-wrap{ display:flex; justify-content:center; padding:0 12px 30px; }
 
         #searchBar{
             width:100%;
@@ -117,21 +97,10 @@
         #searchBar::placeholder{ color:var(--text-dim); }
         #searchBar:focus{ border-color:var(--brass-dim); }
 
-        .container{
-            max-width:900px;
-            margin:0 auto;
-        }
+        .container{ max-width:900px; margin:0 auto; }
 
-        ul{
-            list-style:none;
-            padding:0;
-            margin:0;
-            display:grid;
-            gap:16px;
-        }
-
+        ul{ list-style:none; padding:0; margin:0; display:grid; gap:16px; }
         li{ margin:0; }
-
         a{ text-decoration:none; color:inherit; }
 
         .deposit-box{
@@ -144,11 +113,7 @@
             overflow:hidden;
             transition:border-color 0.3s ease, transform 0.3s ease;
         }
-
-        .deposit-box:hover{
-            transform:translateX(4px);
-            border-color:var(--brass-dim);
-        }
+        .deposit-box:hover{ transform:translateX(4px); border-color:var(--brass-dim); }
 
         .box-number{
             flex:0 0 64px;
@@ -163,11 +128,7 @@
             letter-spacing:1px;
         }
 
-        .box-body{
-            flex:1;
-            padding:16px 20px;
-            min-width:0;
-        }
+        .box-body{ flex:1; padding:16px 20px; min-width:0; }
 
         .box-top{
             display:flex;
@@ -189,10 +150,7 @@
             color:var(--brass-dim);
             transition:color 0.3s ease, transform 0.3s ease;
         }
-        .deposit-box:hover .lock-icon{
-            color:var(--brass-bright);
-            transform:rotate(-8deg);
-        }
+        .deposit-box:hover .lock-icon{ color:var(--brass-bright); transform:rotate(-8deg); }
 
         .formula-form{
             color:var(--formula-color);
@@ -206,11 +164,7 @@
             overflow-x:auto;
         }
 
-        .formula-author{
-            font-size:0.78rem;
-            color:var(--text-dim);
-            font-style:italic;
-        }
+        .formula-author{ font-size:0.78rem; color:var(--text-dim); font-style:italic; }
 
         .btn-save{
             display:inline-flex;
@@ -230,10 +184,7 @@
             cursor:pointer;
             transition:background 0.2s ease, color 0.2s ease;
         }
-        .btn-save:hover{
-            background:var(--brass);
-            color:var(--steel-900);
-        }
+        .btn-save:hover{ background:var(--brass); color:var(--steel-900); }
 
         .empty-message{
             text-align:center;
@@ -254,37 +205,12 @@
             z-index:10;
         }
 
-        /* ══════════════════════════════════════════════
-           NEW: DESKTOP GRID (≥900px only)
-           ul was already "display: grid" but had no
-           grid-template-columns, so it defaulted to a
-           single column at every screen width. This adds
-           a proper 2-column layout on desktop only.
-           No HTML changes needed.
-           ══════════════════════════════════════════════ */
         @media (min-width: 900px) {
-
-            .container {
-                max-width: 960px;
-            }
-
-            ul {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 18px;
-            }
-
-            .deposit-box {
-                height: 100%;
-            }
-
-            .box-body {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .box-body form {
-                margin-top: auto;
-            }
+            .container { max-width: 960px; }
+            ul { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+            .deposit-box { height: 100%; }
+            .box-body { display: flex; flex-direction: column; }
+            .box-body form { margin-top: auto; }
         }
     </style>
 
@@ -294,15 +220,13 @@
         svg: { fontCache: 'global' }
     };
     </script>
-    <script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 <body>
 
-    {% if last_formula %}
-    <a href="{% url "single-formula-page" pk=last_formula.id %}">
+    <a href="{% url 'dashboard' %}">
         <div class="back-link">&larr;</div>
     </a>
-    {% endif %}
 
     <div class="vault-header">
         <h1><span class="dial"></span> Formulavault</h1>
@@ -310,54 +234,40 @@
     </div>
 
     <div class="search-wrap">
-        <input
-            type="text"
-            id="searchBar"
-            placeholder="🔍Search your saved formulas"
-            oninput="searchFormulas()">
+        <input type="text" id="searchBar" placeholder="🔍Search your saved formulas" oninput="searchFormulas()">
     </div>
 
     <div class="container">
-    {% if savedformulas %}
-
+    {% if saved_formulas %}
     <ul>
-        {% for formula in savedformulas %}
+        {% for formula in saved_formulas %}
         <li>
             <div class="deposit-box">
                 <div class="box-number">{{ forloop.counter|stringformat:"03d" }}</div>
                 <div class="box-body">
-                    <a href="{% url "single-formula-page" pk=formula.id %}">
+                    <a href="{% url 'single-formula-page' pk=formula.id %}">
                         <div class="box-top">
                             <div class="formula-title">{{ formula.title }}</div>
                         </div>
-
-                        <div class="formula-form">
-                            $$ {{ formula.form }} $$
-                        </div>
-                        <div class="formula-author">
-                            Given by {{ formula.given_by }}
-                        </div>
+                        <div class="formula-form">$$ {{ formula.form }} $$</div>
+                        <div class="formula-author">Given by {{ formula.given_by }}</div>
                     </a>
 
-                    <form method="POST" action="{% url "unsave-formula" pk=formula.id %}">
+                    <form method="POST" action="{% url 'unsave-formula' pk=formula.id %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn-save">
-                            Unsave
-                        </button>
+                        <button type="submit" class="btn-save">Unsave</button>
                     </form>
                 </div>
             </div>
         </li>
         {% endfor %}
     </ul>
-
     {% else %}
     <div class="empty-message">Your vault is empty. Save a formula to lock it in here.</div>
     {% endif %}
     </div>
 
 <script>
-
     function searchFormulas() {
         const query = document.getElementById('searchBar').value.toLowerCase();
         document.querySelectorAll('.formula-title').forEach(titleEl => {
@@ -373,7 +283,6 @@
             .catch(err => console.log('SW failed:', err));
         });
     }
-
 </script>
 
 </body>

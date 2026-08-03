@@ -148,3 +148,21 @@ class SavedFormula(models.Model):
 
     class Meta:
         unique_together = ('user', 'formula')  # prevents duplicate saves
+
+
+class ExamDate(models.Model):
+    EXAM_CHOICES = [
+        ('jee_main_1', 'JEE Main Session 1'),
+        ('jee_main_2', 'JEE Main Session 2'),
+        ('jee_advanced', 'JEE Advanced'),
+        ('neet', 'NEET'),
+    ]
+    exam_key = models.CharField(max_length=20, choices=EXAM_CHOICES)
+    display_name = models.CharField(max_length=100)
+    exam_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.display_name} — {self.exam_date}"
+
+    class Meta:
+        ordering = ['exam_date']

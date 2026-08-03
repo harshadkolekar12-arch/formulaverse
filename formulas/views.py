@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.views.generic import DetailView,TemplateView, CreateView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy, reverse
-from .models import Formula, Chapter, SimpleUser, PurchasedChapter, has_purchased, SavedFormula
+from .models import Formula, Chapter, SimpleUser, PurchasedChapter, has_purchased, SavedFormula, ExamDate
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -254,50 +254,6 @@ class AboutMeView(TemplateView):
 
 
 
-@staff_member_required
-def mini_panel(request):
-    formulas = Formula.objects.select_related('category').all().order_by('category__name')
-    categories = Category.objects.all()
-    return render(request, 'mini_panel.html', {
-        'formulas': formulas,
-        'categories': categories,
-    })
-
-@staff_member_required
-def add_formula(request):
-    form = FormulaForm(request.POST or None, request.FILES or None)
-    if request.method == 'POST' and form.is_valid():
-        form.save()
-        messages.success(request, 'Formula added successfully!')
-        return redirect('add_formula')
-    return render(request, 'add_formula.html', {'form': form, 'title': 'Add Formula'})
-
-@staff_member_required
-def edit_formula(request, pk):
-    formula = get_object_or_404(Formula, pk=pk)
-    form = FormulaForm(request.POST or None, request.FILES or None, instance=formula)
-    if request.method == 'POST' and form.is_valid():
-        form.save()
-        messages.success(request, 'Formula updated!')
-        return redirect('mini_panel')
-    return render(request, 'add_formula.html', {'form': form, 'title': 'Edit Formula'})
-
-@staff_member_required
-def delete_formula(request, pk):
-    formula = get_object_or_404(Formula, pk=pk)
-    if request.method == 'POST':
-        formula.delete()
-        messages.success(request, 'Formula deleted!')
-    return redirect('mini_panel')
-
-@staff_member_required
-def add_category(request):
-    form = CategoryForm(request.POST or None)
-    if request.method == 'POST' and form.is_valid():
-        form.save()
-        messages.success(request, 'Category added!')
-        return redirect('add_category')
-    return render(request, 'add_category.html', {'form': form})
 
 
 
@@ -345,7 +301,6 @@ def get_youtube_video(formula_title):
              return f"https://www.youtube.com/watch?v={video_id}"
          return None
     except Exception as e:
-
         return None
 
 class FormulaAnimationView(View):
@@ -408,10 +363,17 @@ def privacy(request):
     return render(request, "formulas/privacy.html")
 
 
+def get_nearest_exam(exam_prefix):
+    today = date.today()
+    upcoming = ExamDate.objects.filter(exam_key__startswith=exam_prefix, exam_date__gte=today).order_by('exam_date').first()
+    if upcoming:
+        return upcoming.display_name, (upcoming.exam_date - today).days
+    return None
+
+
 class ExamFilterView(View):
     def get(self, request, *args, **kwargs):
-        # Get exam type from URL
-        path = request.path.strip('/')  # 'jee', 'neet',
+        path = request.path.strip('/')
 
         if path == 'neet':
             formula_path = reverse('neet-formulas')
@@ -419,7 +381,6 @@ class ExamFilterView(View):
             formula_path = reverse('jee-formulas')
         else:
             formula_path = reverse('both-formulas')
-
 
         if path == 'jee':
             formulas = Formula.objects.filter(
@@ -454,12 +415,22 @@ class ExamFilterView(View):
             formulas = Formula.objects.none()
             exam_label = ''
 
+
+        exam_key = None
+        days_remaining = None
+        if path in ('jee', 'neet'):
+            exam_info = get_nearest_exam(path)
+            if exam_info:
+                exam_key, days_remaining = exam_info
+
         return render(request, 'formulas/exam_filter.html', {
             'formulas': formulas,
             'exam_label': exam_label,
             'total': formulas.count(),
-            'formula_path' : formula_path,
-        })
+            'formula_path': formula_path,
+            'exam_key': exam_key,
+            'days_remaining': days_remaining,
+            })
 
 
 
@@ -914,3 +885,16 @@ def razorpay_webhook(request):
         )
 
     return JsonResponse({"status": "ok"})
+
+
+class AllSavedFormulasView(View):
+    def get(self, request):
+        user_id = request.session.get('user_session_id')
+        user = SimpleUser.objects.filter(session_id=user_id).first()
+        saved_formulas = Formula.objects.filter(savedformula__user=user) if user else Formula.objects.none()
+
+        return render(request, 'formulas/all_saved.html',{
+            'saved_formulas': saved_formulas
+            })
+
+
