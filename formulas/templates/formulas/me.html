@@ -40,36 +40,41 @@ JEE formula, NEET formula, physics formula">
     <style>
 
         :root {
-            --void: #060a14;
-            --panel: #0e1524;
-            --panel-edge: rgba(148, 178, 224, 0.14);
-            --grid-line: rgba(103, 163, 217, 0.055);
-            --cyan: #4fd8ff;
-            --cyan-dim: rgba(79, 216, 255, 0.14);
-            --violet: #b58cff;
-            --violet-dim: rgba(181, 140, 255, 0.14);
-            --green: #34e0a1;
-            --green-dim: rgba(52, 224, 161, 0.14);
-            --amber: #ffc24b;
-            --amber-dim: rgba(255, 194, 75, 0.14);
-            --rose: #ff8fb3;
-            --rose-dim: rgba(255, 143, 179, 0.14);
-            --ink: #eaf1fb;
-            --muted: #7789a3;
-            --faint: #4c5b76;
+            --bg1:      #fdf3e7;
+            --bg2:      #fef9f0;
+            --bg3:      #fbeee0;
+            --panel:    rgba(255, 255, 255, 0.62);
+            --panel-edge: rgba(255, 255, 255, 0.9);
+            --grid-line: rgba(140, 110, 70, 0.055);
+            --teal:     #0d9488;
+            --teal-dim: rgba(13, 148, 136, 0.12);
+            --violet:   #8b5cf6;
+            --violet-dim: rgba(139, 92, 246, 0.12);
+            --green:    #16a34a;
+            --green-dim: rgba(22, 163, 74, 0.12);
+            --amber:    #ea9a3e;
+            --amber-dim: rgba(234, 154, 62, 0.15);
+            --rose:     #ec4899;
+            --rose-dim: rgba(236, 72, 153, 0.12);
+            --ink:      #2d2a3d;
+            --muted:    #7c7a8c;
+            --faint:    #a9a6b8;
+            --grad:     linear-gradient(90deg, #7c5cfc, #14b8a6);
         }
 
         * { box-sizing: border-box; }
 
-        html, body { margin: 0; padding: 0; background: var(--void); }
+        html, body { margin: 0; padding: 0; background: var(--bg2); }
 
         body{
             font-family: 'Inter', -apple-system, sans-serif;
             color: var(--ink);
+            background: linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
             background-image:
                 linear-gradient(var(--grid-line) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-            background-size: 28px 28px;
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+                linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
+            background-size: 28px 28px, 28px 28px, 100% 100%;
             background-position: center top;
         }
 
@@ -79,8 +84,8 @@ JEE formula, NEET formula, physics formula">
             margin: 0 auto;
             padding: 70px 20px 60px;
             background:
-                radial-gradient(ellipse 480px 260px at 50% 0%, rgba(79,216,255,0.10), transparent 65%),
-                radial-gradient(ellipse 420px 300px at 90% 20%, rgba(181,140,255,0.08), transparent 60%);
+                radial-gradient(ellipse 480px 260px at 50% 0%, rgba(20,184,166,0.10), transparent 65%),
+                radial-gradient(ellipse 420px 300px at 90% 20%, rgba(139,92,246,0.08), transparent 60%);
         }
 
         /* ===== top nav ===== */
@@ -95,15 +100,15 @@ JEE formula, NEET formula, physics formula">
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: rgba(14, 21, 36, 0.75);
+            background: rgba(255, 255, 255, 0.75);
             border: 1px solid var(--panel-edge);
             backdrop-filter: blur(8px);
             color: var(--ink);
             font-size: 1.35rem;
             text-decoration: none;
         }
-        .back-link:hover { border-color: var(--cyan); }
-        .back-link:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+        .back-link:hover { border-color: var(--teal); }
+        .back-link:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 
         .top-nav {
             position: fixed;
@@ -140,9 +145,9 @@ JEE formula, NEET formula, physics formula">
             height: 100px;
             border-radius: 50%;
             padding: 4px;
-            background: conic-gradient(var(--cyan), var(--violet), var(--cyan));
+            background: conic-gradient(var(--teal), var(--violet), var(--teal));
             flex-shrink: 0;
-            box-shadow: 0 0 26px rgba(79,216,255,0.18);
+            box-shadow: 0 0 26px rgba(13,148,136,0.18);
         }
         .me-image img{
             width: 100%;
@@ -150,7 +155,7 @@ JEE formula, NEET formula, physics formula">
             display: block;
             object-fit: cover;
             border-radius: 50%;
-            border: 3px solid var(--void);
+            border: 3px solid #fff;
         }
         .intro-text h1{
             margin: 0;
@@ -159,7 +164,7 @@ JEE formula, NEET formula, physics formula">
             font-weight: 900;
             font-size: 2rem;
             letter-spacing: -0.5px;
-            background: linear-gradient(90deg, #ffffff, var(--cyan) 75%);
+            background: linear-gradient(90deg, #7c5cfc, #14b8a6 75%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -174,11 +179,12 @@ JEE formula, NEET formula, physics formula">
         /* ===== shared panel ===== */
         .panel {
             position: relative;
-            background: linear-gradient(160deg, rgba(255,255,255,0.035), rgba(255,255,255,0));
-            background-color: var(--panel);
+            background: var(--panel);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--panel-edge);
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            box-shadow: 0 10px 30px rgba(140, 120, 90, 0.14);
         }
         .corner-brackets::before, .corner-brackets::after {
             content: '';
@@ -186,8 +192,8 @@ JEE formula, NEET formula, physics formula">
             width: 10px;
             height: 10px;
         }
-        .corner-brackets::before { top: 8px; left: 8px; border-top: 1.5px solid rgba(255,255,255,0.25); border-left: 1.5px solid rgba(255,255,255,0.25); }
-        .corner-brackets::after { bottom: 8px; right: 8px; border-bottom: 1.5px solid rgba(255,255,255,0.25); border-right: 1.5px solid rgba(255,255,255,0.25); }
+        .corner-brackets::before { top: 8px; left: 8px; border-top: 1.5px solid rgba(45,42,61,0.15); border-left: 1.5px solid rgba(45,42,61,0.15); }
+        .corner-brackets::after { bottom: 8px; right: 8px; border-bottom: 1.5px solid rgba(45,42,61,0.15); border-right: 1.5px solid rgba(45,42,61,0.15); }
 
         /* ===== about me ===== */
         .description{
@@ -197,7 +203,7 @@ JEE formula, NEET formula, physics formula">
             color: var(--ink);
             margin-bottom: 40px;
         }
-        .description p{ margin: 0; font-style: italic; color: #cdd8ec; }
+        .description p{ margin: 0; font-style: italic; color: var(--ink); }
         .eyebrow-label {
             font-family: 'Space Mono', monospace;
             font-size: 11px;
@@ -218,7 +224,7 @@ JEE formula, NEET formula, physics formula">
         .why-header{ text-align:center; }
         .why-kicker{
             font-family: 'Space Mono', monospace;
-            color: var(--cyan);
+            color: var(--teal);
             font-weight: 700;
             letter-spacing: .28em;
             font-size: 11px;
@@ -251,7 +257,7 @@ JEE formula, NEET formula, physics formula">
             overflow: hidden;
             border-radius: 14px;
             border: 1px solid var(--panel-edge);
-            background: rgba(255,255,255,0.025);
+            background: rgba(255,255,255,0.5);
             padding: 20px 20px 20px 24px;
         }
         .why-card::before{
@@ -263,7 +269,7 @@ JEE formula, NEET formula, physics formula">
             width: 42px; height: 42px;
             display: grid; place-items: center;
             border-radius: 50%;
-            border: 1px solid rgba(255,194,75,.35);
+            border: 1px solid rgba(234,154,62,.35);
             background: var(--amber-dim);
             font-size: 19px;
             margin-bottom: 12px;
@@ -293,7 +299,7 @@ JEE formula, NEET formula, physics formula">
         /* ===== skills ===== */
         .section-label {
             font-family: 'Space Mono', monospace;
-            color: var(--cyan);
+            color: var(--teal);
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.18em;
@@ -309,11 +315,11 @@ JEE formula, NEET formula, physics formula">
             font-family: 'Space Mono', monospace;
             border: 1px solid;
         }
-        .chip.cyan   { background: var(--cyan-dim);   border-color: rgba(79,216,255,0.3);  color: var(--cyan); }
-        .chip.green  { background: var(--green-dim);  border-color: rgba(52,224,161,0.3);  color: var(--green); }
-        .chip.violet { background: var(--violet-dim); border-color: rgba(181,140,255,0.3); color: var(--violet); }
-        .chip.amber  { background: var(--amber-dim);  border-color: rgba(255,194,75,0.3);  color: var(--amber); }
-        .chip.rose   { background: var(--rose-dim);   border-color: rgba(255,143,179,0.3); color: var(--rose); }
+        .chip.cyan   { background: var(--teal-dim);   border-color: rgba(13,148,136,0.3);  color: var(--teal); }
+        .chip.green  { background: var(--green-dim);  border-color: rgba(22,163,74,0.3);  color: var(--green); }
+        .chip.violet { background: var(--violet-dim); border-color: rgba(139,92,246,0.3); color: var(--violet); }
+        .chip.amber  { background: var(--amber-dim);  border-color: rgba(234,154,62,0.3);  color: var(--amber); }
+        .chip.rose   { background: var(--rose-dim);   border-color: rgba(236,72,153,0.3); color: var(--rose); }
 
         /* ===== contact ===== */
         .contact-wrap { margin-bottom: 30px; }
@@ -332,28 +338,28 @@ JEE formula, NEET formula, physics formula">
         }
         .btn:hover { transform: translateY(-1px); }
         .btn-filled {
-            background: linear-gradient(90deg, var(--cyan), var(--violet));
-            color: #06101c;
+            background: var(--grad);
+            color: #fff;
             border-color: transparent;
-            box-shadow: 0 6px 20px rgba(79,216,255,0.25);
+            box-shadow: 0 6px 20px rgba(20,184,166,0.25);
         }
         .btn-outline {
-            background: transparent;
+            background: rgba(255,255,255,0.6);
             color: var(--ink);
             border-color: var(--panel-edge);
         }
-        .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+        .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
 
         .chai-btn {
             display: inline-block;
             padding: 11px 24px;
             border-radius: 999px;
-            background: linear-gradient(90deg, var(--amber), #ff9f4b);
-            color: #1a0f00;
+            background: linear-gradient(90deg, var(--amber), #f4b862);
+            color: #fff;
             font-weight: 700;
             text-decoration: none;
             font-family: inherit;
-            box-shadow: 0 6px 20px rgba(255,194,75,0.25);
+            box-shadow: 0 6px 20px rgba(234,154,62,0.25);
         }
 
         /* ===== video intro ===== */
@@ -365,7 +371,7 @@ JEE formula, NEET formula, physics formula">
             border-radius: 14px;
             overflow: hidden;
             border: 1px solid var(--panel-edge);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            box-shadow: 0 10px 30px rgba(140, 120, 90, 0.16);
         }
         .video-frame iframe {
             position: absolute;
@@ -555,7 +561,7 @@ JEE formula, NEET formula, physics formula">
         </section>
 
         <a href="https://buymeachai.ezee.li/formulaverse" target="_blank" rel="noopener noreferrer" class="chai-btn">
-            ☕ Buy me a chai
+            ☕ Buy a chai for the developer!
         </a>
 
     </div>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ category.name }} | FormulaVerse</title>
+    <title>{{ category.name }} formulas for JEE/NEET | FormulaVerse</title>
 
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
     <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
@@ -41,21 +41,28 @@
 
     <style>
     :root {
-        --bg: #0a0716;
-        --bg-glow-1: #ff4d6d;
-        --bg-glow-2: #38bdf8;
-        --surface: #171129;
-        --surface-hover: #201a3d;
-        --border: rgba(255,255,255,0.08);
-        --cyan: #38bdf8;
-        --cyan-soft: #7dd3fc;
-        --pink: #ff4d6d;
-        --pink-soft: #ff85a1;
-        --amber: #ffc857;
-        --violet: #a78bfa;
-        --text-main: #ece9fb;
-        --text-dim: #948dc4;
-        --text-faint: #665f96;
+        /* Base — warm cream light theme, matches rest of site */
+        --bg: #FAF6ED;
+        --surface: rgba(255,255,255,0.55);
+        --surface-hover: rgba(255,255,255,0.80);
+        --border: rgba(27,27,47,0.10);
+        --border-glass: rgba(255,255,255,0.65);
+
+        /* Accents — this page's "physics spectrum" identity, remapped to the site's palette */
+        --cyan: #0EA5A0;
+        --cyan-deep: #0B7F7A;
+        --pink: #DB2777;
+        --pink-soft: #EC4899;
+        --amber: #F5A623;
+        --amber-deep: #B96F00;
+        --violet: #7C3AED;
+        --violet-deep: #6D28D9;
+        --indigo: #4F46E5;
+
+        --text-main: #1B1B2F;
+        --text-dim: #63637A;
+        --text-faint: #94918A;
+
         --font-display: 'Space Grotesk', sans-serif;
         --font-body: 'Outfit', sans-serif;
         --font-mono: 'JetBrains Mono', monospace;
@@ -75,7 +82,7 @@
         min-height: 100vh;
     }
 
-    /* Ambient glow wash behind everything */
+    /* Ambient glow wash behind everything — gives the glass cards something to blur */
     body::before {
         content: "";
         position: fixed;
@@ -83,9 +90,9 @@
         z-index: 0;
         pointer-events: none;
         background:
-            radial-gradient(600px 400px at 12% -5%, rgba(255,77,109,0.16), transparent 60%),
-            radial-gradient(600px 500px at 90% 15%, rgba(56,189,248,0.14), transparent 60%),
-            radial-gradient(500px 400px at 50% 100%, rgba(167,139,250,0.10), transparent 60%);
+            radial-gradient(600px 400px at 12% -5%, rgba(219,39,119,0.14), transparent 60%),
+            radial-gradient(600px 500px at 90% 15%, rgba(14,165,160,0.14), transparent 60%),
+            radial-gradient(500px 400px at 50% 100%, rgba(124,58,237,0.10), transparent 60%);
     }
 
     /* Drifting physics glyphs — signature background texture */
@@ -101,7 +108,7 @@
         font-family: var(--font-display);
         font-weight: 600;
         color: var(--text-faint);
-        opacity: 0.16;
+        opacity: 0.20;
         animation: drift linear infinite;
         user-select: none;
     }
@@ -125,7 +132,7 @@
         z-index: 1;
     }
 
-    /* Back arrow */
+    /* Back arrow (frosted) */
     .back-link {
         position: fixed;
         top: 14px;
@@ -137,10 +144,11 @@
         align-items: center;
         justify-content: center;
         border-radius: 50%;
-        background: rgba(23, 17, 41, 0.7);
-        backdrop-filter: blur(6px);
-        border: 1px solid var(--border);
-        color: #fff;
+        background: var(--surface);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--border-glass);
+        color: var(--text-main);
         font-size: 1.4rem;
         text-decoration: none;
         transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
@@ -189,19 +197,21 @@
         font-family: var(--font-mono);
         font-size: 1.05rem;
         font-weight: 600;
-        color: var(--amber);
+        color: var(--amber-deep);
         background: var(--surface);
-        border: 1px solid rgba(255,200,87,0.35);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(245,166,35,0.40);
         border-radius: 50%;
         width: 46px;
         height: 46px;
-        box-shadow: 0 0 0 0 rgba(255,200,87,0.35);
+        box-shadow: 0 0 0 0 rgba(245,166,35,0.35);
         animation: pulse-ring 2.6s ease-out infinite;
     }
     @keyframes pulse-ring {
-        0%   { box-shadow: 0 0 0 0 rgba(255,200,87,0.30); }
-        70%  { box-shadow: 0 0 0 10px rgba(255,200,87,0); }
-        100% { box-shadow: 0 0 0 0 rgba(255,200,87,0); }
+        0%   { box-shadow: 0 0 0 0 rgba(245,166,35,0.30); }
+        70%  { box-shadow: 0 0 0 10px rgba(245,166,35,0); }
+        100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); }
     }
 
     .tagline {
@@ -227,21 +237,22 @@
         width: 100%;
         padding: 13px 18px;
         border-radius: 999px;
-        border: 1.5px solid var(--border);
-        background: rgba(255,255,255,0.04);
-        backdrop-filter: blur(8px);
+        border: 1.5px solid var(--border-glass);
+        background: var(--surface);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         font-family: var(--font-body);
         font-size: 15px;
         color: var(--text-main);
         outline: none;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+        box-shadow: 0 4px 18px rgba(27,27,47,0.08);
         transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
     }
     .search-input::placeholder { color: var(--text-faint); }
     .search-input:focus {
         border-color: var(--cyan);
-        background: rgba(56,189,248,0.06);
-        box-shadow: 0 0 0 4px rgba(56,189,248,0.15), 0 4px 18px rgba(0,0,0,0.3);
+        background: rgba(14,165,160,0.06);
+        box-shadow: 0 0 0 4px rgba(14,165,160,0.15), 0 4px 18px rgba(27,27,47,0.10);
     }
 
     /* Simulation box */
@@ -249,12 +260,14 @@
         margin: 16px 0;
         border-radius: 14px;
         overflow: hidden;
-        border: 1px solid rgba(255,200,87,0.3);
-        background: linear-gradient(180deg, rgba(255,200,87,0.06), rgba(255,255,255,0.02));
-        box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+        border: 1px solid rgba(245,166,35,0.35);
+        background: linear-gradient(180deg, rgba(245,166,35,0.08), rgba(255,255,255,0.45));
+        backdrop-filter: blur(12px) saturate(140%);
+        -webkit-backdrop-filter: blur(12px) saturate(140%);
+        box-shadow: 0 8px 24px -8px rgba(27,27,47,0.10);
     }
     .sim-label {
-        color: var(--amber);
+        color: var(--amber-deep);
         font-family: var(--font-mono);
         font-size: 11px;
         font-weight: 600;
@@ -271,10 +284,12 @@
     /* Resource box */
     .resource-box {
         background: var(--surface);
+        backdrop-filter: blur(12px) saturate(140%);
+        -webkit-backdrop-filter: blur(12px) saturate(140%);
         padding: 18px 18px;
         border-radius: 14px;
         margin: 18px 0;
-        border: 1px solid var(--border);
+        border: 1px solid var(--border-glass);
         position: relative;
         overflow: hidden;
     }
@@ -295,7 +310,7 @@
         margin-bottom: 8px;
     }
     .resource-link {
-        color: var(--cyan-soft);
+        color: var(--cyan-deep);
         font-size: 15px;
         font-weight: 600;
         text-decoration: none;
@@ -304,19 +319,21 @@
         gap: 7px;
         transition: color 0.2s ease, transform 0.2s ease;
     }
-    .resource-link:hover { color: var(--amber); transform: translateX(2px); }
+    .resource-link:hover { color: var(--amber-deep); transform: translateX(2px); }
     .resource-link .book-emoji { display: inline-block; transition: transform 0.3s ease; }
     .resource-link:hover .book-emoji { transform: rotate(-8deg) scale(1.15); }
 
-    /* Formula Card */
+    /* Formula Card (glass) */
     .formula-card {
         position: relative;
         background: var(--surface);
-        border: 1px solid var(--border);
+        backdrop-filter: blur(14px) saturate(140%);
+        -webkit-backdrop-filter: blur(14px) saturate(140%);
+        border: 1px solid var(--border-glass);
         border-radius: 14px;
         padding: 18px 18px 16px;
         margin: 10px 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        box-shadow: 0 6px 18px -8px rgba(27,27,47,0.10);
         overflow: hidden;
         opacity: 0;
         transform: translateY(14px);
@@ -332,15 +349,15 @@
         left: 0; top: 0; bottom: 0;
         width: 4px;
         background: linear-gradient(180deg, var(--cyan), var(--pink), var(--amber));
-        opacity: 0.35;
+        opacity: 0.45;
         transition: opacity 0.3s ease, width 0.3s ease;
     }
 
     .formula-card:hover {
         transform: translateY(-5px) scale(1.012);
-        box-shadow: 0 0 22px rgba(56,189,248,0.22), 0 22px 40px rgba(0,0,0,0.4);
+        box-shadow: 0 0 22px rgba(14,165,160,0.18), 0 22px 40px -14px rgba(27,27,47,0.20);
         background: var(--surface-hover);
-        border-color: rgba(56,189,248,0.35);
+        border-color: rgba(14,165,160,0.35);
     }
     .formula-card:hover::before { opacity: 1; width: 5px; }
 
@@ -349,13 +366,13 @@
         font-family: var(--font-display);
         font-size: 17px;
         font-weight: 600;
-        color: var(--cyan);
+        color: var(--cyan-deep);
         margin-bottom: 8px;
         text-decoration: none;
         display: block;
         transition: color 0.3s ease;
     }
-    .formula-title:hover { color: var(--cyan-soft); }
+    .formula-title:hover { color: var(--cyan); }
 
     /* Playful "explore" hint, purely decorative */
     .formula-card .explore-hint {
@@ -370,11 +387,11 @@
         transition: opacity 0.25s ease, transform 0.25s ease;
         letter-spacing: 0.04em;
     }
-    .formula-card:hover .explore-hint { opacity: 1; transform: translateX(0); color: var(--pink-soft); }
+    .formula-card:hover .explore-hint { opacity: 1; transform: translateX(0); color: var(--pink); }
 
     /* Formula Expression */
     .formula-form {
-        color: var(--amber);
+        color: var(--amber-deep);
         max-width: 400px;
         max-height: 80px;
         overflow: hidden;
@@ -417,11 +434,11 @@
         font-weight: bold;
         color: white;
         letter-spacing: 0.5px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        box-shadow: 0 2px 6px rgba(27,27,47,0.18);
     }
-    .hanging-badge.jee  { background: linear-gradient(135deg, #ff6b9d, #c9184a); }
-    .hanging-badge.neet { background: linear-gradient(135deg, #ff85a1, #ff4d6d); }
-    .hanging-badge.both { background: linear-gradient(135deg, #ff4d6d, #c9184a); }
+    .hanging-badge.jee  { background: linear-gradient(135deg, var(--amber), var(--amber-deep)); }
+    .hanging-badge.neet { background: linear-gradient(135deg, var(--cyan), var(--cyan-deep)); }
+    .hanging-badge.both { background: linear-gradient(135deg, var(--violet), var(--violet-deep)); }
 
     /* Staggered entrance for the first several cards (pure CSS, no template math) */
     li:nth-child(1)  .formula-card { animation-delay: 0.02s; }
@@ -447,12 +464,13 @@
 .sim-help-btn {
     font-size: 9px;
     font-weight: 600;
-    color: var(--cyan);
-    border: 1px solid var(--line);
+    color: var(--cyan-deep);
+    border: 1px solid var(--border);
     border-radius: 20px;
     padding: 5px 12px;
     text-decoration: none;
     white-space: nowrap;
+    background: rgba(255,255,255,0.4);
 }
 .sim-help-btn-full {
     display: block;
@@ -577,15 +595,15 @@
    style="display:flex; align-items:center; justify-content:center; gap:8px;
           padding:12px; margin: 14px 0;
           {% if chapter.is_premium and not is_purchased %}
-            background: rgba(234, 179, 8, 0.16); color: #fde047; border: 1px solid rgba(234, 179, 8, 0.4);
+            background: rgba(245, 166, 35, 0.14); color: var(--amber-deep); border: 1px solid rgba(245, 166, 35, 0.45); backdrop-filter: blur(10px);
           {% else %}
-            background: rgba(56,189,248,0.16); color:#7dd3fc; border: 1px solid var(--border-subtle);
+            background: rgba(14,165,160,0.12); color: var(--cyan-deep); border: 1px solid var(--border); backdrop-filter: blur(10px);
           {% endif %}
           border-radius:14px; text-decoration:none; font-weight:700;
           font-size: 13px;">
 
   {% if chapter.is_premium and not is_purchased %}
-    <span style="background: #eab308; color: #000; font-size: 10px; padding: 2px 6px; border-radius: 6px; font-weight: 800; text-transform: uppercase;">PRO</span>
+    <span style="background: var(--amber); color: #1a1408; font-size: 10px; padding: 2px 6px; border-radius: 6px; font-weight: 800; text-transform: uppercase;">PRO</span>
     🔒 Unlock full {{ chapter_name }} guide PDF (₹49)
   {% else %}
     📄 Download full {{ chapter_name }} guide PDF

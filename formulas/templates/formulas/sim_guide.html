@@ -22,21 +22,24 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --ink:        #0A0F1D;
-            --surface:    #131A2C;
-            --surface-2:  #1A2338;
-            --line:       #232D46;
+            --bg1:        #fdf3e7;
+            --bg2:        #fef9f0;
+            --bg3:        #fbeee0;
+            --surface:    rgba(255, 255, 255, 0.62);
+            --surface-2:  rgba(255, 255, 255, 0.5);
+            --border-soft: rgba(120, 100, 80, 0.10);
+            --line:       rgba(120, 100, 80, 0.14);
 
-            --violet:  #8B7FF5;
-            --indigo:  #5B7CF5;
-            --cyan:    #2FD3E6;
-            --gold:    #F5B841;
-            --coral:   #FF6E86;
+            --violet:  #8b5cf6;
+            --indigo:  #7c5cfc;
+            --cyan:    #0d9488;
+            --gold:    #ea9a3e;
+            --coral:   #ec4899;
 
-            --paper:  #EEF1F9;
-            --muted:  #8A93AB;
+            --ink:   #2d2a3d;
+            --muted: #7c7a8c;
 
-            --radius: 14px;
+            --radius: 16px;
             --font-display: 'Space Grotesk', sans-serif;
             --font-body: 'Outfit', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
@@ -48,9 +51,9 @@
 
         body {
             background:
-                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 1px) 0 0/26px 26px,
-                var(--ink);
-            color: var(--paper);
+                radial-gradient(circle at 1px 1px, rgba(120,100,80,0.05) 1px, transparent 1px) 0 0/26px 26px,
+                linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
+            color: var(--ink);
             font-family: var(--font-body);
             min-height: 100vh;
             padding: 0 0 60px;
@@ -80,14 +83,15 @@
             position: sticky;
             top: 3px;
             z-index: 29;
-            background: rgba(10,15,29,0.75);
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--line);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-soft);
         }
         .back-btn {
-            background: transparent;
-            border: 1px solid var(--line);
-            color: var(--paper);
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--border-soft);
+            color: var(--ink);
             padding: 7px 14px;
             border-radius: 20px;
             cursor: pointer;
@@ -97,7 +101,9 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            transition: background .15s;
         }
+        .back-btn:hover { background: #fff; }
         .back-btn:active { transform: scale(0.96); }
 
         .content-wrapper {
@@ -119,8 +125,8 @@
             letter-spacing: 0.16em;
             text-transform: uppercase;
             color: var(--gold);
-            background: rgba(245,184,65,0.09);
-            border: 1px solid rgba(245,184,65,0.3);
+            background: rgba(234,154,62,0.12);
+            border: 1px solid rgba(234,154,62,0.3);
             border-radius: 999px;
             padding: 5px 14px;
             margin-bottom: 14px;
@@ -128,7 +134,7 @@
         .page-title {
             font-family: var(--font-display);
             font-weight: 700;
-            color: #fff;
+            color: var(--ink);
             letter-spacing: -0.5px;
             font-size: clamp(1.4rem, 5vw, 2rem);
             margin-bottom: 10px;
@@ -143,9 +149,12 @@
         .section {
             margin-top: 26px;
             background: var(--surface);
-            border: 1px solid var(--line);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.9);
             border-radius: var(--radius);
             padding: 18px 20px;
+            box-shadow: 0 4px 24px rgba(140, 120, 90, 0.10);
         }
         .section-label {
             font-family: var(--font-display);
@@ -159,10 +168,10 @@
             align-items: center;
             gap: 7px;
         }
-        .section p { font-size: 0.92rem; color: var(--paper); margin-bottom: 8px; }
+        .section p { font-size: 0.92rem; color: var(--ink); margin-bottom: 8px; }
         .section p:last-child { margin-bottom: 0; }
         .section ol, .section ul { padding-left: 1.2em; }
-        .section li { font-size: 0.92rem; margin-bottom: 8px; }
+        .section li { font-size: 0.92rem; margin-bottom: 8px; color: var(--ink); }
         .section li:last-child { margin-bottom: 0; }
 
         /* Icon glossary — the same handful of PhET icons repeat across every simulation */
@@ -174,8 +183,8 @@
         }
         .icon-chip {
             background: var(--surface-2);
-            border: 1px solid var(--line);
-            border-radius: 10px;
+            border: 1px solid var(--border-soft);
+            border-radius: 12px;
             padding: 12px 14px;
             display: flex;
             gap: 10px;
@@ -189,7 +198,7 @@
         .icon-text-label {
             font-size: 0.82rem;
             font-weight: 600;
-            color: var(--paper);
+            color: var(--ink);
             margin-bottom: 2px;
         }
         .icon-text-desc {
@@ -200,8 +209,10 @@
 
         .try-card {
             margin-top: 26px;
-            background: rgba(245,184,65,0.07);
-            border: 1px solid rgba(245,184,65,0.35);
+            background: rgba(234,154,62,0.10);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(234,154,62,0.35);
             border-radius: var(--radius);
             padding: 18px 20px;
         }
@@ -212,25 +223,30 @@
             width: 100%;
             margin-top: 26px;
             padding: 13px;
-            background: #FAF6EE;
-            border: 1px solid var(--gold);
-            border-radius: 10px;
-            color: #1a1408;
+            background: var(--spectrum-gradient);
+            background-size: 200% 100%;
+            border: none;
+            border-radius: 12px;
+            color: #fff;
             font-family: var(--font-display);
             font-size: 0.88rem;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
+            box-shadow: 0 8px 22px rgba(139,92,246,0.22);
         }
         .btn-done:active { transform: scale(0.98); }
 
 .video-card {
             margin-top: 22px;
             background: var(--surface);
-            border: 1px solid var(--line);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.9);
             border-radius: var(--radius);
             padding: 14px;
+            box-shadow: 0 4px 24px rgba(140, 120, 90, 0.10);
         }
         .video-card video {
             width: 100%;
@@ -249,7 +265,7 @@
             text-align: center;
             color: var(--muted);
             font-size: 0.85rem;
-            border: 1px dashed var(--line);
+            border: 1px dashed var(--border-soft);
             border-radius: 10px;
         }
 

@@ -31,52 +31,62 @@
 
     <link rel="preconnect" href=https://fonts.googleapis.com>
     <link rel="preconnect" href=https://fonts.gstatic.com crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-        /* Base surfaces */
-        --bg-primary: #0a0e1a;
-        --bg-secondary: #0f172a;
-        --bg-card: rgba(255, 255, 255, 0.03);
-        --border-subtle: #1e293b;
-        --border-glow: rgba(56, 189, 248, 0.15);
+        /* Base surfaces — warm cream light theme */
+        --bg-primary: #FAF6ED;
+        --bg-secondary: #FFFFFF;
+        --bg-card: #FFFFFF;
+        --bg-card-alt: #F3EEE1;
+        --border-subtle: #E8E1D0;
+        --border-glow: rgba(79, 70, 229, 0.14);
 
         /* Text */
-        --text-primary: #f1f5f9;
-        --text-secondary: #94a3b8;
-        --text-muted: #64748b;
+        --text-primary: #1B1B2F;
+        --text-secondary: #63637A;
+        --text-muted: #94918A;
 
-        /* Accent (primary brand color) */
-        --accent-blue: #38bdf8;
-        --accent-purple: #818cf8;
+        /* Accent — indigo (primary) + amber (CTA / featured) + teal (tertiary) */
+        --accent-indigo: #4F46E5;
+        --accent-indigo-soft: rgba(79, 70, 229, 0.08);
+        --accent-teal: #0EA5A0;
 
-        /* Gold — reserved ONLY for CTAs / badges / "featured" moments */
-        --gold: #FFD700;
-        --gold-deep: #FFA500;
+        --gold: #F5A623;
+        --gold-deep: #E08E00;
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-        background: linear-gradient(135deg, #0a0e1a, #0f172a, #0a0812, #05070f);
-        background-size: 400% 400%;
-        animation: gradientShift 8s ease infinite;
+        background: var(--bg-primary);
         font-family: 'Outfit', sans-serif;
         min-height: 100vh;
         padding: 20px 14px;
         overflow-x: hidden;
         position: relative;
-        /* NEW: centers .page-wrap horizontally on any viewport width */
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+    /* Faint orbit-ring field — the site's signature motif, echoing the
+       gravity/orbit diagrams used throughout FormulaVerse's own content */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 900px;
+        height: 900px;
+        transform: translate(-50%, -46%);
+        background:
+            radial-gradient(circle, transparent 0 128px, rgba(79,70,229,0.055) 129px, transparent 131px),
+            radial-gradient(circle, transparent 0 220px, rgba(79,70,229,0.045) 221px, transparent 223px),
+            radial-gradient(circle, transparent 0 312px, rgba(245,166,35,0.06) 313px, transparent 315px);
+        pointer-events: none;
+        z-index: 0;
     }
 
     /* ── Top Floating Header Navigation ── */
@@ -92,13 +102,14 @@
     }
 
     .about-me {
-        font-size: 0.8rem;
+        font-size: 1rem;
         color: var(--text-primary);
-        font-weight: bold;
+        font-weight: 600;
         text-decoration: none;
-        opacity: 0.8;
+        opacity: 0.75;
         transition: opacity 0.2s;
         padding: 5px 9px;
+        margin-left: auto;
     }
     .about-me:hover { opacity: 1; }
 
@@ -113,7 +124,7 @@
         border-radius: 20px;
         text-decoration: none !important;
         transition: all 0.2s ease-in-out;
-        box-shadow: 0 4px 10px rgba(36, 161, 222, 0.2);
+        box-shadow: 0 4px 10px rgba(36, 161, 222, 0.18);
     }
     .tg-join-btn:hover {
         background: #1d82b3;
@@ -125,33 +136,24 @@
         max-width: 500px;
         width: 100%;
         text-align: center;
-        /* FIX: was "margin-top: 20px auto 0;" — invalid shorthand, browser ignored it,
-           which is why this never centered on wide/laptop screens */
         margin: 20px auto 0;
+        position: relative;
+        z-index: 1;
     }
 
     .ornament {
-        color: var(--accent-blue);
+        color: var(--accent-indigo);
         font-size: 1.1rem;
         letter-spacing: 0.4rem;
         margin-bottom: 0.3rem;
-        opacity: 0.7;
+        opacity: 0.6;
     }
 
     .eyebrow {
         font-size: 0.95rem;
         font-weight: 600;
         letter-spacing: 0.05em;
-        background: linear-gradient(90deg, #38bdf8, #818cf8, #38bdf8);
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: shine 3s linear infinite;
-    }
-
-    @keyframes shine {
-        0% { background-position: 0% center; }
-        100% { background-position: 200% center; }
+        color: var(--accent-indigo);
     }
 
     h1 {
@@ -161,84 +163,108 @@
         line-height: 1.2;
         color: var(--text-primary);
         margin: 0.5rem 0;
-        text-shadow: 0 2px 20px rgba(56, 189, 248, 0.15);
     }
 
     .divider {
         display: flex;
         align-items: center;
         gap: 1rem;
-        margin: 1rem 0;
+        margin: 1rem 0 1.4rem;
     }
     .divider::before, .divider::after {
         content: '';
         flex: 1;
         height: 1px;
-        background: linear-gradient(to right, transparent, var(--accent-blue), transparent);
+        background: linear-gradient(to right, transparent, var(--border-subtle), transparent);
     }
     .divider-diamond {
-        color: var(--accent-blue);
+        color: var(--gold);
         font-size: 0.6rem;
     }
 
-    /* ── Feature Cards ── */
-    .features {
+    /* ── Stat Cards (replaces the old 4-row feature grid) ── */
+    .stat-cards {
         display: flex;
         flex-direction: column;
-        gap: 10px;
-        margin-bottom: 1.2rem;
+        gap: 12px;
+        margin-bottom: 1.4rem;
     }
 
-    .feature-item {
+    .stat-card {
         display: flex;
         align-items: center;
-        gap: 15px;
+        justify-content: space-between;
+        gap: 14px;
         background: var(--bg-card);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
         border: 1px solid var(--border-subtle);
-        border-left: 4px solid var(--accent-blue);
-        border-radius: 14px;
-        padding: 12px 16px;
+        border-radius: 16px;
+        padding: 20px 22px;
         text-align: left;
-        transition: all 0.3s ease;
+        text-decoration: none;
+        box-shadow: 0 6px 20px rgba(27, 27, 47, 0.05);
+        transition: all 0.25s ease;
     }
-    .feature-item:hover {
-        background: rgba(56, 189, 248, 0.06);
+    .stat-card:hover {
         transform: translateY(-2px);
+        box-shadow: 0 10px 26px rgba(79, 70, 229, 0.14);
+        border-color: var(--accent-indigo);
     }
 
-    .feature-icon {
+    .stat-card-count {
+        border-left: 4px solid var(--gold);
+    }
+    .stat-card-count .stat-number {
+        font-family: 'Playfair Display', serif;
+        font-weight: 600;
+        font-size: 2.1rem;
+        color: var(--text-primary);
+        line-height: 1;
+    }
+    .stat-card-count .stat-label {
+        display: block;
+        margin-top: 4px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        font-weight: 400;
+    }
+    .stat-card-count .stat-badge {
         flex-shrink: 0;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: rgba(245, 166, 35, 0.12);
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-    .feature-icon img {
-        width: 2.2rem;
-        height: 2.2rem;
-        object-fit: contain;
+        font-size: 1.3rem;
     }
 
-    .feature-text {
-        flex-grow: 1;
+    .stat-card-tools {
+        border-left: 4px solid var(--accent-indigo);
     }
-    .feature-text strong {
-        display: block;
+    .stat-card-tools .stat-tools-title {
         font-family: 'Playfair Display', serif;
-        font-size: 1rem;
         font-weight: 700;
+        font-size: 1.02rem;
         color: var(--text-primary);
-        margin-bottom: 0.1rem;
+        margin-bottom: 3px;
     }
-    .feature-text span {
-        display: block;
+    .stat-card-tools .stat-tools-sub {
         font-size: 0.8rem;
         color: var(--text-secondary);
-        line-height: 1.3;
+        line-height: 1.35;
+    }
+    .stat-card-tools .stat-arrow {
+        flex-shrink: 0;
+        font-size: 1.3rem;
+        color: var(--accent-indigo);
+        transition: transform 0.25s ease;
+    }
+    .stat-card-tools:hover .stat-arrow {
+        transform: translateX(4px);
     }
 
-    /* ── CTA Button (kept gold — deliberate contrast against blue theme) ── */
+    /* ── CTA Button ── */
     .explore-btn-wrapper {
         margin: 1.5rem auto 0.5rem;
     }
@@ -249,40 +275,25 @@
         padding: 14px 40px;
         font-size: 16px;
         font-weight: bold;
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        box-shadow: 0 10px 24px rgba(245, 166, 35, 0.32);
         transition: all 0.3s ease;
-        animation: pulse 2s ease-in-out infinite;
         text-decoration: none;
     }
     .explore-btn a {
         text-decoration: none;
-        color: #0a0e1a !important;
+        color: #1B1B2F !important;
     }
     .explore-btn:hover {
-        transform: scale(1.03);
-        box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
-    }
-
-    @keyframes pulse {
-        0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
-        50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
+        transform: scale(1.03) translateY(-1px);
+        box-shadow: 0 14px 30px rgba(245, 166, 35, 0.42);
     }
 
     .bottom-note {
-        margin-top: 0.8rem;
-        font-size: 0.7rem;
+        margin-top: 0.9rem;
+        font-size: 0.8rem;
         font-style: italic;
         color: var(--text-muted);
         letter-spacing: 0.05em;
-    }
-
-    .bg-video {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        object-fit: cover;
-        z-index: -1;
-        opacity: 0.2;
     }
 
     /* ── Physics History Banner ── */
@@ -295,23 +306,24 @@
         font-size: 14px;
         z-index: 999;
         width: 100%;
+        position: relative;
     }
 
     .banner-btn {
         background: var(--gold);
-        color: #0a0e1a;
+        color: #1B1B2F;
         border: none;
-        padding: 4px 14px;
+        padding: 4px 13px;
         border-radius: 20px;
         cursor: pointer;
-        font-size: 12px;
-        font-weight: 700;
+        font-size: 11.5px;
+        font-weight: 370;
         transition: all 0.2s ease;
-        box-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
+        box-shadow: 0 3px 8px rgba(245, 166, 35, 0.28);
     }
 
     .banner-btn:hover {
-        background: #ffe066;
+        background: #f7b545;
         transform: scale(1.03);
     }
 
@@ -325,6 +337,7 @@
     }
     .banner-text {
         font-weight: 500;
+        color: var(--text-secondary);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -339,24 +352,24 @@
     }
     .modal-overlay {
         position: absolute; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.65);
+        background: rgba(27, 27, 47, 0.45);
         backdrop-filter: blur(4px);
     }
     .modal-box {
         position: relative;
         background: var(--bg-secondary);
         border: 1px solid var(--border-subtle);
-        border-radius: 12px;
+        border-radius: 14px;
         width: 90%; max-width: 500px;
         padding: 24px; color: var(--text-primary);
-        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5);
+        box-shadow: 0 20px 40px -8px rgba(27, 27, 47, 0.25);
         animation: slideUp 0.3s ease-out;
     }
     .modal-header {
         display: flex; justify-content: space-between; align-items: center;
         margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;
     }
-    .modal-title { font-weight: 700; color: var(--accent-blue); font-size: 16px; }
+    .modal-title { font-weight: 700; color: var(--accent-indigo); font-size: 16px; }
     .modal-close {
         background: none; border: none; color: var(--text-muted);
         font-size: 24px; cursor: pointer; line-height: 1;
@@ -371,43 +384,27 @@
 
     /* ══════════════════════════════════════════════
        DESKTOP / LAPTOP ENHANCEMENTS
-       Everything above is untouched mobile CSS.
-       Below only APPLIES on screens ≥ 900px wide.
        ══════════════════════════════════════════════ */
     @media (min-width: 900px) {
 
-        body {
-            padding: 32px 40px;
-        }
+        body { padding: 32px 40px; }
 
-        .top-nav {
-            max-width: 900px;
-        }
+        .top-nav { max-width: 900px; }
 
-        .page-wrap {
-            max-width: 640px;
-            margin-top: 30px;
-        }
+        .page-wrap { max-width: 680px; margin-top: 30px; }
 
-        .features {
+        .stat-cards {
             flex-direction: row;
-            flex-wrap: wrap;
             gap: 16px;
         }
-
-        .feature-item {
-            flex: 1 1 calc(50% - 16px);
-            min-width: 260px;
-        }
+        .stat-card { flex: 1 1 50%; }
 
         .explore-btn {
             padding: 16px 52px;
             font-size: 17px;
         }
 
-        .physics-history-banner {
-            padding: 12px 20px;
-        }
+        .physics-history-banner { padding: 12px 20px; }
     }
 </style>
 </head>
@@ -438,8 +435,7 @@
 
     <!-- Unified navigation wrapper preventing text displacement -->
     <div class="top-nav">
-        <a href="{% url 'me' %}" class="about-me">💡 About me</a>
-        <a href=https://t.me/formulaverse target="_blank" class="tg-join-btn">Join Telegram</a>
+        <a href="{% url 'me' %}" class="about-me"> About </a>
     </div>
 
     <div class="page-wrap">
@@ -450,46 +446,21 @@
 
         <div class="divider"><span class="divider-diamond">◆</span></div>
 
-        <div class="features">
-            <div class="feature-item">
-                <div class="feature-icon">
-                    <img src="{% static 'images/science.png' %}" alt="">
+        <div class="stat-cards">
+            <a href="{% url 'index-page' %}" class="stat-card stat-card-count">
+                <div>
+                    <span class="stat-number">150+ formulas, 16 Chapters</span>
+                    <span class="stat-label"> Ready when you need them</span>
                 </div>
-                <div class="feature-text">
-                    <strong>A Multiverse of Physics</strong>
-                    <span>You are introduced to a world of formulas, concepts &amp; discovery.</span>
-                </div>
-            </div>
+                <div class="stat-badge">📐</div>
+            </a>
 
-            <div class="feature-item">
-                <div class="feature-icon">
-                    <img src="{% static 'images/science1.png' %}" alt="">
+            <a href="{% url 'index-page' %}" class="stat-card stat-card-tools">
+                <div>
+                    <div class="stat-tools-title">Reference Tools</div>
+                    <div class="stat-tools-sub">Physical Constants, Units/Dimensions and PYQ Papers</div>
                 </div>
-                <div class="feature-text">
-                    <strong>Learn with Clarity</strong>
-                    <span>Every formula comes with clear, intuitive explanations.</span>
-                </div>
-            </div>
-
-            <div class="feature-item">
-                <div class="feature-icon">
-                    <img src="{% static 'images/brain.png' %}" alt="">
-                </div>
-                <div class="feature-text">
-                    <strong>Understand, Don't Memorise</strong>
-                    <span>Build real conceptual understanding that sticks.</span>
-                </div>
-            </div>
-
-            <div class="feature-item">
-                <div class="feature-icon">
-                    <img src="{% static 'images/space.png' %}" alt="">
-                </div>
-                <div class="feature-text">
-                    <strong>Perform Smarter</strong>
-                    <span>Apply what you know — in exams and beyond.</span>
-                </div>
-            </div>
+            </a>
         </div>
 
         <div class="explore-btn-wrapper">
@@ -500,10 +471,6 @@
 
         <p class="bottom-note">Knowledge is the compass. Physics is the universe.</p>
     </div>
-
-    <video class="bg-video" autoplay muted loop playsinline>
-        <source src="{% static 'videos/stars.mp4' %}" type="video/mp4">
-    </video>
 
     <script>
       if ('serviceWorker' in navigator) {
