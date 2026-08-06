@@ -526,6 +526,35 @@
             max-width: 640px;
         }
     }
+
+     .site-footer {
+            margin-top: auto;
+            padding-top: 40px;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .site-footer p {
+            margin-bottom: 8px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-main);
+        }
     </style>
 </head>
 
@@ -603,9 +632,9 @@
           font-size: 13px;">
 
   {% if chapter.is_premium and not is_purchased %}
-    <span style="background: var(--amber); color: #1a1408; font-size: 10px; padding: 2px 6px; border-radius: 6px; font-weight: 800; text-transform: uppercase;">PRO</span>
-    🔒 Unlock full {{ chapter_name }} guide PDF (₹49)
-  {% else %}
+<span style="background: var(--amber); color: #1a1408; font-size: 10px; padding: 2px 6px; border-radius: 6px; font-weight: 800; text-transform: uppercase;">PRO</span>
+🔒 Unlock full {{ chapter_name }} guide PDF (<del style="color: #888; text-decoration: line-through; margin-right: 2px;">₹99</del><span style="color: #d97706; font-weight: 800;">₹49</span>)
+{% else %}
     📄 Download full {{ chapter_name }} guide PDF
   {% endif %}
 
@@ -657,5 +686,16 @@
       }
 
     </script>
+
+<footer class="site-footer">
+            <p>© 2026 formulaverse.in</p>
+            <div class="footer-links">
+                <a href="/">Home</a> •
+                <a href="/me">About</a> •
+                <a href="/privacy/">Privacy Policy</a> •
+                <a href="/terms/">Terms of Service</a>
+            </div>
+        </footer>
+
 </body>
 </html>

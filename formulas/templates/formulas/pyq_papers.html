@@ -214,6 +214,36 @@
     }
  }
 
+  .site-footer {
+            margin-top: auto;
+            padding-top: 40px;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .site-footer p {
+            margin-bottom: 8px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-main);
+        }
+
+
 </style>
 </head>
 <body>
@@ -276,6 +306,15 @@
 }
 </script>
 
+<footer class="site-footer">
+            <p>© 2026 formulaverse.in</p>
+            <div class="footer-links">
+                <a href="/">Home</a> •
+                <a href="/me">About</a> •
+                <a href="/privacy/">Privacy Policy</a> •
+                <a href="/terms/">Terms of Service</a>
+            </div>
+        </footer>
 
 
 </body>

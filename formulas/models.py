@@ -166,3 +166,29 @@ class ExamDate(models.Model):
 
     class Meta:
         ordering = ['exam_date']
+
+
+class FormulaVariable(models.Model):
+    formula = models.ForeignKey(Formula, related_name="formula_variables", on_delete=models.CASCADE)
+    symbol = models.CharField(max_length=10) # e.g. "v"
+    name = models.CharField(max_length=100) # e.g. "Final velocity"
+    unit = models.CharField(max_length=20, blank=True) # e.g. "m/s"
+    expr = models.CharField(max_length=200) # e.g. "u + a*t"
+    is_solvable = models.BooleanField(default=True) # exclude quadratics/trig for now
+    order = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order"]
+
+    def __str__(self):
+        return f"{self.formula.title} — {self.symbol}"
+
+
+class FormulaConstant(models.Model):
+    formula = models.ForeignKey(Formula, related_name="constants", on_delete=models.CASCADE)
+    symbol = models.CharField(max_length=10) # e.g. "k"
+    value = models.FloatField() # e.g. 8.99e9
+
+    def __str__(self):
+        return f"{self.symbol} = {self.value}"
+

@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ formula.title }} | Formulaverse</title>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.0/math.js"></script>
+
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
     <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
     <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
@@ -166,21 +168,50 @@
             100% { background-position: 200% 0; }
         }
 
-        /* ===== Top utility bar (frosted) ===== */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            gap: 8px;
-            position: sticky;
-            top: 3px;
-            z-index: 29;
-            background: rgba(250,246,237,0.72);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--line);
-        }
+       .top-bar {
+  display: flex;
+  justify-content: flex-end; /* Groups buttons on the top right */
+  align-items: center;
+  padding: 10px 16px;
+  gap: 8px;
+  position: sticky;
+  top: 0px;
+  z-index: 29;
+  background: rgba(250, 246, 237, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+
+
+/* ===== Save button inside top-bar ===== */
+.btn-save {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: linear-gradient(135deg, var(--gold), #E08E00);
+  border: none;
+  border-radius: 20px;
+  color: #1a1408;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.3);
+  transition: transform .15s, box-shadow .2s;
+}
+
+.btn-save:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(245, 166, 35, 0.4);
+}
+
+.btn-save:active {
+  transform: scale(0.97);
+}
+
         .util-btn {
             background: transparent;
             border: 1px solid var(--line);
@@ -617,26 +648,6 @@
             margin-top: 16px;
         }
 
-        /* ===== Save button ===== */
-        .btn-save {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, var(--gold), #E08E00);
-            border: none;
-            border-radius: 10px;
-            color: #1a1408;
-            font-family: var(--font-display);
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 10px 24px -8px rgba(245,166,35,0.40);
-            transition: transform .15s, box-shadow .2s;
-        }
-        .btn-save:hover { transform: translateY(-1px); box-shadow: 0 12px 28px -8px rgba(245,166,35,0.5); }
-        .btn-save:active { transform: scale(0.97); }
 
         /* ===== Practice section ===== */
         .practice-section {
@@ -920,6 +931,157 @@
                 max-width: 460px;
             }
         }
+
+        .calc-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    font-family: inherit;
+    box-sizing: border-box;
+  }
+
+  .calc-title {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .calc-group {
+    margin-bottom: 16px;
+  }
+
+  .calc-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .solve-for {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 0.95rem;
+    background-color: #ffffff;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  .solve-for:focus, .field input:focus {
+    border-color: #2563eb;
+  }
+
+  .calc-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 480px) {
+    .calc-inputs {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .calc-field label {
+    display: block;
+    font-size: 0.8rem;
+    color: #475569;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .calc-field input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    outline: none;
+  }
+
+  .calc-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #2563eb;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .calc-btn:hover {
+    background-color: #1d4ed8;
+  }
+
+  .calc-result {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    font-weight: 700;
+    font-size: 1rem;
+    display: none;
+    text-align: center;
+  }
+
+  .calc-result.show {
+    display: block;
+  }
+
+  .calc-result.error {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+    font-weight: normal;
+    font-size: 0.9rem;
+  }
+
+
+ .site-footer {
+            margin-top: auto;
+            padding-top: 40px;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .site-footer p {
+            margin-bottom: 8px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-main);
+        }
+
     </style>
 </head>
 <body>
@@ -948,8 +1110,14 @@
     <div class="spectrum-thread"></div>
 
     <div class="top-bar">
-        <button onclick="handleShareClick()" class="util-btn util-share">📱 Share</button>
-    </div>
+  <form method="POST" action="{% url 'saved-page' pk=formula.id %}" id="saveForm" onsubmit="return handleSaveSubmit(event)" style="margin: 0;">
+    {% csrf_token %}
+    <button type="submit" name="save" class="btn-save">★ Save</button>
+  </form>
+
+  <button onclick="handleShareClick()" class="util-btn util-share">📱 Share</button>
+</div>
+
 
     <div class="page-header">
         {% if formula.chapter %}
@@ -1044,18 +1212,7 @@
         </div>
         {% endif %}
 
-        <!-- Worked example keeps full visual weight — it's what people re-read mid-problem -->
-        {% if formula.worked_example %}
-        <div class="example-card">
-            <div class="example-label">🧮 Worked example</div>
-            <div class="card-content">Q) {{ formula.example }}</div>
-            <div class="card-content" style="display: flex; justify-content: left; align-items: left; overflow-x: auto; max-width: 100%; margin-top: 6px;">Ans: $$ {{ formula.answer }} $$ </div>
-        </div>
-        {% endif %}
 
-        {% if result %}
-        <div class="result-badge">{{ result }}</div>
-        {% endif %}
 
         {% if formula.pyq_appearances %}
         <div class="pyq-row">
@@ -1098,16 +1255,45 @@
             </div>
         </div>
 
+        <!-- Worked example keeps full visual weight — it's what people re-read mid-problem -->
+        {% if formula.worked_example %}
+        <div class="example-card">
+            <div class="example-label">🧮 Worked example</div>
+            <div class="card-content">Q) {{ formula.example }}</div>
+            <div class="card-content" style="display: flex; justify-content: left; align-items: left; overflow-x: auto; max-width: 100%; margin-top: 6px;">Ans: $$ {{ formula.answer }} $$ </div>
+        </div>
+        {% endif %}
+
+        {{ calculator_config|json_script:"calc-config" }}
+
+{% if calculator_config.variables %}
+<div class="calc-box">
+  <h3 class="calc-title">Interactive Calculator</h3>
+
+  <div class="calc-group">
+    <label class="calc-label" for="solve-for-select">Solve for</label>
+    <select id="solve-for-select" class="solve-for"></select>
+  </div>
+
+  <div class="calc-inputs" id="calc-inputs-container"></div>
+
+  <button type="button" class="calc-btn" id="calc-trigger-btn">Calculate</button>
+
+  <div class="calc-result" id="calc-result-box"></div>
+</div>
+{% endif %}
+
+
+        {% if result %}
+        <div class="result-badge">{{ result }}</div>
+        {% endif %}
+
         <div class="explanation">
             {% if explanation %}
             <img src="{{ formula.explanation.url }}" alt="Explanation">
             {% endif %}
         </div>
 
-       <form method="POST" action="{% url 'saved-page' pk=formula.id %}" id="saveForm" onsubmit="return handleSaveSubmit(event)">
-  {% csrf_token %}
-  <button type="submit" name="save" class="btn-save">★ Save</button>
-</form>
 
         <div id="animationModal">
             <div class="modal-box">
@@ -1499,7 +1685,130 @@ function handleSaveSubmit(event) {
   {% endif %}
   return true; // logged in, let form submit normally
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const configEl = document.getElementById("calc-config");
+    if (!configEl) return;
+
+    const config = JSON.parse(configEl.textContent);
+    const variables = config.variables || [];
+    const constants = config.constants || {};
+
+    if (variables.length === 0) return;
+
+    const select = document.getElementById("solve-for-select");
+    const inputsDiv = document.getElementById("calc-inputs-container");
+    const resultDiv = document.getElementById("calc-result-box");
+    const btn = document.getElementById("calc-trigger-btn");
+
+    // Populate dropdown options
+    select.innerHTML = variables
+      .map(v => `<option value="${v.symbol}">${v.name} (${v.symbol})</option>`)
+      .join("");
+
+    // Dynamically render inputs for non-target variables
+    function renderInputs() {
+      resultDiv.classList.remove("show", "error");
+      const targetSymbol = select.value;
+      const inputVariables = variables.filter(v => v.symbol !== targetSymbol);
+
+      inputsDiv.innerHTML = inputVariables
+        .map(
+          v => `
+        <div class="calc-field">
+          <label>${v.name} (${v.symbol}) ${v.unit ? '[' + v.unit + ']' : ''}</label>
+          <input type="number" step="any" placeholder="Enter value" data-symbol="${v.symbol}">
+        </div>
+      `
+        )
+        .join("");
+    }
+
+    function formatLaTeXNumber(val) {
+    let num = Number(val);
+    if (isNaN(num)) return val;
+
+    // Format large/small numbers as scientific LaTeX (e.g. 1.0788 \times 10^{11})
+    if (Math.abs(num) >= 10000 || (Math.abs(num) < 0.001 && num !== 0)) {
+        let parts = num.toExponential(4).split('e');
+        let mantissa = parts[0];
+        let exponent = parseInt(parts[1], 10);
+        return `${mantissa} \\times 10^{${exponent}}`;
+    }
+
+    // Regular numbers up to 4 decimal places
+    return parseFloat(num.toFixed(4)).toString();
+}
+
+    // Calculation Handler
+    function calculate() {
+      const targetSymbol = select.value;
+      const targetVar = variables.find(v => v.symbol === targetSymbol);
+      const scope = { ...constants };
+
+      let missingField = false;
+
+      inputsDiv.querySelectorAll("input").forEach(input => {
+        const valString = input.value.trim();
+        const val = parseFloat(valString);
+
+        if (valString === "" || Number.isNaN(val)) {
+          missingField = true;
+        } else {
+          scope[input.dataset.symbol] = val;
+        }
+      });
+
+      resultDiv.classList.remove("show", "error");
+
+      if (missingField) {
+        resultDiv.classList.add("show", "error");
+        resultDiv.textContent = "Please enter valid numbers into all fields.";
+        return;
+      }
+
+    try {
+    const rawResult = math.evaluate(targetVar.expr, scope);
+
+    if (typeof rawResult !== "number" || !isFinite(rawResult)) {
+        throw new Error("Invalid output numerical result");
+    }
+
+    const formattedResult = formatLaTeXNumber(rawResult);
+    const unitText = targetVar.unit ? ` \\text{ ${targetVar.unit}}` : "";
+
+    resultDiv.classList.add("show");
+    resultDiv.innerHTML = `\\(${targetVar.symbol} = ${formattedResult}${unitText}\\)`;
+
+    if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise([resultDiv]).catch(err => console.error("MathJax error:", err));
+    }
+} catch (err) {
+    console.error("MathJS Evaluation error:", err, "Scope:", scope, "Expr:", targetVar.expr);
+    resultDiv.classList.add("show", "error");
+    resultDiv.textContent = "Cannot calculate — check for division by zero or invalid inputs.";
+}
+    }
+
+    select.addEventListener("change", renderInputs);
+    btn.addEventListener("click", calculate);
+
+    // Initial trigger
+    renderInputs();
+  });
+
 </script>
+
+<footer class="site-footer">
+            <p>© 2026 formulaverse.in</p>
+            <div class="footer-links">
+                <a href="/">Home</a> •
+                <a href="/me">About</a> •
+                <a href="/privacy/">Privacy Policy</a> •
+                <a href="/terms/">Terms of Service</a>
+            </div>
+        </footer>
+
 
 </body>
 </html>

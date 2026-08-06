@@ -7,6 +7,7 @@ urlpatterns=[
     path("me", views.AboutMeView.as_view(), name="me"),
     path("index/", views.IndexView.as_view(), name="index-page"),
     path('privacy/', views.privacy, name="privacy"),
+    path('terms/', views.terms, name="terms"),
     path("chatbot/", views.ChatbotView.as_view(), name="chatbot"),
     path('jee/', views.ExamFilterView.as_view(), name='jee-formulas'),
     path('neet/', views.ExamFilterView.as_view(), name='neet-formulas'),

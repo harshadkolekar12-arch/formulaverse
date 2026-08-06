@@ -108,6 +108,25 @@ class SingleFormulaView(DetailView):
         context['similar_formulas'] = Formula.objects.filter(
             chapter = self.object.chapter
             ).exclude(pk=self.object.pk)[:5]
+
+
+        variables = self.object.formula_variables.filter(is_solvable=True).order_by("order")
+        constants = self.object.constants.all()
+
+        context['calculator_config'] = {
+            "variables": [
+                {
+                    "symbol": v.symbol,
+                    "name": v.name,
+                    "unit": v.unit,
+                    "expr": v.expr,
+                }
+                for v in variables
+            ],
+            "constants": {c.symbol: c.value for c in constants},
+        }
+
+
         return context
 
     def get(self, request, *args, **kwargs):
@@ -898,3 +917,5 @@ class AllSavedFormulasView(View):
             })
 
 
+def terms(request):
+    return render(request, "formulas/terms.html")

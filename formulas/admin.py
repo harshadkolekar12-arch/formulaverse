@@ -1,10 +1,22 @@
 from django.contrib import admin
 
-from .models import Formula,Chapter, PYQ, SimpleUser, ExamDate
+from .models import Formula,Chapter, PYQ, SimpleUser, ExamDate, FormulaVariable, FormulaConstant
+
+
+class FormulaVariableInline(admin.TabularInline):
+    model = FormulaVariable
+    extra = 1
+
+class FormulaConstantInline(admin.TabularInline):
+    model = FormulaConstant
+    extra = 0
+
+
 
 # Register your models here.
 class FormulaAdmin(admin.ModelAdmin):
     list_display=("title", "form", "given_by")
+    inlines = [FormulaVariableInline, FormulaConstantInline]
 
 admin.site.register(Formula, FormulaAdmin)
 admin.site.register(Chapter)
