@@ -620,25 +620,6 @@
         </div>
 
 
-        <a href="{% url 'topic-cheatsheet-pdf' %}?topic={{ chapter_slug }}"
-   style="display:flex; align-items:center; justify-content:center; gap:8px;
-          padding:12px; margin: 14px 0;
-          {% if chapter.is_premium and not is_purchased %}
-            background: rgba(245, 166, 35, 0.14); color: var(--amber-deep); border: 1px solid rgba(245, 166, 35, 0.45); backdrop-filter: blur(10px);
-          {% else %}
-            background: rgba(14,165,160,0.12); color: var(--cyan-deep); border: 1px solid var(--border); backdrop-filter: blur(10px);
-          {% endif %}
-          border-radius:14px; text-decoration:none; font-weight:700;
-          font-size: 13px;">
-
-  {% if chapter.is_premium and not is_purchased %}
-<span style="background: var(--amber); color: #1a1408; font-size: 10px; padding: 2px 6px; border-radius: 6px; font-weight: 800; text-transform: uppercase;">PRO</span>
-🔒 Unlock full {{ chapter_name }} guide PDF (<del style="color: #888; text-decoration: line-through; margin-right: 2px;">₹99</del><span style="color: #d97706; font-weight: 800;">₹49</span>)
-{% else %}
-    📄 Download full {{ chapter_name }} guide PDF
-  {% endif %}
-
-</a>
         <!-- Formula Cards -->
         {% for formula in formulas %}
         <ul>
@@ -662,6 +643,27 @@
         {% endfor %}
 
     </div>
+
+
+        <a href="{% url 'topic-cheatsheet-pdf' %}?topic={{ chapter_slug }}"
+   style="display:flex; align-items:center; justify-content:center; gap:8px;
+          padding:12px; margin: 14px 0;
+          {% if chapter.is_premium and not is_purchased %}
+            background: rgba(245, 166, 35, 0.14); color: var(--amber-deep); border: 1px solid rgba(245, 166, 35, 0.45); backdrop-filter: blur(10px);
+          {% else %}
+            background: rgba(14,165,160,0.12); color: var(--cyan-deep); border: 1px solid var(--border); backdrop-filter: blur(10px);
+          {% endif %}
+          border-radius:14px; text-decoration:none; font-weight:700;
+          font-size: 13px;">
+
+  {% if chapter.is_premium and not is_purchased %}
+<span style="background: var(--amber); color: #1a1408; font-size: 10px; padding: 2px 6px; border-radius: 6px; font-weight: 800; text-transform: uppercase;">PRO</span>
+🔒 Unlock full {{ chapter_name }} guide PDF (<del style="color: #888; text-decoration: line-through; margin-right: 2px;">₹99</del><span style="color: #d97706; font-weight: 800;">₹49</span>)
+{% else %}
+    📄 Download full {{ chapter_name }} guide PDF
+  {% endif %}
+
+</a>
 
     <script>
 

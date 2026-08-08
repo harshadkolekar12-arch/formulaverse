@@ -39,21 +39,31 @@ def serve_assetlinks(request):
   }
 }]'''
     return HttpResponse(content, content_type='application/json')
-
 sitemaps = {
-    'formulas' : FormulaSitemap,
-    'static' : StaticSitemap
-    }
+    'formulas': FormulaSitemap,
+    'static': StaticSitemap
+}
+
+def robots_txt(request):
+    content = """User-agent: *
+Disallow: /api/
+Disallow: /chatbot/
+Disallow: /payment/
+Disallow: /simple-login/
+Disallow: /*/create-order/
+
+Sitemap: https://formulaverse.in/sitemap.xml
+"""
+    return HttpResponse(content, content_type="text/plain")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('robots.txt', robots_txt),
     path('ads.txt', lambda r: HttpResponse("google.com, pub-2098916755752141, DIRECT, f08c47fec0942fa0", content_type="text/plain")),
-    path('sitemap.xml', sitemap, {'sitemaps' : sitemaps}),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
     path('sw.js', serve_sw),
     path('.well-known/assetlinks.json', serve_assetlinks),
     path("", include("formulas.urls")),
-
-
 ]
 
 if settings.DEBUG:
