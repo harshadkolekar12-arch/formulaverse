@@ -7,11 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ formula.title }} | Formulaverse</title>
 
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "formulaVerse",
+  "url": "https://formulaverse.in",
+  "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+}
+</script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.0/math.js"></script>
 
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
     <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
-    <link rel="icon" type="image/png" href="{% static 'formulas/icon-512.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
 
     <script src=https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js></script>
     <script src=https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js></script>
@@ -1082,9 +1093,81 @@
             color: var(--text-main);
         }
 
+        .sprint-banner-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1rem 0.25rem 1rem;
+}
+
+/* Styled Pill Button */
+.sprint-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border: 1px solid #e9d5ff;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.12);
+    border-radius: 9999px;
+    padding: 0.4rem 0.9rem;
+    text-decoration: none;
+    transition: all 0.25s ease-in-out;
+}
+
+.sprint-pill-btn:hover {
+    transform: translateY(-2px);
+    border-color: #c084fc;
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.22);
+    background: #ffffff;
+}
+
+/* Icon & Text Styling */
+.sprint-icon {
+    font-size: 0.9rem;
+}
+
+.sprint-text {
+    font-size: 0.825rem;
+    font-weight: 700;
+    color: #4c1d95;
+    letter-spacing: -0.01em;
+}
+
+/* Pulsing LIVE Indicator Badge */
+.sprint-badge {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 9999px;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.35);
+    animation: livePulse 2s infinite;
+}
+
+@keyframes livePulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+
     </style>
 </head>
 <body>
+
+
+    <div class="sprint-banner-wrapper">
+    <a href="{% url 'daily-sprint' %}" class="sprint-pill-btn">
+        <span class="sprint-icon">⚡</span>
+        <span class="sprint-text">Daily Escape Sprint</span>
+        <span class="sprint-badge">LIVE</span>
+    </a>
+</div>
+
 
     <div id="loginModal" class="login-modal hidden">
   <div class="login-modal-content">

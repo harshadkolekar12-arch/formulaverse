@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Service — FormulaVerse</title>
     <meta name="description" content="Terms of Service for FormulaVerse - Educational physics calculator and formula platform.">
+
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "formulaVerse",
+  "url": "https://formulaverse.in",
+  "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+}
+</script>
+
+      <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
+    <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
+
+     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+
+
     <style>
         /* CSS Variables matching FormulaVerse Theme */
         :root {

@@ -1,6 +1,6 @@
 {
-    "name": "FormulaVerse",
-    "short_name": "FormulaVerse",
+    "name": "formulaVerse",
+    "short_name": "formulaVerse",
     "description": "All Physics Formulas for JEE and NEET",
     "start_url": "/",
     "scope": "/",
@@ -10,13 +10,13 @@
     "orientation": "portrait",
     "icons": [
         {
-            "src": "/static/formulas/icon-192.png",
+            "src": "/static/formulas/icon.jpeg",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable any"
         },
         {
-            "src": "/static/formulas/icon-512.png",
+            "src": "/static/formulas/icon.jpeg",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable any"

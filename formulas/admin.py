@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Formula,Chapter, PYQ, SimpleUser, ExamDate, FormulaVariable, FormulaConstant
+from .models import Formula,Chapter, PYQ, SimpleUser, ExamDate, FormulaVariable, FormulaConstant, DailyChallenge
 
 
 class FormulaVariableInline(admin.TabularInline):
@@ -18,10 +18,13 @@ class FormulaAdmin(admin.ModelAdmin):
     list_display=("title", "form", "given_by")
     inlines = [FormulaVariableInline, FormulaConstantInline]
 
+class DailyChallengeAdmin(admin.ModelAdmin):
+    list_display=("date", "scenario_title")
+
 admin.site.register(Formula, FormulaAdmin)
 admin.site.register(Chapter)
 admin.site.register(PYQ)
-
+admin.site.register(DailyChallenge, DailyChallengeAdmin)
 
 @admin.register(SimpleUser)
 class SimpleUserAdmin(admin.ModelAdmin):

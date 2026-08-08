@@ -1,0 +1,462 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Sprint | FormulaVerse</title>
+
+    <!-- MathJax Configuration -->
+    <script>
+    MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "formulaVerse",
+      "url": "https://formulaverse.in",
+      "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+    }
+    </script>
+
+    <!-- Meta & Head Tags -->
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+    <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
+    <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
+
+    <!-- Google Tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YHLZCEHWF7');
+    </script>
+
+    <meta name="description" content="FormulaVerse — Daily Physics Escape Sprints to test instant formula recall!">
+    <meta property="og:title" content="FormulaVerse Daily Sprint"/>
+    <meta property="og:url" content="https://formulaverse.in/daily-sprint/"/>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FormulaVerse Signature Aesthetic Stylesheet -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            min-height: 100vh;
+        }
+
+        /* FormulaVerse Signature Ambient Gradient Background */
+        body {
+            background-color: #faf8f5;
+            background-image:
+                radial-gradient(at 10% 10%, rgba(124, 58, 237, 0.08) 0px, transparent 40%),
+                radial-gradient(at 90% 15%, rgba(245, 158, 11, 0.12) 0px, transparent 45%),
+                radial-gradient(at 50% 85%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #1e1b4b;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem 1rem;
+        }
+
+        /* Main Card Vertical Expansion Setup */
+        .sprint-card {
+            width: 100%;
+            min-height: 85vh;
+            max-width: 42rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-left: 6px solid #f59e0b;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05), 0 0 25px rgba(245, 158, 11, 0.06);
+            padding: 2rem;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top Header Navigation Pills */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge-sprint {
+            background: #ede9fe;
+            color: #6d28d9;
+            border: 1px solid #ddd6fe;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.06em;
+            padding: 0.45rem 1rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .badge-sprint .icon {
+            color: #f59e0b;
+        }
+
+        .timer-pill {
+            background-color: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #fecaca;
+            font-family: monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 9999px;
+            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.1);
+        }
+
+
+        /* Option Buttons Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .options-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option-btn {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            color: #1e293b;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-radius: 16px;
+            padding: 1.1rem 1.25rem;
+            text-align: left;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: #8b5cf6;
+            background: #fdf4ff;
+            color: #6d28d9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -4px rgba(139, 92, 246, 0.18);
+        }
+
+        .option-btn:disabled {
+            opacity: 0.85;
+            cursor: not-allowed;
+        }
+
+        /* Dynamic Pass / Fail Option Animations */
+        .option-btn.btn-correct {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%) !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.2) !important;
+        }
+
+        .option-btn.btn-wrong {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%) !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.2) !important;
+        }
+
+        /* Result Box Display */
+        #result-box {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #cbd5e1;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #result-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        #result-desc {
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Formula Card Container */
+        .formula-card {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 1px solid #fde68a;
+            border-radius: 18px;
+            padding: 1.25rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.9);
+        }
+
+        .formula-label {
+            font-size: 0.725rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #d97706;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Main CTA Share Button */
+        .share-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            border-radius: 9999px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 20px -4px rgba(124, 58, 237, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px -4px rgba(124, 58, 237, 0.5);
+            background: linear-gradient(135deg, #6d28d9 0%, #1d4ed8 100%);
+        }
+
+        .site-footer {
+            margin-top: auto;
+            padding-top: 40px;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .site-footer p {
+            margin-bottom: 8px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-main);
+        }
+
+
+        .scenario-story {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 1.5rem;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.task-heading {
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #6366f1;
+    margin-bottom: 0.4rem;
+}
+
+.story-text {
+    color: #334155;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+}
+
+.hint-text {
+    font-size: 0.85rem;
+    color: #d97706;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    line-height: 1.4;
+}
+
+
+    </style>
+</head>
+
+<body>
+
+    <div class="sprint-card">
+
+        <!-- Top Section -->
+        <div>
+            <!-- Header with Countdown -->
+            <div class="top-bar">
+                <span class="badge-sprint"><span class="icon">⚡</span> DAILY ESCAPE SPRINT</span>
+                <div id="timer" class="timer-pill">⏱️ 60s</div>
+            </div>
+
+            <h1 class="scenario-title">{{ challenge.scenario_title }}</h1>
+
+<div class="scenario-story">
+    <h3 class="task-heading">Task</h3>
+    <p class="story-text">"{{ challenge.scenario_story }}"</p>
+    {% if challenge.hint %}
+        <p class="hint-text">💡 <strong>Hint:</strong> {{ challenge.hint }}</p>
+    {% endif %}
+</div>
+
+
+            <!-- Options Grid -->
+            <div class="options-grid" id="options-grid">
+                {% for option in options %}
+                    <button
+                        onclick="checkAnswer(this, {{ option.is_correct|lower }})"
+                        class="option-btn">
+                        <span>{{ option.title }}</span>
+                    </button>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Bottom Section (Result Box Revealed Upon Choice) -->
+        <div id="result-box" style="display: none;">
+            <h2 id="result-title"></h2>
+            <p id="result-desc"></p>
+
+            <div class="formula-card">
+                <p class="formula-label">Correct Physics Formula</p>
+                <div id="formula-latex" class="text-xl">\[ {{ challenge.correct_formula_latex }} \]</div>
+            </div>
+
+            <button onclick="shareStreak()" class="share-btn">
+                <span>📲 Share Result on WhatsApp</span> ➔
+            </button>
+        </div>
+
+          <footer class="site-footer">
+            <p>© 2026 formulaverse.in</p>
+            <div class="footer-links">
+                <a href="/">Home</a> •
+                <a href="/me">About</a> •
+                <a href="/privacy/">Privacy Policy</a> •
+                <a href="/terms/">Terms of Service</a>
+            </div>
+        </footer>
+
+
+
+    </div>
+
+    <script>
+    let timeLeft = 60;
+    let timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').innerText = `⏱️ ${timeLeft}s`;
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            endGame(false, "Time's up! The system collapsed before you applied the right formula.");
+        }
+    }, 1000);
+
+    function checkAnswer(button, isCorrect) {
+        clearInterval(timer);
+
+        // Disable all option buttons
+        document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+
+        if (isCorrect) {
+            button.classList.add('btn-correct');
+            endGame(true, "ESCAPED SUCCESSFULLY! You identified the correct physics principle in record time.");
+        } else {
+            button.classList.add('btn-wrong');
+            endGame(false, "FAILED! Incorrect formula applied. {{ challenge.explanation }}");
+        }
+    }
+
+    function endGame(success, message) {
+        const box = document.getElementById('result-box');
+        const title = document.getElementById('result-title');
+        const desc = document.getElementById('result-desc');
+
+        box.style.display = 'block';
+
+        if (success) {
+            title.innerText = "🚀 Mission Accomplished!";
+            title.style.color = "#16a34a"; // Vibrant Green
+        } else {
+            title.innerText = "💥 Mission Failed!";
+            title.style.color = "#dc2626"; // Vibrant Red
+        }
+        desc.innerText = message;
+
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    }
+
+    function shareStreak() {
+        const text = "⚡ I solved today's FormulaVerse Daily Escape Sprint! Can you decode today's physics scenario? Test yourself here: https://formulaverse.in/daily-sprint/";
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+    }
+    </script>
+
+</body>
+</html>

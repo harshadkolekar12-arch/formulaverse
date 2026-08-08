@@ -17,6 +17,7 @@ urlpatterns=[
     path('pyq-papers/', views.pyq_papers, name="pyq-papers"),
     path('units-dimensions/', views.UnitsDimensionsView.as_view(), name="units-dimensions"),
     path('api/daily-facts/', views.daily_physics_fact_view, name="daily_fact"),
+    path('daily-sprint/', views.daily_sprint_view, name="daily-sprint"),
     path('simple-login/', views.simple_login, name='simple_login'),
     path('get-captcha/', views.get_captcha, name='get_captcha'),
     path('logout/', views.logout_view, name='logout'),

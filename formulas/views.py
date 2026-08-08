@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.views.generic import DetailView,TemplateView, CreateView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy, reverse
-from .models import Formula, Chapter, SimpleUser, PurchasedChapter, has_purchased, SavedFormula, ExamDate
+from .models import Formula, Chapter, SimpleUser, PurchasedChapter, has_purchased, SavedFormula, ExamDate, DailyChallenge
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -37,6 +37,7 @@ from django.template.loader import render_to_string
 from .pdf_utils import render_formula_media_url, simplify_latex_for_text, format_units_for_display
 import logging
 from weasyprint import HTML
+from django.utils import timezone
 
 #from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
@@ -919,3 +920,30 @@ class AllSavedFormulasView(View):
 
 def terms(request):
     return render(request, "formulas/terms.html")
+
+
+
+
+def daily_sprint_view(request):
+    today = timezone.now().date()
+    challenge = DailyChallenge.objects.filter(date=today).first()
+    if not challenge:
+        challenge = DailyChallenge.objects.last()
+
+    if challenge:
+        options = [
+            {'title': challenge.correct_formula_name, 'is_correct': True},
+            {'title': challenge.wrong_option_1, 'is_correct': False},
+            {'title': challenge.wrong_option_2, 'is_correct': False},
+            {'title': challenge.wrong_option_3, 'is_correct': False},
+        ]
+        random.seed(str(today))
+        random.shuffle(options)
+    else:
+        options = []
+
+    context = {
+        'challenge': challenge,
+        'options': options,
+    }
+    return render(request, 'formulas/daily_sprint.html', context)

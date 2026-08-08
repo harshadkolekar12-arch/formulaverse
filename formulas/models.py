@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 import uuid
 from django.core.validators import FileExtensionValidator
+from django.utils import timezone
 
 
 # Create your models here.
@@ -192,3 +193,18 @@ class FormulaConstant(models.Model):
     def __str__(self):
         return f"{self.symbol} = {self.value}"
 
+
+class DailyChallenge(models.Model):
+  date = models.DateField(default=timezone.now, unique=True)
+  scenario_title = models.CharField(max_length=200)
+  scenario_story = models.TextField()
+  hint = models.CharField(max_length=255, blank=True, null=True)
+  correct_formula_name = models.CharField(max_length=100)
+  correct_formula_latex = models.CharField(max_length=100)
+  wrong_option_1 = models.CharField(max_length=100)
+  wrong_option_2 = models.CharField(max_length=100)
+  wrong_option_3 = models.CharField(max_length=100)
+  explanation = models.TextField()
+
+  def _str_(self):
+    return f"Challenge {self.date} - {self.scenario_title}"
