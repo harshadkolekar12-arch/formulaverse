@@ -5,26 +5,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> My Dashboard | Formulaverse</title>
+     <title>My FormulaVerse Dashboard — Chapterwise Formula Sheets for JEE & NEET | FormulaVerse</title>
 
+    <!-- High-CTR Meta Description -->
+    <meta name="description" content="Your FormulaVerse Dashboard — browse 150+ Physics formulas by chapter, track saved formulas, and access revision cheat sheets for JEE Main, Advanced, and NEET.">
 
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "formulaVerse",
-  "url": "https://formulaverse.in",
-  "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
-}
-</script>
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="physics formula dashboard, chapterwise physics formulas, JEE physics chapters, NEET physics chapters, formula categories">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
-    <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
+    <!-- Open Graph / WhatsApp / Telegram Previews -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FormulaVerse">
+    <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
+    <meta property="og:title" content="Physics Formula Dashboard — FormulaVerse">
+    <meta property="og:description" content="Browse chapterwise Physics formulas, access saved revision sheets, and track study progress for JEE & NEET.">
+    <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Physics Formula Dashboard — FormulaVerse">
+    <meta name="twitter:description" content="Browse chapterwise Physics formulas and quick revision cheat sheets for JEE & NEET.">
+    <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Favicon & Web Manifest -->
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755..."></script>
+    <!-- Schema.org Organization Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "FormulaVerse",
+      "url": "https://formulaverse.in",
+      "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+    }
+    </script>
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
+
+    <!-- Google Tag Manager / Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -33,14 +56,10 @@
       gtag('config', 'G-YHLZCEHWF7');
     </script>
 
-    <meta name="description" content="Your FormulaVerse Dashboard — browse 158+ physics formulas by chapter, track saved formulas, and access practice questions for JEE and NEET.">
-    <meta property="og:title" content="Dashboard | FormulaVerse"/>
-    <meta property="og:url" content="https://formulaverse.in/dashboard/"/>
-    <meta name="keywords" content="physics formula dashboard, JEE physics chapters, NEET physics chapters, formula categories">
-
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -58,6 +77,8 @@
             --green-dim: rgba(22, 163, 74, 0.12);
             --amber:    #ea9a3e;
             --amber-dim: rgba(234, 154, 62, 0.15);
+            --rose:     #e0577b;
+            --rose-dim: rgba(224, 87, 123, 0.13);
             --ink:      #2d2a3d;
             --muted:    #7c7a8c;
             --faint:    #a9a6b8;
@@ -146,6 +167,21 @@
             margin: 0;
         }
 
+        /* ===== Streak chip (new) ===== */
+        .streak-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            background: var(--amber-dim);
+            border: 1px solid rgba(234,154,62,0.35);
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            color: #a8631a;
+        }
+
         /* ===== Shared panel look ===== */
         .panel {
             position: relative;
@@ -176,6 +212,16 @@
             text-transform: uppercase;
             color: var(--teal);
             margin: 0 0 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .panel-label .panel-hint {
+            text-transform: none;
+            letter-spacing: 0;
+            color: var(--faint);
+            font-family: 'Inter', sans-serif;
+            font-size: 11.5px;
         }
 
         /* ===== Lock overlay ===== */
@@ -262,6 +308,15 @@
             text-transform: uppercase;
             margin-top: 4px;
         }
+        /* NEW: motivational headline replaces bare "Complete" framing */
+        .gauge-motiv {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--ink);
+            margin: 2px 0 4px;
+        }
         .gauge-caption { color: var(--muted); font-size: 13px; margin: 0; }
         .gauge-caption strong { color: var(--ink); font-weight: 600; }
 
@@ -286,6 +341,7 @@
         .stat.violet { background: var(--violet-dim); border-color: rgba(139,92,246,0.28); }
         .stat.green  { background: var(--green-dim);  border-color: rgba(22,163,74,0.28); }
         .stat.amber  { background: var(--amber-dim);  border-color: rgba(234,154,62,0.3); }
+        .stat.rose   { background: var(--rose-dim);   border-color: rgba(224,87,123,0.3); }
 
         .stat-value {
             font-family: 'Space Mono', monospace;
@@ -298,6 +354,7 @@
         .stat.violet .stat-value { color: var(--violet); }
         .stat.green .stat-value  { color: var(--green); }
         .stat.amber .stat-value  { color: var(--amber); font-size: 19px; }
+        .stat.rose .stat-value   { color: var(--rose); }
 
         .stat-label {
             font-family: 'Space Mono', monospace;
@@ -338,15 +395,34 @@
         }
 
         /* ===== Chapter breakdown ===== */
-        .chapter-row { margin-bottom: 14px; }
+        .chapter-row {
+            margin-bottom: 14px;
+            border-radius: 10px;
+            padding: 8px;
+            margin-left: -8px;
+            margin-right: -8px;
+        }
         .chapter-row:last-child { margin-bottom: 0; }
+        .chapter-row.is-strongest { background: rgba(22,163,74,0.07); }
+        .chapter-row.is-next { background: rgba(224,87,123,0.07); }
         .chapter-top {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-size: 13px;
             margin-bottom: 5px;
         }
-        .chapter-name { color: var(--ink); }
+        .chapter-name { color: var(--ink); display: flex; align-items: center; gap: 6px; }
+        .chapter-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 9.5px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 2px 7px;
+            border-radius: 50px;
+        }
+        .chapter-badge.strongest { background: var(--green-dim); color: var(--green); }
+        .chapter-badge.next { background: var(--rose-dim); color: var(--rose); }
         .chapter-count { font-family: 'Space Mono', monospace; color: var(--teal); }
         .chapter-bar-track {
             background: rgba(45,42,61,0.08);
@@ -359,7 +435,23 @@
             border-radius: 50px;
             background: var(--grad);
         }
-        .empty-state { color: var(--muted); text-align: center; font-size: 13px; padding: 10px 0; }
+        .empty-state {
+            text-align: center;
+            padding: 18px 10px 6px;
+        }
+        .empty-state p.lead {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 700;
+            color: var(--ink);
+            font-size: 15px;
+            margin: 0 0 6px;
+        }
+        .empty-state p.sub {
+            color: var(--muted);
+            font-size: 12.5px;
+            margin: 0;
+        }
 
         @media (prefers-reduced-motion: no-preference) {
             .panel, .stat, .gauge-panel {
@@ -383,9 +475,7 @@
         }
 
         /* ══════════════════════════════════════════════
-           NEW: DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
-           Nothing above this block was changed —
-           mobile layout is 100% identical to before.
+           DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
            ══════════════════════════════════════════════ */
         @media (min-width: 900px) {
 
@@ -398,19 +488,15 @@
                 padding-top: 20px;
             }
 
-            /* Gauge panel becomes a centered hero card instead of full-width stack */
             .gauge-panel {
                 max-width: 340px;
                 margin: 0 auto 20px;
             }
 
-            /* Stat cards go from 2x2 to a single row of 4 */
             .stat-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
 
-            /* Overall Progress + Exam Breakdown sit side by side,
-               Chapter Breakdown spans the full width beneath them */
             .dashboard-lower {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
@@ -428,46 +514,46 @@
         }
 
         .saved-cta-wrapper {
-    display: flex;
-    justify-content: center;
-    margin: 24px 0;
-}
+            display: flex;
+            justify-content: center;
+            margin: 24px 0;
+        }
 
-.btn-view-saved {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 48px;
-    min-width: 260px;
-    background: var(--grad);
-    border: 1px solid transparent;
-    border-radius: 50px;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-decoration: none;
-    cursor: pointer;
-    box-shadow: 0 8px 24px rgba(20,184,166,0.25);
-    transition: transform .15s, box-shadow .2s, filter .2s;
-}
+        .btn-view-saved {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 48px;
+            min-width: 260px;
+            background: var(--grad);
+            border: 1px solid transparent;
+            border-radius: 50px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(20,184,166,0.25);
+            transition: transform .15s, box-shadow .2s, filter .2s;
+        }
 
-.btn-view-saved:hover {
-    filter: brightness(1.05);
-    box-shadow: 0 10px 28px rgba(139,92,246,0.28);
-}
+        .btn-view-saved:hover {
+            filter: brightness(1.05);
+            box-shadow: 0 10px 28px rgba(139,92,246,0.28);
+        }
 
-.btn-view-saved:active {
-    transform: scale(0.97);
-}
+        .btn-view-saved:active {
+            transform: scale(0.97);
+        }
 
- .site-footer {
+        .site-footer {
             margin-top: auto;
             padding-top: 40px;
             text-align: center;
             font-size: 0.875rem;
-            color: var(--text-muted);
+            color: var(--muted);
         }
 
         .site-footer p {
@@ -482,13 +568,13 @@
         }
 
         .footer-links a {
-            color: var(--text-muted);
+            color: var(--muted);
             text-decoration: none;
             transition: color 0.15s ease;
         }
 
         .footer-links a:hover {
-            color: var(--text-main);
+            color: var(--ink);
         }
     </style>
 </head>
@@ -503,6 +589,10 @@
             <p class="eyebrow">Study Telemetry</p>
             <h1 class="title">My Progress Dashboard</h1>
             <p class="subtitle">Your Personal Study Stats</p>
+
+            {% if streak_days > 0 %}
+            <div class="streak-chip">🔥 {{ streak_days }}-day streak</div>
+            {% endif %}
         </div>
 
         <!-- ===== Wrapper that holds the stats + lock overlay for logged-out users ===== -->
@@ -521,40 +611,56 @@
 
             <div class="{% if not is_logged_in %}blurred{% endif %}">
 
-                <!-- Hero gauge: completion at a glance -->
+                <!-- Hero gauge: motivating framing instead of a bare percentage -->
                 <div class="panel gauge-panel corner-brackets">
                     <div class="gauge-wrap">
                         <div class="gauge-ring">
                             <div class="gauge-face">
-                                <span class="gauge-num">{{ completion_percent }}%</span>
-                                <span class="gauge-sub">Complete</span>
+                                <span class="gauge-num">{{ total_saved }}</span>
+                                <span class="gauge-sub">Formulas Saved</span>
                             </div>
                         </div>
                     </div>
-                    <p class="gauge-caption"><strong>{{ total_saved }}</strong> of <strong>{{ total_formulas }}</strong> formulas saved</p>
+
+                    {% if total_saved == 0 %}
+                        <p class="gauge-motiv">Your formula library starts here</p>
+                        <p class="gauge-caption">Save your first formula from any chapter to begin tracking progress.</p>
+                    {% elif completion_percent < 10 %}
+                        <p class="gauge-motiv">Off to a solid start</p>
+                        <p class="gauge-caption"><strong>{{ total_saved }}</strong> formulas saved — every revision session adds to this.</p>
+                    {% elif completion_percent < 30 %}
+                        <p class="gauge-motiv">Building real momentum</p>
+                        <p class="gauge-caption"><strong>{{ total_saved }}</strong> of <strong>{{ total_formulas }}</strong> formulas in your vault.</p>
+                    {% elif completion_percent < 60 %}
+                        <p class="gauge-motiv">Well past the halfway mark on your vault</p>
+                        <p class="gauge-caption"><strong>{{ total_saved }}</strong> of <strong>{{ total_formulas }}</strong> formulas saved so far.</p>
+                    {% elif completion_percent < 90 %}
+                        <p class="gauge-motiv">Your library is nearly complete</p>
+                        <p class="gauge-caption"><strong>{{ total_saved }}</strong> of <strong>{{ total_formulas }}</strong> — the finish line is close.</p>
+                    {% else %}
+                        <p class="gauge-motiv">Exam-ready formula vault</p>
+                        <p class="gauge-caption"><strong>{{ total_saved }}</strong> of <strong>{{ total_formulas }}</strong> formulas saved. Time to revise, not collect.</p>
+                    {% endif %}
                 </div>
 
                 <div class="stat-grid">
 
-                    <!-- Total Saved -->
+                    <!-- Chapters Started replaces a second "raw completion %" stat with a more motivating count -->
                     <div class="stat cyan corner-brackets">
-                        <div class="stat-value">{{ total_saved }}</div>
-                        <div class="stat-label">Formulas Saved</div>
+                        <div class="stat-value">{{ chapters_started }}</div>
+                        <div class="stat-label">Chapters Started</div>
                     </div>
 
-                    <!-- Total Formulas -->
                     <div class="stat violet corner-brackets">
                         <div class="stat-value">{{ total_formulas }}</div>
                         <div class="stat-label">Total Formulas</div>
                     </div>
 
-                    <!-- Completion -->
                     <div class="stat green corner-brackets">
                         <div class="stat-value">{{ completion_percent }}%</div>
-                        <div class="stat-label">Completion</div>
+                        <div class="stat-label">Vault Filled</div>
                     </div>
 
-                    <!-- Favourite Chapter -->
                     <div class="stat amber corner-brackets">
                         <div class="stat-value">{{ favourite_chapter }}</div>
                         <div class="stat-label">Favourite Chapter</div>
@@ -562,12 +668,6 @@
 
                 </div>
 
-                <!-- ═══════════════════════════════════════════
-                     NEW: this wrapper <div class="dashboard-lower">
-                     groups the 3 panels below so the desktop CSS
-                     above can arrange them into a grid.
-                     Nothing INSIDE these panels changed at all.
-                     ═══════════════════════════════════════════ -->
                 <div class="dashboard-lower">
 
                     <div class="panel">
@@ -596,13 +696,19 @@
                         </div>
                     </div>
 
-                    <!-- NEW: added class="chapter-panel" so desktop CSS can make it full-width -->
                     <div class="panel chapter-panel">
-                        <p class="panel-label">Chapter Breakdown</p>
+                        <p class="panel-label">
+                            Chapter Breakdown
+                            {% if category_counts %}<span class="panel-hint">strongest & next-up highlighted</span>{% endif %}
+                        </p>
                         {% for category, count in category_counts.items %}
-                        <div class="chapter-row">
+                        <div class="chapter-row {% if category == strongest_chapter %}is-strongest{% elif category == next_chapter %}is-next{% endif %}">
                             <div class="chapter-top">
-                                <span class="chapter-name">{{ category }}</span>
+                                <span class="chapter-name">
+                                    {{ category }}
+                                    {% if category == strongest_chapter %}<span class="chapter-badge strongest">Strongest</span>{% endif %}
+                                    {% if category == next_chapter %}<span class="chapter-badge next">Tackle next</span>{% endif %}
+                                </span>
                                 <span class="chapter-count">{{ count }}</span>
                             </div>
                             <div class="chapter-bar-track">
@@ -610,7 +716,10 @@
                             </div>
                         </div>
                         {% empty %}
-                        <p class="empty-state">No formulas saved yet!</p>
+                        <div class="empty-state">
+                            <p class="lead">No formulas saved yet</p>
+                            <p class="sub">Browse any chapter and tap save on a formula to start your vault.</p>
+                        </div>
                         {% endfor %}
                     </div>
 

@@ -5,30 +5,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to use this simulation | Formulaverse</title>
 
 
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "formulaVerse",
-  "url": "https://formulaverse.in",
-  "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
-}
-</script>
+       <title> Simulation Guide & Interactive Experiment | FormulaVerse-Interactive Physics Simulations Guide & User Manual | FormulaVerse</title>
 
-     <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+    <!-- High-CTR Meta Description -->
+    <meta name="description" content="{% if sim_title %}Learn how to use the {{ sim_title }} interactive Physics simulation on FormulaVerse. Adjust variables, run virtual experiments, and master key concepts for JEE & NEET.{% else %}Master Physics visually with interactive simulations on FormulaVerse. Step-by-step user guides, variable controls, and virtual lab experiments for JEE and NEET.{% endif %}">
 
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="{% if sim_title %}{{ sim_title }} simulation, {% endif %}physics simulation guide, interactive physics lab, virtual physics experiment, JEE physics simulation, NEET physics visualization">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
+
+    <!-- Open Graph / WhatsApp / Telegram Previews -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="FormulaVerse">
+    <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
+    <meta property="og:title" content="{% if sim_title %}{{ sim_title }} Simulation Guide{% else %}Interactive Physics Simulation Guide{% endif %} — FormulaVerse">
+    <meta property="og:description" content="Step-by-step guide to interactive Physics simulations and virtual lab experiments for JEE & NEET.">
+    <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% if sim_title %}{{ sim_title }} Simulation Guide{% else %}Interactive Physics Simulation Guide{% endif %} — FormulaVerse">
+    <meta name="twitter:description" content="Learn how to run virtual experiments and visualize Physics concepts interactively.">
+    <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Favicon & Web Manifest -->
+    <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
-    <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "{% if sim_title %}{{ sim_title }} Simulation User Guide{% else %}Interactive Physics Simulation Guide{% endif %}",
+      "description": "User guide and experimental controls for interactive Physics simulations on FormulaVerse.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "FormulaVerse",
+        "url": "https://formulaverse.in",
+        "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+      }
+    }
+    </script>
 
-    <link rel="preconnect" href=https://fonts.googleapis.com>
-    <link rel="preconnect" href=https://fonts.gstatic.com crossorigin>
-    <link href=https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap rel="stylesheet">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
 
+    <!-- Google Tag Manager / Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YHLZCEHWF7');
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

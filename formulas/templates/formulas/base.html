@@ -5,43 +5,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Explore Physics | Formulaverse </title>
+     <title>{% block title %}{% if formula.title %}{{ formula.title }} Formula, Derivation & Notes | FormulaVerse{% else %}Explore All Physics Formulas for JEE & NEET | FormulaVerse{% endif %}{% endblock %}</title>
 
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "formulaVerse",
-  "url": "https://formulaverse.in",
-  "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
-}
-</script>
+    <!-- Dynamic Meta Description -->
+    <meta name="description" content="{% block meta_description %}{% if formula.meta_description %}{{ formula.meta_description }}{% elif formula.title %}Get the exact formula for {{ formula.title }}, key variables, step-by-step derivation, sign conventions, and solved numerical examples for JEE & NEET.{% else %}Master Physics with FormulaVerse. Complete formula cheat sheets, derivations, and quick revision notes for JEE Main, Advanced, NEET, and Class 11-12.{% endif %}{% endblock %}">
 
-    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+    <meta name="keywords" content="{% if formula.title %}{{ formula.title }}, {% endif %}JEE formula, NEET formula, physics formula, class 11 physics, class 12 physics, formula sheet">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
+
+    <!-- Open Graph / WhatsApp / Facebook Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FormulaVerse">
+    <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
+    <meta property="og:title" content="{% block og_title %}{% if formula.title %}{{ formula.title }} Formula & Notes{% else %}FormulaVerse - Physics Formulas for JEE & NEET{% endif %}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{% if formula.title %}Quick reference guide, equation variables, and solved examples for {{ formula.title }}.{% else %}Free downloadable formula sheets and quick revision guides for JEE & NEET Physics.{% endif %}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}https://formulaverse.in/static/formulas/formulaverse_og_default.png{% endblock %}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{% if formula.title %}{{ formula.title }} Formula & Notes{% else %}FormulaVerse - Physics Formulas for JEE & NEET{% endif %}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{% if formula.title %}Quick reference guide for {{ formula.title }}.{% else %}Free formula sheets for JEE & NEET Physics.{% endif %}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}https://formulaverse.in/static/formulas/formulaverse_og_default.png{% endblock %}">
+
+    <!-- Favicon & Web Manifest -->
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
-    <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
-
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <script async src=https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141 crossorigin="anonymous"></script>
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "FormulaVerse",
+      "url": "https://formulaverse.in",
+      "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+    }
+    </script>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src=https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
+
+    <!-- Google Tag Manager / Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-YHLZCEHWF7');
     </script>
-
-    <meta name="description" content="FormulaVerse — All Physics Formulas for JEE, NEET and Class 11-12">
-    <meta property="og:title" content="FormulaVerse"/>
-    <meta property="og:url" content=https://formulaverse.in/base/>
-    <meta name="keywords" content="{{ formula.title }}, JEE formula, NEET formula, physics formula">
-
-    <link rel="preconnect" href=https://fonts.googleapis.com>
-    <link rel="preconnect" href=https://fonts.gstatic.com crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -418,10 +435,10 @@
     }
 
      .site-footer {
-            margin-top: auto;
-            padding-top: 40px;
+            margin-top: 18px;
+            padding-top: 0;
             text-align: center;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
         }
 
@@ -446,6 +463,53 @@
             color: var(--text-main);
         }
 </style>
+
+    <!-- ═══════════════════════════════════════════════
+         BOTTOM NAV — self-contained styling, deliberately
+         independent of this page's :root vars, so it looks
+         identical across every page regardless of that
+         page's own accent theme.
+         ═══════════════════════════════════════════════ -->
+    <style>
+        .fv-nav-spacer { height: 72px; }
+
+        .fv-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+            background: rgba(254, 249, 240, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(140, 110, 70, 0.14);
+            box-shadow: 0 -6px 24px rgba(140, 120, 90, 0.10);
+        }
+
+        .fv-nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 4px 2px;
+            text-decoration: none;
+            color: #a9a6b8;
+            font-family: 'Outfit', sans-serif;
+            transition: color 0.2s ease;
+        }
+        .fv-nav-item:hover { color: #0d9488; }
+        .fv-nav-item:focus-visible { outline: 2px solid #0d9488; outline-offset: 2px; border-radius: 8px; }
+
+        .fv-nav-item.is-active { color: #0d9488; }
+
+        .fv-nav-icon { font-size: 1.15rem; line-height: 1; }
+        .fv-nav-label { font-size: 10.5px; letter-spacing: 0.02em; }
+    </style>
 </head>
 
 <body>
@@ -500,12 +564,42 @@
 
         <div class="explore-btn-wrapper">
             <div class="explore-btn">
-                <a href="{% url 'index-page' %}"> Enter the Verse →</a>
+                <a href="{% url 'index-page' %}"> Browse Formulas →</a>
             </div>
         </div>
 
-        <p class="bottom-note">Knowledge is the compass. Physics is the universe.</p>
+        <footer class="site-footer">
+            <p>© 2026 formulaverse.in</p>
+            <div class="footer-links">
+                <a href="/me">About</a> •
+                <a href="/privacy/">Privacy Policy</a> •
+                <a href="/terms/">Terms of Service</a>
+            </div>
+        </footer>
+
     </div>
+
+    <!-- Spacer so the fixed bottom nav doesn't cover the footer/content above it -->
+    <div class="fv-nav-spacer"></div>
+
+    <nav class="fv-bottom-nav" aria-label="Primary">
+        <a href="{% url 'base-page' %}" class="fv-nav-item is-active">
+            <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
+            <span class="fv-nav-label">Home</span>
+        </a>
+        <a href="{% url 'index-page' %}" class="fv-nav-item">
+            <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
+            <span class="fv-nav-label">Index</span>
+        </a>
+        <a href="{% url 'all-saved' %}" class="fv-nav-item">
+            <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
+            <span class="fv-nav-label">Vault</span>
+        </a>
+        <a href="{% url 'my-purchase' %}" class="fv-nav-item">
+            <span class="fv-nav-icon" aria-hidden="true">&#128179;</span>
+            <span class="fv-nav-label">My Purchase</span>
+        </a>
+    </nav>
 
     <script>
       if ('serviceWorker' in navigator) {
@@ -560,15 +654,6 @@
           document.getElementById("factModal").style.display = "none";
       }
     </script>
-<footer class="site-footer">
-            <p>© 2026 formulaverse.in</p>
-            <div class="footer-links">
-                <a href="/">Home</a> •
-                <a href="/me">About</a> •
-                <a href="/privacy/">Privacy Policy</a> •
-                <a href="/terms/">Terms of Service</a>
-            </div>
-        </footer>
 
 
 

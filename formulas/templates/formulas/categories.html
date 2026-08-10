@@ -4,28 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ category.name }} formulas for JEE/NEET | FormulaVerse</title>
+     <title>{{ category.name }} Formula Sheet, Derivations & Quick Notes | FormulaVerse</title>
 
+    <!-- High-CTR Dynamic Meta Description -->
+    <meta name="description" content="Complete {{ category.name }} formula sheet for JEE Main, JEE Advanced, NEET & Class 11-12. Access key equations, definitions, derivations, and downloadable PDF notes.">
 
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "formulaVerse",
-  "url": "https://formulaverse.in",
-  "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
-}
-</script>
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="{{ category.name }} formulas, {{ category.name }} formula sheet, JEE {{ category.name }} notes, NEET {{ category.name }} revision, class 11 physics, class 12 physics">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
-    <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
+    <!-- Open Graph / WhatsApp / Telegram Previews -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FormulaVerse">
+    <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
+    <meta property="og:title" content="{{ category.name }} Formula Sheet & Revision Guide | FormulaVerse">
+    <meta property="og:description" content="Master {{ category.name }} with complete formula lists, derivations, and quick revision notes for JEE & NEET.">
+    <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ category.name }} Formula Sheet | FormulaVerse">
+    <meta name="twitter:description" content="Complete {{ category.name }} formula sheet and revision notes for JEE & NEET.">
+    <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Favicon & Web Manifest -->
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
-
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
-     crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
+    <!-- Schema.org Organization Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "FormulaVerse",
+      "url": "https://formulaverse.in",
+      "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+    }
+    </script>
+
+    <!-- Google Adsense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
+
+    <!-- Google Tag Manager / Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -33,23 +54,22 @@
       gtag('js', new Date());
       gtag('config', 'G-YHLZCEHWF7');
     </script>
-    <meta name="keywords" content="{{ formula.title }}, Interactive PhET simulations,
-    JEE formula, NEET formula, physics formula">
-    <meta name="description" content="All {{ category.name }} formulas for JEE and NEET — FormulaVerse">
 
+    <!-- MathJax Configuration -->
     <script>
-    MathJax = {
-        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
         svg: { fontCache: 'global' }
-    };
+      };
     </script>
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
-    <!-- Fonts: Space Grotesk (display, playful geometric) + Outfit (body) + JetBrains Mono (data/labels) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Outfit:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <style>
     :root {
         /* Base — warm cream light theme, matches rest of site */

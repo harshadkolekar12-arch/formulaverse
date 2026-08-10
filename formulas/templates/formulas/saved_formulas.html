@@ -5,40 +5,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Personal Formulavault | Formulaverse </title>
+        <title>Personal Formula Vault | FormulaVerse</title>
 
+    <!-- Meta Description -->
+    <meta name="description" content="Access and organize your saved Physics formulas, custom revision notes, and bookmarked cheat sheets on FormulaVerse.">
 
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "formulaVerse",
-  "url": "https://formulaverse.in",
-  "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
-}
-</script>
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="saved formulas, physics formula vault, custom physics revision sheet, formulaverse account">
 
-    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+    <!-- Protect private/dashboard user pages from thin content indexing -->
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
+    <!-- Open Graph / Social Previews -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FormulaVerse">
+    <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
+    <meta property="og:title" content="Personal Formula Vault — FormulaVerse">
+    <meta property="og:description" content="Your personal collection of saved Physics formulas and revision guides for JEE & NEET.">
+    <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Personal Formula Vault — FormulaVerse">
+    <meta name="twitter:description" content="Access your saved Physics formulas and revision cheat sheets.">
+    <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Favicon & Web Manifest -->
+    <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
-    <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
-    <script async src=https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141
-     crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src=https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7></script>
+    <!-- Schema.org Organization Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "FormulaVerse",
+      "url": "https://formulaverse.in",
+      "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+    }
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
+
+    <!-- Google Tag Manager / Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-YHLZCEHWF7');
     </script>
-
-    <meta name="description" content="Your saved Physics formulas on FormulaVerse">
-    <meta property="og:title" content="Saved Formulas — FormulaVerse"/>
-    <meta property="og:url" content=https://formulaverse.in/saved/>
-    <meta name="keywords" content="{{ formula.title }}, JEE formula, NEET formula, physics formula">
 
     <style>
         :root{
@@ -55,6 +73,10 @@
             --ink:#2d2a3d;
             --text-dim:#7c7a8c;
             --formula-color:#0d9488;
+            --violet:#8b5cf6;
+            --violet-dim: rgba(139, 92, 246, 0.12);
+            --rose:#e0577b;
+            --rose-dim: rgba(224, 87, 123, 0.13);
         }
 
         *{ box-sizing:border-box; }
@@ -109,8 +131,52 @@
             font-size:0.85rem;
             letter-spacing:2px;
             text-transform:uppercase;
-            margin-bottom:34px;
+            margin-bottom:22px;
         }
+
+        /* ===== NEW: action bar (revise mode + share) ===== */
+        .vault-actions{
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-wrap:wrap;
+            margin-bottom:22px;
+        }
+
+        .action-btn{
+            display:inline-flex;
+            align-items:center;
+            gap:7px;
+            padding:10px 18px;
+            border-radius:50px;
+            font-size:0.82rem;
+            font-weight:600;
+            letter-spacing:0.2px;
+            cursor:pointer;
+            border:1px solid var(--border-soft);
+            background:rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px);
+            color:var(--ink);
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+        }
+        .action-btn:hover{ transform:translateY(-1px); }
+
+        .action-btn.revise{
+            border-color: rgba(139,92,246,0.35);
+            color: var(--violet);
+        }
+        .action-btn.revise:hover{ background: var(--violet-dim); }
+        .action-btn.revise.is-active{
+            background: var(--violet);
+            color: #fff;
+            border-color: var(--violet);
+        }
+
+        .action-btn.share{
+            border-color: rgba(234,154,62,0.35);
+            color: var(--amber-dim);
+        }
+        .action-btn.share:hover{ background: rgba(234,154,62,0.10); }
 
         .search-wrap{
             display:flex;
@@ -206,6 +272,22 @@
             letter-spacing:0.2px;
         }
 
+        /* ===== NEW: spaced-repetition nudge badge ===== */
+        .review-nudge{
+            display:inline-flex;
+            align-items:center;
+            gap:5px;
+            margin-top:8px;
+            padding:3px 10px;
+            font-size:0.68rem;
+            font-weight:600;
+            letter-spacing:0.3px;
+            text-transform:uppercase;
+            border-radius:50px;
+            background: var(--rose-dim);
+            color: var(--rose);
+        }
+
         .lock-icon{
             flex-shrink:0;
             width:20px; height:20px;
@@ -227,6 +309,7 @@
             margin:10px 0 10px;
             text-align:center;
             overflow-x:auto;
+            transition: filter 0.2s ease, opacity 0.2s ease;
         }
 
         .formula-author{
@@ -279,12 +362,37 @@
         }
 
         /* ══════════════════════════════════════════════
-           NEW: DESKTOP GRID (≥900px only)
-           ul was already "display: grid" but had no
-           grid-template-columns, so it defaulted to a
-           single column at every screen width. This adds
-           a proper 2-column layout on desktop only.
-           No HTML changes needed.
+           REVISE MODE
+           Toggled by adding .revise-mode to <body>.
+           Hides the formula expression + "given by" line
+           behind a tap-to-reveal cover, turning each card
+           into a flashcard for active recall.
+           ══════════════════════════════════════════════ */
+        body.revise-mode .formula-form,
+        body.revise-mode .formula-author{
+            filter: blur(6px);
+            opacity: 0.35;
+            user-select: none;
+        }
+        body.revise-mode .deposit-box.is-revealed .formula-form,
+        body.revise-mode .deposit-box.is-revealed .formula-author{
+            filter: none;
+            opacity: 1;
+        }
+        .reveal-hint{
+            display:none;
+            font-size:0.68rem;
+            letter-spacing:0.4px;
+            text-transform:uppercase;
+            color:var(--violet);
+            font-weight:600;
+            margin-top:8px;
+        }
+        body.revise-mode .reveal-hint{ display:block; }
+        body.revise-mode .deposit-box.is-revealed .reveal-hint{ display:none; }
+
+        /* ══════════════════════════════════════════════
+           DESKTOP GRID (≥900px only)
            ══════════════════════════════════════════════ */
         @media (min-width: 900px) {
 
@@ -316,7 +424,7 @@
             padding-top: 40px;
             text-align: center;
             font-size: 0.875rem;
-            color: var(--text-muted);
+            color: var(--text-dim);
         }
 
         .site-footer p {
@@ -331,13 +439,13 @@
         }
 
         .footer-links a {
-            color: var(--text-muted);
+            color: var(--text-dim);
             text-decoration: none;
             transition: color 0.15s ease;
         }
 
         .footer-links a:hover {
-            color: var(--text-main);
+            color: var(--ink);
         }
     </style>
 
@@ -364,6 +472,15 @@
         <p>Your personal deposit box</p>
     </div>
 
+    <div class="vault-actions">
+        <button type="button" class="action-btn revise" id="reviseToggle" onclick="toggleReviseMode()">
+            🧠 Revise Mode
+        </button>
+        <button type="button" class="action-btn share" onclick="shareVault()">
+            🔗 Share Vault
+        </button>
+    </div>
+
     <div class="search-wrap">
         <input
             type="text"
@@ -378,7 +495,7 @@
     <ul>
         {% for formula in savedformulas %}
         <li>
-            <div class="deposit-box">
+            <div class="deposit-box" onclick="revealCard(this, event)">
                 <div class="box-number">{{ forloop.counter|stringformat:"03d" }}</div>
                 <div class="box-body">
                     <a href="{% url "single-formula-page" pk=formula.id %}">
@@ -394,7 +511,13 @@
                         </div>
                     </a>
 
-                    <form method="POST" action="{% url "unsave-formula" pk=formula.id %}">
+                    <div class="reveal-hint">Tap to reveal →</div>
+
+                    {% if formula.days_since_saved >= 1 %}
+                    <div class="review-nudge">⏰ Saved {{ formula.days_since_saved }}d ago — review?</div>
+                    {% endif %}
+
+                    <form method="POST" action="{% url "unsave-formula" pk=formula.id %}" onclick="event.stopPropagation();">
                         {% csrf_token %}
                         <button type="submit" class="btn-save">
                             Unsave
@@ -419,6 +542,37 @@
             const title = titleEl.innerText.toLowerCase();
             titleEl.closest('li').style.display = title.includes(query) ? 'block' : 'none';
         });
+    }
+
+    function toggleReviseMode() {
+        document.body.classList.toggle('revise-mode');
+        document.getElementById('reviseToggle').classList.toggle('is-active');
+        // Collapse any previously revealed cards when entering revise mode
+        document.querySelectorAll('.deposit-box.is-revealed').forEach(box => {
+            box.classList.remove('is-revealed');
+        });
+    }
+
+    function revealCard(box, event) {
+        if (!document.body.classList.contains('revise-mode')) return; // normal nav, do nothing extra
+        if (box.classList.contains('is-revealed')) return; // already shown, let the link work
+        event.preventDefault();
+        event.stopPropagation();
+        box.classList.add('is-revealed');
+    }
+
+    function shareVault() {
+        const shareUrl = window.location.href;
+        const shareText = "Check out my saved physics formulas on FormulaVerse!";
+
+        if (navigator.share) {
+            navigator.share({ title: 'My FormulaVerse Vault', text: shareText, url: shareUrl })
+                .catch(() => {});
+        } else {
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('Vault link copied — share it with your study group!');
+            });
+        }
     }
 
     if ('serviceWorker' in navigator) {

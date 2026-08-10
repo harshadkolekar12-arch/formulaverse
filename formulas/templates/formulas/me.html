@@ -4,52 +4,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Developer | Formulaverse </title>
 
+      <title>About Harshad Kolekar — Creator & Developer of FormulaVerse</title>
 
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "formulaVerse",
-  "url": "https://formulaverse.in",
-  "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
-}
-</script>
+    <!-- High-CTR Meta Description -->
+    <meta name="description" content="Meet Harshad Kolekar, creator and developer of FormulaVerse — building free, comprehensive Physics formula sheets, derivations, and study tools for JEE and NEET students.">
 
-    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="Harshad Kolekar, FormulaVerse creator, FormulaVerse developer, physics app developer, JEE formula sheets, NEET physics resources">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
-    <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
+    <!-- Open Graph / WhatsApp / Social Previews -->
+    <meta property="og:type" content="profile">
+    <meta property="og:site_name" content="FormulaVerse">
+    <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
+    <meta property="og:title" content="About Harshad Kolekar — Creator of FormulaVerse">
+    <meta property="og:description" content="Meet the developer behind FormulaVerse — free interactive Physics formula sheets and revision guides for JEE & NEET.">
+    <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Harshad Kolekar — Creator of FormulaVerse">
+    <meta name="twitter:description" content="Meet the developer behind FormulaVerse — free interactive Physics formula sheets for JEE & NEET.">
+    <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Favicon & Web Manifest -->
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
-     crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Schema.org Person & Organization Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://formulaverse.in/#person",
+          "name": "Harshad Kolekar",
+          "jobTitle": "Developer & Creator",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "FormulaVerse",
+            "url": "https://formulaverse.in"
+          },
+          "url": "https://formulaverse.in/me/"
+        },
+        {
+          "@type": "Organization",
+          "name": "FormulaVerse",
+          "url": "https://formulaverse.in",
+          "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+        }
+      ]
+    }
+    </script>
 
-  gtag('config', 'G-YHLZCEHWF7');
-</script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
 
-    <title>About the Creator — FormulaVerse</title>
-<meta name="description" content="Meet Harshad Kolekar — the creator of FormulaVerse, a Physics formula app for JEE and NEET students">
-<meta name="keywords" content="FormulaVerse creator, Harshad Kolekar, physics app developer">
-<meta property="og:title" content="About — FormulaVerse"/>
-<meta property="og:description" content="Meet the creator of FormulaVerse!"/>
-<meta property="og:url" content="https://formulaverse.in/me"/>
-<meta name="keywords" content="{{ formula.title }},
-JEE formula, NEET formula, physics formula">
+    <!-- Google Tag Manager / Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YHLZCEHWF7');
+    </script>
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-
         :root {
             --bg1:      #fdf3e7;
             --bg2:      #fef9f0;
@@ -77,7 +105,7 @@ JEE formula, NEET formula, physics formula">
 
         html, body { margin: 0; padding: 0; background: var(--bg2); }
 
-        body{
+        body {
             font-family: 'Inter', -apple-system, sans-serif;
             color: var(--ink);
             background: linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
@@ -123,8 +151,8 @@ JEE formula, NEET formula, physics formula">
 
         .top-nav {
             position: fixed;
-            top: 14px;
-            right: 14px;
+            top: 13px;
+            right: 11px;
             z-index: 100;
         }
 
@@ -132,11 +160,11 @@ JEE formula, NEET formula, physics formula">
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: #24A1DE;
+            background: red;
             color: #ffffff !important;
-            padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 700;
+            padding: 10px 18px;
+            font-size: 15px;
+            font-weight: 900;
             border-radius: 50px;
             text-decoration: none !important;
             box-shadow: 0 6px 18px rgba(36, 161, 222, 0.3);
@@ -144,48 +172,41 @@ JEE formula, NEET formula, physics formula">
         }
         .tg-join-btn:hover { transform: translateY(-1px); }
 
-        /* ===== intro ===== */
-        .intro-image{
+        /* Header Wrapper */
+        .about-header-card {
             display: flex;
             align-items: center;
-            gap: 22px;
-            margin-bottom: 26px;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 0;
         }
-        .me-image {
-            width: 100px;
-            height: 100px;
+
+        /* Fibonacci Spiral Badge */
+        .golden-spiral-badge {
+            width: 76px;
+            height: 76px;
+            min-width: 76px;
             border-radius: 50%;
-            padding: 4px;
-            background: conic-gradient(var(--teal), var(--violet), var(--teal));
-            flex-shrink: 0;
-            box-shadow: 0 0 26px rgba(13,148,136,0.18);
+            background: #ffffff;
+            border: 1.5px solid #fef08a;
+            box-shadow: 0 6px 18px rgba(245, 158, 11, 0.15), 0 0 0 4px rgba(254, 240, 138, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .me-image img{
+
+        .golden-spiral-badge:hover {
+            transform: rotate(15deg) scale(1.05);
+        }
+
+        .spiral-svg {
             width: 100%;
             height: 100%;
-            display: block;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 3px solid #fff;
         }
-        .intro-text h1{
-            margin: 0;
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-weight: 900;
-            font-size: 2rem;
-            letter-spacing: -0.5px;
-            background: linear-gradient(90deg, #7c5cfc, #14b8a6 75%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .intro-text h2{
-            font-size: 1rem;
-            font-weight: 500;
-            margin: 6px 0 0;
-            color: var(--muted);
-        }
+
+
 
         /* ===== shared panel ===== */
         .panel {
@@ -207,14 +228,14 @@ JEE formula, NEET formula, physics formula">
         .corner-brackets::after { bottom: 8px; right: 8px; border-bottom: 1.5px solid rgba(45,42,61,0.15); border-right: 1.5px solid rgba(45,42,61,0.15); }
 
         /* ===== about me ===== */
-        .description{
+        .description {
             padding: 26px 24px;
             font-size: 1.05rem;
             line-height: 1.7;
             color: var(--ink);
             margin-bottom: 40px;
         }
-        .description p{ margin: 0; font-style: italic; color: var(--ink); }
+        .description p { margin: 0; font-style: italic; color: var(--ink); }
         .eyebrow-label {
             font-family: 'Space Mono', monospace;
             font-size: 11px;
@@ -228,12 +249,12 @@ JEE formula, NEET formula, physics formula">
         }
 
         /* ===== why section ===== */
-        .why-section{
+        .why-section {
             margin: 0 0 40px;
             padding: 36px 24px;
         }
-        .why-header{ text-align:center; }
-        .why-kicker{
+        .why-header { text-align:center; }
+        .why-kicker {
             font-family: 'Space Mono', monospace;
             color: var(--teal);
             font-weight: 700;
@@ -241,7 +262,7 @@ JEE formula, NEET formula, physics formula">
             font-size: 11px;
             text-transform: uppercase;
         }
-        .why-title{
+        .why-title {
             font-family: 'Playfair Display', serif;
             font-style: italic;
             font-weight: 900;
@@ -250,7 +271,7 @@ JEE formula, NEET formula, physics formula">
             margin: 14px 0 12px;
             color: var(--ink);
         }
-        .why-sub{
+        .why-sub {
             max-width: 440px;
             margin: 0 auto;
             font-style: italic;
@@ -258,12 +279,12 @@ JEE formula, NEET formula, physics formula">
             font-size: 14px;
             line-height: 1.6;
         }
-        .why-grid{
+        .why-grid {
             display: grid;
             gap: 14px;
             margin-top: 34px;
         }
-        .why-card{
+        .why-card {
             position: relative;
             overflow: hidden;
             border-radius: 14px;
@@ -271,12 +292,12 @@ JEE formula, NEET formula, physics formula">
             background: rgba(255,255,255,0.5);
             padding: 20px 20px 20px 24px;
         }
-        .why-card::before{
+        .why-card::before {
             content:"";
             position:absolute; left:0; top:0; bottom:0; width:3px;
             background: linear-gradient(180deg, transparent, var(--amber), transparent);
         }
-        .why-icon{
+        .why-icon {
             width: 42px; height: 42px;
             display: grid; place-items: center;
             border-radius: 50%;
@@ -285,21 +306,21 @@ JEE formula, NEET formula, physics formula">
             font-size: 19px;
             margin-bottom: 12px;
         }
-        .why-card h3{
+        .why-card h3 {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             font-size: 19px;
             margin: 0 0 6px;
             color: var(--ink);
         }
-        .why-card p{
+        .why-card p {
             margin: 0;
             font-style: italic;
             font-size: 14px;
             line-height: 1.6;
             color: var(--muted);
         }
-        .why-sign{
+        .why-sign {
             text-align: center;
             margin-top: 34px;
             font-style: italic;
@@ -407,66 +428,41 @@ JEE formula, NEET formula, physics formula">
         }
 
         @media (max-width: 400px) {
-            .intro-text h1 { font-size: 1.6rem; }
-            .me-image { width: 80px; height: 80px; }
+            .greeting-text { font-size: 1.6rem; }
         }
 
-        /* ══════════════════════════════════════════════
-           NEW: DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
-           No HTML changes needed for this page.
-           Mobile layout below 900px is untouched.
-           ══════════════════════════════════════════════ */
         @media (min-width: 900px) {
-
             .page {
                 max-width: 880px;
                 padding-top: 90px;
             }
-
-            .intro-image {
-                gap: 28px;
-            }
-
-            .me-image {
-                width: 120px;
-                height: 120px;
-            }
-
-            .intro-text h1 {
-                font-size: 2.4rem;
-            }
-
-            /* "Why I built this" cards go from 1 column to 2 */
             .why-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 18px;
             }
-
             .description {
                 padding: 32px 40px;
                 font-size: 1.1rem;
             }
-
             .why-section {
                 padding: 44px 40px;
             }
-
             .video-frame {
                 max-width: 700px;
                 margin: 0 auto;
             }
-
             .btn-row {
                 gap: 14px;
             }
         }
 
-         .site-footer {
+        .site-footer {
             margin-top: auto;
             padding-top: 40px;
+            padding-bottom: 20px;
             text-align: center;
             font-size: 0.875rem;
-            color: var(--text-muted);
+            color: var(--muted);
         }
 
         .site-footer p {
@@ -481,17 +477,34 @@ JEE formula, NEET formula, physics formula">
         }
 
         .footer-links a {
-            color: var(--text-muted);
+            color: var(--muted);
             text-decoration: none;
             transition: color 0.15s ease;
         }
 
         .footer-links a:hover {
-            color: var(--text-main);
+            color: var(--ink);
         }
 
-    </style>
+        /* Align icon and text side-by-side */
+.about-header-card {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
 
+/* Constrain icon size */
+.header-icon {
+    width: 76px;
+    height: 76px;
+    min-width: 76px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fef08a;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
+}
+    </style>
 </head>
 
 <body>
@@ -499,29 +512,28 @@ JEE formula, NEET formula, physics formula">
     <a href="{% url 'base-page' %}" class="back-link" aria-label="Back to home">←</a>
 
     <div class="top-nav">
-        <a href="https://t.me/formulaverse" target="_blank" class="tg-join-btn">Join Telegram</a>
+        <a href="https://youtube.com/@formulaversein?si=t9xjlM-vM8guCpQ" target="_blank" class="tg-join-btn">Youtube</a>
     </div>
 
     <div class="page">
-
-        <div class="intro-image">
-            <div class="me-image">
-                <img src="{% static "images/harshad.webp" %}">
-            </div>
-            <div class="intro-text">
-                <h1>Hello 👋</h1>
-                <h2>I'm Harshad Pravin Kolekar</h2>
+        <!-- Header Card: Icon + Text Side-by-Side -->
+        <div class="about-header-card">
+            <img src="{% static 'formulas/icon.jpeg' %}" alt="FormulaVerse Logo" class="header-icon">
+            <div class="creator-intro">
+                <h1 class="greeting-text">Hello <span class="wave-emoji">👋</span></h1>
+                <p class="creator-name">I'm Harshad Pravin Kolekar</p>
             </div>
         </div>
 
+        <!-- VIDEO SECTION -->
         <div class="video-wrap">
             <div class="video-frame">
-                <!-- Replace VIDEO_ID_HERE with your actual YouTube video ID -->
                 <iframe src="https://res.cloudinary.com/nimyi5kd/video/upload/VN20260731_184609_cugbhl.mp4" title="A quick hello from the creator of FormulaVerse" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <p class="video-caption">A quick hello — why I built FormulaVerse, in my own words.</p>
         </div>
 
+        <!-- ABOUT ME SECTION -->
         <div class="panel description corner-brackets">
             <div class="eyebrow-label">✦ About Me ✦</div>
             <p>
@@ -531,7 +543,7 @@ JEE formula, NEET formula, physics formula">
             </p>
         </div>
 
-        <!-- ===== WHY I BUILT THIS ===== -->
+        <!-- WHY I BUILT THIS SECTION -->
         <section class="panel why-section corner-brackets">
             <div class="why-header">
                 <div class="why-kicker">✦ The Story ✦</div>
@@ -604,20 +616,8 @@ JEE formula, NEET formula, physics formula">
             ☕ Buy a chai for the developer!
         </a>
 
-    </div>
-
-<script>
-
-      if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('SW registered!'))
-        .catch(err => console.log('SW failed:', err));
-    });
-}
-</script>
-
-<footer class="site-footer">
+        <!-- FOOTER -->
+        <footer class="site-footer">
             <p>© 2026 formulaverse.in</p>
             <div class="footer-links">
                 <a href="/">Home</a> •
@@ -627,5 +627,16 @@ JEE formula, NEET formula, physics formula">
             </div>
         </footer>
 
+    </div> <!-- End of .page wrapper -->
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('SW registered!'))
+                .catch(err => console.log('SW failed:', err));
+            });
+        }
+    </script>
 </body>
 </html>

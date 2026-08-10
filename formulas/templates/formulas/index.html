@@ -5,66 +5,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> formulaVerse </title>
 
+    <title>FormulaVerse | All Physics Formulas, Derivations & Cheat Sheets for JEE & NEET</title>
 
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "formulaVerse",
-  "url": "https://formulaverse.in",
-  "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
-}
-</script>
+    <!-- High-CTR Meta Description -->
+    <meta name="description" content="Master Physics with FormulaVerse. Free downloadable formula sheets, step-by-step derivations, key definitions, and quick revision guides for JEE Main, Advanced, NEET, and Class 11-12.">
 
-    <script src=https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js></script>
-    <script src=https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js></script>
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="physics formulas, JEE physics formulas, NEET physics revision, physics formula sheet, kinematics formulas, mechanics formulas, electrostatics formulas, class 11 physics, class 12 physics">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
+    <!-- Open Graph / WhatsApp / Telegram Previews -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FormulaVerse">
+    <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
+    <meta property="og:title" content="FormulaVerse — Complete Physics Formula Sheets for JEE & NEET">
+    <meta property="og:description" content="Browse all Physics formulas by category — Kinematics, Mechanics, Optics, Electrostatics and more with quick derivations and solved examples.">
+    <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="FormulaVerse — Physics Formulas for JEE & NEET">
+    <meta name="twitter:description" content="Free downloadable formula sheets, derivations, and quick revision notes for JEE Main, Advanced, and NEET.">
+    <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- PWA & Mobile Settings -->
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
-    <meta property="og:image" content=https://formulaverse.in/static/formulaverse_og_default.png/>
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+    <meta name="theme-color" content="#FAF6ED">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="FormulaVerse">
 
-    <script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyDEO2NDNQZgt9NshLFIhYntGOafMQtdQBA",
-        authDomain: "formulaverse-afaf2.firebaseapp.com",
-        projectId: "formulaverse-afaf2",
-        storageBucket: "formulaverse-afaf2.firebasestorage.app",
-        messagingSenderId: "472325603873",
-        appId: "1:472325603873:web:06fbd627b03c3d0c3b5960"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const messaging = firebase.messaging();
-
-    async function requestPermission() {
-        try {
-            const permission = await Notification.requestPermission();
-            if (permission === 'granted') {
-                const token = await messaging.getToken({
-                    vapidKey: 'BMD65Lhf-odwE-rVU08G4MpOUvwOXIUmaPTv_SAYxTLo3e6IsUgiPKqbXBimwgl-Zlkuyxm4nqciABwklelr4g4'
-                });
-                console.log('FCM Token:', token);
-                fetch('/save-fcm-token/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    body: JSON.stringify({ token: token })
-                });
-            }
-        } catch (err) {
-            console.error('Notification permission error:', err);
-        }
+    <!-- Schema.org Organization Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "FormulaVerse",
+      "url": "https://formulaverse.in",
+      "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
     }
-
-    setTimeout(requestPermission, 3000);
     </script>
-    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
-    <script async src=https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141
-     crossorigin="anonymous"></script>
-    <script async src=https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7></script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
+
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -72,24 +60,54 @@
       gtag('config', 'G-YHLZCEHWF7');
     </script>
 
-    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
-    <meta name="theme-color" content="#FAF6ED">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="FormulaVerse">
-    <meta name="keywords" content="{{ formula.title }}, JEE formula, NEET formula, physics formula">
-
-    <meta name="description" content="Browse Physics formulas by category — Kinematics, Mechanics, Electrostatics and more on FormulaVerse">
-    <meta name="keywords" content="physics categories, kinematics formulas, mechanics formulas, electrostatics formulas">
-    <meta property="og:title" content="Physics Categories — FormulaVerse"/>
-    <meta property="og:url" content=https://formulaverse.in/index/>
-
+    <!-- MathJax Configuration -->
     <script>
-    MathJax = {
+      MathJax = {
         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
         svg: { fontCache: 'global' }
-    };
+      };
     </script>
-    <script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <!-- Firebase Messaging (FCM Notifications) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+          apiKey: "AIzaSyDEO2NDNQZgt9NshLFIhYntGOafMQtdQBA",
+          authDomain: "formulaverse-afaf2.firebaseapp.com",
+          projectId: "formulaverse-afaf2",
+          storageBucket: "formulaverse-afaf2.firebasestorage.app",
+          messagingSenderId: "472325603873",
+          appId: "1:472325603873:web:06fbd627b03c3d0c3b5960"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const messaging = firebase.messaging();
+
+      async function requestPermission() {
+          try {
+              const permission = await Notification.requestPermission();
+              if (permission === 'granted') {
+                  const token = await messaging.getToken({
+                      vapidKey: 'BMD65Lhf-odwE-rVU08G4MpOUvwOXIUmaPTv_SAYxTLo3e6IsUgiPKqbXBimwgl-Zlkuyxm4nqciABwklelr4g4'
+                  });
+                  fetch('/save-fcm-token/', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                          'X-CSRFToken': '{{ csrf_token }}'
+                      },
+                      body: JSON.stringify({ token: token })
+                  });
+              }
+          } catch (err) {
+              console.error('Notification permission error:', err);
+          }
+      }
+
+      setTimeout(requestPermission, 3000);
+    </script>
 
     <style>
         :root {
@@ -642,10 +660,10 @@
         }
     }
  .site-footer {
-            margin-top: auto;
-            padding-top: 40px;
+            margin-top: 12px;
+            padding-top: 0;
             text-align: center;
-            font-size: 0.875rem;
+            font-size: 0.87rem;
             color: var(--text-muted);
         }
 
@@ -670,6 +688,58 @@
             color: var(--text-main);
         }
 
+         .fv-nav-spacer { height: 72px; }
+
+    .fv-bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+        background: rgba(254, 249, 240, 0.92);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-top: 1px solid rgba(140, 110, 70, 0.14);
+        box-shadow: 0 -6px 24px rgba(140, 120, 90, 0.10);
+    }
+
+    .fv-nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        padding: 4px 2px;
+        text-decoration: none;
+        color: #a9a6b8;
+        font-family: 'Outfit', sans-serif;
+        transition: color 0.2s ease;
+    }
+    .fv-nav-item:hover { color: #0d9488; }
+    .fv-nav-item:focus-visible { outline: 2px solid #0d9488; outline-offset: 2px; border-radius: 8px; }
+    .fv-nav-item.is-active { color: #0d9488; }
+
+    .fv-nav-icon { font-size: 1.15rem; line-height: 1; }
+    .fv-nav-label { font-size: 10.5px; letter-spacing: 0.02em; }
+
+
+
+body { padding-bottom: 72px; }
+
+/* push existing fixed widgets above the new nav bar */
+#chat-icon { bottom: 90px !important; }
+#chat-box { bottom: 160px !important; }
+#install-popup { bottom: 88px !important; }
+
+@media (min-width: 900px) {
+    #chat-icon { bottom: 100px !important; right: 40px; }
+    #chat-box { bottom: 170px !important; right: 40px; }
+}
+
     </style>
 </head>
 <body>
@@ -677,9 +747,7 @@
 <div class="app-header">
     <div class="app-header-top" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
 
-        <a href="{% url 'base-page' %}" class="app-header-back" style="order: 1;"> ← </a>
-
-        <div class="app-header-brand" style="order: 2; display: flex; flex-direction: column; align-items: center; text-align: center; flex: 2;">
+        <div class="app-header-brand" style="order: 1; display: flex; flex-direction: column; align-items: flex-start; text-align: left; margin-left: 0; flex: 0 0 auto;">
             <div style="display: flex; align-items: center; gap: 5.5px;">
               <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0; filter: drop-shadow(0px 2px 8px rgba(79,70,229,0.25));">
   <defs>
@@ -899,7 +967,7 @@
 </div>
 
 <!-- Chatbot Button -->
-<div id="chat-icon" onclick="toggleChat()" style="position:fixed;bottom:30px;right:30px;
+<div id="chat-icon" onclick="toggleChat()" style="position:fixed;bottom:24px;right:24px;
     background:#0EA5A0;color:white;width:60px;height:60px;border-radius:50%;
     display:flex;align-items:center;justify-content:center;font-size:28px;
     cursor:pointer;box-shadow:0 6px 18px rgba(14,165,160,0.35);z-index:1000;">💬</div>
@@ -1043,7 +1111,7 @@
     <p>Just few things to move further!</p>
 
     <label> Your Name </label>
-    <input type="text" id="nameInput" placeholder="e.g. Rahul" required />
+    <input type="text" id="nameInput" placeholder="e.g. Rahul/Jack" required />
 
     <label>Date of Birth</label>
     <input type="date" id="dobInput" placeholder="e.g 14/05/2006" required />
@@ -1116,6 +1184,16 @@
 </div>
             </div>
         </div>
+
+
+        <footer class="site-footer">
+            <p>© 2026 formulaverse.in</p>
+            <div class="footer-links">
+                <a href="/me">About</a> •
+                <a href="/privacy/">Privacy Policy</a> •
+                <a href="/terms/">Terms of Service</a>
+            </div>
+        </footer>
 
 <script>
 
@@ -1442,15 +1520,28 @@ document.querySelectorAll('.card-ring').forEach(ring => {
 });
 
 </script>
-<footer class="site-footer">
-            <p>© 2026 formulaverse.in</p>
-            <div class="footer-links">
-                <a href="/">Home</a> •
-                <a href="/me">About</a> •
-                <a href="/privacy/">Privacy Policy</a> •
-                <a href="/terms/">Terms of Service</a>
-            </div>
-        </footer>
 
+
+<!-- Spacer so the fixed bottom nav doesn't cover content above it -->
+<div class="fv-nav-spacer"></div>
+
+<nav class="fv-bottom-nav" aria-label="Primary">
+    <a href="{% url 'base-page' %}" class="fv-nav-item {% if request.resolver_match.url_name == 'base-page' %}is-active{% endif %}">
+        <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
+        <span class="fv-nav-label">Home</span>
+    </a>
+    <a href="{% url 'index-page' %}" class="fv-nav-item {% if request.resolver_match.url_name == 'index-page' %}is-active{% endif %}">
+        <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
+        <span class="fv-nav-label">Index</span>
+    </a>
+    <a href="{% url 'all-saved' %}" class="fv-nav-item {% if request.resolver_match.url_name == 'all-saved' %}is-active{% endif %}">
+        <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
+        <span class="fv-nav-label">Vault</span>
+    </a>
+    <a href="{% url 'my-purchase' %}" class="fv-nav-item {% if request.resolver_match.url_name == 'my-purchase' %}is-active{% endif %}">
+        <span class="fv-nav-icon" aria-hidden="true">&#128179;</span>
+        <span class="fv-nav-label">My Purchase</span>
+    </a>
+</nav>
 </body>
 </html>

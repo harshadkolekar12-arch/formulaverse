@@ -4,32 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ exam_label }} Formulas | Formulaverse</title>
+   <title>Complete {{ exam_label }} Physics Formula Sheet & Revision List | FormulaVerse</title>
 
+    <!-- High-CTR Dynamic Meta Description -->
+    <meta name="description" content="Access all {{ total }} essential Physics formulas for {{ exam_label }}. Download quick revision cheat sheets, key definitions, derivations, and solved questions.">
 
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "formulaVerse",
-  "url": "https://formulaverse.in",
-  "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
-}
-</script>
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="{{ exam_label }} physics formulas, {{ exam_label }} formula sheet, {{ exam_label }} physics revision, {{ exam_label }} formula list, physics cheat sheet">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
+    <!-- Open Graph / WhatsApp / Social Previews -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FormulaVerse">
+    <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
+    <meta property="og:title" content="{{ exam_label }} Physics Formula Sheet & Quick Revision | FormulaVerse">
+    <meta property="og:description" content="Browse all {{ total }} essential Physics formulas for {{ exam_label }} with equations, derivations, and quick study guides.">
+    <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ exam_label }} Physics Formula List | FormulaVerse">
+    <meta name="twitter:description" content="Complete {{ exam_label }} Physics formula list and revision cheat sheet.">
+    <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Favicon & Web Manifest -->
+    <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
-    <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
+    <!-- Schema.org Organization Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "FormulaVerse",
+      "url": "https://formulaverse.in",
+      "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+    }
+    </script>
 
-    <meta name="description"
-    content="{{ total }} Physics formulas for {{ exam_label }} — FormulaVerse">
-    <meta name="keywords"
-    content="{{ exam_label }} physics formulas, {{ exam_label }} formula list">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
 
+    <!-- Google Tag Manager / Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YHLZCEHWF7');
+    </script>
+
+    <!-- MathJax Configuration -->
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+
     <style>
         :root {
             /* Base — warm cream light theme, matches rest of site */
@@ -463,7 +492,7 @@
     <p>Just few things to share formulas</p>
 
     <label> Your Name </label>
-    <input type="text" id="nameInput" placeholder="e.g. Rahul" required />
+    <input type="text" id="nameInput" placeholder="e.g. Rahul/Jack" required />
 
     <label>Date of Birth</label>
     <input type="date" id="dobInput" required />

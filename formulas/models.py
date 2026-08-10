@@ -59,6 +59,7 @@ class Formula(models.Model):
         )
 
 
+
     def get_absolute_url(self):
         return reverse("single-formula-page", args=[self.id])
 
@@ -105,10 +106,9 @@ class SimpleUser(models.Model):
         ordering = ['-created_at']
 
 
-
 class PurchasedChapter(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name="purchases")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(SimpleUser, on_delete=models.CASCADE, null=True, blank=True, related_name="purchases")
     session_key = models.CharField(max_length=100, null=True, blank=True)
 
     razorpay_order_id = models.CharField(max_length=100)
@@ -128,17 +128,26 @@ class PurchasedChapter(models.Model):
         ]
 
     def _str_(self):
-        return f"{self.chapter.name} — {self.status} — {self.razorpay_order_id}"
+        return f"{self.chapter.name} - {self.status} - {self.razorpay_order_id}"
 
 
 def has_purchased(chapter, request):
     qs = PurchasedChapter.objects.filter(chapter=chapter, status="paid")
-    if request.user.is_authenticated:
-        if qs.filter(user=request.user).exists():
-            return True
+
+    user_id = request.session.get('user_session_id')
+    if user_id:
+        try:
+            user = SimpleUser.objects.get(session_id=user_id)
+            if qs.filter(user=user).exists():
+                return True
+        except SimpleUser.DoesNotExist:
+            pass
+
+    # Fallback: guest checkout before login, matched by raw Django session key
     session_key = request.session.session_key
     if session_key and qs.filter(session_key=session_key).exists():
         return True
+
     return False
 
 

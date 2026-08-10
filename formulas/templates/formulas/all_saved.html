@@ -5,27 +5,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Saved Formulas | Formulaverse</title>
+        <title>Personal Formula Vault | FormulaVerse</title>
 
+    <!-- Meta Description -->
+    <meta name="description" content="Access and organize your saved Physics formulas, custom revision notes, and bookmarked cheat sheets on FormulaVerse.">
 
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "formulaVerse",
-  "url": "https://formulaverse.in",
-  "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
-}
-</script>
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="saved formulas, physics formula vault, custom physics revision sheet, formulaverse account">
 
-    <link rel="canonical" href="https://formulaverse.in{{ request.path }}"/>
-    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+    <!-- Protect private/dashboard user pages from thin content indexing -->
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
+
+    <!-- Open Graph / Social Previews -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FormulaVerse">
+    <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
+    <meta property="og:title" content="Personal Formula Vault — FormulaVerse">
+    <meta property="og:description" content="Your personal collection of saved Physics formulas and revision guides for JEE & NEET.">
+    <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Personal Formula Vault — FormulaVerse">
+    <meta name="twitter:description" content="Access your saved Physics formulas and revision cheat sheets.">
+    <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
+
+    <!-- Favicon & Web Manifest -->
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
-    <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
+    <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <meta name="description" content="All your saved Physics formulas on FormulaVerse">
-    <meta property="og:title" content="All Saved Formulas — FormulaVerse"/>
-    <meta property="og:url" content="https://formulaverse.in/all-saved/"/>
+    <!-- Schema.org Organization Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "FormulaVerse",
+      "url": "https://formulaverse.in",
+      "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+    }
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
+
+    <!-- Google Tag Manager / Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YHLZCEHWF7');
+    </script>
 
     <style>
         :root{
@@ -42,6 +73,10 @@
             --ink:#2d2a3d;
             --text-dim:#7c7a8c;
             --formula-color:#0d9488;
+            --violet:#8b5cf6;
+            --violet-dim: rgba(139, 92, 246, 0.12);
+            --rose:#e0577b;
+            --rose-dim: rgba(224, 87, 123, 0.13);
         }
 
         *{ box-sizing:border-box; }
@@ -58,7 +93,10 @@
             min-height:100vh;
         }
 
-        .vault-header{ text-align:center; margin-bottom:6px; }
+        .vault-header{
+            text-align:center;
+            margin-bottom:6px;
+        }
 
         .vault-header h1{
             font-size:1.9rem;
@@ -93,10 +131,58 @@
             font-size:0.85rem;
             letter-spacing:2px;
             text-transform:uppercase;
-            margin-bottom:34px;
+            margin-bottom:22px;
         }
 
-        .search-wrap{ display:flex; justify-content:center; padding:0 12px 30px; }
+        /* ===== NEW: action bar (revise mode + share) ===== */
+        .vault-actions{
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-wrap:wrap;
+            margin-bottom:22px;
+        }
+
+        .action-btn{
+            display:inline-flex;
+            align-items:center;
+            gap:7px;
+            padding:10px 18px;
+            border-radius:50px;
+            font-size:0.82rem;
+            font-weight:600;
+            letter-spacing:0.2px;
+            cursor:pointer;
+            border:1px solid var(--border-soft);
+            background:rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px);
+            color:var(--ink);
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+        }
+        .action-btn:hover{ transform:translateY(-1px); }
+
+        .action-btn.revise{
+            border-color: rgba(139,92,246,0.35);
+            color: var(--violet);
+        }
+        .action-btn.revise:hover{ background: var(--violet-dim); }
+        .action-btn.revise.is-active{
+            background: var(--violet);
+            color: #fff;
+            border-color: var(--violet);
+        }
+
+        .action-btn.share{
+            border-color: rgba(234,154,62,0.35);
+            color: var(--amber-dim);
+        }
+        .action-btn.share:hover{ background: rgba(234,154,62,0.10); }
+
+        .search-wrap{
+            display:flex;
+            justify-content:center;
+            padding:0 12px 30px;
+        }
 
         #searchBar{
             width:100%;
@@ -115,10 +201,21 @@
         #searchBar::placeholder{ color:var(--text-dim); }
         #searchBar:focus{ border-color:var(--amber); box-shadow: 0 0 0 3px rgba(234,154,62,0.15); }
 
-        .container{ max-width:900px; margin:0 auto; }
+        .container{
+            max-width:900px;
+            margin:0 auto;
+        }
 
-        ul{ list-style:none; padding:0; margin:0; display:grid; gap:16px; }
+        ul{
+            list-style:none;
+            padding:0;
+            margin:0;
+            display:grid;
+            gap:16px;
+        }
+
         li{ margin:0; }
+
         a{ text-decoration:none; color:inherit; }
 
         .deposit-box{
@@ -134,6 +231,7 @@
             box-shadow: 0 4px 24px rgba(140, 120, 90, 0.12);
             transition:border-color 0.3s ease, transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
+
         .deposit-box:hover{
             transform:translateX(4px);
             border-color:rgba(234,154,62,0.4);
@@ -154,7 +252,11 @@
             letter-spacing:1px;
         }
 
-        .box-body{ flex:1; padding:16px 20px; min-width:0; }
+        .box-body{
+            flex:1;
+            padding:16px 20px;
+            min-width:0;
+        }
 
         .box-top{
             display:flex;
@@ -170,13 +272,32 @@
             letter-spacing:0.2px;
         }
 
+        /* ===== NEW: spaced-repetition nudge badge ===== */
+        .review-nudge{
+            display:inline-flex;
+            align-items:center;
+            gap:5px;
+            margin-top:8px;
+            padding:3px 10px;
+            font-size:0.68rem;
+            font-weight:600;
+            letter-spacing:0.3px;
+            text-transform:uppercase;
+            border-radius:50px;
+            background: var(--rose-dim);
+            color: var(--rose);
+        }
+
         .lock-icon{
             flex-shrink:0;
             width:20px; height:20px;
             color:var(--amber-dim);
             transition:color 0.3s ease, transform 0.3s ease;
         }
-        .deposit-box:hover .lock-icon{ color:var(--amber-bright); transform:rotate(-8deg); }
+        .deposit-box:hover .lock-icon{
+            color:var(--amber-bright);
+            transform:rotate(-8deg);
+        }
 
         .formula-form{
             color:var(--formula-color);
@@ -188,9 +309,14 @@
             margin:10px 0 10px;
             text-align:center;
             overflow-x:auto;
+            transition: filter 0.2s ease, opacity 0.2s ease;
         }
 
-        .formula-author{ font-size:0.78rem; color:var(--text-dim); font-style:italic; }
+        .formula-author{
+            font-size:0.78rem;
+            color:var(--text-dim);
+            font-style:italic;
+        }
 
         .btn-save{
             display:inline-flex;
@@ -210,7 +336,11 @@
             cursor:pointer;
             transition:background 0.2s ease, color 0.2s ease;
         }
-        .btn-save:hover{ background:var(--amber); color:#fff; border-color: var(--amber); }
+        .btn-save:hover{
+            background:var(--amber);
+            color:#fff;
+            border-color: var(--amber);
+        }
 
         .empty-message{
             text-align:center;
@@ -231,12 +361,62 @@
             z-index:10;
         }
 
+        /* ══════════════════════════════════════════════
+           REVISE MODE
+           Toggled by adding .revise-mode to <body>.
+           Hides the formula expression + "given by" line
+           behind a tap-to-reveal cover, turning each card
+           into a flashcard for active recall.
+           ══════════════════════════════════════════════ */
+        body.revise-mode .formula-form,
+        body.revise-mode .formula-author{
+            filter: blur(6px);
+            opacity: 0.35;
+            user-select: none;
+        }
+        body.revise-mode .deposit-box.is-revealed .formula-form,
+        body.revise-mode .deposit-box.is-revealed .formula-author{
+            filter: none;
+            opacity: 1;
+        }
+        .reveal-hint{
+            display:none;
+            font-size:0.68rem;
+            letter-spacing:0.4px;
+            text-transform:uppercase;
+            color:var(--violet);
+            font-weight:600;
+            margin-top:8px;
+        }
+        body.revise-mode .reveal-hint{ display:block; }
+        body.revise-mode .deposit-box.is-revealed .reveal-hint{ display:none; }
+
+        /* ══════════════════════════════════════════════
+           DESKTOP GRID (≥900px only)
+           ══════════════════════════════════════════════ */
         @media (min-width: 900px) {
-            .container { max-width: 960px; }
-            ul { grid-template-columns: repeat(2, 1fr); gap: 18px; }
-            .deposit-box { height: 100%; }
-            .box-body { display: flex; flex-direction: column; }
-            .box-body form { margin-top: auto; }
+
+            .container {
+                max-width: 960px;
+            }
+
+            ul {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+
+            .deposit-box {
+                height: 100%;
+            }
+
+            .box-body {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .box-body form {
+                margin-top: auto;
+            }
         }
 
          .site-footer {
@@ -244,7 +424,7 @@
             padding-top: 40px;
             text-align: center;
             font-size: 0.875rem;
-            color: var(--text-muted);
+            color: var(--text-dim);
         }
 
         .site-footer p {
@@ -259,15 +439,17 @@
         }
 
         .footer-links a {
-            color: var(--text-muted);
+            color: var(--text-dim);
             text-decoration: none;
             transition: color 0.15s ease;
         }
 
         .footer-links a:hover {
-            color: var(--text-main);
+            color: var(--ink);
         }
     </style>
+
+
 
     <script>
     MathJax = {
@@ -275,60 +457,122 @@
         svg: { fontCache: 'global' }
     };
     </script>
-    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js></script>
 </head>
 <body>
+
 
     <a href="{% url 'dashboard' %}">
         <div class="back-link">&larr;</div>
     </a>
+
 
     <div class="vault-header">
         <h1><span class="dial"></span> Formulavault</h1>
         <p>Your personal deposit box</p>
     </div>
 
+    <div class="vault-actions">
+        <button type="button" class="action-btn revise" id="reviseToggle" onclick="toggleReviseMode()">
+            🧠 Revise Mode
+        </button>
+        <button type="button" class="action-btn share" onclick="shareVault()">
+            🔗 Share Vault
+        </button>
+    </div>
+
     <div class="search-wrap">
-        <input type="text" id="searchBar" placeholder="🔍Search your saved formulas" oninput="searchFormulas()">
+        <input
+            type="text"
+            id="searchBar"
+            placeholder="🔍Search your saved formulas"
+            oninput="searchFormulas()">
     </div>
 
     <div class="container">
     {% if saved_formulas %}
+
     <ul>
         {% for formula in saved_formulas %}
         <li>
-            <div class="deposit-box">
+            <div class="deposit-box" onclick="revealCard(this, event)">
                 <div class="box-number">{{ forloop.counter|stringformat:"03d" }}</div>
                 <div class="box-body">
-                    <a href="{% url 'single-formula-page' pk=formula.id %}">
+                    <a href="{% url "single-formula-page" pk=formula.id %}">
                         <div class="box-top">
                             <div class="formula-title">{{ formula.title }}</div>
                         </div>
-                        <div class="formula-form">$$ {{ formula.form }} $$</div>
-                        <div class="formula-author">Given by {{ formula.given_by }}</div>
+
+                        <div class="formula-form">
+                            $$ {{ formula.form }} $$
+                        </div>
+                        <div class="formula-author">
+                            Given by {{ formula.given_by }}
+                        </div>
                     </a>
 
-                    <form method="POST" action="{% url 'unsave-formula' pk=formula.id %}">
+                    <div class="reveal-hint">Tap to reveal →</div>
+
+                    {% if formula.days_since_saved >= 1 %}
+                    <div class="review-nudge">⏰ Saved {{ formula.days_since_saved }}d ago — review?</div>
+                    {% endif %}
+
+                    <form method="POST" action="{% url "unsave-formula" pk=formula.id %}" onclick="event.stopPropagation();">
                         {% csrf_token %}
-                        <button type="submit" class="btn-save">Unsave</button>
+                        <button type="submit" class="btn-save">
+                            Unsave
+                        </button>
                     </form>
                 </div>
             </div>
         </li>
         {% endfor %}
     </ul>
+
     {% else %}
     <div class="empty-message">Your vault is empty. Save a formula to lock it in here.</div>
     {% endif %}
     </div>
 
 <script>
+
     function searchFormulas() {
         const query = document.getElementById('searchBar').value.toLowerCase();
         document.querySelectorAll('.formula-title').forEach(titleEl => {
             const title = titleEl.innerText.toLowerCase();
             titleEl.closest('li').style.display = title.includes(query) ? 'block' : 'none';
         });
+    }
+
+    function toggleReviseMode() {
+        document.body.classList.toggle('revise-mode');
+        document.getElementById('reviseToggle').classList.toggle('is-active');
+        // Collapse any previously revealed cards when entering revise mode
+        document.querySelectorAll('.deposit-box.is-revealed').forEach(box => {
+            box.classList.remove('is-revealed');
+        });
+    }
+
+    function revealCard(box, event) {
+        if (!document.body.classList.contains('revise-mode')) return; // normal nav, do nothing extra
+        if (box.classList.contains('is-revealed')) return; // already shown, let the link work
+        event.preventDefault();
+        event.stopPropagation();
+        box.classList.add('is-revealed');
+    }
+
+    function shareVault() {
+        const shareUrl = window.location.href;
+        const shareText = "Check out my saved physics formulas on FormulaVerse!";
+
+        if (navigator.share) {
+            navigator.share({ title: 'My FormulaVerse Vault', text: shareText, url: shareUrl })
+                .catch(() => {});
+        } else {
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('Vault link copied — share it with your study group!');
+            });
+        }
     }
 
     if ('serviceWorker' in navigator) {
@@ -338,6 +582,7 @@
             .catch(err => console.log('SW failed:', err));
         });
     }
+
 </script>
 
 <footer class="site-footer">
@@ -349,6 +594,7 @@
                 <a href="/terms/">Terms of Service</a>
             </div>
         </footer>
+
 
 </body>
 </html>

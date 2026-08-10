@@ -38,6 +38,7 @@ from .pdf_utils import render_formula_media_url, simplify_latex_for_text, format
 import logging
 from weasyprint import HTML
 from django.utils import timezone
+from collections import Counter
 
 #from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
@@ -189,7 +190,24 @@ class SavedFormulasView(View):
         formula = get_object_or_404(Formula, id=pk)
         user_id = request.session.get('user_session_id')
         user = SimpleUser.objects.get(session_id=user_id)
-        saved_formulas = Formula.objects.filter(savedformula__user=user)
+
+        # NEW: query the through-table directly (instead of Formula via
+        # savedformula__user) so we can read each save's timestamp and
+        # attach a days_since_saved value the template can check.
+        saved_rows = (
+            SavedFormula.objects
+            .filter(user=user)
+            .select_related('formula')
+            .order_by('-saved_at')  # most recently saved first
+        )
+
+        today = timezone.localdate()
+        saved_formulas = []
+        for row in saved_rows:
+            f = row.formula
+            f.days_since_saved = (today - row.saved_at.date()).days
+            saved_formulas.append(f)
+
         return render(request, "formulas/saved_formulas.html", {
             "savedformulas": saved_formulas,
             "last_formula": formula
@@ -207,7 +225,6 @@ def unsave(request, pk):
     user = SimpleUser.objects.get(session_id=user_id)
     SavedFormula.objects.filter(user=user, formula_id=pk).delete()
     return redirect("single-formula-page", pk=pk)
-
 
 
 class TryView(TemplateView):
@@ -452,8 +469,6 @@ class ExamFilterView(View):
             'days_remaining': days_remaining,
             })
 
-
-
 def progress_dashboard(request):
     user_id = request.session.get('user_session_id')
     user = None
@@ -480,6 +495,10 @@ def progress_dashboard(request):
             'both_count': 0,
             'saved_formulas': [],
             'completion_percent': 0,
+            'chapters_started': 0,
+            'strongest_chapter': None,
+            'next_chapter': None,
+            'streak_days': 0,
         }
         return render(request, 'formulas/dashboard.html', context)
 
@@ -488,7 +507,6 @@ def progress_dashboard(request):
 
     total_saved = saved_formulas.count()
 
-    from collections import Counter
     category_counts = Counter(
         saved_formulas.values_list('chapter__name', flat=True)
     )
@@ -497,6 +515,37 @@ def progress_dashboard(request):
     jee_count = saved_formulas.filter(exam_tag='jee').count()
     neet_count = saved_formulas.filter(exam_tag='neet').count()
     both_count = saved_formulas.filter(exam_tag='both').count()
+
+    # --- NEW: Chapters Started ---
+    # How many distinct chapters the user has at least one saved formula in.
+    chapters_started = len(category_counts)
+
+    # --- NEW: Strongest chapter ---
+    # Same as favourite_chapter, but named for the "Strongest" badge in the template.
+    # (Kept as a separate variable in case you later want the badge logic to
+    # differ from the raw favourite — e.g. requiring a minimum count to qualify.)
+    strongest_chapter = favourite_chapter if category_counts else None
+
+    # --- NEW: Chapter to tackle next ---
+    # Prefer a chapter the user hasn't touched at all; if they've started
+    # every chapter, fall back to their weakest (lowest-count) started chapter.
+    all_chapter_names = list(
+        Chapter.objects.values_list('name', flat=True)
+    )
+    untouched_chapters = [c for c in all_chapter_names if c not in category_counts]
+
+    if untouched_chapters:
+        next_chapter = untouched_chapters[0]
+    elif category_counts:
+        next_chapter = min(category_counts, key=category_counts.get)
+    else:
+        next_chapter = None
+
+    # --- NEW: Streak ---
+    # Requires two fields on SimpleUser: last_active_date (DateField, null=True)
+    # and streak_days (IntegerField, default=0). Update these wherever a
+    # formula gets saved (see snippet below) — this view only reads them.
+    streak_days = getattr(user, 'streak_days', 0) or 0
 
     context = {
         'is_logged_in': True,
@@ -509,8 +558,35 @@ def progress_dashboard(request):
         'both_count': both_count,
         'saved_formulas': saved_formulas,
         'completion_percent': round((total_saved / total_formulas) * 100) if total_formulas else 0,
+        'chapters_started': chapters_started,
+        'strongest_chapter': strongest_chapter,
+        'next_chapter': next_chapter,
+        'streak_days': streak_days,
     }
     return render(request, 'formulas/dashboard.html', context)
+
+
+# ─────────────────────────────────────────────────────────────
+# OPTIONAL: streak-tracking helper.
+# Call this from inside your "save formula" view, right after a
+# SavedFormula gets created, to keep the streak field current.
+# Requires SimpleUser to have:
+#     last_active_date = models.DateField(null=True, blank=True)
+#     streak_days = models.IntegerField(default=0)
+# ─────────────────────────────────────────────────────────────
+def update_streak(user):
+    today = timezone.localdate()
+
+    if user.last_active_date == today:
+        return  # already counted today, no change
+
+    if user.last_active_date == today - timezone.timedelta(days=1):
+        user.streak_days = (user.streak_days or 0) + 1  # consecutive day
+    else:
+        user.streak_days = 1  # streak broken or first-ever save
+
+    user.last_active_date = today
+    user.save(update_fields=['streak_days', 'last_active_date'])
 
 @csrf_exempt
 def save_fcm_token(request):
@@ -912,6 +988,20 @@ class AllSavedFormulasView(View):
         user_id = request.session.get('user_session_id')
         user = SimpleUser.objects.filter(session_id=user_id).first()
         saved_formulas = Formula.objects.filter(savedformula__user=user) if user else Formula.objects.none()
+        saved_rows = (
+            SavedFormula.objects
+            .filter(user=user)
+            .select_related('formula')
+            .order_by('-saved_at')  # most recently saved first
+        )
+
+        today = timezone.localdate()
+        saved_formulas = []
+        for row in saved_rows:
+            f = row.formula
+            f.days_since_saved = (today - row.saved_at.date()).days
+            saved_formulas.append(f)
+
 
         return render(request, 'formulas/all_saved.html',{
             'saved_formulas': saved_formulas
@@ -947,3 +1037,34 @@ def daily_sprint_view(request):
         'options': options,
     }
     return render(request, 'formulas/daily_sprint.html', context)
+
+
+
+def my_purchases(request):
+    user_id = request.session.get('user_session_id')
+    user = None
+
+    if user_id:
+        try:
+            user = SimpleUser.objects.get(session_id=user_id)
+        except SimpleUser.DoesNotExist:
+            request.session.flush()
+            user = None
+
+    if not user:
+        return render(request, 'formulas/my_purchase.html', {
+            'is_logged_in': False,
+            'purchases': [],
+        })
+
+    purchases = (
+        PurchasedChapter.objects
+        .filter(user=user, status="paid")
+        .select_related('chapter')
+        .order_by('-created_at')
+    )
+
+    return render(request, 'formulas/my_purchase.html', {
+        'is_logged_in': True,
+        'purchases': purchases,
+    })
