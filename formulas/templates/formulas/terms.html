@@ -59,6 +59,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            background:
+                radial-gradient(circle at 50% -10%, #fff6e9 0%, var(--bg2) 55%),
+                repeating-linear-gradient(90deg, rgba(120,100,80,0.03) 0px, rgba(120,100,80,0.03) 1px, transparent 1px, transparent 48px),
+                linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
         }
 
         /* Container setup */
@@ -67,21 +71,28 @@
             max-width: var(--max-width);
         }
 
-        /* Top Bar Breadcrumb */
-        .top-nav {
-            margin-bottom: 24px;
-            font-size: 1.3rem;
-            color: var(--text-muted);
+        .topbar {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-soft);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
-
-        .top-nav a {
-            color: #6366f1;
+        .topbar a {
+            color: #7c5cfc;
             text-decoration: none;
+            font-size: 1.3rem;
             font-weight: 700;
         }
-
-        .top-nav a:hover {
-            text-decoration: underline;
+        .topbar span {
+            color: var(--text-dim);
+            font-size: 0.85rem;
         }
 
         /* Hero Header */
@@ -229,16 +240,16 @@
 
     <div class="container">
 
-        <!-- Breadcrumb Nav -->
-        <div class="top-nav">
-            ← <a href="/">formulaverse</a> / Terms of Service
-        </div>
+        <div class="topbar">
+    <a href="{% url "index-page" %}">&larr; formulaVerse</a>
+    <span>/ Terms of Service</span>
+</div>
 
         <!-- Header -->
         <header class="header">
             <span class="badge">Legal</span>
             <h1>Terms of Service</h1>
-            <p class="last-updated">Last updated: August 06, 2026</p>
+            <p class="last-updated">Last updated: August 10, 2026</p>
         </header>
 
         <!-- Terms Content Cards -->

@@ -1,23 +1,54 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-from .models import Formula
+from .models import Formula, Chapter, PYQ, DailyChallenge
+
+class StaticViewSitemap(Sitemap):
+    priority = 0.8
+    changefreq = 'weekly'
+
+    def items(self):
+        # List all main static view names here
+        return ['me', 'constants', 'pyq-papers', 'units-dimensions', 'privacy', 'terms']
+
+    def location(self, item):
+        return reverse(item)
+
+class ChapterSitemap(Sitemap):
+    priority = 0.9
+    changefreq = 'monthly'
+
+    def items(self):
+        return Chapter.objects.all()
 
 class FormulaSitemap(Sitemap):
-    changefreq = 'weekly'
     priority = 0.9
+    changefreq = 'weekly'
 
     def items(self):
         return Formula.objects.all()
 
-    def location(self, obj):
-        return reverse('single-formula-page', args=[obj.pk])
+    def location(self, item):
+        return f'/formula/{item.slug}/'
 
-class StaticSitemap(Sitemap):
+class PYQSitemap(Sitemap):
+    priority = 0.7
     changefreq = 'monthly'
-    priority = 0.8
 
     def items(self):
-        return ['index-page', 'base-page']
+        return PYQ.objects.all()
 
-    def location(self, item):
-        return reverse(item)
+class DailyChallengeSitemap(Sitemap):
+    priority = 0.6
+    changefreq = 'daily'
+
+    def items(self):
+        return DailyChallenge.objects.all()
+
+# Master sitemaps dictionary
+sitemaps = {
+    'static': StaticViewSitemap,
+    'chapters': ChapterSitemap,
+    'formulas': FormulaSitemap,
+    'pyqs': PYQSitemap,
+    'daily_challenges': DailyChallengeSitemap,
+}

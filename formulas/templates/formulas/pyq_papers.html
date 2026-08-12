@@ -253,6 +253,96 @@
             color: var(--text-main);
         }
 
+        /* PYQ Page Affiliate Banner */
+.pyq-affiliate-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 16px;
+    margin: 20px 0 24px 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.pyq-affiliate-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.pyq-badge {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.pyq-amazon-tag {
+    color: #d97706;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.pyq-affiliate-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.pyq-icon {
+    font-size: 26px;
+    line-height: 1;
+    background: #f0fdf4;
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid #dcfce7;
+}
+
+.pyq-details {
+    flex: 1;
+}
+
+.pyq-title {
+    margin: 0 0 3px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.pyq-desc {
+    margin: 0;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.pyq-amazon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    background: #ff9900; /* Amazon Gold */
+    color: #111111;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(255, 153, 0, 0.25);
+    transition: transform 0.1s ease, background 0.15s ease;
+}
+
+.pyq-amazon-btn:active {
+    transform: scale(0.98);
+    background: #e68a00;
+}
+
 
 </style>
 </head>
@@ -268,11 +358,25 @@
     <p>JEE & NEET question papers, sorted by chapter — download and practice.</p>
 </div>
 
-<div class="resource-box" style="background: rgba(255,255,255,0.62); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 4px 24px rgba(140,120,90,0.12); padding: 15px; border-radius: 14px; margin: 10px 4px 0 4px;">
-    <a href="https://amzn.to/44QrFdw" target="_blank" style="color: #0d9488; font-weight: bold; font-size: 12.65px; text-decoration: none;">
-        Prefer practicing offline? 📖 Get Solved Papers on Amazon ↗
+<!-- Redesigned Offline PYQ Book Banner -->
+<div class="pyq-affiliate-card">
+    <div class="pyq-affiliate-header">
+        <span class="pyq-badge">Offline Practice</span>
+        <span class="pyq-amazon-tag">Amazon Official</span>
+    </div>
+    <div class="pyq-affiliate-body">
+        <div class="pyq-icon">📖</div>
+        <div class="pyq-details">
+            <h4 class="pyq-title">Prefer practicing on paper?</h4>
+            <p class="pyq-desc">Get chapter-wise 36+ years JEE & NEET solved paper books with detailed solutions.</p>
+        </div>
+    </div>
+    <a href="https://amzn.to/44QrFdw" target="_blank" rel="noopener sponsored" class="pyq-amazon-btn">
+        Get Solved Papers on Amazon
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
     </a>
 </div>
+
 
 <div class="grid">
     {% for paper in papers %}

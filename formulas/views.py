@@ -78,7 +78,7 @@ class IndexView(ListView):
 
         visited_counts= {
             cat.name.lower().replace(' ', '_').replace('&', 'and'):
-                Formula.objects.filter(chapter=cat, id__in=visited_ids).count()
+                Formula.objects.filter(chapter=cat, slug__in=visited_ids).count()
             for cat in Chapter.objects.all()
             }
 
@@ -104,6 +104,8 @@ class SingleFormulaView(DetailView):
     model=Formula
     fields="__all__"
     context_object_name="formula"
+    slug_field = "slug"
+    slug_url_kwarg = "slug"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -135,8 +137,8 @@ class SingleFormulaView(DetailView):
         response= super().get(request, *args, **kwargs)
 
         visited= request.session.get("visited_formulas", [])
-        if self.object.id not in visited:
-            visited.append(self.object.id)
+        if self.object.slug not in visited:
+            visited.append(self.object.slug)
             request.session['visited_formulas']= visited
             request.session.modified= True
 
@@ -176,18 +178,22 @@ class SingleFormulaView(DetailView):
 
 
 class SavedFormulasView(View):
-    def post(self, request, pk, *args, **kwargs):
+    slug_field = "slug"
+    slug_url_kwarg = "slug"
+
+
+    def post(self, request, slug, *args, **kwargs):
         user_id = request.session.get('user_session_id')
         if not user_id:
-            return redirect('single-formula-page', pk=pk)
+            return redirect('single-formula-page', slug=slug)
 
         user = SimpleUser.objects.get(session_id=user_id)
-        formula = get_object_or_404(Formula, id=pk)
+        formula = get_object_or_404(Formula, slug=slug)
         SavedFormula.objects.get_or_create(user=user, formula=formula)
-        return redirect('saved-page', pk=pk)
+        return redirect('saved-page', slug=slug)
 
-    def get(self, request, pk):
-        formula = get_object_or_404(Formula, id=pk)
+    def get(self, request, slug):
+        formula = get_object_or_404(Formula, slug=slug)
         user_id = request.session.get('user_session_id')
         user = SimpleUser.objects.get(session_id=user_id)
 
@@ -214,17 +220,18 @@ class SavedFormulasView(View):
         })
 
 
-def unsave(request, pk):
+def unsave(request, slug):
+    formula = get_object_or_404(Formula, slug=slug)
     if request.method != "POST":
-        return redirect("single-formula-page", pk=pk)
+        return redirect("single-formula-page", slug=slug)
 
     user_id = request.session.get('user_session_id')
     if not user_id:
-        return redirect("single-formula-page", pk=pk)
+        return redirect("single-formula-page", slug=slug)
 
     user = SimpleUser.objects.get(session_id=user_id)
-    SavedFormula.objects.filter(user=user, formula_id=pk).delete()
-    return redirect("single-formula-page", pk=pk)
+    SavedFormula.objects.filter(user=user, formula=formula).delete()
+    return redirect("single-formula-page", slug=slug)
 
 
 class TryView(TemplateView):
@@ -295,9 +302,9 @@ class AboutMeView(TemplateView):
 
 
 
-def practice_question(request, formula_id):
+def practice_question(request, slug):
     try:
-        formula = Formula.objects.get(id=formula_id)
+        formula = Formula.objects.get(slug=slug)
         difficulty = request.GET.get("difficulty", "medium")
 
         result = generate_practice_question(
@@ -460,6 +467,22 @@ class ExamFilterView(View):
             if exam_info:
                 exam_key, days_remaining = exam_info
 
+        affiliate_data = None
+        if path == 'jee':
+            affiliate_data = {
+                'title': 'DC Pandey Physics Series for JEE Main & Advanced',
+                'subtitle': 'Top recommended practice book for solving JEE numericals',
+                'link': 'https://amzn.to/B08txTj7c',  # Put your Amazon tag link here
+                'tag_label': 'Recommended for JEE'
+                }
+        elif path == 'neet':
+            affiliate_data = {
+                'title': 'MTG Objective NCERT at your Fingertips Physics',
+                'subtitle': 'Master NCERT line-by-line questions for NEET 2026',
+                'link': 'https://amzn.to/B0bwwfnAy', # Put your Amazon tag link here
+                'tag_label': 'Recommended for NEET'
+                }
+
         return render(request, 'formulas/exam_filter.html', {
             'formulas': formulas,
             'exam_label': exam_label,
@@ -467,6 +490,7 @@ class ExamFilterView(View):
             'formula_path': formula_path,
             'exam_key': exam_key,
             'days_remaining': days_remaining,
+            'affiliate': affiliate_data,
             })
 
 def progress_dashboard(request):

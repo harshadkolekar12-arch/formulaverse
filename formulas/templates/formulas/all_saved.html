@@ -447,6 +447,126 @@
         .footer-links a:hover {
             color: var(--ink);
         }
+
+
+         .empty-message span{ color: blue; font-weight:600; text-decoration:none; }
+
+
+         /* Custom Popup Modal Styling */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.custom-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.custom-modal-box {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 24px 20px;
+    width: 85%;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    transform: scale(0.85);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.custom-modal-overlay.active .custom-modal-box {
+    transform: scale(1);
+}
+
+.custom-modal-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.custom-modal-title {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e1e24;
+}
+
+.custom-modal-message {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+    color: #666666;
+    line-height: 1.4;
+}
+
+.custom-modal-btn {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.custom-modal-btn:active {
+    transform: scale(0.97);
+}
+
+ .fv-nav-spacer { height: 72px; }
+
+        .fv-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+            background: rgba(254, 249, 240, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(140, 110, 70, 0.14);
+            box-shadow: 0 -6px 24px rgba(140, 120, 90, 0.10);
+        }
+
+        .fv-nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 4px 2px;
+            text-decoration: none;
+            color: #a9a6b8;
+            font-family: 'Outfit', sans-serif;
+            transition: color 0.2s ease;
+        }
+        .fv-nav-item:hover { color: #0d9488; }
+        .fv-nav-item:focus-visible { outline: 2px solid #0d9488; outline-offset: 2px; border-radius: 8px; }
+
+        .fv-nav-item.is-active { color: #0d9488; }
+
+        .fv-nav-icon { font-size: 1.15rem; line-height: 1; }
+        .fv-nav-label { font-size: 10.5px; letter-spacing: 0.02em; }
     </style>
 
 
@@ -476,7 +596,7 @@
         <button type="button" class="action-btn revise" id="reviseToggle" onclick="toggleReviseMode()">
             🧠 Revise Mode
         </button>
-        <button type="button" class="action-btn share" onclick="shareVault()">
+        <button type="button" class="action-btn share" onclick="shareVault({{ saved_formulas|length|default:0 }})">
             🔗 Share Vault
         </button>
     </div>
@@ -498,7 +618,7 @@
             <div class="deposit-box" onclick="revealCard(this, event)">
                 <div class="box-number">{{ forloop.counter|stringformat:"03d" }}</div>
                 <div class="box-body">
-                    <a href="{% url "single-formula-page" pk=formula.id %}">
+                    <a href="{% url "single-formula-page" slug=formula.slug %}">
                         <div class="box-top">
                             <div class="formula-title">{{ formula.title }}</div>
                         </div>
@@ -517,7 +637,7 @@
                     <div class="review-nudge">⏰ Saved {{ formula.days_since_saved }}d ago — review?</div>
                     {% endif %}
 
-                    <form method="POST" action="{% url "unsave-formula" pk=formula.id %}" onclick="event.stopPropagation();">
+                    <form method="POST" action="{% url "unsave-formula" slug=formula.slug %}" onclick="event.stopPropagation();">
                         {% csrf_token %}
                         <button type="submit" class="btn-save">
                             Unsave
@@ -530,7 +650,8 @@
     </ul>
 
     {% else %}
-    <div class="empty-message">Your vault is empty. Save a formula to lock it in here.</div>
+    <div class="empty-message">Your vault is empty. <span><a href='/chapter/optics/'>Save a formula to lock it in here-></a></span>
+    </div>
     {% endif %}
     </div>
 
@@ -561,19 +682,42 @@
         box.classList.add('is-revealed');
     }
 
-    function shareVault() {
-        const shareUrl = window.location.href;
-        const shareText = "Check out my saved physics formulas on FormulaVerse!";
-
-        if (navigator.share) {
-            navigator.share({ title: 'My FormulaVerse Vault', text: shareText, url: shareUrl })
-                .catch(() => {});
-        } else {
-            navigator.clipboard.writeText(shareUrl).then(() => {
-                alert('Vault link copied — share it with your study group!');
-            });
-        }
+    // Helper functions to show/hide custom popup
+function showCustomAlert(message, title = "Vault is Empty") {
+    const modal = document.getElementById('customAlertModal');
+    if (modal) {
+        document.getElementById('customModalTitle').innerText = title;
+        document.getElementById('customModalMessage').innerText = message;
+        modal.classList.add('active');
     }
+}
+
+function closeCustomAlert() {
+    const modal = document.getElementById('customAlertModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+// Updated shareVault function
+function shareVault(formulaCount) {
+    if (!formulaCount || formulaCount === 0) {
+        showCustomAlert("No formulas in your vault to share yet! Save a formula first.", "Vault is Empty");
+        return; // Stops execution completely
+    }
+
+    const shareUrl = window.location.href;
+    const shareText = "Check out my saved physics formulas on FormulaVerse!";
+
+    if (navigator.share) {
+        navigator.share({ title: 'My FormulaVerse Vault', text: shareText, url: shareUrl })
+            .catch(() => {});
+    } else {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            showCustomAlert("Vault link copied — share it with your study group!", "Link Copied!");
+        });
+    }
+}
 
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -588,7 +732,6 @@
 <footer class="site-footer">
             <p>© 2026 formulaverse.in</p>
             <div class="footer-links">
-                <a href="/">Home</a> •
                 <a href="/me">About</a> •
                 <a href="/privacy/">Privacy Policy</a> •
                 <a href="/terms/">Terms of Service</a>
@@ -596,5 +739,36 @@
         </footer>
 
 
+<!-- Custom Popup Modal -->
+<div id="customAlertModal" class="custom-modal-overlay" onclick="closeCustomAlert()">
+    <div class="custom-modal-box" onclick="event.stopPropagation()">
+        <div class="custom-modal-icon">🔒</div>
+        <h3 id="customModalTitle" class="custom-modal-title">Vault is Empty</h3>
+        <p id="customModalMessage" class="custom-modal-message">Save a few formulas to your vault before sharing with friends!</p>
+        <button type="button" class="custom-modal-btn" onclick="closeCustomAlert()">Got it</button>
+    </div>
+</div>
+
+
+<div class="fv-nav-spacer"></div>
+
+    <nav class="fv-bottom-nav" aria-label="Primary">
+        <a href="{% url 'base-page' %}" class="fv-nav-item is-active">
+            <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
+            <span class="fv-nav-label">Home</span>
+        </a>
+        <a href="{% url 'index-page' %}" class="fv-nav-item">
+            <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
+            <span class="fv-nav-label">Index</span>
+        </a>
+        <a href="{% url 'all-saved' %}" class="fv-nav-item">
+            <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
+            <span class="fv-nav-label">Vault</span>
+        </a>
+        <a href="{% url 'my-purchase' %}" class="fv-nav-item">
+            <span class="fv-nav-icon" aria-hidden="true">&#128179;</span>
+            <span class="fv-nav-label">My Purchase</span>
+        </a>
+    </nav>
 </body>
 </html>

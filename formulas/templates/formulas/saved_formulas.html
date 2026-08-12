@@ -462,7 +462,7 @@
 <body>
 
     {% if last_formula %}
-    <a href="{% url "single-formula-page" pk=last_formula.id %}">
+    <a href="{% url "single-formula-page" slug=last_formula.slug %}">
         <div class="back-link">&larr;</div>
     </a>
     {% endif %}
@@ -498,7 +498,7 @@
             <div class="deposit-box" onclick="revealCard(this, event)">
                 <div class="box-number">{{ forloop.counter|stringformat:"03d" }}</div>
                 <div class="box-body">
-                    <a href="{% url "single-formula-page" pk=formula.id %}">
+                    <a href="{% url "single-formula-page" slug=formula.slug %}">
                         <div class="box-top">
                             <div class="formula-title">{{ formula.title }}</div>
                         </div>
@@ -517,7 +517,7 @@
                     <div class="review-nudge">⏰ Saved {{ formula.days_since_saved }}d ago — review?</div>
                     {% endif %}
 
-                    <form method="POST" action="{% url "unsave-formula" pk=formula.id %}" onclick="event.stopPropagation();">
+                    <form method="POST" action="{% url "unsave-formula" slug=formula.slug %}" onclick="event.stopPropagation();">
                         {% csrf_token %}
                         <button type="submit" class="btn-save">
                             Unsave

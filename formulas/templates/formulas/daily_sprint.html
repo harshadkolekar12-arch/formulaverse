@@ -382,7 +382,8 @@
             <p id="result-desc"></p>
 
             <div class="formula-card">
-                <p class="formula-label">Correct Physics Formula</p>
+                <p class="formula-label"> Answer </p>
+                <div id="formula-name"> {{ challenge.correct_formula_name }} </div>
                 <div id="formula-latex" class="text-xl">\[ {{ challenge.correct_formula_latex }} \]</div>
             </div>
 
@@ -407,6 +408,7 @@
 
     <script>
     let timeLeft = 60;
+    let timeTaken = 0;
     let timer = setInterval(() => {
         timeLeft--;
         document.getElementById('timer').innerText = `⏱️ ${timeLeft}s`;
@@ -418,6 +420,7 @@
 
     function checkAnswer(button, isCorrect) {
         clearInterval(timer);
+        timeTaken = 60 - timeLeft;
 
         // Disable all option buttons
         document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
@@ -453,7 +456,8 @@
     }
 
     function shareStreak() {
-        const text = "⚡ I solved today's FormulaVerse Daily Escape Sprint! Can you decode today's physics scenario? Test yourself here: https://formulaverse.in/daily-sprint/";
+        let timeString = timeTaken > 0 ? `in ${timeTaken} seconds` : '';
+        const text = `⚡ I solved today's FormulaVerse Daily Escape Sprint ${timeString}! Can you decode today's physics scenario in less than 5 seconds? Test yourself here: https://formulaverse.in/daily-sprint/`;
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
     }
     </script>

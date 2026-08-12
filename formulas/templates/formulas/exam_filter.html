@@ -480,6 +480,62 @@
             color: var(--text-main);
         }
 
+        .affiliate-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #2563eb;
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin: 16px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.affiliate-badge {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+.affiliate-title {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.3;
+}
+
+.affiliate-subtitle {
+    margin: 0 0 10px 0;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.affiliate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ff9900; /* Amazon Gold */
+    color: #111111;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: transform 0.1s ease;
+}
+
+.affiliate-btn:active {
+    transform: scale(0.97);
+}
+
     </style>
 </head>
 <body>
@@ -528,6 +584,22 @@
             placeholder="🔍 Search {{ exam_label }} formulas..."
             oninput="searchFormulas()">
     </div>
+
+    {% if affiliate %}
+<div class="affiliate-card">
+    <div class="affiliate-badge">{{ affiliate.tag_label }}</div>
+    <div class="affiliate-content">
+        <div class="affiliate-info">
+            <h4 class="affiliate-title">📚 {{ affiliate.title }}</h4>
+            <p class="affiliate-subtitle">{{ affiliate.subtitle }}</p>
+        </div>
+        <a href="{{ affiliate.link }}" target="_blank" rel="noopener sponsored" class="affiliate-btn">
+            View on Amazon
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+    </div>
+</div>
+{% endif %}
 
     <!-- Formula Cards -->
     <div class="container">

@@ -1262,7 +1262,7 @@
     <div class="spectrum-thread"></div>
 
     <div class="top-bar">
-  <form method="POST" action="{% url 'saved-page' pk=formula.id %}" id="saveForm" onsubmit="return handleSaveSubmit(event)" style="margin: 0;">
+  <form method="POST" action="{% url 'saved-page' slug=formula.slug %}" id="saveForm" onsubmit="return handleSaveSubmit(event)" style="margin: 0;">
     {% csrf_token %}
     <button type="submit" name="save" class="btn-save">★ Save</button>
   </form>
@@ -1572,7 +1572,7 @@ function loadQuestion(difficulty) {
     document.getElementById('question-box').style.display = 'none';
     document.getElementById('feedback-box').style.display = 'none';
 
-    fetch(`/practice/{{ formula.id }}/?difficulty=${difficulty}`)
+    fetch(`/practice/{{ formula.slug }}/?difficulty=${difficulty}`)
         .then(res => res.json())
         .then(data => {
             correctAnswer = data.correct;
@@ -1849,7 +1849,7 @@ function submitSimpleLogin() {
 }
 
 const formulaTitle = "{{ formula.title|escapejs }}";
-const formulaUrl = "https://formulaverse.in{% url 'single-formula-page' pk=formula.id %}";
+const formulaUrl = "https://formulaverse.in{% url 'single-formula-page' slug=formula.slug %}";
 
 function handleShareClick() {
   const message = `Check out this Physics Formula on FormulaVerse! 📐\n\n${formulaTitle}\n${formulaUrl}`;
