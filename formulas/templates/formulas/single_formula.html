@@ -1412,7 +1412,12 @@
         <div class="example-card">
             <div class="example-label">🧮 Worked example</div>
             <div class="card-content">Q) {{ formula.example }}</div>
-            <div class="card-content" style="display: flex; justify-content: left; align-items: left; overflow-x: auto; max-width: 100%; margin-top: 6px;">Ans: $$ {{ formula.answer }} $$ </div>
+            <div class="card-content" style="overflow-x: auto; max-width: 100%; margin-top: 6px;">
+    <div><strong>Ans:</strong></div>
+    <div style="margin-top: 4px;">
+        \[ {{ formula.answer }} \]
+    </div>
+</div>
         </div>
         {% endif %}
 

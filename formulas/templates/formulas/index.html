@@ -432,6 +432,7 @@
 
         .app-header-back:hover { background: var(--card-glass-strong); }
 
+
         .app-header-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -457,25 +458,50 @@
             box-shadow: 0 8px 20px -4px rgba(79,70,229,0.45);
         }
 
-        /* Plain, non-interactive stat badge — deliberately quieter than the Dashboard button */
-        .total-pill {
-            color: var(--text-secondary);
-            font-size: 12px;
-            font-weight: 700;
-            padding: 9px 6px;
-            border-radius: 14px;
-            background: var(--card-glass);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px dashed rgba(148, 145, 138, 0.55);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            cursor: default;
-        }
 
-        .total-pill span.num { color: var(--text-primary); }
+        .formula-counter-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    pointer-events: none;
+    user-select: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    white-space: nowrap; /* Keeps the badge on one line */
+}
+
+/* Ensure pulse dot stays aligned vertically */
+.live-pulse {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    background-color: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: pulse-ring 2s infinite;
+}
+
+.count-number {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #0f172a;
+    line-height: 1;
+}
+
+.count-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #64748b;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+
 
         .reference-label {
             text-align: center;
@@ -808,11 +834,14 @@ body { padding-bottom: 72px; }
     </div>
 
 
-
-    <div class="app-header-actions">
-        <a href="{% url 'dashboard' %}" class="dashboard-btn">📊 Dashboard</a>
-        <div class="total-pill" title="Total formulas across all topics">📐 <span class="num">{{ total }}</span>&nbsp;formulas</div>
+<div class="app-header-actions">
+    <a href="{% url 'dashboard' %}" class="dashboard-btn">📊 Dashboard</a>
+    <div class="formula-counter-badge" title="Total active formulas in vault">
+        <span class="live-pulse"></span>
+        <span class="count-number">{{ total }}</span>
+        <span class="count-label">FORMULAS INDEXED</span>
     </div>
+</div>
 </div>
 
 <div class="reference-label">REFERENCE TOOLS</div>

@@ -201,36 +201,60 @@
         #searchBar::placeholder{ color:var(--text-dim); }
         #searchBar:focus{ border-color:var(--amber); box-shadow: 0 0 0 3px rgba(234,154,62,0.15); }
 
-        .container{
-            max-width:900px;
-            margin:0 auto;
-        }
+        /* 1. Fix outer wrapper padding so cards don't touch screen edges */
+.container {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 16px; /* Adds safe spacing on mobile */
+    box-sizing: border-box;
+}
 
-        ul{
-            list-style:none;
-            padding:0;
-            margin:0;
-            display:grid;
-            gap:16px;
-        }
+/* 2. Reset list padding */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+/* 3. Ensure cards stretch properly without overflowing */
+.deposit-box {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    background: var(--surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 4. Allow content inside card body to shrink and wrap */
+.box-body {
+    flex: 1;
+    min-width: 0; /* CRUCIAL: Allows long formulas/text to shrink inside flexbox */
+    padding: 16px;
+}
+
+/* 5. Prevent long math equations from overflowing out of the card */
+.formula-form {
+    overflow-x: auto; /* Adds a clean scrollbar if equation is too wide */
+    max-width: 100%;
+}
+
 
         li{ margin:0; }
 
         a{ text-decoration:none; color:inherit; }
 
-        .deposit-box{
-            position:relative;
-            display:flex;
-            align-items:stretch;
-            background:var(--surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border:1px solid var(--border);
-            border-radius:14px;
-            overflow:hidden;
-            box-shadow: 0 4px 24px rgba(140, 120, 90, 0.12);
-            transition:border-color 0.3s ease, transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-        }
+
 
         .deposit-box:hover{
             transform:translateX(4px);
@@ -252,11 +276,7 @@
             letter-spacing:1px;
         }
 
-        .box-body{
-            flex:1;
-            padding:16px 20px;
-            min-width:0;
-        }
+
 
         .box-top{
             display:flex;
@@ -299,18 +319,6 @@
             transform:rotate(-8deg);
         }
 
-        .formula-form{
-            color:var(--formula-color);
-            font-size:1rem;
-            padding:10px 12px;
-            background:rgba(13,148,136,0.06);
-            border:1px solid rgba(13,148,136,0.18);
-            border-radius:8px;
-            margin:10px 0 10px;
-            text-align:center;
-            overflow-x:auto;
-            transition: filter 0.2s ease, opacity 0.2s ease;
-        }
 
         .formula-author{
             font-size:0.78rem;
@@ -420,8 +428,8 @@
         }
 
          .site-footer {
-            margin-top: auto;
-            padding-top: 40px;
+            margin-top: 12px;
+            padding-top: 0;
             text-align: center;
             font-size: 0.875rem;
             color: var(--text-dim);
@@ -447,6 +455,46 @@
         .footer-links a:hover {
             color: var(--ink);
         }
+
+         .fv-nav-spacer { height: 72px; }
+
+        .fv-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+            background: rgba(254, 249, 240, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(140, 110, 70, 0.14);
+            box-shadow: 0 -6px 24px rgba(140, 120, 90, 0.10);
+        }
+
+        .fv-nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 4px 2px;
+            text-decoration: none;
+            color: #a9a6b8;
+            font-family: 'Outfit', sans-serif;
+            transition: color 0.2s ease;
+        }
+        .fv-nav-item:hover { color: #0d9488; }
+        .fv-nav-item:focus-visible { outline: 2px solid #0d9488; outline-offset: 2px; border-radius: 8px; }
+
+        .fv-nav-item.is-active { color: #0d9488; }
+
+        .fv-nav-icon { font-size: 1.15rem; line-height: 1; }
+        .fv-nav-label { font-size: 10.5px; letter-spacing: 0.02em; }
+
     </style>
 
 
@@ -534,6 +582,15 @@
     {% endif %}
     </div>
 
+    <footer class="site-footer">
+            <p>© 2026 formulaverse.in</p>
+            <div class="footer-links">
+                <a href="/me">About</a> •
+                <a href="/privacy/">Privacy Policy</a> •
+                <a href="/terms/">Terms of Service</a>
+            </div>
+        </footer>
+
 <script>
 
     function searchFormulas() {
@@ -585,16 +642,28 @@
 
 </script>
 
-<footer class="site-footer">
-            <p>© 2026 formulaverse.in</p>
-            <div class="footer-links">
-                <a href="/">Home</a> •
-                <a href="/me">About</a> •
-                <a href="/privacy/">Privacy Policy</a> •
-                <a href="/terms/">Terms of Service</a>
-            </div>
-        </footer>
 
+
+<div class="fv-nav-spacer"></div>
+
+    <nav class="fv-bottom-nav" aria-label="Primary">
+        <a href="{% url 'base-page' %}" class="fv-nav-item is-active">
+            <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
+            <span class="fv-nav-label">Home</span>
+        </a>
+        <a href="{% url 'index-page' %}" class="fv-nav-item">
+            <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
+            <span class="fv-nav-label">Index</span>
+        </a>
+        <a href="{% url 'all-saved' %}" class="fv-nav-item">
+            <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
+            <span class="fv-nav-label">Vault</span>
+        </a>
+        <a href="{% url 'my-purchase' %}" class="fv-nav-item">
+            <span class="fv-nav-icon" aria-hidden="true">&#128179;</span>
+            <span class="fv-nav-label">My Purchase</span>
+        </a>
+    </nav>
 
 </body>
 </html>

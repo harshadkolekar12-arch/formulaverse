@@ -1452,6 +1452,51 @@ CALCULATOR_DATA = {
         ],
         "constants": [],
     },
+
+
+    "Most Probable Speed of Gas": {
+        "variables": [
+            ("v_mp", "Most probable speed", "m/s", "sqrt((2 * R * T) / M)", 1),
+            ("T", "Absolute temperature", "K", "(v_mp * v_mp * M) / (2 * R)", 2),
+            ("M", "Molar mass", "kg/mol", "(2 * R * T) / (v_mp * v_mp)", 3),
+        ],
+        "constants": [
+            ("R", "8.314"),
+        ],
+    },
+
+    "Root Mean Square (RMS) Speed of Gas": {
+        "variables": [
+            ("v_rms", "RMS speed", "m/s", "sqrt((3 * R * T) / M)", 1),
+            ("T", "Absolute temperature", "K", "(v_rms * v_rms * M) / (3 * R)", 2),
+            ("M", "Molar mass", "kg/mol", "(3 * R * T) / (v_rms * v_rms)", 3),
+        ],
+        "constants": [
+            ("R", "8.314"),
+        ],
+    },
+
+    "Quality Factor (Q-Factor) of Series LCR": {
+        "variables": [
+            ("Q", "Quality factor", "", "(1 / R) * sqrt(L / C)", 1),
+            ("R", "Resistance", "ohm", "(1 / Q) * sqrt(L / C)", 2),
+            ("L", "Inductance", "H", "(Q * R) * (Q * R) * C", 3),
+            ("C", "Capacitance", "F", "L / ((Q * R) * (Q * R))", 4),
+        ],
+        "constants": [],
+    },
+
+    "LC Oscillations Frequency": {
+        "variables": [
+            ("f", "Frequency", "Hz", "1 / (2 * pi * sqrt(L * C))", 1),
+            ("L", "Inductance", "H", "1 / (4 * pi * pi * f * f * C)", 2),
+            ("C", "Capacitance", "F", "1 / (4 * pi * pi * f * f * L)", 3),
+        ],
+        "constants": [
+            ("pi", "3.14159265359"),
+        ],
+    },
+
 }
 
 class Command(BaseCommand):
