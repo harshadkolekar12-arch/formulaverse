@@ -39,6 +39,7 @@ import logging
 from weasyprint import HTML
 from django.utils import timezone
 from collections import Counter
+from django.db.models import Max
 
 #from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
@@ -738,6 +739,7 @@ class TopicCheatsheetPDFView(View):
 
     CACHE_DIR = os.path.join(settings.MEDIA_ROOT, "cheatsheets")
 
+
     def get(self, request, *args, **kwargs):
         topic_slug = request.GET.get("topic")
         if not topic_slug:
@@ -750,15 +752,13 @@ class TopicCheatsheetPDFView(View):
         if not formulas.exists():
             raise Http404("No formulas found for this chapter.")
 
-        # --- NEW: paywall gate ---
-        # All formulas here share the same chapter (filtered above),
-        # so grab it off the first result rather than querying Chapter again.
+        # --- paywall gate ---
         chapter = formulas.first().chapter
         if chapter.is_premium and not has_purchased(chapter, request):
             return redirect(f"/chapter/{topic_slug}/unlock/")
-        # --- end paywall gate ---
 
-        cache_path = self.get_cache_path(topic_slug)
+        # Pass 'formulas' to get_cache_path to build a dynamic fingerprint
+        cache_path = self.get_cache_path(topic_slug, formulas)
         force_regen = request.GET.get("regen") == "1"
 
         if force_regen or not os.path.exists(cache_path):
@@ -771,13 +771,18 @@ class TopicCheatsheetPDFView(View):
         )
         return response
 
-
-    def get_cache_path(self, topic_slug):
+    def get_cache_path(self, topic_slug, formulas):
         os.makedirs(self.CACHE_DIR, exist_ok=True)
         safe_slug = "".join(
             c for c in topic_slug.lower() if c.isalnum() or c in "-_"
         )
-        return os.path.join(self.CACHE_DIR, f"{safe_slug}.pdf")
+
+        # Fingerprint combining formula count + highest formula ID
+        count = formulas.count()
+        latest_id = formulas.aggregate(Max('id'))['id__max'] or 0
+        fingerprint = f"c{count}_id{latest_id}"
+
+        return os.path.join(self.CACHE_DIR, f"{safe_slug}_{fingerprint}.pdf")
 
     def _local_file_url(self, field_file, formula_obj=None, field_name="file"):
         """

@@ -1873,6 +1873,15 @@ function handleSaveSubmit(event) {
     openLoginModal('save');
     return false;
   {% endif %}
+
+
+   if (typeof gtag === 'function') {
+        gtag('event', 'save_to_vault', {
+            'event_category': 'Engagement',
+            'formula_slug': '{{ formula.slug }}'
+        });
+    }
+
   return true; // logged in, let form submit normally
 }
 

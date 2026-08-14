@@ -368,10 +368,10 @@
             <div class="options-grid" id="options-grid">
                 {% for option in options %}
                     <button
-                        onclick="checkAnswer(this, {{ option.is_correct|lower }})"
-                        class="option-btn">
-                        <span>{{ option.title }}</span>
-                    </button>
+    onclick="trackSprintAnswer({{ option.is_correct|lower }}); checkAnswer(this, {{ option.is_correct|lower }})"
+    class="option-btn">
+    <span>{{ option.title }}</span>
+</button>
                 {% endfor %}
             </div>
         </div>
@@ -387,9 +387,9 @@
                 <div id="formula-latex" class="text-xl">\[ {{ challenge.correct_formula_latex }} \]</div>
             </div>
 
-            <button onclick="shareStreak()" class="share-btn">
-                <span>📲 Share Result on WhatsApp</span> ➔
-            </button>
+           <button onclick="gtag('event', 'share_streak', {'method': 'WhatsApp'}); shareStreak()" class="share-btn">
+    <span>Share Result on WhatsApp</span> &rarr;
+</button>
         </div>
 
           <footer class="site-footer">
@@ -430,7 +430,7 @@
             endGame(true, "ESCAPED SUCCESSFULLY! You identified the correct physics principle in record time.");
         } else {
             button.classList.add('btn-wrong');
-            endGame(false, "FAILED! Incorrect formula applied. {{ challenge.explanation }}");
+            endGame(false, "FAILED! Incorrect formula applied. {{ challenge.explanation|safe }}");
         }
     }
 
@@ -460,6 +460,25 @@
         const text = `⚡ I solved today's FormulaVerse Daily Escape Sprint ${timeString}! Can you decode today's physics scenario in less than 5 seconds? Test yourself here: https://formulaverse.in/daily-sprint/`;
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
     }
+
+
+    function trackSprintAnswer(isCorrect) {
+    if (typeof gtag === 'function') {
+        gtag('event', 'sprint_answer', {
+            'event_category': 'Engagement',
+            'is_correct': isCorrect,
+            'challenge_title': '{{ challenge.scenario_title|escapejs }}'
+        });
+
+        // Fire a specific Key Event if the user cracked the challenge!
+        if (isCorrect) {
+            gtag('event', 'sprint_completed', {
+                'event_category': 'Conversion',
+                'challenge_title': '{{ challenge.scenario_title|escapejs }}'
+            });
+        }
+    }
+}
     </script>
 
 </body>

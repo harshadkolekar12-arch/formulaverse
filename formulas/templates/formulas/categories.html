@@ -642,6 +642,46 @@
         .footer-links a:hover {
             color: var(--text-main);
         }
+
+
+        /* Floating Back to Top Button */
+#backToTopBtn {
+    position: fixed;
+    bottom: 90px; /* Positioned right above the mobile bottom nav bar */
+    right: 20px;
+    z-index: 9999;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+/* Active State (Shown on scroll) */
+#backToTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#backToTopBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.5);
+}
+
+#backToTopBtn:active {
+    transform: translateY(0);
+}
     </style>
 </head>
 
@@ -753,25 +793,33 @@
     </div>
 
 
-        <a href="{% url 'topic-cheatsheet-pdf' %}?topic={{ chapter_slug }}"
+      <a href="{% url 'topic-cheatsheet-pdf' %}?topic={{ chapter_slug }}"
+   onclick="if(typeof gtag==='function'){gtag('event', 'download_pdf_sheet', {'chapter': '{{ chapter_slug }}', 'is_premium': '{{ chapter.is_premium }}'});}"
    style="display:flex; align-items:center; justify-content:center; gap:8px;
-          padding:12px; margin: 14px 0;
+          padding:12px; margin:14px 0;
           {% if chapter.is_premium and not is_purchased %}
-            background: rgba(245, 166, 35, 0.14); color: var(--amber-deep); border: 1px solid rgba(245, 166, 35, 0.45); backdrop-filter: blur(10px);
+          background: rgba(245, 166, 35, 0.14); color: var(--amber-deep); border: 1px solid rgba(245, 166, 35, 0.45); backdrop-filter: blur(10px);
           {% else %}
-            background: rgba(14,165,160,0.12); color: var(--cyan-deep); border: 1px solid var(--border); backdrop-filter: blur(10px);
+          background: rgba(14, 165, 160, 0.12); color: var(--cyan-deep); border: 1px solid var(--border); backdrop-filter: blur(10px);
           {% endif %}
           border-radius:14px; text-decoration:none; font-weight:700;
-          font-size: 13px;">
+          font-size:13px;">
 
-  {% if chapter.is_premium and not is_purchased %}
-<span style="background: var(--amber); color: #1a1408; font-size: 10px; padding: 2px 6px; border-radius: 6px; font-weight: 800; text-transform: uppercase;">PRO</span>
-🔒 Unlock full {{ chapter_name }} guide PDF (<del style="color: #888; text-decoration: line-through; margin-right: 2px;">₹99</del><span style="color: #d97706; font-weight: 800;">₹49</span>)
-{% else %}
-    📄 Download full {{ chapter_name }} guide PDF
-  {% endif %}
-
+    {% if chapter.is_premium and not is_purchased %}
+    <span style="background: var(--amber); color: #1a1408; font-size: 10px; padding: 2px 6px; border-radius: 6px; font-weight: 800; text-transform: uppercase;">PRO</span>
+    Unlock full {{ chapter_name }} guide PDF (<del style="color: #888; text-decoration: line-through; margin-right: 2px;">₹99</del><span style="color: #d97706; font-weight: 800;">₹49</span>)
+    {% else %}
+    📥 Download full {{ chapter_name }} guide PDF
+    {% endif %}
 </a>
+
+
+<!-- Floating Back to Top Button -->
+<button id="backToTopBtn" onclick="scrollToTop()" title="Back to top" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+</button>
 
     <script>
 
@@ -795,6 +843,25 @@
         });
       }
 
+      const backToTopBtn = document.getElementById("backToTopBtn");
+
+    // Show button after scrolling down 300px
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    });
+
+    // Smooth scroll to top function
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
     </script>
 
 <footer class="site-footer">
@@ -806,6 +873,8 @@
                 <a href="/terms/">Terms of Service</a>
             </div>
         </footer>
+
+
 
 </body>
 </html>

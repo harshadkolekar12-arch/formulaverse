@@ -509,6 +509,55 @@
 
         .fv-nav-icon { font-size: 1.15rem; line-height: 1; }
         .fv-nav-label { font-size: 10.5px; letter-spacing: 0.02em; }
+
+
+
+        /* Social Proof Banner */
+.social-proof-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 16px auto 24px auto;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 30px;
+    width: fit-content;
+    max-width: 90%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.proof-avatars {
+    display: flex;
+    align-items: center;
+    margin-right: 2px;
+}
+
+.proof-avatars .avatar {
+    font-size: 0.9rem;
+    margin-left: -4px;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+
+.proof-avatars .avatar:first-child {
+    margin-left: 0;
+}
+
+.proof-text {
+    font-size: 0.78rem;
+    color: #475569;
+    margin: 0;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.highlight-count {
+    color: #0f172a;
+    font-weight: 700;
+}
     </style>
 </head>
 
@@ -567,6 +616,18 @@
                 <a href="{% url 'index-page' %}"> Browse Formulas →</a>
             </div>
         </div>
+
+        <!-- Social Proof Banner -->
+<div class="social-proof-banner">
+    <div class="proof-avatars">
+        <span class="avatar">🇮🇳</span>
+        <span class="avatar">🇱🇰</span>
+        <span class="avatar">🇧🇷</span>
+    </div>
+    <p class="proof-text">
+        Trusted by <strong class="highlight-count">8k+</strong> STEM aspirants across <strong class="highlight-count">10+ countries</strong>
+    </p>
+</div>
 
         <footer class="site-footer">
             <p>© 2026 formulaverse.in</p>
