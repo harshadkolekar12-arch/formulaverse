@@ -1497,6 +1497,67 @@ CALCULATOR_DATA = {
         ],
     },
 
+
+   "Schrödinger Equation in Hamiltonian Operator Form": {
+        "variables": [
+            ("E", "Total energy", "J", "(p^2 / (2 * m)) + V", 1),
+            ("V", "Potential energy", "J", "E - (p^2 / (2 * m))", 2),
+            ("p", "Momentum", "kg*m/s", "sqrt(2 * m * (E - V))", 3),
+            ("m", "Particle mass", "kg", "p^2 / (2 * (E - V))", 4),
+        ],
+        "constants": [],
+    },
+
+    "Schrödinger Equation for Free Particle (V = 0)": {
+        "variables": [
+            ("E", "Kinetic energy", "J", "(hbar^2 * k^2) / (2 * m)", 1),
+            ("k", "Wave vector", "m^-1", "sqrt(2 * m * E) / hbar", 2),
+            ("m", "Particle mass", "kg", "(hbar^2 * k^2) / (2 * E)", 3),
+        ],
+        "constants": [
+            ("hbar", 1.0545718e-34),
+        ],
+    },
+
+    "Time-Independent Schrödinger Equation (1D)": {
+        "variables": [
+            ("E", "Energy level", "J", "(n^2 * h^2) / (8 * m * L^2)", 1),
+            ("n", "Quantum number (n)", "", "sqrt(8 * m * L^2 * E) / h", 2),
+            ("m", "Particle mass", "kg", "(n^2 * h^2) / (8 * L^2 * E)", 3),
+            ("L", "Box width", "m", "sqrt((n^2 * h^2) / (8 * m * E))", 4),
+        ],
+        "constants": [
+            ("h", 6.62607015e-34),
+        ],
+    },
+
+    "Time-Dependent Schrödinger Equation (1D)": {
+        "variables": [
+            ("E", "Energy", "J", "hbar * omega", 1),
+            ("omega", "Angular frequency", "rad/s", "E / hbar", 2),
+        ],
+        "constants": [
+            ("hbar", 1.0545718e-34),
+        ],
+    },
+
+    "3D Time-Dependent Schrödinger Equation": {
+        "variables": [
+            ("E", "3D Box ground/state energy", "J", "((nx^2 + ny^2 + nz^2) * h^2) / (8 * m * L^2)", 1),
+            ("m", "Particle mass", "kg", "((nx^2 + ny^2 + nz^2) * h^2) / (8 * L^2 * E)", 2),
+            ("L", "Cube side length", "m", "sqrt(((nx^2 + ny^2 + nz^2) * h^2) / (8 * m * E))", 3),
+            ("nx", "Quantum number nx", "", "1", 4),
+            ("ny", "Quantum number ny", "", "1", 5),
+            ("nz", "Quantum number nz", "", "1", 6),
+        ],
+        "constants": [
+            ("h", 6.62607015e-34),
+        ],
+    },
+
+
+
+
 }
 
 class Command(BaseCommand):

@@ -48,8 +48,7 @@
     }
     </script>
 
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
+
 
     <!-- Google Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
@@ -766,6 +765,43 @@ body { padding-bottom: 72px; }
     #chat-box { bottom: 170px !important; right: 40px; }
 }
 
+
+.fv-in {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #7c3aed;
+  letter-spacing: 0.06em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg) translateY(3.5px);
+  display: inline-flex;
+  align-items: center;
+  margin-left: 2.56px;
+  line-height: 1;
+  vertical-align: top;
+}
+
+
+
+.ad-banner-container {
+  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  width: 100%;
+  margin: 16px auto; /* Centers the banner horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Ensures the internal ad iframe scales cleanly */
+.ad-banner-container iframe,
+.ad-banner-container img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+
+
     </style>
 </head>
 <body>
@@ -815,8 +851,8 @@ body { padding-bottom: 72px; }
   <!-- Middle Ribbon Wing (Dynamic Cutout) -->
   <path d="M 32 44 L 68 44 C 73 44, 76 48, 73 53 C 70 58, 64 60, 59 60 L 29 60 C 26 60, 28 54, 30 48 Z" fill="url(#fv_grad_mid)" />
 </svg>
-               <div class="app-header-wordmark" style="font-weight: 800; font-size: 1.2rem; letter-spacing: -0.025em;">
-    <span style="color: #0f172a;">formula</span><span style="color: #7c3aed;">Verse</span>
+             <div class="app-header-wordmark" style="font-weight: 800; font-size: 1.2rem; letter-spacing: -0.025em; display: inline-flex; align-items: flex-end; white-space: nowrap;">
+    <span style="color: #0f172a;">formula</span><span style="color: #7c3aed;">Verse</span><span class="fv-in"><span style="font-size: 1.35rem;">.</span>In</span>
 </div>
             </div>
         </div>
@@ -858,6 +894,15 @@ body { padding-bottom: 72px; }
         <a href="{% url 'both-formulas' %}" class="filter-btn both" onclick="filterFormulas('both', this)">JEE/NEET</a>
     </div>
 </div>
+
+
+
+<div class="ad-banner-container">
+<script async="async" data-cfasync="false" src="https://pl30854659.effectivecpmnetwork.com/839994ed0cd70e78485e96284f4eae08/invoke.js"></script>
+<div id="container-839994ed0cd70e78485e96284f4eae08"></div>
+</div>
+
+
 
 <div class="grid-heading">
     <span class="label">Browse by topic</span>

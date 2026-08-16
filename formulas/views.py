@@ -40,13 +40,59 @@ from weasyprint import HTML
 from django.utils import timezone
 from collections import Counter
 from django.db.models import Max
+import re
+import html
 
 #from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 #from allauth.account.adapter import DefaultAccountAdapter
 
-# Create your views here.
+# Create your views here
 
+def clean_latex_for_seo(text):
+    if not text:
+        return ""
+
+    # 1. Strip HTML tags
+    text = re.sub(r'<[^>]+>', '', str(text))
+
+    # 2. Replace common LaTeX commands with clean Unicode symbols
+    replacements = {
+        r'\propto': '∝',
+        r'\alpha': 'α',
+        r'\beta': 'β',
+        r'\gamma': 'γ',
+        r'\delta': 'δ',
+        r'\theta': 'θ',
+        r'\lambda': 'λ',
+        r'\pi': 'π',
+        r'\sigma': 'σ',
+        r'\omega': 'ω',
+        r'\infty': '∞',
+        r'\pm': '±',
+        r'\approx': '≈',
+        r'\neq': '≠',
+        r'\le': '≤',
+        r'\ge': '≥',
+        r'\times': '×',
+        r'\div': '÷',
+        r'\sqrt': '√',
+    }
+    for latex_cmd, unicode_char in replacements.items():
+        text = text.replace(latex_cmd, unicode_char)
+
+    # 3. Convert fractions like \frac{a}{b} into (a/b)
+    text = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1/\2)', text)
+
+    # 4. Remove MathJax / LaTeX delimiters ($...$, \(...\), \[...\])
+    text = re.sub(r'\\[(\[\)\]]', '', text)
+    text = text.replace('$', '')
+
+    # 5. Clean up remaining backslashes and normalize extra spaces
+    text = re.sub(r'\\([a-zA-Z]+)', r'\1', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+
+    return html.unescape(text)
 
 class BaseView(TemplateView):
     template_name="formulas/base.html"
@@ -101,19 +147,19 @@ class IndexView(ListView):
 
 
 class SingleFormulaView(DetailView):
-    template_name="formulas/single_formula.html"
-    model=Formula
-    fields="__all__"
-    context_object_name="formula"
+    template_name = "formulas/single_formula.html"
+    model = Formula
+    fields = "_all_"
+    context_object_name = "formula"
     slug_field = "slug"
     slug_url_kwarg = "slug"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['similar_formulas'] = Formula.objects.filter(
-            chapter = self.object.chapter
-            ).exclude(pk=self.object.pk)[:5]
 
+        context['similar_formulas'] = Formula.objects.filter(
+            chapter=self.object.chapter
+        ).exclude(pk=self.object.pk)[:5]
 
         variables = self.object.formula_variables.filter(is_solvable=True).order_by("order")
         constants = self.object.constants.all()
@@ -131,50 +177,75 @@ class SingleFormulaView(DetailView):
             "constants": {c.symbol: c.value for c in constants},
         }
 
+        # Clean fields before sending to JSON-LD
+        formula_title = clean_latex_for_seo(getattr(self.object, 'title', str(self.object)))
+        formula_expr = clean_latex_for_seo(getattr(self.object, 'form', getattr(self.object, 'formula', '')))
+        raw_mistakes = getattr(self.object, 'common_mistakes', None)
+        common_mistakes = clean_latex_for_seo(raw_mistakes) if raw_mistakes else None
+
+        faq_data = {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": f"What is the formula for {formula_title}?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": f"The formula for {formula_title} is {formula_expr}." if formula_expr else f"Learn and derive the formula for {formula_title} with step-by-step notes and calculators."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": f"What are common mistakes in {formula_title} for JEE/NEET?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": common_mistakes if common_mistakes else f"Pay close attention to sign conventions, vector directions, and standard SI unit conversions when applying the {formula_title}."
+                    }
+                }
+            ]
+        }
+
+        # ensure_ascii=False keeps clean UTF-8 text instead of \u2022 escape codes
+        context['faq_schema_json'] = json.dumps(faq_data, ensure_ascii=False)
 
         return context
 
     def get(self, request, *args, **kwargs):
-        response= super().get(request, *args, **kwargs)
+        response = super().get(request, *args, **kwargs)
 
-        visited= request.session.get("visited_formulas", [])
+        visited = request.session.get("visited_formulas", [])
         if self.object.slug not in visited:
             visited.append(self.object.slug)
-            request.session['visited_formulas']= visited
-            request.session.modified= True
+            request.session['visited_formulas'] = visited
+            request.session.modified = True
 
         return response
 
     def post(self, request, *args, **kwargs):
-        self.object=self.get_object()
+        self.object = self.get_object()
 
         if "image" in request.FILES:
             self.object.image = request.FILES["image"]
             self.object.save()
 
+        context = self.get_context_data()
 
-        context=self.get_context_data()
-
-        correct_answer=(self.object.correct_answer or '').strip().lower()
-        user_answer=(request.POST.get("user_answer") or '').strip().lower()
-        explanation=self.object.explanation
-
-
+        correct_answer = (self.object.correct_answer or '').strip().lower()
+        user_answer = (request.POST.get("user_answer") or '').strip().lower()
+        explanation = self.object.explanation
 
         if user_answer:
+            if user_answer == correct_answer:
+                context["result"] = "✔️Correct Answer"
+            else:
+                context["result"] = f"❌Wrong Answer! Correct answer is: {correct_answer}"
+                context["explanation"] = explanation
 
-                if (user_answer.strip().lower()) == (correct_answer.strip().lower()):
-                    context["result"]="✔️Correct Answer"
-                else:
-                 context["result"]=f"❌Wrong Answer! Correct answer is: {correct_answer} "
-                 context["explanation"]= explanation
-
-
-
-                return self.render_to_response(context)
+            return self.render_to_response(context)
 
         if not user_answer:
-            context["result"]="Please enter some answer"
+            context["result"] = "Please enter some answer"
             return render(request, "formulas/single_formula.html", context)
 
 
@@ -1097,3 +1168,7 @@ def my_purchases(request):
         'is_logged_in': True,
         'purchases': purchases,
     })
+
+
+
+

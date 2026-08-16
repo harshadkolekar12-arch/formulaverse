@@ -43,8 +43,7 @@
     }
     </script>
 
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141" crossorigin="anonymous"></script>
+
 
     <!-- Google Tag Manager / Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
@@ -536,6 +535,64 @@
     transform: scale(0.97);
 }
 
+
+#backToTopBtn {
+    position: fixed;
+    bottom: 90px; /* Positioned right above the mobile bottom nav bar */
+    right: 20px;
+    z-index: 9999;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+/* Active State (Shown on scroll) */
+#backToTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#backToTopBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.5);
+}
+
+#backToTopBtn:active {
+    transform: translateY(0);
+}
+
+
+.ad-banner-container {
+  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  width: 100%;
+  margin: 16px auto; /* Centers the banner horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Ensures the internal ad iframe scales cleanly */
+.ad-banner-container iframe,
+.ad-banner-container img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+
     </style>
 </head>
 <body>
@@ -601,6 +658,13 @@
 </div>
 {% endif %}
 
+
+
+<div class="ad-banner-container">
+<script async="async" data-cfasync="false" src="https://pl30854659.effectivecpmnetwork.com/839994ed0cd70e78485e96284f4eae08/invoke.js"></script>
+<div id="container-839994ed0cd70e78485e96284f4eae08"></div>
+</div>
+
     <!-- Formula Cards -->
     <div class="container">
         <ul>
@@ -643,6 +707,12 @@
         </ul>
         <div class="empty-state" id="emptyState">No formulas match your search.</div>
     </div>
+
+<button id="backToTopBtn" onclick="scrollToTop()" title="Back to top" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+</button>
 
     <script>
         function searchFormulas() {
@@ -740,7 +810,27 @@ function handleSaveSubmit(event) {
   {% endif %}
   return true; // logged in, let form submit normally
 }
+
+
+  window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    });
+
+    // Smooth scroll to top function
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
     </script>
+
+
 
 <footer class="site-footer">
             <p>© 2026 formulaverse.in</p>

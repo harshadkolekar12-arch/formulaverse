@@ -6,31 +6,58 @@ import re
 from datetime import datetime
 import random, math, time
 
-
 def get_all_formulas_text():
-    formulas = Formula.objects.all()
-    formula_text = ""
-    for f in formulas:
-        formula_text += "Title: " + str(f.title) + ", "
-        formula_text += "Formula: " + str(f.form) + ", "
-        formula_text += "Chapter: " + str(f.chapter) + ", "
-        formula_text += "Description: " + str(f.description) + " | "
-    return formula_text
+    try:
+        formulas = Formula.objects.all()
+        formula_text = ""
+        for f in formulas:
+            # Safe attribute checks (handles both 'form' and 'formula' field names)
+            form_val = getattr(f, 'form', getattr(f, 'formula', ''))
+            formula_text += f"Title: {f.title}, Formula: {form_val}, Chapter: {f.chapter}, Description: {f.description} | "
+        return formula_text
+    except Exception as e:
+        print(f"Error fetching formulas: {e}")
+        return ""
 
-def ask_chatbot(user_message, chat_history=[]):
-    client = Groq(api_key=settings.GROQ_CHATBOT_KEY)
-    formulas_context = get_all_formulas_text()
-    system_prompt = "You are a helpful Physics tutor for Formulaverse. Help students with physics formulas and doubts. Formulas in database: " + formulas_context + " Explain simply and give real-life examples."
-    messages = [{"role": "system", "content": system_prompt}]
-    for msg in chat_history:
-        messages.append(msg)
-    messages.append({"role": "user", "content": user_message})
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=messages,
-        max_tokens=500
-    )
-    return response.choices[0].message.content
+def ask_chatbot(user_message, chat_history=None):
+    if chat_history is None:
+        chat_history = []
+
+    try:
+        client = Groq(api_key=settings.GROQ_CHATBOT_KEY)
+        formulas_context = get_all_formulas_text()
+
+        system_prompt = (
+            "You are a helpful Physics tutor for Formulaverse. "
+            "Help students with physics formulas and doubts. "
+            f"Formulas in database: {formulas_context} "
+            "Explain simply and give real-life examples."
+        )
+
+        messages = [{"role": "system", "content": system_prompt}]
+
+        # Sanitize and validate incoming chat history format
+        for msg in chat_history:
+            if isinstance(msg, dict) and "role" in msg and "content" in msg:
+                # Filter out previous error responses from clogging context
+                if "something went wrong" not in msg["content"].lower():
+                    messages.append({"role": msg["role"], "content": msg["content"]})
+
+        messages.append({"role": "user", "content": user_message})
+
+        # Using Groq's official active production model
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=messages,
+            max_tokens=500,
+            temperature=0.7
+        )
+        return response.choices[0].message.content
+
+    except Exception as e:
+        print(f"Groq API Error in ask_chatbot: {e}")
+        return "I'm having a brief connection issue with my AI backend. Please ask your question again!"
+
 
 
 SAFE_FUNCS = {
@@ -282,7 +309,7 @@ If no verified fact exists for the given date, output only: NO_VERIFIED_FACT
 
     try:
         completion = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="llama-3.1-8b-instant",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt}

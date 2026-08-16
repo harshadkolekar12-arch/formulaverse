@@ -56,7 +56,6 @@ Sitemap: https://formulaverse.in/sitemap.xml
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('robots.txt', robots_txt),
-    path('ads.txt', lambda r: HttpResponse("google.com, pub-2098916755752141, DIRECT, f08c47fec0942fa0", content_type="text/plain")),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('sw.js', serve_sw),
     path('.well-known/assetlinks.json', serve_assetlinks),
