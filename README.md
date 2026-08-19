@@ -1,3 +1,8 @@
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![Django](https://img.shields.io/badge/Framework-Django-green)
+![LLaMA](https://img.shields.io/badge/AI-Groq%20LLaMA%203.3--70b-orange)
+
+
 # 📐 FormulaVerse
 
 A Physics Formula Web App for JEE, NEET and Class 11-12 students.
