@@ -11,10 +11,14 @@
 </script>
 
 
-    <title>{{ formula.title }} Formula, Diagram/Graph, Hand-written derivation, SI Units & Solved Example | FormulaVerse</title>
+    <title>{{ formula.title }} Formula, Hand-written derivations & Solved Example | FormulaVerse</title>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
+     crossorigin="anonymous"></script>
+
 
     <!-- High-CTR Dynamic Meta Description -->
-    <meta name="description" content="Get the complete {{ formula.title }} formula{% if formula.given_by %} ({{ formula.given_by }}){% endif %}, equation variables, SI units, step-by-step derivation, and solved numerical practice problems for JEE Main & NEET.">
+    <meta name="description" content="{{ formula.title }} formula - variables, SI units, Hand-written derivation, and solved numerical example  for JEE  & NEET.">
 
     <!-- SEO Meta Tags -->
     <meta name="keywords" content="{{ formula.title }}, {{ formula.title }} formula, {{ formula.title }} derivation, {{ formula.title }} units, JEE physics formula, NEET physics formula, class 11 physics, class 12 physics">
@@ -1231,9 +1235,9 @@
 
 
 .ad-banner-container {
-  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  max-width: 250px;
   width: 100%;
-  margin: 16px auto; /* Centers the banner horizontally */
+  margin: 24px auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1247,7 +1251,158 @@
   height: auto !important;
 }
 
+.pyq-affiliate-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 16px;
+    margin: 20px 0 24px 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.pyq-affiliate-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.pyq-badge {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.pyq-amazon-tag {
+    color: #d97706;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.pyq-affiliate-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.pyq-icon {
+    font-size: 26px;
+    line-height: 1;
+    background: #f0fdf4;
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid #dcfce7;
+}
+
+.pyq-details {
+    flex: 1;
+}
+
+.pyq-title {
+    margin: 0 0 3px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.pyq-desc {
+    margin: 0;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.pyq-amazon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    background: #ff9900; /* Amazon Gold */
+    color: #111111;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(255, 153, 0, 0.25);
+    transition: transform 0.1s ease, background 0.15s ease;
+}
+
+.pyq-amazon-btn:active {
+    transform: scale(0.98);
+    background: #e68a00;
+}
+
+
+ .formula-deep-dive {
+    margin-top: 24px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden; /* Prevents outer card from stretching the viewport */
+  }
+
+  .content-section {
+    margin-bottom: 24px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .content-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .content-section h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 10px;
+  }
+
+  /* Math & Content Container Isolation */
+  .mathjax-render {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #4a5568;
+    overflow-x: auto;         /* Enables smooth horizontal scroll for wide math equations */
+    overflow-y: hidden;
+    max-width: 100%;
+    word-wrap: break-word;     /* Wraps standard long text */
+    overflow-wrap: break-word;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* MathJax / KaTeX targeted fixes */
+  .mathjax-render .MathJax_Display,
+  .mathjax-render .mjx-chtml,
+  .mathjax-render .katex-display {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 4px 0;
+  }
+
+  /* Mobile Tweaks */
+  @media (max-width: 640px) {
+    .formula-deep-dive {
+      padding: 16px;
+      margin-top: 18px;
+    }
+  }
+
     </style>
+
+
 </head>
 <body>
 
@@ -1317,7 +1472,7 @@
             <p class="formula-subline">{{ formula.description }}</p>
             {% endif %}
 
-            {% if formula.diagram_url or formula.desmos_graph_id or formula.derivation_image %}
+          {% if formula.diagram_url or formula.desmos_graph_id or formula.derivation_image %}
             <div class="diagram-toggle-row">
                 <button type="button" class="diagram-toggle-btn" id="diagramToggleBtn" onclick="toggleDiagram()">
                     <span>📈 Diagram/Graph &amp; derivation</span>
@@ -1400,35 +1555,35 @@
         </div>
         {% endif %}
 
-        <!-- Description, variables, units and common mistakes: useful, but not needed on every visit — collapsed by default -->
-        <div class="accordion">
-            <button type="button" class="accordion-header" id="detailsToggleBtn" onclick="toggleDetails()">
-                <span> Variables, units &amp; common mistakes</span>
-                <span class="accordion-chevron">▾</span>
-            </button>
-            <div class="accordion-body" id="detailsBody">
-                {% if formula.variables %}
-                <div class="detail-block">
-                    <div class="detail-label">Variables</div>
-                    <div class="detail-body">{{ formula.variables }}</div>
-                </div>
-                {% endif %}
+       <!-- Variables, units and common mistakes (Permanently Expanded for SEO & AdSense Crawlers) -->
+<div class="details-static-block" style="margin-top: 20px; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; background-color: #ffffff;">
+    <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: #2c3e50;">Variables, Units &amp; Common Mistakes</h2>
 
-                {% if formula.units %}
-                <div class="detail-block">
-                    <div class="detail-label">Units</div>
-                    <div class="detail-body" style="display: flex; justify-content: left; align-items: left;">$$ {{ formula.units }} $$</div>
-                </div>
-                {% endif %}
+    {% if formula.variables %}
+    <div class="detail-block" style="margin-bottom: 14px;">
+        <h3 class="detail-label" style="font-size: 0.95rem; font-weight: 600; color: #4a5568; margin-bottom: 4px;">Variables</h3>
+        <div class="detail-body" style="font-size: 0.9rem; color: #2d3748;">{{ formula.variables }}</div>
+    </div>
+    {% endif %}
 
-                {% if formula.common_mistakes %}
-                <div class="detail-block mistakes">
-                    <div class="detail-label">⚠️ Common mistakes</div>
-                    <div class="detail-body">{{ formula.common_mistakes|linebreaks }}</div>
-                </div>
-                {% endif %}
-            </div>
+    {% if formula.units %}
+    <div class="detail-block" style="margin-bottom: 14px;">
+        <h3 class="detail-label" style="font-size: 0.95rem; font-weight: 600; color: #4a5568; margin-bottom: 4px;">Units</h3>
+        <div class="detail-body" style="display: flex; justify-content: flex-start; align-items: center; font-size: 0.9rem; color: #2d3748; max-width: 100%; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scroling: touch;">
+            $${{ formula.units }}$$
         </div>
+    </div>
+    {% endif %}
+
+    {% if formula.common_mistakes %}
+    <div class="detail-block" style="margin-bottom: 8px;">
+        <h3 class="detail-label" style="font-size: 0.95rem; font-weight: 600; color: #e53e3e; margin-bottom: 4px;">⚠️ Common Mistakes</h3>
+        <div class="detail-body" style="font-size: 0.9rem; color: #2d3748;">{{ formula.common_mistakes|linebreaks }}</div>
+    </div>
+    {% endif %}
+</div>
+
+
 
         <!-- Worked example keeps full visual weight — it's what people re-read mid-problem -->
         {% if formula.worked_example %}
@@ -1465,10 +1620,9 @@
 
 
 
-<div class="ad-banner-container">
-<script async="async" data-cfasync="false" src="https://pl30854659.effectivecpmnetwork.com/839994ed0cd70e78485e96284f4eae08/invoke.js"></script>
-<div id="container-839994ed0cd70e78485e96284f4eae08"></div>
-</div>
+
+
+
 
         {% if result %}
         <div class="result-badge">{{ result }}</div>
@@ -1489,6 +1643,71 @@
                 <div id="animationContent"></div>
             </div>
         </div>
+
+<section class="formula-deep-dive">
+
+  {% if formula.conceptual_overview %}
+  <div class="content-section">
+    <h2>Detailed Conceptual Overview</h2>
+    <div class="mathjax-render">
+      {{ formula.conceptual_overview|linebreaks }}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if formula.step_by_step_derivation %}
+  <div class="content-section">
+    <h2>Mathematical Derivation & Fundamentals</h2>
+    <div class="mathjax-render">
+      {{ formula.step_by_step_derivation|linebreaks }}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if formula.real_world_applications %}
+  <div class="content-section">
+    <h2>Real-world Engineering & Practical Applications</h2>
+    <div class="mathjax-render">
+      {{ formula.real_world_applications|linebreaks }}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if formula.jee_neet_exam_tips %}
+  <div class="content-section" style="background-color: #fffaf0; border-left: 4px solid #ed8936; padding: 16px; border-radius: 8px;">
+    <h2 style="font-size: 1.05rem; color: #c05621; margin-bottom: 8px;">💡 JEE Mains & NEET High-Yield Notes & Shortcuts</h2>
+    <div class="mathjax-render" style="color: #744210;">
+      {{ formula.jee_neet_exam_tips|linebreaks }}
+    </div>
+  </div>
+  {% endif %}
+
+</section>
+
+
+{% if formula.faqs %}
+<div class="faq-container" style="background: #ffffff; border-radius: 16px; padding: 24px; margin-top: 24px; margin-bottom: 24px; border: 1px solid #f0eee6; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid #f7f5ee; padding-bottom: 12px;">
+        <span style="font-size: 1.25rem;">❓</span>
+        <h2 style="font-size: 1.25rem; font-weight: 700; color: #2d3748; margin: 0;">Frequently Asked Questions — FAQs</h2>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+        {% for faq in formula.faqs %}
+        <div style="background: #faf8f5; border-radius: 12px; padding: 18px 20px; border: 1px solid #f0ece1;">
+            <h3 style="font-weight: 700; color: #1a202c; font-size: 1.05rem; margin: 0 0 10px 0; line-height: 1.4;">
+                Q{{ forloop.counter }}: {{ faq.question }}
+            </h3>
+            <div class="mathjax-render" style="color: #4a5568; font-size: 0.96rem; line-height: 1.65; margin: 0;">
+                {{ faq.answer|linebreaks }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+
 
         <!-- Practice section — pulled up next to the content it tests, right after Save -->
         <div class="practice-section">
@@ -1514,6 +1733,38 @@
             </div>
         </div>
 
+        <!-- FormulaVerse Comment / Doubt Section -->
+<div class="content-section" style="margin-top: 24px; background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+  <h2 style="font-size: 1.15rem; font-weight: 700; color: #1a202c; margin-bottom: 6px;">💬 Have a Doubt or Feedback?</h2>
+  <p style="font-size: 0.85rem; color: #718096; margin-bottom: 16px;">Ask a question about this derivation or leave a note for other students.</p>
+
+  <form method="POST" action="{% url 'add_comment' formula.slug %}" style="display: flex; flex-direction: column; gap: 12px;">
+    {% csrf_token %}
+    <input
+      type="text"
+      name="student_name"
+      placeholder="Your Name or Username"
+      required
+      style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e0; border-radius: 8px; font-size: 0.9rem; box-sizing: border-box;"
+    />
+
+    <textarea
+      name="comment_text"
+      rows="3"
+      placeholder="Type your message or doubt here..."
+      required
+      style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e0; border-radius: 8px; font-size: 0.9rem; box-sizing: border-box; resize: vertical;"
+    ></textarea>
+
+    <button
+      type="submit"
+      style="align-self: flex-start; background-color: #7c3aed; color: #ffffff; font-weight: 600; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem;"
+    >
+      Post Comment
+    </button>
+  </form>
+</div>
+
         <div>
              <div class="practice-heading" style="margin-top:22px;"> 💡 You Might Also Need </div>
             <div class="similar-scroll">
@@ -1528,43 +1779,68 @@
             </div>
         </div>
 
-        <a href=https://t.me/formulaverse target="_blank" class="tg-join-btn">📢 Loved this explanation? Join our Telegram for daily physics shortcuts &amp; cheat sheets!</a>
+
+<div style="background: #f0f3ff; border: 1px solid #d0d7de; border-radius: 8px; padding: 1.2rem; margin-top: 2rem; text-align: center;">
+    <p style="margin: 0; font-weight: 600;">🚀 Curious about modern breakthroughs?</p>
+    <a href="/discovery/" style="color: #6c5ce7; font-weight: 700; text-decoration: none;">Explore Incredible Physics Discoveries (2022–2023) &rarr;</a>
+</div>
+
+
+
+        <!-- Redesigned Offline PYQ Book Banner -->
+<div class="pyq-affiliate-card">
+    <div class="pyq-affiliate-header">
+        <span class="pyq-badge">Offline Practice</span>
+        <span class="pyq-amazon-tag">Amazon Official</span>
+    </div>
+    <div class="pyq-affiliate-body">
+        <div class="pyq-icon">📖</div>
+        <div class="pyq-details">
+            <h4 class="pyq-title">Prefer practicing on paper?</h4>
+            <p class="pyq-desc">Get chapter-wise 36+ years JEE & NEET solved paper books with detailed solutions.</p>
+        </div>
+    </div>
+    <a href="https://amzn.to/44QrFdw" target="_blank" rel="noopener sponsored" class="pyq-amazon-btn">
+        Get Solved Papers on Amazon
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+    </a>
+</div>
 
     </div>
 
 
 
-
 <footer class="site-footer">
-            <p>© 2026 formulaverse.in</p>
-            <div class="footer-links">
-                <a href="/me">About</a> •
-                <a href="/privacy/">Privacy Policy</a> •
-                <a href="/terms/">Terms of Service</a>
-            </div>
-        </footer>
+  <p>© 2026 formulaverse.in</p>
+  <div class="footer-links">
+    <a href="/me">About</a> •
+    <a href="/me#get-in-touch">Contact Us</a> •
+    <a href="/privacy/">Privacy Policy</a> •
+    <a href="/terms/">Terms of Service</a>
+  </div>
+</footer>
 
-
-    <!-- Spacer so the fixed bottom nav doesn't cover content above it -->
-<div class="fv-nav-spacer"></div>
-
-<nav class="fv-bottom-nav" aria-label="Primary">
-    <a href="{% url 'base-page' %}" class="fv-nav-item {% if request.resolver_match.url_name == 'base-page' %}is-active{% endif %}">
-        <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
-        <span class="fv-nav-label">Home</span>
-    </a>
-    <a href="{% url 'index-page' %}" class="fv-nav-item {% if request.resolver_match.url_name == 'index-page' %}is-active{% endif %}">
-        <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
-        <span class="fv-nav-label">Index</span>
-    </a>
-    <a href="{% url 'all-saved' %}" class="fv-nav-item {% if request.resolver_match.url_name == 'all-saved' %}is-active{% endif %}">
-        <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
-        <span class="fv-nav-label">Vault</span>
-    </a>
-    <a href="{% url 'my-purchase' %}" class="fv-nav-item {% if request.resolver_match.url_name == 'my-purchase' %}is-active{% endif %}">
-        <span class="fv-nav-icon" aria-hidden="true">&#128179;</span>
-        <span class="fv-nav-label">My Purchase</span>
-    </a>
+<nav class="nav-menu fv-bottom-nav" aria-label="Primary">
+  <a href="{% url 'base-page' %}" class="fv-nav-item is-active">
+    <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
+    <span class="fv-nav-label">Home</span>
+  </a>
+  <a href="{% url 'index-page' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
+    <span class="fv-nav-label">Index</span>
+  </a>
+  <a href="{% url 'blog_list' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#128214;</span>
+    <span class="fv-nav-label">Guides</span>
+  </a>
+  <a href="{% url 'all-saved' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
+    <span class="fv-nav-label">Vault</span>
+  </a>
+  <a href="{% url 'my-purchase' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#128179;</span>
+    <span class="fv-nav-label">My Purchase</span>
+  </a>
 </nav>
 
 <script>
@@ -2027,14 +2303,19 @@ document.addEventListener("DOMContentLoaded", function () {
     renderInputs();
   });
 
+ document.addEventListener("DOMContentLoaded", function() {
+    if (window.MathJax) {
+      MathJax.typesetPromise(document.querySelectorAll('.mathjax-render')).catch(function (err) {
+        console.error('MathJax rendering failed: ' + err.message);
+      });
+    }
+  });
 
 
 
 </script>
 
 
-
-<script src="https://pl30861993.effectivecpmnetwork.com/8d/26/66/8d266641c3fdbb36cf102559f460796a.js"></script>
 
 </body>
 </html>

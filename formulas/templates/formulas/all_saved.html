@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Personal Formula Vault | FormulaVerse</title>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
+     crossorigin="anonymous"></script>
+
 
     <!-- Meta Description -->
     <meta name="description" content="Access and organize your saved Physics formulas, custom revision notes, and bookmarked cheat sheets on FormulaVerse.">
@@ -591,6 +594,84 @@ ul {
   height: auto !important;
 }
 
+.section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 2.2rem 0 1rem 0;
+            text-align: center;
+        }
+
+        /* Featured Formula Cards Grid (Content Expansion) */
+        .featured-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+        }
+        .featured-card {
+            background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(27, 27, 47, 0.03);
+            transition: border-color 0.2s ease;
+        }
+        .featured-card:hover {
+            border-color: var(--accent-indigo);
+        }
+        .featured-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .featured-card-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+        }
+        .featured-tag {
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: var(--accent-indigo-soft);
+            color: var(--accent-indigo);
+        }
+        .featured-formula-math {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--accent-indigo);
+            background: var(--bg-card-alt);
+            padding: 6px 12px;
+            border-radius: 8px;
+            margin: 6px 0 8px 0;
+            display: inline-block;
+        }
+        .featured-card-desc {
+            font-size: 0.83rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            margin-bottom: 8px;
+        }
+        .featured-link {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--accent-indigo);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .featured-link:hover { text-decoration: underline; }
+
+        .featured-card a{
+            text-decoration: none;
+        }
+
 
     </style>
 
@@ -675,24 +756,86 @@ ul {
     </ul>
 
     {% else %}
-    <div class="empty-message">Your vault is empty. <span><a href='/chapter/optics/'>Save a formula to lock it in here-></a></span>
+    <div class="empty-message">Your vault is empty
     </div>
     {% endif %}
     </div>
 
-<div class="ad-banner-container">
-<script async="async" data-cfasync="false" src="https://pl30854659.effectivecpmnetwork.com/839994ed0cd70e78485e96284f4eae08/invoke.js"></script>
-<div id="container-839994ed0cd70e78485e96284f4eae08"></div>
-</div>
 
-    <footer class="site-footer">
-            <p>© 2026 formulaverse.in</p>
-            <div class="footer-links">
-                <a href="/me">About</a> •
-                <a href="/privacy/">Privacy Policy</a> •
-                <a href="/terms/">Terms of Service</a>
+     <h2 class="section-title"> Get Started- Save one of these </h2>
+        <div class="featured-grid">
+
+            <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Bernoulli's Principle</span>
+                    <span class="featured-tag">Fluid Mechanics</span>
+                </div>
+                <div class="featured-formula-math">P + ½ρv² + ρgh = const</div>
+                <p class="featured-card-desc">Governs energy conservation for ideal fluids. Explains lift forces in aerodynamics and fluid pressure changes in venture tubes.</p>
+                <a href='/formula/bernoullis-equation/' class="featured-link">Explore Fluid Mechanics →</a>
             </div>
-        </footer>
+
+            <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Lorentz Force Law</span>
+                    <span class="featured-tag">Electromagnetism</span>
+                </div>
+                <div class="featured-formula-math">F = q(E + v × B)</div>
+                <p class="featured-card-desc">Calculates combined electric and magnetic forces on moving charges. Core concept for cyclotrons and mass spectrometers.</p>
+                <a href='/formula/lorentz-force/' class="featured-link">Explore Electromagnetism →</a>
+            </div>
+
+            <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Stokes' Drag Law</span>
+                    <span class="featured-tag">Viscosity</span>
+                </div>
+                <div class="featured-formula-math">F_d = 6π η r v</div>
+                <p class="featured-card-desc">Determines viscous drag on spherical objects in laminar fluid flow. Crucial for Millikan oil drop calculations and terminal velocity analysis.</p>
+                <a href='/formula/stokes-law/' class="featured-link">Explore Viscosity Notes →</a>
+            </div>
+
+           <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Brewster's Law</span>
+                    <span class="featured-tag"> Optics</span>
+                </div>
+                <div class="featured-formula-math">μ = tan(i_p)</div>
+                <p class="featured-card-desc">Relates the refractive index of a medium to the polarizing angle where reflected light becomes completely linearly polarized.</p>
+                <a href='/formula/brewsters-law/' class="featured-link">Explore  Optics →</a>
+            </div>
+
+            <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Heisenberg Uncertainty</span>
+                    <span class="featured-tag">Modern Physics</span>
+                </div>
+                <div class="featured-formula-math">Δx · Δp ≥ ℏ / 2</div>
+                <p class="featured-card-desc">Establishes the fundamental quantum limit on the simultaneous precision of a particle's position and linear momentum.</p>
+                <a href='/formula/heisenberg-uncertainty-principle/' class="featured-link">Explore Quantum Physics →</a>
+            </div>
+
+            <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Ideal Gas Equation</span>
+                    <span class="featured-tag">Thermodynamics</span>
+                </div>
+                <div class="featured-formula-math">PV = nRT</div>
+                <p class="featured-card-desc">Combines Boyle's, Charles's, and Avogadro's laws to relate state variables of ideal gases under thermal equilibrium.</p>
+                <a href='/formula/ideal-gas-equation/' class="featured-link">Explore Thermodynamics →</a>
+            </div>
+
+        </div>
+
+<footer class="site-footer">
+  <p>© 2026 formulaverse.in</p>
+  <div class="footer-links">
+    <a href="/me">About</a> •
+    <a href="/me#get-in-touch">Contact Us</a> •
+    <a href="/privacy/">Privacy Policy</a> •
+    <a href="/terms/">Terms of Service</a>
+  </div>
+</footer>
 
 <script>
 
@@ -782,25 +925,28 @@ function shareVault(formulaCount) {
 </div>
 
 
-<div class="fv-nav-spacer"></div>
+<nav class="nav-menu fv-bottom-nav" aria-label="Primary">
+  <a href="{% url 'base-page' %}" class="fv-nav-item is-active">
+    <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
+    <span class="fv-nav-label">Home</span>
+  </a>
+  <a href="{% url 'index-page' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
+    <span class="fv-nav-label">Index</span>
+  </a>
+  <a href="{% url 'blog_list' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#128214;</span>
+    <span class="fv-nav-label">Guides</span>
+  </a>
+  <a href="{% url 'all-saved' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
+    <span class="fv-nav-label">Vault</span>
+  </a>
+  <a href="{% url 'my-purchase' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#128179;</span>
+    <span class="fv-nav-label">My Purchase</span>
+  </a>
+</nav>
 
-    <nav class="fv-bottom-nav" aria-label="Primary">
-        <a href="{% url 'base-page' %}" class="fv-nav-item is-active">
-            <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
-            <span class="fv-nav-label">Home</span>
-        </a>
-        <a href="{% url 'index-page' %}" class="fv-nav-item">
-            <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
-            <span class="fv-nav-label">Index</span>
-        </a>
-        <a href="{% url 'all-saved' %}" class="fv-nav-item">
-            <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
-            <span class="fv-nav-label">Vault</span>
-        </a>
-        <a href="{% url 'my-purchase' %}" class="fv-nav-item">
-            <span class="fv-nav-icon" aria-hidden="true">&#128179;</span>
-            <span class="fv-nav-label">My Purchase</span>
-        </a>
-    </nav>
 </body>
 </html>

@@ -5,7 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>{% block title %}{% if formula.title %}{{ formula.title }} Formula, Derivation & Notes | FormulaVerse{% else %}Explore All Physics Formulas for JEE & NEET | FormulaVerse{% endif %}{% endblock %}</title>
+    <title>{% block title %}{% if formula.title %}{{ formula.title }} Formula, Derivation & Notes | FormulaVerse{% else %}Explore All Physics Formulas for JEE & NEET | FormulaVerse{% endif %}{% endblock %}</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
+     crossorigin="anonymous"></script>
+
 
     <!-- Dynamic Meta Description -->
     <meta name="description" content="{% block meta_description %}{% if formula.meta_description %}{{ formula.meta_description }}{% elif formula.title %}Get the exact formula for {{ formula.title }}, key variables, step-by-step derivation, sign conventions, and solved numerical examples for JEE & NEET.{% else %}Master Physics with FormulaVerse. Complete formula cheat sheets, derivations, and quick revision notes for JEE Main, Advanced, NEET, and Class 11-12.{% endif %}{% endblock %}">
@@ -32,14 +35,47 @@
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <!-- Structured Data (Schema.org) -->
+    <!-- Structured Data: Organization & FAQ Schema (SEO & AdSense E-E-A-T) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "FormulaVerse",
-      "url": "https://formulaverse.in",
-      "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "FormulaVerse",
+          "url": "https://formulaverse.in",
+          "logo": "https://formulaverse.in/static/formulas/icon.jpeg"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Are all physics formula derivations free on FormulaVerse?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, 100% of our formula index, step-by-step mathematical derivations, and reference tables are completely free to access for JEE and NEET aspirants."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is this content updated for current JEE Mains and NEET physics syllabi?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, our formula sheets, dimensional analysis shortcuts, and problem-solving guides follow the latest NTA and NCERT exam guidelines."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What reference tools does FormulaVerse provide?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "FormulaVerse includes physical constant lookup tables, SI unit conversions, dimensional formulas, and PYQ reference materials across 16 physics chapters."
+              }
+            }
+          ]
+        }
+      ]
     }
     </script>
 
@@ -48,8 +84,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-
-    <!-- Google Tag Manager / Analytics (gtag.js) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -58,424 +93,581 @@
       gtag('config', 'G-YHLZCEHWF7');
     </script>
 
-  <style>
-    :root {
-        /* Base surfaces — warm cream light theme */
-        --bg-primary: #FAF6ED;
-        --bg-secondary: #FFFFFF;
-        --bg-card: #FFFFFF;
-        --bg-card-alt: #F3EEE1;
-        --border-subtle: #E8E1D0;
-        --border-glow: rgba(79, 70, 229, 0.14);
+    <style>
+        :root {
+            /* Base surfaces — warm cream light theme */
+            --bg-primary: #FAF6ED;
+            --bg-secondary: #FFFFFF;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #F3EEE1;
+            --border-subtle: #E8E1D0;
+            --border-glow: rgba(79, 70, 229, 0.14);
 
-        /* Text */
-        --text-primary: #1B1B2F;
-        --text-secondary: #63637A;
-        --text-muted: #94918A;
+            /* Text */
+            --text-primary: #1B1B2F;
+            --text-secondary: #63637A;
+            --text-muted: #94918A;
 
-        /* Accent — indigo (primary) + amber (CTA / featured) + teal (tertiary) */
-        --accent-indigo: #4F46E5;
-        --accent-indigo-soft: rgba(79, 70, 229, 0.08);
-        --accent-teal: #0EA5A0;
+            /* Accent — indigo (primary) + amber (CTA / featured) + teal (tertiary) */
+            --accent-indigo: #4F46E5;
+            --accent-indigo-soft: rgba(79, 70, 229, 0.08);
+            --accent-teal: #0EA5A0;
 
-        --gold: #F5A623;
-        --gold-deep: #E08E00;
-    }
+            --gold: #F5A623;
+            --gold-deep: #E08E00;
+        }
 
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-        background: var(--bg-primary);
-        font-family: 'Outfit', sans-serif;
-        min-height: 100vh;
-        padding: 20px 14px;
-        overflow-x: hidden;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+        body {
+            background: var(--bg-primary);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            padding: 20px 14px;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    /* Faint orbit-ring field — the site's signature motif, echoing the
-       gravity/orbit diagrams used throughout FormulaVerse's own content */
-    body::before {
-        content: '';
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        width: 900px;
-        height: 900px;
-        transform: translate(-50%, -46%);
-        background:
-            radial-gradient(circle, transparent 0 128px, rgba(79,70,229,0.055) 129px, transparent 131px),
-            radial-gradient(circle, transparent 0 220px, rgba(79,70,229,0.045) 221px, transparent 223px),
-            radial-gradient(circle, transparent 0 312px, rgba(245,166,35,0.06) 313px, transparent 315px);
-        pointer-events: none;
-        z-index: 0;
-    }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 900px;
+            height: 900px;
+            transform: translate(-50%, -46%);
+            background:
+                radial-gradient(circle, transparent 0 128px, rgba(79,70,229,0.055) 129px, transparent 131px),
+                radial-gradient(circle, transparent 0 220px, rgba(79,70,229,0.045) 221px, transparent 223px),
+                radial-gradient(circle, transparent 0 312px, rgba(245,166,35,0.06) 313px, transparent 315px);
+            pointer-events: none;
+            z-index: 0;
+        }
 
-    /* ── Top Floating Header Navigation ── */
-    .top-nav {
-        position: relative;
-        top: -2px;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 5px 0;
-        z-index: 100;
-    }
+        /* Top Nav */
+        .top-nav {
+            position: relative;
+            top: -2px;
+            width: 100%;
+            max-width: 720px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5px 0;
+            z-index: 100;
+        }
 
-    .about-me {
-        font-size: 1rem;
-        color: var(--text-primary);
-        font-weight: 600;
-        text-decoration: none;
-        opacity: 0.75;
-        transition: opacity 0.2s;
-        padding: 5px 9px;
-        margin-left: auto;
-    }
-    .about-me:hover { opacity: 1; }
+        .about-me {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            text-decoration: none;
+            opacity: 0.85;
+            transition: opacity 0.2s;
+        }
+        .about-me:hover { opacity: 1; }
 
-    .tg-join-btn {
-        display: inline-flex;
-        align-items: center;
-        background: #24A1DE;
-        color: #ffffff !important;
-        padding: 5px 9px;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 20px;
-        text-decoration: none !important;
-        transition: all 0.2s ease-in-out;
-        box-shadow: 0 4px 10px rgba(36, 161, 222, 0.18);
-    }
-    .tg-join-btn:hover {
-        background: #1d82b3;
-        transform: translateY(-1px);
-    }
+        /* Core Page Wrapper */
+        .page-wrap {
+            max-width: 680px;
+            width: 100%;
+            text-align: center;
+            margin: 15px auto 0;
+            position: relative;
+            z-index: 1;
+        }
 
-    /* ── Core Container ── */
-    .page-wrap {
-        max-width: 500px;
-        width: 100%;
-        text-align: center;
-        margin: 20px auto 0;
-        position: relative;
-        z-index: 1;
-    }
+        .ornament {
+            color: var(--accent-indigo);
+            font-size: 1.1rem;
+            letter-spacing: 0.4rem;
+            margin-bottom: 0.3rem;
+            opacity: 0.6;
+        }
 
-    .ornament {
-        color: var(--accent-indigo);
-        font-size: 1.1rem;
-        letter-spacing: 0.4rem;
-        margin-bottom: 0.3rem;
-        opacity: 0.6;
-    }
+        .eyebrow {
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: var(--accent-indigo);
+        }
 
-    .eyebrow {
-        font-size: 0.95rem;
-        font-weight: 600;
-        letter-spacing: 0.05em;
-        color: var(--accent-indigo);
-    }
+        h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--text-primary);
+            margin: 0.5rem 0;
+        }
 
-    h1 {
-        font-family: 'Playfair Display', Georgia, serif;
-        font-size: clamp(1.8rem, 6vw, 2.6rem);
-        font-weight: 800;
-        line-height: 1.2;
-        color: var(--text-primary);
-        margin: 0.5rem 0;
-    }
+        .subtitle-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
 
-    .divider {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin: 1rem 0 1.4rem;
-    }
-    .divider::before, .divider::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: linear-gradient(to right, transparent, var(--border-subtle), transparent);
-    }
-    .divider-diamond {
-        color: var(--gold);
-        font-size: 0.6rem;
-    }
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0 1.4rem;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border-subtle), transparent);
+        }
+        .divider-diamond {
+            color: var(--gold);
+            font-size: 0.6rem;
+        }
 
-    /* ── Stat Cards (replaces the old 4-row feature grid) ── */
-    .stat-cards {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin-bottom: 1.4rem;
-    }
+        /* Hero Search Bar */
+        .hero-search-box {
+            position: relative;
+            max-width: 520px;
+            margin: 0 auto 1.5rem auto;
+        }
+        .hero-search-input {
+            width: 100%;
+            padding: 14px 48px 14px 18px;
+            font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif;
+            border: 1px solid var(--border-subtle);
+            border-radius: 30px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: 0 4px 16px rgba(27, 27, 47, 0.04);
+            transition: all 0.25s ease;
+            outline: none;
+        }
+        .hero-search-input:focus {
+            border-color: var(--accent-indigo);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.12);
+        }
+        .hero-search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gold);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1B1B2F;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+        .hero-search-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+        }
 
-    .stat-card {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 14px;
-        background: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        border-radius: 16px;
-        padding: 20px 22px;
-        text-align: left;
-        text-decoration: none;
-        box-shadow: 0 6px 20px rgba(27, 27, 47, 0.05);
-        transition: all 0.25s ease;
-    }
-    .stat-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 26px rgba(79, 70, 229, 0.14);
-        border-color: var(--accent-indigo);
-    }
-
-    .stat-card-count {
-        border-left: 4px solid var(--gold);
-    }
-    .stat-card-count .stat-number {
-        font-family: 'Playfair Display', serif;
-        font-weight: 600;
-        font-size: 2rem;
-        color: var(--text-primary);
-        line-height: 1;
-    }
-    .stat-card-count .stat-label {
-        display: block;
-        margin-top: 4px;
-        font-size: 0.85rem;
-        color: var(--text-secondary);
-        font-weight: 400;
-    }
-    .stat-card-count .stat-badge {
-        flex-shrink: 0;
-        width: 46px;
-        height: 46px;
-        border-radius: 50%;
-        background: rgba(245, 166, 35, 0.12);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.3rem;
-    }
-
-    .stat-card-tools {
-        border-left: 4px solid var(--accent-indigo);
-    }
-    .stat-card-tools .stat-tools-title {
-        font-family: 'Playfair Display', serif;
-        font-weight: 700;
-        font-size: 1.56rem;
-        color: var(--text-primary);
-        margin-bottom: 3px;
-    }
-    .stat-card-tools .stat-tools-sub {
-        font-size: 0.8rem;
-        color: var(--text-secondary);
-        line-height: 1.35;
-    }
-    .stat-card-tools .stat-arrow {
-        flex-shrink: 0;
-        font-size: 1.3rem;
-        color: var(--accent-indigo);
-        transition: transform 0.25s ease;
-    }
-    .stat-card-tools:hover .stat-arrow {
-        transform: translateX(4px);
-    }
-
-    /* ── CTA Button ── */
-    .explore-btn-wrapper {
-        margin: 1.5rem auto 0.5rem;
-    }
-    .explore-btn {
-        display: inline-block;
-        background: linear-gradient(135deg, var(--gold), var(--gold-deep));
-        border-radius: 50px;
-        padding: 14px 40px;
-        font-size: 16px;
-        font-weight: bold;
-        box-shadow: 0 10px 24px rgba(245, 166, 35, 0.32);
-        transition: all 0.3s ease;
-        text-decoration: none;
-    }
-    .explore-btn a {
-        text-decoration: none;
-        color: #1B1B2F !important;
-    }
-    .explore-btn:hover {
-        transform: scale(1.03) translateY(-1px);
-        box-shadow: 0 14px 30px rgba(245, 166, 35, 0.42);
-    }
-
-    .bottom-note {
-        margin-top: 1rem;
-        font-size: 0.8rem;
-        font-style: italic;
-        color: var(--text-muted);
-        letter-spacing: 0.05em;
-    }
-
-    /* ── Physics History Banner ── */
-    .physics-history-banner {
-        background: var(--bg-secondary);
-        border-bottom: 1px solid var(--border-subtle);
-        padding: 10px 20px;
-        color: var(--text-primary);
-        font-family: system-ui, -apple-system, sans-serif;
-        font-size: 14px;
-        z-index: 999;
-        width: 100%;
-        position: relative;
-    }
-
-    .banner-btn {
-        background: var(--gold);
-        color: #1B1B2F;
-        border: none;
-        padding: 4px 13px;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 11.5px;
-        font-weight: 370;
-        transition: all 0.2s ease;
-        box-shadow: 0 3px 8px rgba(245, 166, 35, 0.28);
-    }
-
-    .banner-btn:hover {
-        background: #f7b545;
-        transform: scale(1.03);
-    }
-
-    .banner-content {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    .banner-text {
-        font-weight: 500;
-        color: var(--text-secondary);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    /* ── Modal Styles ── */
-    .history-modal {
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        display: flex; align-items: center; justify-content: center;
-        z-index: 1000;
-    }
-    .modal-overlay {
-        position: absolute; width: 100%; height: 100%;
-        background: rgba(27, 27, 47, 0.45);
-        backdrop-filter: blur(4px);
-    }
-    .modal-box {
-        position: relative;
-        background: var(--bg-secondary);
-        border: 1px solid var(--border-subtle);
-        border-radius: 14px;
-        width: 90%; max-width: 500px;
-        padding: 24px; color: var(--text-primary);
-        box-shadow: 0 20px 40px -8px rgba(27, 27, 47, 0.25);
-        animation: slideUp 0.3s ease-out;
-    }
-    .modal-header {
-        display: flex; justify-content: space-between; align-items: center;
-        margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;
-    }
-    .modal-title { font-weight: 700; color: var(--accent-indigo); font-size: 16px; }
-    .modal-close {
-        background: none; border: none; color: var(--text-muted);
-        font-size: 24px; cursor: pointer; line-height: 1;
-    }
-    .modal-close:hover { color: var(--text-primary); }
-    .modal-body { font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
-
-    @keyframes slideUp {
-        from { transform: translateY(20px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-
-    /* ══════════════════════════════════════════════
-       DESKTOP / LAPTOP ENHANCEMENTS
-       ══════════════════════════════════════════════ */
-    @media (min-width: 900px) {
-
-        body { padding: 32px 40px; }
-
-        .top-nav { max-width: 900px; }
-
-        .page-wrap { max-width: 680px; margin-top: 30px; }
-
+        /* Stat Cards Grid */
         .stat-cards {
-            flex-direction: row;
-            gap: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 1.4rem;
         }
-        .stat-card { flex: 1 1 50%; }
 
+        .stat-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 18px 22px;
+            text-align: left;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(27, 27, 47, 0.04);
+            transition: all 0.25s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 26px rgba(79, 70, 229, 0.12);
+            border-color: var(--accent-indigo);
+        }
+
+        .stat-card-count { border-left: 4px solid var(--gold); }
+        .stat-card-count .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+        .stat-card-count .stat-label {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .stat-card-count .stat-badge {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(245, 166, 35, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .stat-card-tools { border-left: 4px solid var(--accent-indigo); }
+        .stat-card-tools .stat-tools-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+        .stat-card-tools .stat-tools-sub {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.35;
+        }
+
+        /* CTA Button */
+        .explore-btn-wrapper { margin: 1.5rem auto 1rem; }
         .explore-btn {
-            padding: 16px 52px;
-            font-size: 17px;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+            border-radius: 50px;
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 10px 24px rgba(245, 166, 35, 0.32);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .explore-btn a {
+            text-decoration: none;
+            color: #1B1B2F !important;
+        }
+        .explore-btn:hover {
+            transform: scale(1.03) translateY(-1px);
+            box-shadow: 0 14px 30px rgba(245, 166, 35, 0.42);
         }
 
-        .physics-history-banner { padding: 12px 20px; }
-    }
+        /* Section Headings inside page-wrap */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 2.2rem 0 1rem 0;
+            text-align: center;
+        }
 
-     .site-footer {
-            margin-top: 18px;
-            padding-top: 0;
+        /* Featured Formula Cards Grid (Content Expansion) */
+        .featured-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+        }
+        .featured-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(27, 27, 47, 0.03);
+            transition: border-color 0.2s ease;
+        }
+        .featured-card:hover {
+            border-color: var(--accent-indigo);
+        }
+        .featured-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .featured-card-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+        }
+        .featured-tag {
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: var(--accent-indigo-soft);
+            color: var(--accent-indigo);
+        }
+        .featured-formula-math {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--accent-indigo);
+            background: var(--bg-card-alt);
+            padding: 6px 12px;
+            border-radius: 8px;
+            margin: 6px 0 8px 0;
+            display: inline-block;
+        }
+        .featured-card-desc {
+            font-size: 0.83rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            margin-bottom: 8px;
+        }
+        .featured-link {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--accent-indigo);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .featured-link:hover { text-decoration: underline; }
+
+        /* Value Proposition Grid (3 Columns on larger screens) */
+        .value-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        .value-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 4px 12px rgba(27, 27, 47, 0.03);
+        }
+        .value-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        .value-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        .value-desc {
+            font-size: 0.83rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* FAQ Section Accordion */
+        .faq-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+            margin-top: 1rem;
+        }
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 12px 16px;
+        }
+        .faq-item summary {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after {
+            content: '＋';
+            font-size: 0.9rem;
+            color: var(--accent-indigo);
+            font-weight: bold;
+        }
+        .faq-item[open] summary::after {
+            content: '－';
+        }
+        .faq-item p {
+            margin-top: 8px;
+            font-size: 0.83rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            border-top: 1px dashed var(--border-subtle);
+            padding-top: 8px;
+        }
+
+        /* Physics History Banner */
+        .physics-history-banner {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 10px 20px;
+            color: var(--text-primary);
+            font-size: 14px;
+            z-index: 999;
+            width: 100%;
+            position: relative;
+        }
+        .banner-btn {
+            background: var(--gold);
+            color: #1B1B2F;
+            border: none;
+            padding: 4px 13px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 11.5px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 8px rgba(245, 166, 35, 0.28);
+        }
+        .banner-btn:hover {
+            background: #f7b545;
+            transform: scale(1.03);
+        }
+        .banner-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .banner-text {
+            font-weight: 500;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Modal Styles */
+        .history-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000;
+        }
+        .modal-overlay {
+            position: absolute; width: 100%; height: 100%;
+            background: rgba(27, 27, 47, 0.45);
+            backdrop-filter: blur(4px);
+        }
+        .modal-box {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            width: 90%; max-width: 500px;
+            padding: 24px; color: var(--text-primary);
+            box-shadow: 0 20px 40px -8px rgba(27, 27, 47, 0.25);
+            animation: slideUp 0.3s ease-out;
+        }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;
+        }
+        .modal-title { font-weight: 700; color: var(--accent-indigo); font-size: 16px; }
+        .modal-close {
+            background: none; border: none; color: var(--text-muted);
+            font-size: 24px; cursor: pointer; line-height: 1;
+        }
+        .modal-close:hover { color: var(--text-primary); }
+        .modal-body { font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Social Proof Banner */
+        .social-proof-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px auto 20px auto;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 30px;
+            width: fit-content;
+            max-width: 100%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+        .proof-avatars { display: flex; align-items: center; margin-right: 2px; }
+        .proof-avatars .avatar { font-size: 0.9rem; margin-left: -4px; }
+        .proof-avatars .avatar:first-child { margin-left: 0; }
+        .proof-text { font-size: 0.78rem; color: #475569; margin: 0; line-height: 1.2; font-weight: 500; }
+        .highlight-count { color: #0f172a; font-weight: 700; }
+
+        /* Ad Banner Container */
+        .ad-banner-container {
+            max-width: 280px;
+            width: 100%;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Footer */
+        .site-footer {
+            margin-top: 24px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-subtle);
             text-align: center;
             font-size: 0.8rem;
             color: var(--text-muted);
         }
-
-        .site-footer p {
-            margin-bottom: 8px;
-        }
-
+        .site-footer p { margin-bottom: 8px; }
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 16px;
             flex-wrap: wrap;
         }
-
         .footer-links a {
             color: var(--text-muted);
             text-decoration: none;
             transition: color 0.15s ease;
         }
+        .footer-links a:hover { color: var(--text-primary); }
 
-        .footer-links a:hover {
-            color: var(--text-main);
+        /* Desktop Media Queries */
+        @media (min-width: 768px) {
+            body { padding: 32px 40px; }
+            .stat-cards { flex-direction: row; gap: 16px; }
+            .stat-card { flex: 1; }
+            .value-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+            .featured-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
         }
-</style>
+    </style>
 
-    <!-- ═══════════════════════════════════════════════
-         BOTTOM NAV — self-contained styling, deliberately
-         independent of this page's :root vars, so it looks
-         identical across every page regardless of that
-         page's own accent theme.
-         ═══════════════════════════════════════════════ -->
+    <!-- Bottom Nav Styles -->
     <style>
         .fv-nav-spacer { height: 72px; }
-
         .fv-bottom-nav {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             z-index: 200;
             display: flex;
             justify-content: space-around;
@@ -487,7 +679,6 @@
             border-top: 1px solid rgba(140, 110, 70, 0.14);
             box-shadow: 0 -6px 24px rgba(140, 120, 90, 0.10);
         }
-
         .fv-nav-item {
             flex: 1;
             display: flex;
@@ -501,85 +692,15 @@
             transition: color 0.2s ease;
         }
         .fv-nav-item:hover { color: #0d9488; }
-        .fv-nav-item:focus-visible { outline: 2px solid #0d9488; outline-offset: 2px; border-radius: 8px; }
-
         .fv-nav-item.is-active { color: #0d9488; }
-
         .fv-nav-icon { font-size: 1.15rem; line-height: 1; }
         .fv-nav-label { font-size: 10.5px; letter-spacing: 0.02em; }
-
-
-
-        /* Social Proof Banner */
-.social-proof-banner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin: 16px auto 24px auto;
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: 30px;
-    width: fit-content;
-    max-width: 90%;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-}
-
-.proof-avatars {
-    display: flex;
-    align-items: center;
-    margin-right: 2px;
-}
-
-.proof-avatars .avatar {
-    font-size: 0.9rem;
-    margin-left: -4px;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
-}
-
-.proof-avatars .avatar:first-child {
-    margin-left: 0;
-}
-
-.proof-text {
-    font-size: 0.78rem;
-    color: #475569;
-    margin: 0;
-    line-height: 1.2;
-    font-weight: 500;
-}
-
-.highlight-count {
-    color: #0f172a;
-    font-weight: 700;
-}
-
-
-.ad-banner-container {
-  max-width: 280px; /* Adjust between 250px - 300px based on preference */
-  width: 100%;
-  margin: 16px auto; /* Centers the banner horizontally */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* Ensures the internal ad iframe scales cleanly */
-.ad-banner-container iframe,
-.ad-banner-container img {
-  max-width: 100% !important;
-  height: auto !important;
-}
-
     </style>
 </head>
 
 <body>
 
+    <!-- Daily Physics Fact Banner -->
     <div id="historyBanner" class="physics-history-banner" style="display: none;">
         <div class="banner-content">
             <span class="banner-icon">💡</span>
@@ -588,7 +709,7 @@
         </div>
     </div>
 
-    <!-- Clean Modal for Full Fact Description -->
+    <!-- Modal for Full Daily Fact -->
     <div id="factModal" class="history-modal" style="display: none;">
         <div class="modal-overlay" onclick="closeHistoryModal()"></div>
         <div class="modal-box">
@@ -602,28 +723,29 @@
         </div>
     </div>
 
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="{% url 'me' %}" class="about-me">About</a>
+    </nav>
 
+    <!-- Core Page Content Wrapper -->
     <div class="page-wrap">
         <div class="ornament">✦ ✦ ✦</div>
         <p class="eyebrow">Welcome to FormulaVerse</p>
 
         <h1>Explore Physics<br>like never before</h1>
+        <p class="subtitle-text">Instant access to step-by-step derivations, JEE & NEET cheat sheets, physical constants, and interactive reference tools.</p>
+o
+
 
         <div class="divider"><span class="divider-diamond">◆</span></div>
 
-<div class="ad-banner-container">
-<script async="async" data-cfasync="false" src="https://pl30854659.effectivecpmnetwork.com/839994ed0cd70e78485e96284f4eae08/invoke.js"></script>
-<div id="container-839994ed0cd70e78485e96284f4eae08"></div>
-</div>
-
-
-
-
+        <!-- High-Level Navigation Cards -->
         <div class="stat-cards">
             <a href="{% url 'index-page' %}" class="stat-card stat-card-count">
                 <div>
-                    <span class="stat-number">150+ formulas, 16 Chapters</span>
-                    <span class="stat-label"> Ready when you need them</span>
+                    <span class="stat-number">150+ Formulas</span>
+                    <span class="stat-label">16 Core Physics Chapters</span>
                 </div>
                 <div class="stat-badge">📐</div>
             </a>
@@ -631,44 +753,236 @@
             <a href="{% url 'index-page' %}" class="stat-card stat-card-tools">
                 <div>
                     <div class="stat-tools-title">Reference Tools</div>
-                    <div class="stat-tools-sub">Physical Constants, Units/Dimensions and PYQ Papers</div>
+                    <div class="stat-tools-sub">Physical Constants, Units/Dimensions & PYQ Papers</div>
                 </div>
             </a>
         </div>
 
         <div class="explore-btn-wrapper">
             <div class="explore-btn">
-                <a href="{% url 'index-page' %}"> Browse Formulas →</a>
+                <a href="{% url 'index-page' %}"> Browse Full Formula Index →</a>
             </div>
         </div>
 
         <!-- Social Proof Banner -->
-<div class="social-proof-banner">
-    <div class="proof-avatars">
-        <span class="avatar">🇮🇳</span>
-        <span class="avatar">🇱🇰</span>
-        <span class="avatar">🇧🇷</span>
+        <div class="social-proof-banner">
+            <div class="proof-avatars">
+                <span class="avatar">🇮🇳</span>
+                <span class="avatar">🇱🇰</span>
+                <span class="avatar">🇧🇷</span>
+            </div>
+            <p class="proof-text">
+                Visited by <strong class="highlight-count">12k+</strong> STEM aspirants with <span style="color: black; font-weight: bold;">105 clicks</span> across <strong class="highlight-count">10+ countries in 2 months</strong>
+            </p>
+        </div>
+
+        <!-- Featured Formulas Section (High-Value Indexable Content) -->
+        <h2 class="section-title">Featured Formulas & Derivations</h2>
+        <div class="featured-grid">
+
+            <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Bernoulli's Principle</span>
+                    <span class="featured-tag">Fluid Mechanics</span>
+                </div>
+                <div class="featured-formula-math">P + ½ρv² + ρgh = const</div>
+                <p class="featured-card-desc">Governs energy conservation for ideal fluids. Explains lift forces in aerodynamics and fluid pressure changes in venture tubes.</p>
+                <a href='/formula/bernoullis-equation/' class="featured-link">Explore Fluid Mechanics →</a>
+            </div>
+
+            <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Lorentz Force Law</span>
+                    <span class="featured-tag">Electromagnetism</span>
+                </div>
+                <div class="featured-formula-math">F = q(E + v × B)</div>
+                <p class="featured-card-desc">Calculates combined electric and magnetic forces on moving charges. Core concept for cyclotrons and mass spectrometers.</p>
+                <a href='/formula/lorentz-force/' class="featured-link">Explore Electromagnetism →</a>
+            </div>
+
+            <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Stokes' Drag Law</span>
+                    <span class="featured-tag">Viscosity</span>
+                </div>
+                <div class="featured-formula-math">F_d = 6π η r v</div>
+                <p class="featured-card-desc">Determines viscous drag on spherical objects in laminar fluid flow. Crucial for Millikan oil drop calculations and terminal velocity analysis.</p>
+                <a href='/formula/stokes-law/' class="featured-link">Explore Viscosity Notes →</a>
+            </div>
+
+           <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Brewster's Law</span>
+                    <span class="featured-tag"> Optics</span>
+                </div>
+                <div class="featured-formula-math">μ = tan(i_p)</div>
+                <p class="featured-card-desc">Relates the refractive index of a medium to the polarizing angle where reflected light becomes completely linearly polarized.</p>
+                <a href='/formula/brewsters-law/' class="featured-link">Explore  Optics →</a>
+            </div>
+
+            <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Heisenberg Uncertainty</span>
+                    <span class="featured-tag">Modern Physics</span>
+                </div>
+                <div class="featured-formula-math">Δx · Δp ≥ ℏ / 2</div>
+                <p class="featured-card-desc">Establishes the fundamental quantum limit on the simultaneous precision of a particle's position and linear momentum.</p>
+                <a href='/formula/heisenberg-uncertainty-principle/' class="featured-link">Explore Quantum Physics →</a>
+            </div>
+
+            <div class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-title">Ideal Gas Equation</span>
+                    <span class="featured-tag">Thermodynamics</span>
+                </div>
+                <div class="featured-formula-math">PV = nRT</div>
+                <p class="featured-card-desc">Combines Boyle's, Charles's, and Avogadro's laws to relate state variables of ideal gases under thermal equilibrium.</p>
+                <a href='/formula/ideal-gas-equation/' class="featured-link">Explore Thermodynamics →</a>
+            </div>
+
+        </div>
+
+
+        <h2 class="section-title">Fundamental Physical Constants</h2>
+<div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 16px; margin-bottom: 2rem; text-align: left;">
+    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem;">
+        <span style="font-weight: 600; color: var(--text-primary);">Speed of Light (c)</span>
+        <span style="font-family: monospace; color: var(--accent-indigo); font-weight: 600;">3.00 × 10⁸ m/s</span>
     </div>
-    <p class="proof-text">
-        Trusted by <strong class="highlight-count">9k+</strong> STEM aspirants across <strong class="highlight-count">10+ countries</strong>
-    </p>
+    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem;">
+        <span style="font-weight: 600; color: var(--text-primary);">Planck Constant (h)</span>
+        <span style="font-family: monospace; color: var(--accent-indigo); font-weight: 600;">6.626 × 10⁻³⁴ J·s</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem;">
+        <span style="font-weight: 600; color: var(--text-primary);">Elementary Charge (e)</span>
+        <span style="font-family: monospace; color: var(--accent-indigo); font-weight: 600;">1.602 × 10⁻¹⁹ C</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.85rem;">
+        <span style="font-weight: 600; color: var(--text-primary);">Gravitational Constant (G)</span>
+        <span style="font-family: monospace; color: var(--accent-indigo); font-weight: 600;">6.674 × 10⁻¹¹ N·m²/kg²</span>
+    </div>
+    <div style="text-align: center; margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--border-subtle);">
+        <a href="{% url 'constants' %}" style="font-size: 0.82rem; font-weight: 600; color: var(--accent-indigo); text-decoration: none;">View All Constants & Table Units →</a>
+    </div>
 </div>
 
-     <footer class="site-footer">
+
+        <h2 class="section-title">Explore by Physics Chapter</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; text-align: center; margin-bottom: 2rem;">
+    <a href='/chapter/mechanics/' style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 12px 8px; border-radius: 12px; text-decoration: none; color: var(--text-primary); font-size: 0.85rem; font-weight: 600;">
+        ⚙️ Mechanics
+    </a>
+    <a href='/chapter/electromagnetism/' style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 12px 8px; border-radius: 12px; text-decoration: none; color: var(--text-primary); font-size: 0.85rem; font-weight: 600;">
+        ⚡ Electromagnetism
+    </a>
+    <a href='/chapter/optics/' style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 12px 8px; border-radius: 12px; text-decoration: none; color: var(--text-primary); font-size: 0.85rem; font-weight: 600;">
+        🔍 Optics
+    </a>
+    <a href='/chapter/thermodynamics/' style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 12px 8px; border-radius: 12px; text-decoration: none; color: var(--text-primary); font-size: 0.85rem; font-weight: 600;">
+        🔥 Thermodynamics
+    </a>
+
+</div>
+
+
+
+
+
+        <!-- Value Proposition Section -->
+        <h2 class="section-title">Why Study with FormulaVerse?</h2>
+        <div class="value-grid">
+            <div class="value-card">
+                <div class="value-icon">📐</div>
+                <div class="value-title">First-Principle Derivations</div>
+                <p class="value-desc">Every equation is derived step-by-step from fundamental laws, helping you master key derivations required for board exams and advanced physics tests.</p>
+            </div>
+
+            <div class="value-card">
+                <div class="value-icon">⚡</div>
+                <div class="value-title">JEE & NEET Shortcuts</div>
+                <p class="value-desc">High-yield short notes, common sign convention pitfalls, limiting case conditions, and speed calculation shortcuts tailored for competitive exams.</p>
+            </div>
+
+            <div class="value-card">
+                <div class="value-icon">🔬</div>
+                <div class="value-title">Practical Reference Tools</div>
+                <p class="value-desc">Quickly cross-check physical constants, SI unit dimensions, and chapter-wise previous year question paper formulas on any device.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Latest Exam Revision Guides</h2>
+<div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; text-align: left;">
+
+    <a href='/blog/top-50-high-yield-physics-formulas-jee-neet/' style="text-decoration: none; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+            <div style="font-size: 0.72rem; font-weight: 600; color: var(--accent-teal); text-transform: uppercase;">Strategy Guide</div>
+            <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin-top: 2px;">Top 50 High-Yield Physics Formulas</div>
+        </div>
+        <span style="color: var(--accent-indigo); font-weight: bold;">→</span>
+    </a>
+
+    <a href='/blog/fluid-mechanics-bernoulli-viscosity-formulas/' style="text-decoration: none; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+            <div style="font-size: 0.72rem; font-weight: 600; color: var(--accent-teal); text-transform: uppercase;">Revision Sheet</div>
+            <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin-top: 2px;">Fluid Mechanics & Hydraulics</div>
+        </div>
+        <span style="color: var(--accent-indigo); font-weight: bold;">→</span>
+    </a>
+
+     <a href='/blog/rigid-body-dynamics-rolling-without-slipping/' style="text-decoration: none; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+            <div style="font-size: 0.72rem; font-weight: 600; color: var(--accent-teal); text-transform: uppercase;">Revision Sheet</div>
+            <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin-top: 2px;">Rigid Body Dynamics: Rolling Without Slipping..</div>
+        </div>
+        <span style="color: var(--accent-indigo); font-weight: bold;">→</span>
+    </a>
+
+</div>
+
+
+        <!-- Frequently Asked Questions -->
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-accordion">
+            <details class="faq-item" open>
+                <summary>Are all physics formula derivations free on FormulaVerse?</summary>
+                <p>Yes, 100% of our formula index, step-by-step mathematical derivations, and reference tables are completely free to access for JEE, NEET, and high school students.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>Is this content aligned with the latest JEE Mains & NEET syllabi?</summary>
+                <p>Yes, all chapter guides, dimensional formulas, and short notes follow current NTA and NCERT standards for Class 11 and Class 12 Physics.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>What reference tools can I use on this site?</summary>
+                <p>You can browse physical constants, SI unit conversions, dimensional analysis sheets, and chapter-wise formula breakdowns for quick revision before exams.</p>
+            </details>
+        </div>
+
+        <div style="background: #f0f3ff; border: 1px solid #d0d7de; border-radius: 8px; padding: 1.2rem; margin-top: 4rem; text-align: center;">
+    <p style="margin: 0; font-weight: 600;">🚀 Curious about modern breakthroughs?</p>
+    <a href="/discovery/" style="color: #6c5ce7; font-weight: 700; text-decoration: none;">Explore Incredible Physics Discoveries (2022–2023) &rarr;</a>
+</div>
+
+
+
+        <!-- Footer -->
+        <footer class="site-footer">
             <p>© 2026 formulaverse.in</p>
             <div class="footer-links">
-                <a href="/me">About</a> •
-                <a href="/privacy/">Privacy Policy</a> •
-                <a href="/terms/">Terms of Service</a>
+                <a href="{% url 'me' %}">About</a> •
+                <a href="{% url 'me' %}#get-in-touch">Contact Us</a> •
+                <a href="{% url 'privacy' %}">Privacy Policy</a> •
+                <a href="{% url 'terms' %}">Terms of Service</a>
             </div>
         </footer>
 
-    </div>
+    </div> <!-- End Page Wrap -->
 
-    <!-- Spacer so the fixed bottom nav doesn't cover the footer/content above it -->
     <div class="fv-nav-spacer"></div>
 
-    <nav class="fv-bottom-nav" aria-label="Primary">
+    <!-- Fixed Bottom Navigation Bar -->
+    <nav class="nav-menu fv-bottom-nav" aria-label="Primary">
         <a href="{% url 'base-page' %}" class="fv-nav-item is-active">
             <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
             <span class="fv-nav-label">Home</span>
@@ -676,6 +990,10 @@
         <a href="{% url 'index-page' %}" class="fv-nav-item">
             <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
             <span class="fv-nav-label">Index</span>
+        </a>
+        <a href="{% url 'blog_list' %}" class="fv-nav-item">
+            <span class="fv-nav-icon" aria-hidden="true">&#128214;</span>
+            <span class="fv-nav-label">Guides</span>
         </a>
         <a href="{% url 'all-saved' %}" class="fv-nav-item">
             <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
@@ -687,6 +1005,7 @@
         </a>
     </nav>
 
+    <!-- Scripts -->
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -703,7 +1022,7 @@
           const snippetSpan = document.getElementById("bannerSnippet");
           const readMoreBtn = document.getElementById("readMoreBtn");
 
-          fetch('/api/daily-facts/')
+          fetch("{% url 'daily_fact' %}")
               .then(response => response.json())
               .then(data => {
                   if (data.success && data.fact && !data.fact.includes("NO_VERIFIED_FACT")) {
@@ -740,9 +1059,6 @@
           document.getElementById("factModal").style.display = "none";
       }
     </script>
-
-<script src="https://pl30861993.effectivecpmnetwork.com/8d/26/66/8d266641c3fdbb36cf102559f460796a.js"></script>
-
 
 </body>
 </html>

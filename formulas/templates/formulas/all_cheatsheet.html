@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FormulaVerse — {{ topic|default:"JEE/NEET Physics Master" }} Cheatsheet</title>
+
+    <!--
+        MathJax removed here: this template is rendered server-side by
+        WeasyPrint (see views.py -> HTML(string=...).write_pdf()), which
+        has no JavaScript engine. The script tag never executed during
+        PDF generation, so it was dead weight. LaTeX formulas are now
+        pre-rendered to images in views.py (resolve_math_image /
+        render_latex_to_image) before this template ever runs, so
+        entry.formula_img / entry.answer_img already contain a usable
+        file:// or http(s) path by the time we get here.
+
+        If you reuse this same template for an in-browser preview page
+        (not the PDF), re-add MathJax there and it'll work fine — it's
+        only useless in the PDF-generation path.
+    -->
+
+    <style>
+        @page {
+            size: A4;
+            margin: 1.2cm 1.2cm 1.5cm 1.2cm;
+            @bottom-center {
+                content: "FormulaVerse.in  —  Page " counter(page) " of " counter(pages);
+                font-size: 8px;
+                color: #94A3B8;
+                font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #0F172A;
+            font-size: 10px;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+            background-color: #FFFFFF;
+        }
+
+        /* ---------- COVER PAGE ---------- */
+        .cover {
+            height: 24cm;
+            text-align: center;
+            page-break-after: always;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4cm 1cm 0 1cm;
+        }
+
+        .cover .brand-badge {
+            display: inline-block;
+            background: #EFF6FF;
+            color: #0284C7;
+            border: 1px solid #BFDBFE;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .cover h1 {
+            font-size: 34px;
+            font-weight: 900;
+            margin: 0 0 12px 0;
+            color: #0F172A;
+            letter-spacing: -0.8px;
+            line-height: 1.1;
+        }
+
+        .cover .subtitle {
+            font-size: 14px;
+            color: #0284C7;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .cover .count-badge {
+            font-size: 12px;
+            color: #475569;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .cover .tagline-box {
+            width: 80%;
+            max-width: 420px;
+            margin: 0 auto;
+            font-size: 11px;
+            font-style: italic;
+            color: #334155;
+            border-top: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 16px 0;
+            line-height: 1.6;
+        }
+
+        .cover .meta {
+            margin-top: 50px;
+            font-size: 9px;
+            color: #94A3B8;
+            font-weight: 500;
+        }
+
+        /* ---------- FORMULA PAGE ---------- */
+        .formula-page {
+            page-break-before: always;
+            page-break-inside: avoid;
+            margin-bottom: 10px;
+        }
+
+        /* Top Header Bar */
+        .header-bar {
+            border-bottom: 2px solid #0F172A;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .chapter-tag {
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #0284C7;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .formula-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin: 0;
+            color: #0F172A;
+            line-height: 1.2;
+        }
+
+        .given-by {
+            font-size: 9px;
+            font-style: italic;
+            color: #64748B;
+            margin-top: 2px;
+        }
+
+        /* Main Two-Column Layout Grid */
+        .main-layout {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 10px 0;
+            margin-left: -10px;
+            margin-right: -10px;
+            margin-bottom: 8px;
+        }
+
+        .col-left, .col-right {
+            vertical-align: top;
+            width: 50%;
+        }
+
+        /* Hero Formula Box */
+        .formula-box {
+            text-align: center;
+            background: #F0F9FF;
+            border: 1px solid #BAE6FD;
+            border-radius: 6px;
+            padding: 12px 10px;
+            margin-bottom: 8px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .formula-box img {
+            max-height: 48px;
+            max-width: 95%;
+            display: inline-block;
+        }
+
+        .formula-box .latex-text {
+            font-size: 14px;
+            color: #0369A1;
+            font-weight: bold;
+            font-family: 'Courier New', Monaco, monospace;
+            word-break: break-word;
+        }
+
+        .description {
+            font-size: 9.5px;
+            color: #334155;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .section-label {
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #64748B;
+            text-transform: uppercase;
+            margin: 8px 0 4px;
+        }
+
+        .media-container {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            padding: 6px;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .graph-img, .derivation-img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            max-height: 130px;
+            border-radius: 4px;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-left: 3px solid #0284C7;
+            border-radius: 4px;
+            padding: 7px 9px;
+            font-size: 9.5px;
+            margin-bottom: 8px;
+        }
+
+        .info-box .label {
+            font-size: 8px;
+            font-weight: 800;
+            color: #0284C7;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+        }
+
+        .info-box.recall {
+            background: #F0F9FF;
+            border-color: #BAE6FD;
+            border-left-color: #0369A1;
+        }
+
+        .info-box.recall .label {
+            color: #0369A1;
+        }
+
+        /* Variables & Units Table */
+        table.var-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9px;
+            margin-bottom: 8px;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 4px;
+        }
+
+        table.var-table td {
+            border-bottom: 1px solid #E2E8F0;
+            padding: 5px 7px;
+            vertical-align: top;
+        }
+
+        table.var-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table.var-table td:first-child {
+            font-weight: 700;
+            width: 30%;
+            color: #334155;
+            background: #F8FAFC;
+        }
+
+        /* Worked Example Box */
+        .example-box {
+            background: #FFFBEB;
+            border: 1px solid #FDE68A;
+            border-left: 3px solid #D97706;
+            border-radius: 4px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            font-size: 9.5px;
+            color: #451A03;
+            page-break-inside: avoid;
+        }
+
+        .example-box .label {
+            font-size: 8px;
+            font-weight: 800;
+            color: #D97706;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+        }
+
+        .solution-content {
+            margin-top: 6px;
+            border-top: 1px dashed #FDE68A;
+            padding-top: 6px;
+            white-space: pre-line;
+            color: #78350F;
+            font-family: inherit;
+        }
+
+        /* Common Mistakes Box */
+        .mistakes-box {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-left: 3px solid #EF4444;
+            border-radius: 4px;
+            padding: 7px 10px;
+            font-size: 9.5px;
+            color: #7F1D1D;
+            page-break-inside: avoid;
+        }
+
+        .mistakes-box .label {
+            font-size: 8px;
+            font-weight: 800;
+            color: #EF4444;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Protection / Bundle Notice */
+        .bundle-footer {
+            margin-top: 12px;
+            border-top: 1px dashed #CBD5E1;
+            padding-top: 4px;
+            font-size: 7.5px;
+            color: #94A3B8;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============ COVER PAGE ============ -->
+    <div class="cover">
+        <div class="brand-badge">⚡ FORMULAVERSE MASTER SERIES</div>
+
+        {% if is_master_bundle %}
+            <h1>JEE / NEET Physics<br>Master Formula Sheet</h1>
+            <div class="subtitle">Complete Class 11 & 12 Syllabus Revision</div>
+            <div class="count-badge">172 High-Yield Exam Formulas & Worked Examples</div>
+        {% else %}
+            <h1>{{ topic|title }}</h1>
+            <div class="subtitle">JEE & NEET Formula Revision Guide</div>
+            <div class="count-badge">{{ entries|length }} Core Exam Formulas</div>
+        {% endif %}
+
+        <div class="tagline-box">
+            "Every formula here has appeared on an exam paper before it appeared on this page. Master these 172 formulas to secure your core score."
+        </div>
+
+        <div class="meta">
+            Licensed to FormulaVerse Student &nbsp;·&nbsp; Issued {{ today|default:"2026" }} &nbsp;·&nbsp; {{ site_url|default:"formulaverse.in" }}
+        </div>
+    </div>
+
+    <!-- ============ FORMULA PAGES ============ -->
+    {% for entry in entries %}
+    {% with f=entry.obj %}
+    <div class="formula-page">
+
+        <!-- Header Bar -->
+        <div class="header-bar">
+            <div>
+                <div class="chapter-tag">{{ entry.chapter_name|default:topic|upper }}</div>
+                <div class="formula-title">#{{ forloop.counter }} — {{ f.title }}</div>
+            </div>
+            {% if f.given_by %}
+            <div class="given-by">Given by: {{ f.given_by }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Main 2-Column Grid -->
+        <table class="main-layout">
+            <tr>
+                <!-- Left Column: Math & Visuals -->
+                <td class="col-left">
+                    <div class="formula-box">
+                        {% if entry.formula_img %}
+                            <!--
+                                entry.formula_img is only ever set by
+                                views.py to a valid file:// or http(s)
+                                path (existing upload, or LaTeX rendered
+                                to PNG) — no need to re-check the prefix
+                                here in the template.
+                            -->
+                            <img src="{{ entry.formula_img }}" alt="{{ f.title }}">
+                        {% else %}
+                            <!-- Plain-text formula (e.g. "V=IR") — no LaTeX, prints fine as text -->
+                            <div class="latex-text">{{ entry.form_clean|default:entry.form|default:f.form }}</div>
+                        {% endif %}
+                    </div>
+
+                    {% if f.description %}
+                    <div class="description">{{ f.description }}</div>
+                    {% endif %}
+
+                    {% if entry.diagram_path %}
+                    <div class="section-label">Diagram / Illustration</div>
+                    <div class="media-container">
+                        <img class="graph-img" src="{{ entry.diagram_path }}" alt="{{ f.title }} diagram">
+                    </div>
+                    {% endif %}
+
+                    {% if entry.derivation_path %}
+                    <div class="section-label">Quick Derivation</div>
+                    <div class="media-container">
+                        <img class="derivation-img" src="{{ entry.derivation_path }}" alt="{{ f.title }} derivation">
+                    </div>
+                    {% endif %}
+                </td>
+
+                <!-- Right Column: Context & Metadata -->
+                <td class="col-right">
+                    {% if f.when_to_use %}
+                    <div class="info-box">
+                        <div class="label">When To Use</div>
+                        {{ f.when_to_use }}
+                    </div>
+                    {% endif %}
+
+                    {% if f.mnemonic %}
+                    <div class="info-box recall">
+                        <div class="label">Memory Trick / Recall</div>
+                        {{ f.mnemonic }}
+                    </div>
+                    {% endif %}
+
+                    {% if f.variables or entry.units_display %}
+                    <div class="section-label">Variable Breakdown</div>
+                    <table class="var-table">
+                        {% if f.variables %}
+                        <tr>
+                            <td>Variables</td>
+                            <td>{{ f.variables }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if entry.units_display %}
+                        <tr>
+                            <td>SI Units</td>
+                            <td>{{ entry.units_display }}</td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+
+        <!-- Full-Width Bottom Cards -->
+        {% if f.example %}
+        <div class="example-box">
+            <div class="label">Exam Example Problem</div>
+            <div>{{ f.example }}</div>
+
+            <!-- Answer Image Fallback -->
+            {% if entry.answer_img %}
+            <div style="margin-top: 6px; display: flex; align-items: center; gap: 6px;">
+                <span style="font-weight: 700; color: #451A03;">Solution:</span>
+                <img src="{{ entry.answer_img }}" style="height: 20px; vertical-align: middle;" alt="answer">
+            </div>
+            <!-- Answer Text Fallback (Guarantees solution display) -->
+            {% elif entry.answer_clean or f.answer %}
+            <div class="solution-content">
+                <span style="font-weight: 800; color: #92400E; text-transform: uppercase; font-size: 8px; letter-spacing: 0.5px;">Solution:</span>
+                <div style="margin-top: 2px;">{{ entry.answer_clean|default:f.answer }}</div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if f.common_mistakes %}
+        <div class="mistakes-box">
+            <div class="label">Common Student Pitfalls</div>
+            <div>{{ f.common_mistakes }}</div>
+        </div>
+        {% endif %}
+
+        <!-- Footer watermark -->
+        <div class="bundle-footer">
+            FormulaVerse Official Master PDF Bundle  |  Unlicensed redistribution prohibited  |  https://formulaverse.in
+        </div>
+
+    </div>
+    {% endwith %}
+    {% endfor %}
+
+</body>
+</html>

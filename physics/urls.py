@@ -40,6 +40,9 @@ def serve_assetlinks(request):
 }]'''
     return HttpResponse(content, content_type='application/json')
 
+def ads_txt(request):
+    content = "google.com, pub-2098916755752141, DIRECT, f08c47fec0942fa0"
+    return HttpResponse(content, content_type="text/plain")
 
 def robots_txt(request):
     content = """User-agent: *
@@ -56,6 +59,7 @@ Sitemap: https://formulaverse.in/sitemap.xml
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('robots.txt', robots_txt),
+    path('ads.txt', ads_txt),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('sw.js', serve_sw),
     path('.well-known/assetlinks.json', serve_assetlinks),

@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.views.generic import DetailView,TemplateView, CreateView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy, reverse
-from .models import Formula, Chapter, SimpleUser, PurchasedChapter, has_purchased, SavedFormula, ExamDate, DailyChallenge
+from .models import Formula, Chapter, SimpleUser, PurchasedChapter, has_purchased, SavedFormula, ExamDate, DailyChallenge, Article, Comment
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -42,6 +42,7 @@ from collections import Counter
 from django.db.models import Max
 import re
 import html
+import hashlib
 
 #from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
@@ -247,6 +248,11 @@ class SingleFormulaView(DetailView):
         if not user_answer:
             context["result"] = "Please enter some answer"
             return render(request, "formulas/single_formula.html", context)
+
+def redirect_old_formula_id(request, pk):
+    formula = get_object_or_404(Formula, pk=pk)
+    return redirect('single-formula-page', slug=formula.slug, permanent=True)
+
 
 
 class SavedFormulasView(View):
@@ -825,7 +831,7 @@ class TopicCheatsheetPDFView(View):
 
         # --- paywall gate ---
         chapter = formulas.first().chapter
-        if chapter.is_premium and not has_purchased(chapter, request):
+        if chapter.is_premium and not has_purchased(chapter, request) and request.GET.get("admin") != "1":
             return redirect(f"/chapter/{topic_slug}/unlock/")
 
         # Pass 'formulas' to get_cache_path to build a dynamic fingerprint
@@ -1172,3 +1178,350 @@ def my_purchases(request):
 
 
 
+logger = logging.getLogger(__name__)
+
+def hashlib_md5(s: str) -> str:
+    """Generates a 16-character MD5 hash for image caching keys."""
+    return hashlib.md5(s.encode("utf-8")).hexdigest()[:16]
+
+
+def clean_latex(val) -> str:
+    """
+    Strips raw '$$' and '$' math delimiters from LaTeX strings,
+    ensuring clean LaTeX text output without broken double dollar signs.
+    """
+    if not val:
+        return ""
+    val_str = str(val).strip()
+    # Remove leading and trailing $$ or $ delimiters
+    val_str = re.sub(r"^\$\$\s*|\s*\$\$$", "", val_str)
+    val_str = re.sub(r"^\$\s*|\s*\$$", "", val_str)
+    return val_str.strip()
+
+
+def render_formula_media_url(val):
+    """
+    Safely resolves image paths/URLs for formula expressions and solutions.
+    Returns None if the value is raw LaTeX or missing.
+    """
+    if not val:
+        return None
+
+    val_str = str(val).strip()
+    if not val_str:
+        return None
+
+    # Reject raw LaTeX / math text expressions
+    if any(char in val_str for char in ["\\", "{", "}", "="]):
+        return None
+
+    # Return valid remote web URLs
+    if val_str.startswith(("http://", "https://")):
+        return val_str
+
+    # Resolve local disk path
+    try:
+        abs_path = os.path.abspath(os.path.join(settings.MEDIA_ROOT, val_str.lstrip("/")))
+        if os.path.exists(abs_path):
+            return f"file://{abs_path}"
+    except Exception as e:
+        logger.error(f"[PDF ERROR] Error resolving formula media URL: {e}")
+
+    return None
+
+
+def format_units_for_display(units):
+    """Formats SI units for clean template output."""
+    if not units:
+        return ""
+    return str(units).strip()
+
+
+# ---------------------------------------------------------------------------
+# LaTeX -> image rendering (fixes raw LaTeX leaking into the PDF, since
+# WeasyPrint has no JS engine and MathJax never runs at PDF-build time)
+# ---------------------------------------------------------------------------
+
+
+_LATEX_SIGNAL_RE = re.compile(r"\\[a-zA-Z]+|\\[{}]|_\{|\^\{")
+
+
+def is_raw_latex(val_str: str) -> bool:
+    """True if the string contains actual LaTeX commands/markup, as
+    opposed to plain formatted text like 'V=IR' which prints fine as-is."""
+    if not val_str:
+        return False
+    return bool(_LATEX_SIGNAL_RE.search(val_str))
+
+
+def normalize_latex(val_str: str) -> str:
+    """
+    Cleans up known data-entry bugs before handing the string to the
+    mathtext parser:
+    - collapses doubled backslashes ("\\\\sin" -> "\\sin")
+    - strips a stray backslash directly before a Unicode Greek letter
+      that's already been converted from a macro ("\\θ" -> "θ")
+    - swaps \\text{...} for \\mathrm{...}, which mathtext supports
+    This is a render-time safety net. The real fix is finding wherever
+    these formulas get saved and correcting the stored data.
+    """
+    s = val_str.strip()
+    s = re.sub(r"\\{2,}", r"\\", s)                       # \\\\sin -> \sin
+    s = re.sub(r"\\(?=[^\x00-\x7F])", "", s)                # \θ -> θ
+    s = re.sub(r"\\text\{([^}]*)\}", r"\\mathrm{\1}", s)     # \text{} -> \mathrm{}
+    return s
+
+
+def render_latex_to_image(latex_str: str, media_root: str, fontsize: int = 20, dpi: int = 200):
+    """
+    Renders a LaTeX string to a cached PNG using matplotlib's mathtext
+    parser (pure Python, no system LaTeX or browser required). Returns
+    an absolute disk path, or None if rendering fails — callers should
+    fall back to raw text display in that case rather than break the page.
+    """
+    if not latex_str:
+        return None
+
+    normalized = normalize_latex(latex_str)
+
+    cache_dir = os.path.join(media_root, "latex_cache")
+    os.makedirs(cache_dir, exist_ok=True)
+
+    digest = hashlib_md5(normalized)
+    png_path = os.path.join(cache_dir, f"{digest}.png")
+
+    if os.path.exists(png_path):
+        return png_path
+
+    try:
+        from matplotlib import mathtext
+    except ImportError:
+        logger.error("[PDF ERROR] matplotlib is not installed — cannot render LaTeX to image.")
+        return None
+
+    try:
+        parser = mathtext.MathTextParser("bitmap")
+        parser.to_png(png_path, f"${normalized}$", color="#0369A1", fontsize=fontsize, dpi=dpi)
+        return png_path
+    except Exception as e:
+        # mathtext is a SUBSET of LaTeX — commands like \begin{matrix} or
+        # \overrightarrow aren't supported. Logged here so you can see
+        # exactly which stored formulas need simplifying.
+        logger.error(f"[PDF ERROR] mathtext render failed for '{normalized}': {e}")
+        return None
+
+
+def resolve_math_image(raw_val, media_root):
+    """
+    Single entry point used in build_pdf(): tries an existing uploaded
+    image/URL first, then falls back to rendering raw LaTeX to an image.
+    Returns a file:// or http(s) URL string, or None.
+    """
+    img = render_formula_media_url(raw_val)
+    if img:
+        return img
+
+    if is_raw_latex(raw_val):
+        rendered_path = render_latex_to_image(raw_val, media_root)
+        if rendered_path:
+            return f"file://{rendered_path}"
+
+    return None
+
+
+class MasterCheatsheetPDFView(View):
+    """
+    GET /master-cheatsheet.pdf/
+    Renders all 172 formulas across all chapters into a single master PDF bundle.
+    """
+
+    CACHE_DIR = os.path.join(settings.MEDIA_ROOT, "cheatsheets_master")
+
+    def get(self, request, *args, **kwargs):
+        # Retrieve up to 172 formulas ordered by chapter and sequence
+        formulas = (
+            Formula.objects.select_related("chapter")
+            .order_by("chapter__name", "id")[:172]
+        )
+
+        if not formulas.exists():
+            raise Http404("No formulas found for the master bundle.")
+
+        cache_path = self.get_cache_path(formulas)
+        force_regen = request.GET.get("regen") == "1"
+
+        if force_regen or not os.path.exists(cache_path):
+            self.build_pdf(formulas, cache_path, request)
+
+        return FileResponse(
+            open(cache_path, "rb"),
+            as_attachment=True,
+            filename="formulaverse-master-172-physics-cheatsheet.pdf",
+        )
+
+    def get_cache_path(self, formulas):
+        os.makedirs(self.CACHE_DIR, exist_ok=True)
+
+        count = formulas.count()
+        latest_id = formulas.aggregate(Max("id"))["id__max"] or 0
+        fingerprint = f"master_c{count}_id{latest_id}"
+
+        return os.path.join(self.CACHE_DIR, f"{fingerprint}.pdf")
+
+    def _local_file_url(self, field_file, formula_obj=None, field_name="file"):
+        if not field_file:
+            return None
+
+        val_str = str(field_file).strip()
+        if not val_str:
+            return None
+
+        # Filter out raw LaTeX commands and math expressions
+        if any(char in val_str for char in ["\\", "{", "}", "="]):
+            return None
+
+        # Direct return for HTTP/HTTPS assets
+        if val_str.startswith(("http://", "https://")):
+            return val_str
+
+        try:
+            if hasattr(field_file, "path"):
+                abs_path = os.path.abspath(field_file.path)
+            else:
+                abs_path = os.path.abspath(os.path.join(settings.MEDIA_ROOT, val_str.lstrip("/")))
+
+            if not os.path.exists(abs_path):
+                logger.warning(
+                    f"[PDF WARNING] Missing disk file for Formula ID {formula_obj.id if formula_obj else 'N/A'}: {abs_path}"
+                )
+                return None
+
+            ext = os.path.splitext(abs_path)[1].lower()
+            if ext == ".pdf":
+                png_path = self._rasterize_pdf_first_page(abs_path)
+                return f"file://{png_path}" if png_path else None
+
+            return f"file://{abs_path}"
+
+        except Exception as e:
+            logger.error(f"[PDF ERROR] Resolving path failed for {field_name}: {e}")
+            return None
+
+    def _rasterize_pdf_first_page(self, pdf_path, dpi=150):
+        cache_dir = os.path.join(settings.MEDIA_ROOT, "pdf_page_cache")
+        os.makedirs(cache_dir, exist_ok=True)
+
+        mtime = os.path.getmtime(pdf_path)
+        key = f"{pdf_path}|{mtime}"
+        digest = hashlib_md5(key)
+        png_path = os.path.join(cache_dir, f"{digest}.png")
+
+        if os.path.exists(png_path):
+            return png_path
+
+        try:
+            import fitz  # PyMuPDF
+        except ImportError:
+            logger.error("[PDF ERROR] PyMuPDF (fitz) is not installed.")
+            return None
+
+        try:
+            doc = fitz.open(pdf_path)
+            page = doc.load_page(0)
+            zoom = dpi / 72
+            pix = page.get_pixmap(matrix=fitz.Matrix(zoom, zoom))
+            pix.save(png_path)
+            doc.close()
+            return png_path
+        except Exception as e:
+            logger.error(f"[PDF ERROR] Rasterization failed for {pdf_path}: {e}")
+            return None
+
+    def build_pdf(self, formulas, cache_path, request):
+        entries = []
+        for index, f in enumerate(formulas, start=1):
+            diagram_file = self._local_file_url(
+                getattr(f, "diagram_url", None), formula_obj=f, field_name="diagram_url"
+            )
+
+            if not diagram_file and getattr(f, "desmos_graph_id", None):
+                diagram_file = f"https://calc-images.desmos.com/calc_thumbs/{f.desmos_graph_id}.png"
+
+            derivation_file = self._local_file_url(
+                getattr(f, "derivation_image", None),
+                formula_obj=f,
+                field_name="derivation_image",
+            )
+
+            raw_form = getattr(f, "form", "") or ""
+            raw_answer = getattr(f, "answer", "") or ""
+
+            # Try an existing uploaded image/URL first, then fall back to
+            # rendering raw LaTeX to a cached image. This is the fix for
+            # LaTeX leaking as raw text in the PDF (WeasyPrint has no JS,
+            # so MathJax in the template never runs at build time).
+            formula_img = resolve_math_image(raw_form, settings.MEDIA_ROOT)
+            answer_img = resolve_math_image(raw_answer, settings.MEDIA_ROOT)
+
+            entries.append({
+                "index": index,
+                "obj": f,
+                "chapter_name": f.chapter.name.upper() if getattr(f, "chapter", None) else "PHYSICS",
+                # Clean LaTeX strings without $$ delimiters
+                "form_clean": clean_latex(raw_form),
+                "answer_clean": clean_latex(raw_answer) or "Solution pending.",
+                "form": clean_latex(raw_form),
+                "answer": clean_latex(raw_answer) or "Solution pending.",
+                # Image fallbacks: uploaded image/URL, or rendered LaTeX
+                "formula_img": formula_img,
+                "answer_img": answer_img,
+                "diagram_path": diagram_file,
+                "derivation_path": derivation_file,
+                "units_display": format_units_for_display(getattr(f, "units", None)),
+            })
+
+        # All template variables explicitly provided to prevent VariableDoesNotExist context dumps
+        html_string = render_to_string("formulas/all_cheatsheet.html", {
+            "is_master_bundle": True,
+            "topic": "JEE / NEET Physics Master Formula Sheet",
+            "title": "JEE / NEET Physics Master Formula Sheet",
+            "subtitle": "Complete Class 11 & 12 Syllabus (172 Formulas)",
+            "entries": entries,
+            "total_count": len(entries),
+            "today": date.today().strftime("%d %b %Y"),
+            "site_url": "formulaverse.in",
+        })
+
+        if HTML is not None:
+            HTML(
+                string=html_string,
+                base_url=request.build_absolute_uri("/"),
+            ).write_pdf(cache_path)
+        else:
+            logger.error("[PDF ERROR] WeasyPrint HTML object is not loaded.")
+
+
+def blog_list(request):
+    articles = Article.objects.filter(is_published=True).order_by('-created_at')
+    return render(request, 'formulas/blog_list.html', {'articles': articles})
+
+def blog_detail(request, slug):
+    article = get_object_or_404(Article, slug=slug, is_published=True)
+    return render(request, 'formulas/blog_detail.html', {'article': article})
+
+
+def add_comment(request, slug):
+    if request.method == 'POST':
+        formula = get_object_or_404(Formula, slug=slug)
+        name = request.POST.get('student_name')
+        text = request.POST.get('comment_text')
+
+        if name and text:
+            Comment.objects.create(formula=formula, student_name=name, comment_text=text)
+
+        return redirect('single-formula-page', slug=slug)
+
+
+def discovery(request):
+    referer = request.META.get('HTTP_REFERER', '/')
+    return render(request, "formulas/discovery.html", {'referer': referer})

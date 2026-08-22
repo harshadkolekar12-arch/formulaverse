@@ -309,7 +309,7 @@ If no verified fact exists for the given date, output only: NO_VERIFIED_FACT
 
     try:
         completion = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model="llama-3.3-70b-versatile",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt}

@@ -5,114 +5,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Full PDF Download | Formulaverse</title>
-
+    <title>{{ chapter.name }} Full PDF | Formulaverse</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            max-width: 440px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 28px 24px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+        .badge {
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        .title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .desc {
+            color: #64748b;
+            font-size: 13.5px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .price-box {
+            font-size: 34px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 20px;
+        }
+        .price-sub {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 400;
+        }
+        .qr-box {
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .qr-img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 8px;
+            margin: 0 auto 12px;
+            display: block;
+        }
+        .upi-id-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #ffffff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .upi-id {
+            font-family: monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .copy-btn {
+            background: #eff6ff;
+            color: #2563eb;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-wa {
+            background: #25d366;
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 14px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+        }
+        .instructions {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 16px;
+            line-height: 1.5;
+            text-align: left;
+            background: #fafafa;
+            padding: 12px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
 
-   <div style="max-width: 480px; margin: 60px auto; text-align: center; padding: 24px;">
-
-    <div style="font-size: 40px; margin-bottom: 12px;">🔒</div>
-
-    <h1 style="font-size: 22px; margin-bottom: 8px;">{{ chapter.name }} — Full PDF</h1>
-
-    <p style="color: #888; font-size: 14px; margin-bottom: 24px;">
-        Unlock the complete {{ chapter.name }} formula guide —
-        every derivation, worked example, and common-mistake note in
-        one downloadable PDF.
+<div class="card">
+    <span class="badge">PRO GUIDE</span>
+    <h1 class="title">{{ chapter.name }} — Full PDF</h1>
+    <p class="desc">
+        Unlock every derivation, worked example, and common-mistake note in one downloadable PDF.
     </p>
 
-    <div style="font-size: 32px; font-weight: 800; margin-bottom: 24px;">
-        ₹{{ chapter.price_inr }}
-        <span style="font-size: 13px; color: #888; font-weight: 400;">/ one-time</span>
+    <div class="price-box">
+        ₹{{ chapter.price_inr }} <span class="price-sub">/ one-time</span>
     </div>
 
-    <button id="pay-btn"
-        style="background:#7c4dff; color:white; border:none; border-radius:12px;
-               padding:14px 28px; font-size:15px; font-weight:700; cursor:pointer; width:100%;">
-        Pay ₹{{ chapter.price_inr }} & Download
-    </button>
+    <!-- Direct UPI Payment Container -->
+    <div class="qr-box">
+        <img src="{% static 'images/upi_qr.png' %}" alt="UPI QR Code" class="qr-img">
+        <div class="upi-id-container">
+            <span class="upi-id" id="upi-id-text">harshad.kolekar12@oksbi</span>
+            <button class="copy-btn" onclick="copyUPI()">Copy ID</button>
+        </div>
+    </div>
 
-    <p id="pay-status" style="margin-top: 14px; font-size: 13px; color: #888;"></p>
+    <!-- Direct WhatsApp Download Link -->
+    <a href="https://wa.me/919322747127?text=Hi%20FormulaVerse!%20I%20have%20paid%20%E2%82%B9{{ chapter.price_inr }}%20for%20the%20{{ chapter.name }}%20PDF.%20Here%20is%20my%20payment%20screenshot%3A"
+       target="_blank"
+       class="btn-wa">
+        <span>📲</span> Send Screenshot & Receive PDF
+    </a>
 
+    <div class="instructions">
+        <strong>Quick Steps:</strong>
+        <ol style="margin-left: 18px; margin-top: 4px;">
+            <li>Scan QR above using GPay, PhonePe, or Paytm.</li>
+            <li>Pay ₹{{ chapter.price_inr }} and tap the green button.</li>
+            <li>Send the screenshot on WhatsApp to get the PDF link immediately.</li>
+        </ol>
+    </div>
 </div>
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-document.getElementById("pay-btn").addEventListener("click", async function () {
-    const btn = document.getElementById("pay-btn");
-    const status = document.getElementById("pay-status");
-    btn.disabled = true;
-    status.textContent = "Setting up payment...";
-
-    // FIXED: use topic_slug (matches your Chapter.name-based lookup),
-    // not chapter.slug — Chapter has no slug field, so that silently
-    // rendered as an empty string and broke the URL.
-    const orderResp = await fetch("{% url 'create-razorpay-order' topic_slug %}", {
-        method: "POST",
-        headers: { "X-CSRFToken": getCookie("csrftoken") },
-    });
-    const orderData = await orderResp.json();
-
-    if (orderData.already_purchased) {
-        window.location.href = "/cheatsheet.pdf/?topic={{ topic_slug }}";
-        return;
-    }
-
-    const options = {
-        key: orderData.key_id,
-        amount: orderData.amount,
-        currency: orderData.currency,
-        name: "FormulaVerse",
-        description: orderData.chapter_name + " — Full PDF",
-        order_id: orderData.order_id,
-        handler: async function (response) {
-            status.textContent = "Verifying payment...";
-
-            const verifyResp = await fetch("{% url 'verify-razorpay-payment' %}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": getCookie("csrftoken"),
-                },
-                body: JSON.stringify(response),
-            });
-            const verifyData = await verifyResp.json();
-
-            if (verifyData.success) {
-                status.textContent = "Payment confirmed — starting download...";
-                window.location.href = verifyData.redirect_url;
-            } else {
-                status.textContent = "Payment verification failed. Contact support if money was deducted.";
-                btn.disabled = false;
-            }
-        },
-        modal: {
-            ondismiss: function () {
-                btn.disabled = false;
-                status.textContent = "Payment cancelled.";
-            },
-        },
-        theme: { color: "#7c4dff" },
-    };
-
-    const rzp = new Razorpay(options);
-    rzp.open();
-});
-
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-        const cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
+function copyUPI() {
+    const upiText = document.getElementById("upi-id-text").innerText;
+    navigator.clipboard.writeText(upiText);
+    alert("UPI ID copied: " + upiText);
 }
 </script>
+
 </body>
+</html>

@@ -17,6 +17,7 @@ class Chapter(models.Model):
     sim_thumbnail = models.ImageField(upload_to="sim_video/thumbnail/", null=True, blank=True)
     is_premium = models.BooleanField(default=False)
     price_inr = models.PositiveIntegerField(default=49)  # ₹, editable per chapter
+    razorpay_url = models.URLField(blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Chapters"
@@ -35,6 +36,27 @@ EXAM_CHOICES = [
     ('neet', 'NEET'),
     ('both', 'JEE/NEET'),
 ]
+
+
+FAQ_SCHEMA = {
+    'type': 'list',
+    'title': 'Frequently Asked Questions',
+    'items': {
+        'type': 'dict',
+        'keys': {
+            'question': {
+                'type': 'string',
+                'title': 'Question',
+                'help_text': 'Enter the FAQ question'
+            },
+            'answer': {
+                'type': 'string',
+                'widget': 'textarea', # Creates a large text field for long paragraphs
+                'title': 'Answer',
+            }
+        }
+    }
+}
 
 
 class Formula(models.Model):
@@ -64,6 +86,13 @@ class Formula(models.Model):
         validators=[FileExtensionValidator(allowed_extensions=['pdf', 'png', 'jpg', 'jpeg', 'svg'])]
     )
     slug = models.SlugField(max_length=250, unique=True, blank=True, null=True)
+    conceptual_overview = models.TextField(blank=True, null=True)
+    real_world_applications = models.TextField(blank=True, null=True)
+    jee_neet_exam_tips = models.TextField(blank=True, null=True)
+    step_by_step_derivation = models.TextField(blank=True, null=True)
+    faqs = models.JSONField(default=list, blank=True, null=True)
+
+
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -236,3 +265,29 @@ class DailyChallenge(models.Model):
     def get_absolute_url(self):
         # Generates sitemap URL for daily challenge
         return f"/daily-sprint/{self.id}/"
+
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=255, null=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True, null=True)
+    category = models.CharField(max_length=100, default="JEE / NEET Prep", null=True, blank=True)
+    read_time = models.CharField(max_length=50, default="5 min read", null=True, blank=True)
+    summary = models.TextField(null=True, blank=True)
+    content = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_published = models.BooleanField(default=True)
+    related_formula_url = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Comment(models.Model):
+    formula = models.ForeignKey(Formula, on_delete=models.CASCADE, related_name='comments')
+    student_name = models.CharField(max_length=100)
+    comment_text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+        return f"{self.student_name} on {self.formula.title}"

@@ -46,13 +46,7 @@ RAZORPAY_WEBHOOK_SECRET = os.environ.get("RAZORPAY_WEBHOOK_SECRET", "")
 
 
 ALLOWED_HOSTS = [
-'127.0.0.1',
-'localhost',
-'emory-unstultified-staunchly.ngrok-free.dev',
-'overcaustically-straticulate-darin.ngrok-free.dev',
 'harshadkolekar.pythonanywhere.com',
-"*",
-'formulaverse.onrender.com',
 'formulaverse.in',
 'www.formulaverse.in'
 
@@ -65,6 +59,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 INSTALLED_APPS = [
     'formulas',
+    'django_jsonform',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
