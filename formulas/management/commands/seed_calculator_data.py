@@ -1565,14 +1565,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for title, data in CALCULATOR_DATA.items():
-            # Use __iexact to avoid casing mismatches
             formula = Formula.objects.filter(title__iexact=title).first()
 
             if not formula:
                 self.stdout.write(self.style.ERROR(f"Formula NOT found: '{title}'"))
                 continue
 
-            # Delete old entries to prevent duplicates/stale data
             FormulaVariable.objects.filter(formula=formula).delete()
             FormulaConstant.objects.filter(formula=formula).delete()
 
@@ -1583,7 +1581,7 @@ class Command(BaseCommand):
                     name=name,
                     unit=unit,
                     expr=expr,
-                    is_solvable=True, # IMPORTANT: Must be True
+                    is_solvable=True,
                     order=order,
                 )
             for symbol, value in data["constants"]:

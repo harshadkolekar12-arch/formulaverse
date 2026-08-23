@@ -11,7 +11,6 @@ def get_all_formulas_text():
         formulas = Formula.objects.all()
         formula_text = ""
         for f in formulas:
-            # Safe attribute checks (handles both 'form' and 'formula' field names)
             form_val = getattr(f, 'form', getattr(f, 'formula', ''))
             formula_text += f"Title: {f.title}, Formula: {form_val}, Chapter: {f.chapter}, Description: {f.description} | "
         return formula_text
@@ -36,7 +35,6 @@ def ask_chatbot(user_message, chat_history=None):
 
         messages = [{"role": "system", "content": system_prompt}]
 
-        # Sanitize and validate incoming chat history format
         for msg in chat_history:
             if isinstance(msg, dict) and "role" in msg and "content" in msg:
                 # Filter out previous error responses from clogging context
@@ -45,7 +43,6 @@ def ask_chatbot(user_message, chat_history=None):
 
         messages.append({"role": "user", "content": user_message})
 
-        # Using Groq's official active production model
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=messages,
@@ -79,14 +76,9 @@ SAFE_FUNCS = {
 
 
 def safe_eval(expr: str) -> float:
-    """
-    Evaluate a restricted math expression string (e.g. '2*sin(4*2 - 0.5*3)').
-    Raises on anything unexpected -- caller should catch and reject the attempt.
-    """
     if not isinstance(expr, str) or not expr.strip():
         raise ValueError("Empty or invalid calculation_expression")
 
-    # Reject anything that looks like it's trying to escape the sandbox
     if re.search(r'(__|import|lambda|;|\[|\]|=[^=])', expr):
         raise ValueError(f"Unsafe expression rejected: {expr}")
 
@@ -94,10 +86,6 @@ def safe_eval(expr: str) -> float:
 
 
 def extract_number(text: str):
-    """
-    Pull the first numeric value out of an option string like '0.46 cm' or '-1.37 cm'.
-    Returns None if no number is found.
-    """
     if not isinstance(text, str):
         return None
     match = re.search(r'-?\d+\.?\d*(?:[eE][-+]?\d+)?', text)
@@ -105,40 +93,25 @@ def extract_number(text: str):
 
 
 def values_match(computed: float, stated: float, rel_tol: float = 0.05, abs_tol: float = 0.01) -> bool:
-    """
-    Compare computed vs. model-stated numeric answer with a tolerance band,
-    since rounding/unit-display differences are expected and fine.
-    """
     return math.isclose(computed, stated, rel_tol=rel_tol, abs_tol=abs_tol)
 
 
-# ---------------------------------------------------------------------------
-# GROQ MODEL CHAIN
-# ---------------------------------------------------------------------------
-# Tried in order. If one model is congested/erroring, we hop to the next
-# instead of hammering the same queue repeatedly.
 MODEL_CHAIN = [
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b",
     "llama-3.3-70b-versatile",
 ]
 
-# How many attempts to spend on a single model before moving to the next one.
-# Total attempts = ATTEMPTS_PER_MODEL * len(MODEL_CHAIN).
 ATTEMPTS_PER_MODEL = 2
 
 
 def _groq_client():
     return Groq(
         api_key=settings.GROQ_PRACTICE_KEY,
-        timeout=15.0,      # don't let a hung request block silently for 60s+
-        max_retries=0,     # we handle retries/backoff ourselves below
+        timeout=15.0,
+        max_retries=0,
     )
 
-
-# ---------------------------------------------------------------------------
-# MAIN GENERATOR
-# ---------------------------------------------------------------------------
 SCENARIOS = [
     "space flight or satellite telemetry",
     "automotive transport engineering",
@@ -222,7 +195,6 @@ def generate_practice_question(formula_title, formula_eq, chapter, description, 
                 raw = _call_model(client, model_name, system_prompt, user_prompt)
                 print(f"[{model_name} attempt {local_attempt}] RAW GROQ RESPONSE:", raw)
 
-                # In case the model wraps JSON in stray text despite instructions
                 match = re.search(r'\{.*\}', raw, re.DOTALL)
                 if match:
                     raw = match.group()
@@ -238,7 +210,6 @@ def generate_practice_question(formula_title, formula_eq, chapter, description, 
                     print(f"[{model_name} attempt {local_attempt}] 'correct' letter not found in options, retrying.")
                     continue
 
-                # --- Independent verification step -------------------------------
                 try:
                     computed_value = safe_eval(result["calculation_expression"])
                 except Exception as calc_err:
@@ -259,7 +230,6 @@ def generate_practice_question(formula_title, formula_eq, chapter, description, 
                     )
                     continue
 
-                # Passed verification -- safe to ship
                 result["explanation"] = result["explanation"] + AI_DISCLAIMER
                 print(f"[{model_name} attempt {local_attempt}] Verified OK: computed={computed_value}, stated={stated_value}")
                 return result
@@ -280,11 +250,6 @@ def generate_practice_question(formula_title, formula_eq, chapter, description, 
 
 
 def get_daily_physics_fact():
-    """
-    Fetches a compelling historical physics fact for the current day
-    using Groq and Llama.
-    """
-    # Get current date string (e.g., "July 08")
     current_date = datetime.now().strftime("%B %d")
     client = Groq(api_key=settings.GROQ_FACTS_KEY)
 
@@ -319,7 +284,6 @@ If no verified fact exists for the given date, output only: NO_VERIFIED_FACT
         )
         return completion.choices[0].message.content
     except Exception as e:
-        # Fallback safety content in case your API hits a network glitch or rate limit
         return (
             "📅 On This Day: Exploring the Multiverse!\n"
             "📜 Great discoveries are happening every second. Dive into your formula dashboards "

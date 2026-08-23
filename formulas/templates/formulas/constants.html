@@ -30,7 +30,7 @@
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755..."></script>
 
-<!-- Google tag (gtag.js) -->
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -84,7 +84,6 @@
     min-height: 100vh;
   }
 
-  /* ── Header ─────────────────────────────────────────── */
   header {
     background: rgba(255, 255, 255, 0.55);
     backdrop-filter: blur(16px);
@@ -126,7 +125,6 @@
     font-weight: 500;
   }
 
-  /* ── Hero ────────────────────────────────────────────── */
   .hero {
     text-align: center;
     padding: 48px 24px 32px;
@@ -160,7 +158,6 @@
     line-height: 1.6;
   }
 
-  /* ── Search ──────────────────────────────────────────── */
   .search-wrap {
     max-width: 420px;
     margin: 0 auto 36px;
@@ -189,7 +186,6 @@
   }
   .search-box::placeholder { color: var(--sub); }
 
-  /* ── Category filter ─────────────────────────────────── */
   .filters {
     display: flex;
     gap: 8px;
@@ -217,7 +213,6 @@
     color: #fff;
   }
 
-  /* ── Grid ────────────────────────────────────────────── */
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -227,7 +222,6 @@
     margin: 0 auto;
   }
 
-  /* ── Card (glassmorphism) ──────────────────────────────── */
   .card {
     background: var(--surface);
     backdrop-filter: blur(16px);
@@ -311,7 +305,6 @@
     border-radius: 6px;
   }
 
-  /* copy button */
   .copy-btn {
     float: right;
     background: rgba(255, 255, 255, 0.7);
@@ -327,7 +320,6 @@
   .copy-btn:hover { background: rgba(13, 148, 136, 0.12); color: var(--accent2); border-color: rgba(13,148,136,.3); }
   .copy-btn.copied { color: #059669; border-color: #059669; background: rgba(5,150,105,.08); }
 
-  /* ── Count badge ─────────────────────────────────────── */
   .count-line {
     text-align: center;
     font-size: 12px;
@@ -352,11 +344,7 @@
     .filters { padding: 0 14px; }
   }
 
-  /* ══════════════════════════════════════════════
-     DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
-     The .grid is already responsive (auto-fill) —
-     this just polishes the header/hero on wide screens.
-     ══════════════════════════════════════════════ */
+
   @media (min-width: 900px) {
 
     header {
@@ -417,7 +405,7 @@
 
         #backToTopBtn {
     position: fixed;
-    bottom: 90px; /* Positioned right above the mobile bottom nav bar */
+    bottom: 90px;
     right: 20px;
     z-index: 9999;
     width: 44px;
@@ -437,7 +425,7 @@
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
 }
 
-/* Active State (Shown on scroll) */
+
 #backToTopBtn.show {
     opacity: 1;
     visibility: visible;
@@ -454,16 +442,16 @@
 }
 
 .ad-banner-container {
-  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  max-width: 280px;
   width: 100%;
-  margin: 16px auto; /* Centers the banner horizontally */
+  margin: 16px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Ensures the internal ad iframe scales cleanly */
+
 .ad-banner-container iframe,
 .ad-banner-container img {
   max-width: 100% !important;
@@ -654,7 +642,7 @@ renderCards(constants);
         }
     });
 
-    // Smooth scroll to top function
+
     function scrollToTop() {
         window.scrollTo({
             top: 0,

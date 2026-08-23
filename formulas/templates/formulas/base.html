@@ -6,18 +6,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% if formula.title %}{{ formula.title }} Formula, Derivation & Notes | FormulaVerse{% else %}Explore All Physics Formulas for JEE & NEET | FormulaVerse{% endif %}{% endblock %}</title>
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
      crossorigin="anonymous"></script>
 
 
-    <!-- Dynamic Meta Description -->
     <meta name="description" content="{% block meta_description %}{% if formula.meta_description %}{{ formula.meta_description }}{% elif formula.title %}Get the exact formula for {{ formula.title }}, key variables, step-by-step derivation, sign conventions, and solved numerical examples for JEE & NEET.{% else %}Master Physics with FormulaVerse. Complete formula cheat sheets, derivations, and quick revision notes for JEE Main, Advanced, NEET, and Class 11-12.{% endif %}{% endblock %}">
-
     <meta name="keywords" content="{% if formula.title %}{{ formula.title }}, {% endif %}JEE formula, NEET formula, physics formula, class 11 physics, class 12 physics, formula sheet">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <!-- Open Graph / WhatsApp / Facebook Preview -->
+
+
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="FormulaVerse">
     <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
@@ -25,17 +24,18 @@
     <meta property="og:description" content="{% block og_description %}{% if formula.title %}Quick reference guide, equation variables, and solved examples for {{ formula.title }}.{% else %}Free downloadable formula sheets and quick revision guides for JEE & NEET Physics.{% endif %}{% endblock %}">
     <meta property="og:image" content="{% block og_image %}https://formulaverse.in/static/formulas/formulaverse_og_default.png{% endblock %}">
 
-    <!-- Twitter Card -->
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% block twitter_title %}{% if formula.title %}{{ formula.title }} Formula & Notes{% else %}FormulaVerse - Physics Formulas for JEE & NEET{% endif %}{% endblock %}">
     <meta name="twitter:description" content="{% block twitter_description %}{% if formula.title %}Quick reference guide for {{ formula.title }}.{% else %}Free formula sheets for JEE & NEET Physics.{% endif %}{% endblock %}">
     <meta name="twitter:image" content="{% block twitter_image %}https://formulaverse.in/static/formulas/formulaverse_og_default.png{% endblock %}">
 
-    <!-- Favicon & Web Manifest -->
+
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+     <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <!-- Structured Data: Organization & FAQ Schema (SEO & AdSense E-E-A-T) -->
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -79,12 +79,12 @@
     }
     </script>
 
-    <!-- Google Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -95,7 +95,6 @@
 
     <style>
         :root {
-            /* Base surfaces — warm cream light theme */
             --bg-primary: #FAF6ED;
             --bg-secondary: #FFFFFF;
             --bg-card: #FFFFFF;
@@ -103,12 +102,12 @@
             --border-subtle: #E8E1D0;
             --border-glow: rgba(79, 70, 229, 0.14);
 
-            /* Text */
+
             --text-primary: #1B1B2F;
             --text-secondary: #63637A;
             --text-muted: #94918A;
 
-            /* Accent — indigo (primary) + amber (CTA / featured) + teal (tertiary) */
+
             --accent-indigo: #4F46E5;
             --accent-indigo-soft: rgba(79, 70, 229, 0.08);
             --accent-teal: #0EA5A0;
@@ -147,7 +146,7 @@
             z-index: 0;
         }
 
-        /* Top Nav */
+
         .top-nav {
             position: relative;
             top: -2px;
@@ -170,7 +169,7 @@
         }
         .about-me:hover { opacity: 1; }
 
-        /* Core Page Wrapper */
+
         .page-wrap {
             max-width: 680px;
             width: 100%;
@@ -228,7 +227,7 @@
             font-size: 0.6rem;
         }
 
-        /* Hero Search Bar */
+
         .hero-search-box {
             position: relative;
             max-width: 520px;
@@ -273,7 +272,7 @@
             transform: translateY(-50%) scale(1.05);
         }
 
-        /* Stat Cards Grid */
+
         .stat-cards {
             display: flex;
             flex-direction: column;
@@ -341,7 +340,7 @@
             line-height: 1.35;
         }
 
-        /* CTA Button */
+
         .explore-btn-wrapper { margin: 1.5rem auto 1rem; }
         .explore-btn {
             display: inline-block;
@@ -363,7 +362,7 @@
             box-shadow: 0 14px 30px rgba(245, 166, 35, 0.42);
         }
 
-        /* Section Headings inside page-wrap */
+
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.4rem;
@@ -438,7 +437,7 @@
         }
         .featured-link:hover { text-decoration: underline; }
 
-        /* Value Proposition Grid (3 Columns on larger screens) */
+
         .value-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -470,7 +469,7 @@
             line-height: 1.45;
         }
 
-        /* FAQ Section Accordion */
+
         .faq-accordion {
             display: flex;
             flex-direction: column;
@@ -513,7 +512,7 @@
             padding-top: 8px;
         }
 
-        /* Physics History Banner */
+
         .physics-history-banner {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border-subtle);
@@ -556,7 +555,7 @@
             text-overflow: ellipsis;
         }
 
-        /* Modal Styles */
+
         .history-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -595,7 +594,7 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        /* Social Proof Banner */
+
         .social-proof-banner {
             display: flex;
             align-items: center;
@@ -652,7 +651,7 @@
         }
         .footer-links a:hover { color: var(--text-primary); }
 
-        /* Desktop Media Queries */
+
         @media (min-width: 768px) {
             body { padding: 32px 40px; }
             .stat-cards { flex-direction: row; gap: 16px; }
@@ -700,7 +699,7 @@
 
 <body>
 
-    <!-- Daily Physics Fact Banner -->
+
     <div id="historyBanner" class="physics-history-banner" style="display: none;">
         <div class="banner-content">
             <span class="banner-icon">💡</span>
@@ -709,7 +708,7 @@
         </div>
     </div>
 
-    <!-- Modal for Full Daily Fact -->
+
     <div id="factModal" class="history-modal" style="display: none;">
         <div class="modal-overlay" onclick="closeHistoryModal()"></div>
         <div class="modal-box">
@@ -723,12 +722,12 @@
         </div>
     </div>
 
-    <!-- Top Navigation -->
+
     <nav class="top-nav">
         <a href="{% url 'me' %}" class="about-me">About</a>
     </nav>
 
-    <!-- Core Page Content Wrapper -->
+
     <div class="page-wrap">
         <div class="ornament">✦ ✦ ✦</div>
         <p class="eyebrow">Welcome to FormulaVerse</p>
@@ -739,8 +738,6 @@ o
 
 
         <div class="divider"><span class="divider-diamond">◆</span></div>
-
-        <!-- High-Level Navigation Cards -->
         <div class="stat-cards">
             <a href="{% url 'index-page' %}" class="stat-card stat-card-count">
                 <div>
@@ -764,7 +761,7 @@ o
             </div>
         </div>
 
-        <!-- Social Proof Banner -->
+
         <div class="social-proof-banner">
             <div class="proof-avatars">
                 <span class="avatar">🇮🇳</span>
@@ -776,7 +773,7 @@ o
             </p>
         </div>
 
-        <!-- Featured Formulas Section (High-Value Indexable Content) -->
+
         <h2 class="section-title">Featured Formulas & Derivations</h2>
         <div class="featured-grid">
 
@@ -888,7 +885,7 @@ o
 
 
 
-        <!-- Value Proposition Section -->
+
         <h2 class="section-title">Why Study with FormulaVerse?</h2>
         <div class="value-grid">
             <div class="value-card">
@@ -940,7 +937,7 @@ o
 </div>
 
 
-        <!-- Frequently Asked Questions -->
+
         <h2 class="section-title">Frequently Asked Questions</h2>
         <div class="faq-accordion">
             <details class="faq-item" open>
@@ -966,7 +963,7 @@ o
 
 
 
-        <!-- Footer -->
+
         <footer class="site-footer">
             <p>© 2026 formulaverse.in</p>
             <div class="footer-links">
@@ -977,7 +974,7 @@ o
             </div>
         </footer>
 
-    </div> <!-- End Page Wrap -->
+    </div>
 
     <div class="fv-nav-spacer"></div>
 
@@ -1005,7 +1002,7 @@ o
         </a>
     </nav>
 
-    <!-- Scripts -->
+
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {

@@ -29,7 +29,6 @@
 <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755..."></script>
 
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -49,7 +48,12 @@
 
 
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+
+  }
 
   :root {
     --bg1:      #fdf3e7;
@@ -190,15 +194,6 @@
             z-index: 100;
  }
 
- /* ══════════════════════════════════════════════
-    NEW: DESKTOP ALIGNMENT FIX (≥900px only)
-    The .grid was already responsive (auto-fill).
-    This just aligns the hero text width and the
-    two banner divs (Amazon link, Buy me a chai) to
-    the same centered 900px column as the grid,
-    so nothing looks stretched or off-center.
-    No HTML structure changes needed.
-    ══════════════════════════════════════════════ */
  @media (min-width: 900px) {
 
     header {
@@ -217,10 +212,7 @@
         gap: 20px;
     }
 
-    /* These two banners use inline styles for background/padding/margin —
-       inline styles normally beat stylesheet rules, so !important is
-       needed here to actually win the centering override */
-    .resource-box,
+
     body > div[style*="margin-top:24px"] {
         max-width: 900px !important;
         margin-left: auto !important;
@@ -257,7 +249,7 @@
             color: var(--text-main);
         }
 
-        /* PYQ Page Affiliate Banner */
+
 .pyq-affiliate-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
@@ -350,7 +342,7 @@
 
 #backToTopBtn {
     position: fixed;
-    bottom: 90px; /* Positioned right above the mobile bottom nav bar */
+    bottom: 90px;
     right: 20px;
     z-index: 9999;
     width: 44px;
@@ -370,7 +362,6 @@
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
 }
 
-/* Active State (Shown on scroll) */
 #backToTopBtn.show {
     opacity: 1;
     visibility: visible;
@@ -389,16 +380,16 @@
 
 
 .ad-banner-container {
-  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  max-width: 280px;
   width: 100%;
-  margin: 16px auto; /* Centers the banner horizontally */
+  margin: 16px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Ensures the internal ad iframe scales cleanly */
+
 .ad-banner-container iframe,
 .ad-banner-container img {
   max-width: 100% !important;
@@ -422,7 +413,6 @@
     <p>JEE & NEET question papers, sorted by chapter — download and practice.</p>
 </div>
 
-<!-- Redesigned Offline PYQ Book Banner -->
 <div class="pyq-affiliate-card">
     <div class="pyq-affiliate-header">
         <span class="pyq-badge">Offline Practice</span>
@@ -488,7 +478,6 @@
         }
     });
 
-    // Smooth scroll to top function
     function scrollToTop() {
         window.scrollTo({
             top: 0,

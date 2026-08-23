@@ -11,15 +11,15 @@
      crossorigin="anonymous"></script>
 
 
-    <!-- High-CTR Meta Description -->
+
     <meta name="description" content="Your FormulaVerse Dashboard — browse 150+ Physics formulas by chapter, track saved formulas, and access revision cheat sheets for JEE Main, Advanced, and NEET.">
 
-    <!-- SEO Meta Tags -->
+
     <meta name="keywords" content="physics formula dashboard, chapterwise physics formulas, JEE physics chapters, NEET physics chapters, formula categories">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <!-- Open Graph / WhatsApp / Telegram Previews -->
+
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="FormulaVerse">
     <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
@@ -27,17 +27,17 @@
     <meta property="og:description" content="Browse chapterwise Physics formulas, access saved revision sheets, and track study progress for JEE & NEET.">
     <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Twitter Card -->
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Physics Formula Dashboard — FormulaVerse">
     <meta name="twitter:description" content="Browse chapterwise Physics formulas and quick revision cheat sheets for JEE & NEET.">
     <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Favicon & Web Manifest -->
+
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <!-- Schema.org Organization Markup -->
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -49,7 +49,7 @@
     </script>
 
 
-    <!-- Google Tag Manager / Analytics (gtag.js) -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -58,7 +58,7 @@
       gtag('config', 'G-YHLZCEHWF7');
     </script>
 
-    <!-- Google Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -118,7 +118,7 @@
                 radial-gradient(ellipse 420px 300px at 90% 30%, rgba(139,92,246,0.08), transparent 60%);
         }
 
-        /* ===== Back button ===== */
+
         .back-link {
             position: fixed;
             top: 14px;
@@ -141,7 +141,7 @@
         .back-link:hover { border-color: var(--teal); transform: translateX(-2px); }
         .back-link:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 
-        /* ===== Header ===== */
+
         .header { text-align: center; padding-top: 34px; margin-bottom: 22px; }
         .eyebrow {
             font-family: 'Space Mono', monospace;
@@ -169,7 +169,7 @@
             margin: 0;
         }
 
-        /* ===== Streak chip (new) ===== */
+
         .streak-chip {
             display: inline-flex;
             align-items: center;
@@ -184,7 +184,7 @@
             color: #a8631a;
         }
 
-        /* ===== Shared panel look ===== */
+
         .panel {
             position: relative;
             background: var(--panel);
@@ -226,7 +226,7 @@
             font-size: 11.5px;
         }
 
-        /* ===== Lock overlay ===== */
+
         .lock-overlay {
             position: absolute;
             inset: 0;
@@ -273,7 +273,7 @@
 
         .blurred { filter: blur(7px); opacity: 0.45; pointer-events: none; }
 
-        /* ===== Hero gauge ===== */
+
         .gauge-panel { text-align: center; padding: 26px 18px 22px; }
         .gauge-wrap { position: relative; width: 168px; height: 168px; margin: 0 auto 14px; }
         .gauge-ring {
@@ -310,7 +310,7 @@
             text-transform: uppercase;
             margin-top: 4px;
         }
-        /* NEW: motivational headline replaces bare "Complete" framing */
+
         .gauge-motiv {
             font-family: 'Playfair Display', serif;
             font-style: italic;
@@ -322,7 +322,7 @@
         .gauge-caption { color: var(--muted); font-size: 13px; margin: 0; }
         .gauge-caption strong { color: var(--ink); font-weight: 600; }
 
-        /* ===== Stat grid ===== */
+
         .stat-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -366,7 +366,7 @@
             color: var(--muted);
         }
 
-        /* ===== Progress bar (linear) ===== */
+
         .bar-track {
             background: rgba(45,42,61,0.08);
             border-radius: 50px;
@@ -380,7 +380,7 @@
         }
         .bar-caption { color: var(--muted); font-size: 12px; margin: 8px 0 0; }
 
-        /* ===== Exam breakdown ===== */
+
         .exam-row { display: flex; justify-content: space-around; text-align: center; }
         .exam-item .exam-value {
             font-family: 'Space Mono', monospace;
@@ -396,7 +396,7 @@
             margin-top: 6px;
         }
 
-        /* ===== Chapter breakdown ===== */
+
         .chapter-row {
             margin-bottom: 14px;
             border-radius: 10px;
@@ -476,9 +476,7 @@
             .stat-value { font-size: 26px; }
         }
 
-        /* ══════════════════════════════════════════════
-           DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
-           ══════════════════════════════════════════════ */
+
         @media (min-width: 900px) {
 
             .page {
@@ -597,7 +595,7 @@
             {% endif %}
         </div>
 
-        <!-- ===== Wrapper that holds the stats + lock overlay for logged-out users ===== -->
+
         <div style="position: relative;">
 
             {% if not is_logged_in %}
@@ -647,7 +645,7 @@
 
                 <div class="stat-grid">
 
-                    <!-- Chapters Started replaces a second "raw completion %" stat with a more motivating count -->
+
                     <div class="stat cyan corner-brackets">
                         <div class="stat-value">{{ chapters_started }}</div>
                         <div class="stat-label">Chapters Started</div>
@@ -726,13 +724,13 @@
                     </div>
 
                 </div>
-                <!-- end .dashboard-lower -->
+
 
             </div>
-            <!-- end blur wrapper -->
+
 
         </div>
-        <!-- end position:relative wrapper -->
+
 
     </div>
 
@@ -758,7 +756,7 @@
     openLoginModal('save');
     return false;
   {% endif %}
-  return true; // logged in, let form submit normally
+  return true;
 }
 
 

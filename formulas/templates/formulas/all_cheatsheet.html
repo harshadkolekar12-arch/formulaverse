@@ -4,21 +4,6 @@
     <meta charset="UTF-8">
     <title>FormulaVerse — {{ topic|default:"JEE/NEET Physics Master" }} Cheatsheet</title>
 
-    <!--
-        MathJax removed here: this template is rendered server-side by
-        WeasyPrint (see views.py -> HTML(string=...).write_pdf()), which
-        has no JavaScript engine. The script tag never executed during
-        PDF generation, so it was dead weight. LaTeX formulas are now
-        pre-rendered to images in views.py (resolve_math_image /
-        render_latex_to_image) before this template ever runs, so
-        entry.formula_img / entry.answer_img already contain a usable
-        file:// or http(s) path by the time we get here.
-
-        If you reuse this same template for an in-browser preview page
-        (not the PDF), re-add MathJax there and it'll work fine — it's
-        only useless in the PDF-generation path.
-    -->
-
     <style>
         @page {
             size: A4;
@@ -45,7 +30,6 @@
             background-color: #FFFFFF;
         }
 
-        /* ---------- COVER PAGE ---------- */
         .cover {
             height: 24cm;
             text-align: center;
@@ -114,14 +98,14 @@
             font-weight: 500;
         }
 
-        /* ---------- FORMULA PAGE ---------- */
+
         .formula-page {
             page-break-before: always;
             page-break-inside: avoid;
             margin-bottom: 10px;
         }
 
-        /* Top Header Bar */
+
         .header-bar {
             border-bottom: 2px solid #0F172A;
             padding-bottom: 6px;
@@ -155,7 +139,7 @@
             margin-top: 2px;
         }
 
-        /* Main Two-Column Layout Grid */
+
         .main-layout {
             width: 100%;
             border-collapse: separate;
@@ -170,7 +154,7 @@
             width: 50%;
         }
 
-        /* Hero Formula Box */
+
         .formula-box {
             text-align: center;
             background: #F0F9FF;
@@ -231,7 +215,7 @@
             border-radius: 4px;
         }
 
-        /* Info Boxes */
+
         .info-box {
             background: #F8FAFC;
             border: 1px solid #E2E8F0;
@@ -261,7 +245,7 @@
             color: #0369A1;
         }
 
-        /* Variables & Units Table */
+
         table.var-table {
             width: 100%;
             border-collapse: collapse;
@@ -289,7 +273,7 @@
             background: #F8FAFC;
         }
 
-        /* Worked Example Box */
+
         .example-box {
             background: #FFFBEB;
             border: 1px solid #FDE68A;
@@ -320,7 +304,7 @@
             font-family: inherit;
         }
 
-        /* Common Mistakes Box */
+
         .mistakes-box {
             background: #FEF2F2;
             border: 1px solid #FECACA;
@@ -341,7 +325,7 @@
             text-transform: uppercase;
         }
 
-        /* Protection / Bundle Notice */
+
         .bundle-footer {
             margin-top: 12px;
             border-top: 1px dashed #CBD5E1;
@@ -354,7 +338,6 @@
 </head>
 <body>
 
-    <!-- ============ COVER PAGE ============ -->
     <div class="cover">
         <div class="brand-badge">⚡ FORMULAVERSE MASTER SERIES</div>
 
@@ -377,7 +360,7 @@
         </div>
     </div>
 
-    <!-- ============ FORMULA PAGES ============ -->
+
     {% for entry in entries %}
     {% with f=entry.obj %}
     <div class="formula-page">
@@ -393,23 +376,15 @@
             {% endif %}
         </div>
 
-        <!-- Main 2-Column Grid -->
+
         <table class="main-layout">
             <tr>
-                <!-- Left Column: Math & Visuals -->
+
                 <td class="col-left">
                     <div class="formula-box">
                         {% if entry.formula_img %}
-                            <!--
-                                entry.formula_img is only ever set by
-                                views.py to a valid file:// or http(s)
-                                path (existing upload, or LaTeX rendered
-                                to PNG) — no need to re-check the prefix
-                                here in the template.
-                            -->
                             <img src="{{ entry.formula_img }}" alt="{{ f.title }}">
                         {% else %}
-                            <!-- Plain-text formula (e.g. "V=IR") — no LaTeX, prints fine as text -->
                             <div class="latex-text">{{ entry.form_clean|default:entry.form|default:f.form }}</div>
                         {% endif %}
                     </div>
@@ -433,7 +408,6 @@
                     {% endif %}
                 </td>
 
-                <!-- Right Column: Context & Metadata -->
                 <td class="col-right">
                     {% if f.when_to_use %}
                     <div class="info-box">
@@ -471,19 +445,19 @@
             </tr>
         </table>
 
-        <!-- Full-Width Bottom Cards -->
+
         {% if f.example %}
         <div class="example-box">
             <div class="label">Exam Example Problem</div>
             <div>{{ f.example }}</div>
 
-            <!-- Answer Image Fallback -->
+
             {% if entry.answer_img %}
             <div style="margin-top: 6px; display: flex; align-items: center; gap: 6px;">
                 <span style="font-weight: 700; color: #451A03;">Solution:</span>
                 <img src="{{ entry.answer_img }}" style="height: 20px; vertical-align: middle;" alt="answer">
             </div>
-            <!-- Answer Text Fallback (Guarantees solution display) -->
+
             {% elif entry.answer_clean or f.answer %}
             <div class="solution-content">
                 <span style="font-weight: 800; color: #92400E; text-transform: uppercase; font-size: 8px; letter-spacing: 0.5px;">Solution:</span>
@@ -500,7 +474,6 @@
         </div>
         {% endif %}
 
-        <!-- Footer watermark -->
         <div class="bundle-footer">
             FormulaVerse Official Master PDF Bundle  |  Unlicensed redistribution prohibited  |  https://formulaverse.in
         </div>

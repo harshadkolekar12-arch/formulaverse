@@ -1,22 +1,3 @@
-"""
-Django management command: audits every Formula row for content
-quality issues before a distribution push. Run with:
-
-    python manage.py audit_formulas
-
-Checks per formula:
-  1. Missing diagram_url file (field empty, or points to a file that
-     doesn't exist on disk)
-  2. Missing derivation_image file (same check)
-  3. Suspicious LaTeX in `form` — doubled backslashes, \text{}, or
-     other patterns that are known to break the mathtext renderer
-  4. Empty when_to_use / mnemonic / example / common_mistakes — these
-     aren't fatal but are worth knowing about for a "complete
-     content" pass
-
-Outputs a clean per-chapter breakdown, sorted worst-first, so you
-know exactly where to spend your admin time.
-"""
 import os
 import re
 
@@ -38,19 +19,12 @@ class Command(BaseCommand):
     help = "Audit all formulas for missing diagrams, derivations, and suspicious LaTeX."
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            '--chapter',
-            type=str,
-            default=None,
-            help='Limit audit to a single chapter name (case-insensitive).',
-        )
+        parser.add_argument('--chapter', type=str, default=None, help='Limit audit to a single chapter name (case-insensitive).',)
 
     def handle(self, *args, **options):
         chapter_filter = options.get('chapter')
+        formulas = Formula.objects.select_related('chapter').order_by('chapter__name', 'id')
 
-        formulas = Formula.objects.select_related('chapter').order_by(
-            'chapter__name', 'id'
-        )
         if chapter_filter:
             formulas = formulas.filter(chapter__name__iexact=chapter_filter)
 
@@ -83,10 +57,8 @@ class Command(BaseCommand):
             f"{'='*70}\n"
         ))
 
-        # Sort chapters by issue count, worst first
-        sorted_chapters = sorted(
-            issues_by_chapter.items(), key=lambda kv: -len(kv[1])
-        )
+
+        sorted_chapters = sorted(issues_by_chapter.items(), key=lambda kv: -len(kv[1]))
 
         for chapter_name, entries in sorted_chapters:
             self.stdout.write(self.style.MIGRATE_HEADING(
@@ -107,34 +79,27 @@ class Command(BaseCommand):
     def _check_formula(self, f):
         problems = []
 
-        # --- Diagram check ---
         if not self._file_field_ok(f.diagram_url):
             if not f.diagram_url or not getattr(f.diagram_url, 'name', None):
                 problems.append("MISSING diagram (no file uploaded)")
             else:
-                problems.append(
-                    f"BROKEN diagram (file uploaded but not found on disk: {f.diagram_url.name})"
-                )
+                problems.append(f"BROKEN diagram (file uploaded but not found on disk: {f.diagram_url.name})")
 
-        # --- Derivation check ---
+
         if not self._file_field_ok(f.derivation_image):
             if not f.derivation_image or not getattr(f.derivation_image, 'name', None):
                 problems.append("MISSING derivation image (no file uploaded)")
             else:
-                problems.append(
-                    f"BROKEN derivation (file uploaded but not found on disk: {f.derivation_image.name})"
-                )
+                problems.append(f"BROKEN derivation (file uploaded but not found on disk: {f.derivation_image.name})")
 
-        # --- PDF-as-diagram/derivation check (needs rasterization) ---
+
         for field_name, field in [("diagram", f.diagram_url), ("derivation", f.derivation_image)]:
             if field and getattr(field, 'name', None):
                 ext = os.path.splitext(field.name)[1].lower()
                 if ext == '.pdf':
-                    problems.append(
-                        f"{field_name} is a PDF, not an image — needs rasterization to render in cheat sheet PDFs"
-                    )
+                    problems.append(f"{field_name} is a PDF, not an image — needs rasterization to render in cheat sheet PDFs")
 
-        # --- LaTeX sanity check on the `form` field ---
+
         if f.form:
             for pattern, description in SUSPICIOUS_LATEX_PATTERNS:
                 if re.search(pattern, f.form):
@@ -142,7 +107,7 @@ class Command(BaseCommand):
         else:
             problems.append("MISSING `form` (no LaTeX equation set)")
 
-        # --- Content completeness (non-fatal, informational) ---
+
         empty_fields = []
         if not f.when_to_use:
             empty_fields.append("when_to_use")
@@ -158,7 +123,6 @@ class Command(BaseCommand):
         return problems
 
     def _file_field_ok(self, field_file):
-        """True if the field has a file AND it exists on disk."""
         if not field_file:
             return False
         try:

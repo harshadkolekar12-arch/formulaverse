@@ -44,20 +44,13 @@ import re
 import html
 import hashlib
 
-#from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
-
-#from allauth.account.adapter import DefaultAccountAdapter
-
-# Create your views here
 
 def clean_latex_for_seo(text):
     if not text:
         return ""
 
-    # 1. Strip HTML tags
     text = re.sub(r'<[^>]+>', '', str(text))
 
-    # 2. Replace common LaTeX commands with clean Unicode symbols
     replacements = {
         r'\propto': '∝',
         r'\alpha': 'α',
@@ -82,14 +75,11 @@ def clean_latex_for_seo(text):
     for latex_cmd, unicode_char in replacements.items():
         text = text.replace(latex_cmd, unicode_char)
 
-    # 3. Convert fractions like \frac{a}{b} into (a/b)
     text = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1/\2)', text)
 
-    # 4. Remove MathJax / LaTeX delimiters ($...$, \(...\), \[...\])
     text = re.sub(r'\\[(\[\)\]]', '', text)
     text = text.replace('$', '')
 
-    # 5. Clean up remaining backslashes and normalize extra spaces
     text = re.sub(r'\\([a-zA-Z]+)', r'\1', text)
     text = re.sub(r'\s+', ' ', text).strip()
 
@@ -109,7 +99,6 @@ class IndexView(ListView):
         total = formulas.count()
         formula= formulas.filter(derivation_image__isnull=False)
 
-        # Saved count
         saved_count = 0
         if request.user.is_authenticated:
             saved_count = Formula.objects.filter(
@@ -178,7 +167,6 @@ class SingleFormulaView(DetailView):
             "constants": {c.symbol: c.value for c in constants},
         }
 
-        # Clean fields before sending to JSON-LD
         formula_title = clean_latex_for_seo(getattr(self.object, 'title', str(self.object)))
         formula_expr = clean_latex_for_seo(getattr(self.object, 'form', getattr(self.object, 'formula', '')))
         raw_mistakes = getattr(self.object, 'common_mistakes', None)
@@ -207,7 +195,6 @@ class SingleFormulaView(DetailView):
             ]
         }
 
-        # ensure_ascii=False keeps clean UTF-8 text instead of \u2022 escape codes
         context['faq_schema_json'] = json.dumps(faq_data, ensure_ascii=False)
 
         return context
@@ -275,14 +262,11 @@ class SavedFormulasView(View):
         user_id = request.session.get('user_session_id')
         user = SimpleUser.objects.get(session_id=user_id)
 
-        # NEW: query the through-table directly (instead of Formula via
-        # savedformula__user) so we can read each save's timestamp and
-        # attach a days_since_saved value the template can check.
         saved_rows = (
             SavedFormula.objects
             .filter(user=user)
             .select_related('formula')
-            .order_by('-saved_at')  # most recently saved first
+            .order_by('-saved_at')
         )
 
         today = timezone.localdate()
@@ -585,7 +569,6 @@ def progress_dashboard(request):
     total_formulas = Formula.objects.count()
 
     if not user:
-        # Logged-out visitor: show locked preview instead of redirecting
         context = {
             'is_logged_in': False,
             'total_saved': 0,
@@ -604,7 +587,6 @@ def progress_dashboard(request):
         }
         return render(request, 'formulas/dashboard.html', context)
 
-    # Get all saved formulas for this user only
     saved_formulas = Formula.objects.filter(savedformula__user=user)
 
     total_saved = saved_formulas.count()
@@ -618,19 +600,10 @@ def progress_dashboard(request):
     neet_count = saved_formulas.filter(exam_tag='neet').count()
     both_count = saved_formulas.filter(exam_tag='both').count()
 
-    # --- NEW: Chapters Started ---
-    # How many distinct chapters the user has at least one saved formula in.
     chapters_started = len(category_counts)
 
-    # --- NEW: Strongest chapter ---
-    # Same as favourite_chapter, but named for the "Strongest" badge in the template.
-    # (Kept as a separate variable in case you later want the badge logic to
-    # differ from the raw favourite — e.g. requiring a minimum count to qualify.)
     strongest_chapter = favourite_chapter if category_counts else None
 
-    # --- NEW: Chapter to tackle next ---
-    # Prefer a chapter the user hasn't touched at all; if they've started
-    # every chapter, fall back to their weakest (lowest-count) started chapter.
     all_chapter_names = list(
         Chapter.objects.values_list('name', flat=True)
     )
@@ -643,10 +616,6 @@ def progress_dashboard(request):
     else:
         next_chapter = None
 
-    # --- NEW: Streak ---
-    # Requires two fields on SimpleUser: last_active_date (DateField, null=True)
-    # and streak_days (IntegerField, default=0). Update these wherever a
-    # formula gets saved (see snippet below) — this view only reads them.
     streak_days = getattr(user, 'streak_days', 0) or 0
 
     context = {
@@ -668,24 +637,16 @@ def progress_dashboard(request):
     return render(request, 'formulas/dashboard.html', context)
 
 
-# ─────────────────────────────────────────────────────────────
-# OPTIONAL: streak-tracking helper.
-# Call this from inside your "save formula" view, right after a
-# SavedFormula gets created, to keep the streak field current.
-# Requires SimpleUser to have:
-#     last_active_date = models.DateField(null=True, blank=True)
-#     streak_days = models.IntegerField(default=0)
-# ─────────────────────────────────────────────────────────────
 def update_streak(user):
     today = timezone.localdate()
 
     if user.last_active_date == today:
-        return  # already counted today, no change
+        return
 
     if user.last_active_date == today - timezone.timedelta(days=1):
         user.streak_days = (user.streak_days or 0) + 1  # consecutive day
     else:
-        user.streak_days = 1  # streak broken or first-ever save
+        user.streak_days = 1
 
     user.last_active_date = today
     user.save(update_fields=['streak_days', 'last_active_date'])
@@ -809,11 +770,6 @@ def hashlib_md5(s):
 
 
 class TopicCheatsheetPDFView(View):
-    """
-    GET /cheatsheet.pdf/?topic=<chapter name, e.g. "optics">
-    ...(same docstring as before)...
-    """
-
     CACHE_DIR = os.path.join(settings.MEDIA_ROOT, "cheatsheets")
 
 
@@ -829,12 +785,10 @@ class TopicCheatsheetPDFView(View):
         if not formulas.exists():
             raise Http404("No formulas found for this chapter.")
 
-        # --- paywall gate ---
         chapter = formulas.first().chapter
         if chapter.is_premium and not has_purchased(chapter, request) and request.GET.get("admin") != "1":
             return redirect(f"/chapter/{topic_slug}/unlock/")
 
-        # Pass 'formulas' to get_cache_path to build a dynamic fingerprint
         cache_path = self.get_cache_path(topic_slug, formulas)
         force_regen = request.GET.get("regen") == "1"
 
@@ -854,7 +808,6 @@ class TopicCheatsheetPDFView(View):
             c for c in topic_slug.lower() if c.isalnum() or c in "-_"
         )
 
-        # Fingerprint combining formula count + highest formula ID
         count = formulas.count()
         latest_id = formulas.aggregate(Max('id'))['id__max'] or 0
         fingerprint = f"c{count}_id{latest_id}"
@@ -862,22 +815,16 @@ class TopicCheatsheetPDFView(View):
         return os.path.join(self.CACHE_DIR, f"{safe_slug}_{fingerprint}.pdf")
 
     def _local_file_url(self, field_file, formula_obj=None, field_name="file"):
-        """
-        Handles both uploaded FileFields and plain text URL strings (e.g., Desmos URLs).
-        """
         if not field_file:
             return None
 
-        # Convert field_file to string in case it's a FieldFile or CharField
         val_str = str(field_file).strip()
         if not val_str:
             return None
 
-        # 1. If it's a web URL (Desmos, HTTP, HTTPS), return it directly!
         if val_str.startswith("http://") or val_str.startswith("https://"):
             return val_str
 
-        # 2. Otherwise, treat it as a file path on disk
         try:
             path = field_file.path if hasattr(field_file, 'path') else val_str
             if not os.path.exists(path):
@@ -897,10 +844,6 @@ class TopicCheatsheetPDFView(View):
         return f"file://{path}"
 
     def _rasterize_pdf_first_page(self, pdf_path, dpi=150):
-        """
-        Convert page 1 of a PDF to a cached PNG using PyMuPDF (fitz).
-        Returns the PNG's filesystem path, or None on failure.
-        """
         cache_dir = os.path.join(settings.MEDIA_ROOT, "pdf_page_cache")
         os.makedirs(cache_dir, exist_ok=True)
 
@@ -913,7 +856,7 @@ class TopicCheatsheetPDFView(View):
             return png_path
 
         try:
-            import fitz  # PyMuPDF
+            import fitz
         except ImportError:
             print("[PDF ERROR] PyMuPDF (fitz) is not installed! PDF rasterization failed.")
             return None
@@ -935,9 +878,6 @@ class TopicCheatsheetPDFView(View):
         for f in formulas:
             # 1. First choice: Use local uploaded diagram image file if available
             diagram_file = self._local_file_url(f.diagram_url, formula_obj=f, field_name="diagram_url")
-
-            # 2. Fallback choice: If diagram_url is empty but desmos_graph_id exists,
-            # generate the static image URL from Desmos
             if not diagram_file and getattr(f, 'desmos_graph_id', None):
                 # Desmos provides static PNG thumbnail exports for saved graph IDs
                 diagram_file = f"https://calc-images.desmos.com/calc_thumbs/{f.desmos_graph_id}.png"
@@ -963,21 +903,8 @@ class TopicCheatsheetPDFView(View):
             base_url=request.build_absolute_uri("/"),
         ).write_pdf(cache_path)
 
-    # ... get_cache_path(), _local_file_url(), _rasterize_pdf_first_page(),
-    #     and build_pdf() all stay EXACTLY as you already have them —
-    #     nothing in those needs to change.
-
-
-# ============================================================
-# NEW: paywall views (add these as separate functions in the
-# same views.py, below the class)
-# ============================================================
 
 def unlock_chapter(request, topic):
-    """
-    Paywall landing page. topic matches the same string used in
-    ?topic=... everywhere else (e.g. "electrostatics"), NOT a slug field.
-    """
     chapter = get_object_or_404(Chapter, name__iexact=topic)
 
     if not chapter.is_premium or has_purchased(chapter, request):
@@ -1055,7 +982,6 @@ def verify_razorpay_payment(request):
     purchase.status = "paid"
     purchase.save()
 
-    # chapter.name is used directly as the ?topic= value here
     return JsonResponse({
         "success": True,
         "redirect_url": f"/cheatsheet.pdf/?topic={purchase.chapter.name}",
@@ -1181,29 +1107,19 @@ def my_purchases(request):
 logger = logging.getLogger(__name__)
 
 def hashlib_md5(s: str) -> str:
-    """Generates a 16-character MD5 hash for image caching keys."""
     return hashlib.md5(s.encode("utf-8")).hexdigest()[:16]
 
 
 def clean_latex(val) -> str:
-    """
-    Strips raw '$$' and '$' math delimiters from LaTeX strings,
-    ensuring clean LaTeX text output without broken double dollar signs.
-    """
     if not val:
         return ""
     val_str = str(val).strip()
-    # Remove leading and trailing $$ or $ delimiters
     val_str = re.sub(r"^\$\$\s*|\s*\$\$$", "", val_str)
     val_str = re.sub(r"^\$\s*|\s*\$$", "", val_str)
     return val_str.strip()
 
 
 def render_formula_media_url(val):
-    """
-    Safely resolves image paths/URLs for formula expressions and solutions.
-    Returns None if the value is raw LaTeX or missing.
-    """
     if not val:
         return None
 
@@ -1211,15 +1127,12 @@ def render_formula_media_url(val):
     if not val_str:
         return None
 
-    # Reject raw LaTeX / math text expressions
     if any(char in val_str for char in ["\\", "{", "}", "="]):
         return None
 
-    # Return valid remote web URLs
     if val_str.startswith(("http://", "https://")):
         return val_str
 
-    # Resolve local disk path
     try:
         abs_path = os.path.abspath(os.path.join(settings.MEDIA_ROOT, val_str.lstrip("/")))
         if os.path.exists(abs_path):
@@ -1237,48 +1150,25 @@ def format_units_for_display(units):
     return str(units).strip()
 
 
-# ---------------------------------------------------------------------------
-# LaTeX -> image rendering (fixes raw LaTeX leaking into the PDF, since
-# WeasyPrint has no JS engine and MathJax never runs at PDF-build time)
-# ---------------------------------------------------------------------------
-
 
 _LATEX_SIGNAL_RE = re.compile(r"\\[a-zA-Z]+|\\[{}]|_\{|\^\{")
 
 
 def is_raw_latex(val_str: str) -> bool:
-    """True if the string contains actual LaTeX commands/markup, as
-    opposed to plain formatted text like 'V=IR' which prints fine as-is."""
     if not val_str:
         return False
     return bool(_LATEX_SIGNAL_RE.search(val_str))
 
 
 def normalize_latex(val_str: str) -> str:
-    """
-    Cleans up known data-entry bugs before handing the string to the
-    mathtext parser:
-    - collapses doubled backslashes ("\\\\sin" -> "\\sin")
-    - strips a stray backslash directly before a Unicode Greek letter
-      that's already been converted from a macro ("\\θ" -> "θ")
-    - swaps \\text{...} for \\mathrm{...}, which mathtext supports
-    This is a render-time safety net. The real fix is finding wherever
-    these formulas get saved and correcting the stored data.
-    """
     s = val_str.strip()
-    s = re.sub(r"\\{2,}", r"\\", s)                       # \\\\sin -> \sin
-    s = re.sub(r"\\(?=[^\x00-\x7F])", "", s)                # \θ -> θ
-    s = re.sub(r"\\text\{([^}]*)\}", r"\\mathrm{\1}", s)     # \text{} -> \mathrm{}
+    s = re.sub(r"\\{2,}", r"\\", s)
+    s = re.sub(r"\\(?=[^\x00-\x7F])", "", s)
+    s = re.sub(r"\\text\{([^}]*)\}", r"\\mathrm{\1}", s)
     return s
 
 
 def render_latex_to_image(latex_str: str, media_root: str, fontsize: int = 20, dpi: int = 200):
-    """
-    Renders a LaTeX string to a cached PNG using matplotlib's mathtext
-    parser (pure Python, no system LaTeX or browser required). Returns
-    an absolute disk path, or None if rendering fails — callers should
-    fall back to raw text display in that case rather than break the page.
-    """
     if not latex_str:
         return None
 
@@ -1304,19 +1194,11 @@ def render_latex_to_image(latex_str: str, media_root: str, fontsize: int = 20, d
         parser.to_png(png_path, f"${normalized}$", color="#0369A1", fontsize=fontsize, dpi=dpi)
         return png_path
     except Exception as e:
-        # mathtext is a SUBSET of LaTeX — commands like \begin{matrix} or
-        # \overrightarrow aren't supported. Logged here so you can see
-        # exactly which stored formulas need simplifying.
         logger.error(f"[PDF ERROR] mathtext render failed for '{normalized}': {e}")
         return None
 
 
 def resolve_math_image(raw_val, media_root):
-    """
-    Single entry point used in build_pdf(): tries an existing uploaded
-    image/URL first, then falls back to rendering raw LaTeX to an image.
-    Returns a file:// or http(s) URL string, or None.
-    """
     img = render_formula_media_url(raw_val)
     if img:
         return img
@@ -1330,15 +1212,10 @@ def resolve_math_image(raw_val, media_root):
 
 
 class MasterCheatsheetPDFView(View):
-    """
-    GET /master-cheatsheet.pdf/
-    Renders all 172 formulas across all chapters into a single master PDF bundle.
-    """
 
     CACHE_DIR = os.path.join(settings.MEDIA_ROOT, "cheatsheets_master")
 
     def get(self, request, *args, **kwargs):
-        # Retrieve up to 172 formulas ordered by chapter and sequence
         formulas = (
             Formula.objects.select_related("chapter")
             .order_by("chapter__name", "id")[:172]
@@ -1376,11 +1253,9 @@ class MasterCheatsheetPDFView(View):
         if not val_str:
             return None
 
-        # Filter out raw LaTeX commands and math expressions
         if any(char in val_str for char in ["\\", "{", "}", "="]):
             return None
 
-        # Direct return for HTTP/HTTPS assets
         if val_str.startswith(("http://", "https://")):
             return val_str
 
@@ -1420,7 +1295,7 @@ class MasterCheatsheetPDFView(View):
             return png_path
 
         try:
-            import fitz  # PyMuPDF
+            import fitz
         except ImportError:
             logger.error("[PDF ERROR] PyMuPDF (fitz) is not installed.")
             return None
@@ -1456,10 +1331,6 @@ class MasterCheatsheetPDFView(View):
             raw_form = getattr(f, "form", "") or ""
             raw_answer = getattr(f, "answer", "") or ""
 
-            # Try an existing uploaded image/URL first, then fall back to
-            # rendering raw LaTeX to a cached image. This is the fix for
-            # LaTeX leaking as raw text in the PDF (WeasyPrint has no JS,
-            # so MathJax in the template never runs at build time).
             formula_img = resolve_math_image(raw_form, settings.MEDIA_ROOT)
             answer_img = resolve_math_image(raw_answer, settings.MEDIA_ROOT)
 
@@ -1480,7 +1351,6 @@ class MasterCheatsheetPDFView(View):
                 "units_display": format_units_for_display(getattr(f, "units", None)),
             })
 
-        # All template variables explicitly provided to prevent VariableDoesNotExist context dumps
         html_string = render_to_string("formulas/all_cheatsheet.html", {
             "is_master_bundle": True,
             "topic": "JEE / NEET Physics Master Formula Sheet",

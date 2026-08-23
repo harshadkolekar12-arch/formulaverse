@@ -32,7 +32,6 @@
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755..."></script>
 
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -70,7 +69,13 @@
     --pill-bg: rgba(255, 255, 255, 0.65);
     --grad: linear-gradient(135deg, #7c5cfc, #14b8a6);
   }
-  *{box-sizing:border-box;}
+
+  *{
+      box-sizing: border-box;
+
+  }
+
+
   body{
     margin:0;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -105,7 +110,12 @@
       font-size: 1rem;
   }
   .topbar-title{
-    font-weight:700; font-size:16px; display:flex; align-items:center; gap:8px;
+    font-weight:700;
+    font-size:16px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+
   }
   .topbar-count{
     margin-left:auto; color:var(--muted); font-size:13px;
@@ -166,7 +176,10 @@
   .search-icon{ color: var(--muted); }
 
   .filters{
-    display:flex; flex-wrap:wrap; justify-content:center; gap:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
     padding: 0 20px 8px;
   }
   .filter-pill{
@@ -224,7 +237,11 @@
     transform: translateY(-2px);
   }
   .qcard-top{
-    display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+
   }
   .qcard-name{ font-weight:700; font-size: 16px; color: var(--text); }
   .symbol-chip{
@@ -263,7 +280,8 @@
   }
   .qcard-bottom{
     margin-top: 4px;
-    display:flex; align-items:center; justify-content:space-between;
+    display:flex; align-items:center;
+    justify-content:space-between;
   }
   .cat-tag{
     background: var(--accent-soft);
@@ -289,7 +307,10 @@
   .copy-btn.copied{ color: #059669; border-color: #059669; background: rgba(5,150,105,.08); }
 
   .no-results{
-    text-align:center; color: var(--muted); padding: 40px 20px; grid-column: 1 / -1;
+    text-align:center;
+    color: var(--muted);
+    padding: 40px 20px;
+    grid-column: 1 / -1;
   }
 
    .site-footer {
@@ -323,7 +344,7 @@
 
         #backToTopBtn {
     position: fixed;
-    bottom: 90px; /* Positioned right above the mobile bottom nav bar */
+    bottom: 90px;
     right: 20px;
     z-index: 9999;
     width: 44px;
@@ -343,7 +364,6 @@
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
 }
 
-/* Active State (Shown on scroll) */
 #backToTopBtn.show {
     opacity: 1;
     visibility: visible;
@@ -361,16 +381,15 @@
 
 
 .ad-banner-container {
-  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  max-width: 280px;
   width: 100%;
-  margin: 16px auto; /* Centers the banner horizontally */
+  margin: 16px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Ensures the internal ad iframe scales cleanly */
 .ad-banner-container iframe,
 .ad-banner-container img {
   max-width: 100% !important;
@@ -558,7 +577,6 @@ render();
         }
     });
 
-    // Smooth scroll to top function
     function scrollToTop() {
         window.scrollTo({
             top: 0,

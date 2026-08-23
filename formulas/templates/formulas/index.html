@@ -12,15 +12,15 @@
      crossorigin="anonymous"></script>
 
 
-    <!-- High-CTR Meta Description -->
+
     <meta name="description" content="Master Physics with FormulaVerse. Free downloadable formula sheets, step-by-step derivations, key definitions, and quick revision guides for JEE Main, Advanced, NEET, and Class 11-12.">
 
-    <!-- SEO Meta Tags -->
+
     <meta name="keywords" content="physics formulas, JEE physics formulas, NEET physics revision, physics formula sheet, kinematics formulas, mechanics formulas, electrostatics formulas, class 11 physics, class 12 physics">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <!-- Open Graph / WhatsApp / Telegram Previews -->
+
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="FormulaVerse">
     <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
@@ -28,20 +28,20 @@
     <meta property="og:description" content="Browse all Physics formulas by category — Kinematics, Mechanics, Optics, Electrostatics and more with quick derivations and solved examples.">
     <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Twitter Card -->
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="FormulaVerse — Physics Formulas for JEE & NEET">
     <meta name="twitter:description" content="Free downloadable formula sheets, derivations, and quick revision notes for JEE Main, Advanced, and NEET.">
     <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- PWA & Mobile Settings -->
+
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
     <meta name="theme-color" content="#FAF6ED">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="FormulaVerse">
 
-    <!-- Schema.org Organization & FAQ Markup for AdSense SEO -->
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -73,7 +73,7 @@
     }
     </script>
 
-    <!-- Google Analytics (gtag.js) -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -82,7 +82,7 @@
       gtag('config', 'G-YHLZCEHWF7');
     </script>
 
-    <!-- MathJax Configuration -->
+
     <script>
       MathJax = {
         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -91,7 +91,6 @@
     </script>
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
-    <!-- Firebase Messaging (FCM Notifications) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js"></script>
     <script>
@@ -133,43 +132,35 @@
 
     <style>
         :root {
-            /* Base surfaces — warm cream light theme, matches landing page */
             --bg-primary: #FAF6ED;
             --bg-secondary: #FFFFFF;
             --bg-card: #FFFFFF;
             --bg-card-alt: #F3EEE1;
             --bg-card-hover: #F8F4EA;
             --border-subtle: #E8E1D0;
-
-            /* Text */
             --text-primary: #1B1B2F;
             --text-secondary: #63637A;
             --text-muted: #94918A;
-
-            /* Content accent (site-wide primary) */
             --accent-indigo: #4F46E5;
             --accent-violet: #7C3AED;
             --accent-teal: #0EA5A0;
-
-            /* Brand accent — from the heart logo, used ONLY for wordmark/tagline */
             --brand-pink: #D6336C;
             --brand-pink-muted: #A15A78;
-
-            /* Glass surfaces */
             --card-glass: rgba(255,255,255,0.55);
             --card-glass-strong: rgba(255,255,255,0.78);
             --border-glass: rgba(255,255,255,0.65);
-
-            /* Reference-tool chip colors */
             --chip-indigo-text: #4F46E5;
             --chip-gold-text: #B96F00;
             --chip-teal-text: #0B7F7A;
-
-            /* Filter active state */
             --filter-active: linear-gradient(135deg, #4F46E5, #7C3AED);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+
+        }
 
         body {
             background: var(--bg-primary);
@@ -806,7 +797,6 @@
     <span class="count">16 chapters</span>
 </div>
 
-<!-- Category Cards Grid -->
 <div class="cards-grid">
     <a href="/chapter/optics/" class="topic-card" style="--hue:46; animation-delay:0.10s" title="{{ count.optics }} formulas">
         <div class="card-body">
@@ -921,7 +911,6 @@
     </a>
 </div>
 
-<!-- HIGH-VALUE SEO & ADSENSE EXPANSION CONTENT -->
 <div class="content-section-container">
     <div class="content-card">
         <h2>Comprehensive Physics Revision for JEE Main, Advanced & NEET</h2>
@@ -1438,7 +1427,6 @@ function confirmLogout() {
   window.location.href = "/logout/";
 }
 
-/* ===== Progress ring fill — computes --pct and % label per card ===== */
 document.querySelectorAll('.card-ring').forEach(ring => {
     const done = parseInt(ring.dataset.visited) || 0;
     const total = parseInt(ring.dataset.total) || 1;

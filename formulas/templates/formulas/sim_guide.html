@@ -13,15 +13,12 @@
      crossorigin="anonymous"></script>
 
 
-    <!-- High-CTR Meta Description -->
     <meta name="description" content="{% if sim_title %}Learn how to use the {{ sim_title }} interactive Physics simulation on FormulaVerse. Adjust variables, run virtual experiments, and master key concepts for JEE & NEET.{% else %}Master Physics visually with interactive simulations on FormulaVerse. Step-by-step user guides, variable controls, and virtual lab experiments for JEE and NEET.{% endif %}">
 
-    <!-- SEO Meta Tags -->
     <meta name="keywords" content="{% if sim_title %}{{ sim_title }} simulation, {% endif %}physics simulation guide, interactive physics lab, virtual physics experiment, JEE physics simulation, NEET physics visualization">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <!-- Open Graph / WhatsApp / Telegram Previews -->
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="FormulaVerse">
     <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
@@ -29,17 +26,14 @@
     <meta property="og:description" content="Step-by-step guide to interactive Physics simulations and virtual lab experiments for JEE & NEET.">
     <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% if sim_title %}{{ sim_title }} Simulation Guide{% else %}Interactive Physics Simulation Guide{% endif %} — FormulaVerse">
     <meta name="twitter:description" content="Learn how to run virtual experiments and visualize Physics concepts interactively.">
     <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Favicon & Web Manifest -->
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,7 +51,6 @@
 
 
 
-    <!-- Google Tag Manager / Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -66,7 +59,6 @@
       gtag('config', 'G-YHLZCEHWF7');
     </script>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -99,7 +91,10 @@
             --spectrum-gradient: linear-gradient(90deg, var(--violet), var(--indigo) 25%, var(--cyan) 50%, var(--gold) 75%, var(--coral));
         }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+
+        }
 
         body {
             background:
@@ -226,7 +221,6 @@
         .section li { font-size: 0.92rem; margin-bottom: 8px; color: var(--ink); }
         .section li:last-child { margin-bottom: 0; }
 
-        /* Icon glossary — the same handful of PhET icons repeat across every simulation */
         .icon-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -357,14 +351,6 @@
   border: 0;
 }
 
-        /* ══════════════════════════════════════════════
-           NEW: DESKTOP POLISH (≥900px only)
-           Note: .content-wrapper stays a readable width on
-           purpose (a step-by-step guide reads better in a
-           constrained column, like the privacy policy page).
-           This block only adds spacing polish and enlarges
-           the icon glossary grid — nothing is restructured.
-           ══════════════════════════════════════════════ */
         @media (min-width: 900px) {
 
             .content-wrapper {
@@ -430,16 +416,15 @@
 
 
 .ad-banner-container {
-  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  max-width: 280px;
   width: 100%;
-  margin: 16px auto; /* Centers the banner horizontally */
+  margin: 16px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Ensures the internal ad iframe scales cleanly */
 .ad-banner-container iframe,
 .ad-banner-container img {
   max-width: 100% !important;

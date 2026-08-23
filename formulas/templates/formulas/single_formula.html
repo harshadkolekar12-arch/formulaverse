@@ -17,15 +17,12 @@
      crossorigin="anonymous"></script>
 
 
-    <!-- High-CTR Dynamic Meta Description -->
     <meta name="description" content="{{ formula.title }} formula - variables, SI units, Hand-written derivation, and solved numerical example  for JEE  & NEET.">
 
-    <!-- SEO Meta Tags -->
     <meta name="keywords" content="{{ formula.title }}, {{ formula.title }} formula, {{ formula.title }} derivation, {{ formula.title }} units, JEE physics formula, NEET physics formula, class 11 physics, class 12 physics">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <!-- Open Graph / WhatsApp / Telegram Previews -->
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="FormulaVerse">
     <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
@@ -33,17 +30,14 @@
     <meta property="og:description" content="Complete guide to {{ formula.title }} — equation breakdown, variable units, step-by-step derivation, and solved examples for JEE & NEET.">
     <meta property="og:image" content="{% if formula.image_url %}{{ formula.image_url }}{% else %}https://formulaverse.in/static/formulas/formulaverse_og_default.png{% endif %}">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ formula.title }} Formula & Notes | FormulaVerse">
     <meta name="twitter:description" content="Equation breakdown, SI units, and solved examples for {{ formula.title }}.">
     <meta name="twitter:image" content="{% if formula.image_url %}{{ formula.image_url }}{% else %}https://formulaverse.in/static/formulas/formulaverse_og_default.png{% endif %}">
 
-    <!-- Favicon & Web Manifest -->
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <!-- Schema.org Educational Article Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -65,12 +59,8 @@
     }
     </script>
 
-    <!-- External JS Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.0/math.js"></script>
 
-
-
-    <!-- Google Tag Manager / Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -79,7 +69,6 @@
       gtag('config', 'G-YHLZCEHWF7');
     </script>
 
-    <!-- MathJax Configuration -->
     <script>
       MathJax = {
         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
@@ -88,7 +77,6 @@
     </script>
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
-    <!-- Firebase Messaging (FCM Notifications) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js"></script>
     <script>
@@ -128,7 +116,6 @@
       setTimeout(requestPermission, 3000);
     </script>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -137,20 +124,15 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            /* Base — warm cream light theme, matches rest of site */
             --bg:      #FAF6ED;
             --ink:     #1B1B2F;
             --muted:   #63637A;
             --faint:   #94918A;
             --line:    rgba(27,27,47,0.10);
             --line-glass: rgba(255,255,255,0.65);
-
-            /* Glass surfaces */
             --surface:        rgba(255,255,255,0.55);
             --surface-strong: rgba(255,255,255,0.78);
             --surface-2:      rgba(243,238,225,0.65);
-
-            /* Accents (site-wide 3-accent system + supporting hues) */
             --violet:      #7C3AED;
             --violet-deep: #6D28D9;
             --indigo:      #4F46E5;
@@ -160,15 +142,12 @@
             --gold-deep:   #B96F00;
             --coral:       #DB2777;
             --danger:      #DC2626;
-
             --jee:   #F5A623;
             --neet:  #0EA5A0;
-
             --radius: 14px;
             --font-display: 'Space Grotesk', sans-serif;
             --font-body: 'Outfit', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
-
             --spectrum-gradient: linear-gradient(90deg, var(--violet), var(--indigo) 25%, var(--cyan) 50%, var(--gold) 75%, var(--coral));
         }
 
@@ -201,7 +180,6 @@
             z-index: 0;
         }
 
-        /* ===== Prism hairline ===== */
         .spectrum-thread {
             position: sticky;
             top: 0;
@@ -219,7 +197,7 @@
 
        .top-bar {
   display: flex;
-  justify-content: flex-end; /* Groups buttons on the top right */
+  justify-content: flex-end;
   align-items: center;
   padding: 10px 16px;
   gap: 8px;
@@ -234,7 +212,6 @@
 
 
 
-/* ===== Save button inside top-bar ===== */
 .btn-save {
   display: inline-flex;
   align-items: center;
@@ -336,7 +313,6 @@
         }
         .given-by span { color: var(--muted); }
 
-        /* ===== Formula showcase — the hero glass card ===== */
         .formula-card {
             position: relative;
             background: var(--surface);
@@ -400,7 +376,6 @@
             margin: 4px 0 16px;
         }
 
-        /* --- Diagram is opt-in, not a full-width block dominating the fold --- */
         .diagram-toggle-row {
             display: flex;
             gap: 10px;
@@ -555,7 +530,6 @@
             z-index: 1;
         }
 
-        /* ===== Quick-info: two chips side by side ===== */
         .quick-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -587,7 +561,6 @@
         .quick-chip.recall .quick-label { color: var(--cyan-deep); }
         .quick-body { font-size: 0.82rem; color: var(--ink); line-height: 1.45; }
 
-        /* ===== Worked example ===== */
         .example-card {
             margin-top: 14px;
             background: rgba(245,166,35,0.08);
@@ -621,7 +594,6 @@
             color: var(--cyan-deep);
         }
 
-        /* ===== PYQ pills ===== */
         .pyq-row { margin-top: 14px; }
         .pyq-pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
         .pyq-pill {
@@ -643,7 +615,6 @@
             color: var(--violet-deep);
         }
 
-        /* ===== Details accordion ===== */
         .accordion {
             margin-top: 16px;
             border: 1px solid var(--line-glass);
@@ -698,7 +669,6 @@
         }
 
 
-        /* ===== Practice section ===== */
         .practice-section {
             padding: 20px 0 0;
             margin-top: 20px;
@@ -776,7 +746,6 @@
         }
         .next-btn:hover { background: rgba(14,165,160,0.10); }
 
-        /* ===== Similar formulas — horizontal scroll strip ===== */
         .similar-scroll {
             display: flex;
             gap: 10px;
@@ -805,7 +774,6 @@
         .similar-title { color: var(--cyan-deep); font-weight: 600; font-size: 13px; display: block; margin-bottom: 4px; }
         .similar-formula { color: var(--gold-deep); font-size: 12.5px; font-weight: 500; }
 
-        /* ===== Telegram CTA ===== */
         .tg-join-btn {
             display: inline-flex;
             align-items: center;
@@ -822,7 +790,6 @@
         }
         .tg-join-btn:hover { transform: translateY(-1px); }
 
-        /* ===== Animation modal ===== */
         #animationModal {
             display: none; position: fixed; inset: 0;
             background: rgba(27,27,47,0.5); backdrop-filter: blur(4px); z-index: 9999;
@@ -935,10 +902,7 @@
           min-height: 18px;
         }
 
-        /* ══════════════════════════════════════════════
-           DESKTOP ENHANCEMENTS (≥900px only)
-           No HTML changes needed.
-           ══════════════════════════════════════════════ */
+
         @media (min-width: 900px) {
 
             .content-wrapper {
@@ -1139,7 +1103,6 @@
     padding: 0.75rem 1rem 0.25rem 1rem;
 }
 
-/* Styled Pill Button */
 .sprint-pill-btn {
     display: inline-flex;
     align-items: center;
@@ -1161,7 +1124,6 @@
     background: #ffffff;
 }
 
-/* Icon & Text Styling */
 .sprint-icon {
     font-size: 0.9rem;
 }
@@ -1173,7 +1135,6 @@
     letter-spacing: -0.01em;
 }
 
-/* Pulsing LIVE Indicator Badge */
 .sprint-badge {
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     color: #ffffff;
@@ -1349,7 +1310,7 @@
     border: 1px solid #e2e8f0;
     max-width: 100%;
     box-sizing: border-box;
-    overflow: hidden; /* Prevents outer card from stretching the viewport */
+    overflow: hidden;
   }
 
   .content-section {
@@ -1369,20 +1330,18 @@
     margin-bottom: 10px;
   }
 
-  /* Math & Content Container Isolation */
   .mathjax-render {
     font-size: 0.95rem;
     line-height: 1.7;
     color: #4a5568;
-    overflow-x: auto;         /* Enables smooth horizontal scroll for wide math equations */
+    overflow-x: auto;
     overflow-y: hidden;
     max-width: 100%;
-    word-wrap: break-word;     /* Wraps standard long text */
+    word-wrap: break-word;
     overflow-wrap: break-word;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* MathJax / KaTeX targeted fixes */
   .mathjax-render .MathJax_Display,
   .mathjax-render .mjx-chtml,
   .mathjax-render .katex-display {
@@ -1459,7 +1418,6 @@
         {% endif %}
     </div>
 
-    <!-- Formula is the hero. Diagram/derivation is opt-in via toggle instead of a full-width block pushing everything else below the fold. -->
     <div class="formula-card">
         <div class="formula-ribbon">FormulaVerse</div>
 
@@ -1524,7 +1482,6 @@
 
     <div class="content-wrapper">
 
-        <!-- Quick info: the two things read at a glance sit side by side, not stacked full-width -->
         {% if formula.when_to_use or formula.mnemonic %}
         <div class="quick-grid">
             {% if formula.when_to_use %}
@@ -1555,7 +1512,6 @@
         </div>
         {% endif %}
 
-       <!-- Variables, units and common mistakes (Permanently Expanded for SEO & AdSense Crawlers) -->
 <div class="details-static-block" style="margin-top: 20px; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; background-color: #ffffff;">
     <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: #2c3e50;">Variables, Units &amp; Common Mistakes</h2>
 
@@ -1583,9 +1539,6 @@
     {% endif %}
 </div>
 
-
-
-        <!-- Worked example keeps full visual weight — it's what people re-read mid-problem -->
         {% if formula.worked_example %}
         <div class="example-card">
             <div class="example-label">🧮 Worked example</div>
@@ -1708,8 +1661,6 @@
 {% endif %}
 
 
-
-        <!-- Practice section — pulled up next to the content it tests, right after Save -->
         <div class="practice-section">
             <div class="practice-heading">⚡ Practice Questions — Difficulty</div>
 
@@ -1733,7 +1684,6 @@
             </div>
         </div>
 
-        <!-- FormulaVerse Comment / Doubt Section -->
 <div class="content-section" style="margin-top: 24px; background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
   <h2 style="font-size: 1.15rem; font-weight: 700; color: #1a202c; margin-bottom: 6px;">💬 Have a Doubt or Feedback?</h2>
   <p style="font-size: 0.85rem; color: #718096; margin-bottom: 16px;">Ask a question about this derivation or leave a note for other students.</p>
@@ -1787,7 +1737,6 @@
 
 
 
-        <!-- Redesigned Offline PYQ Book Banner -->
 <div class="pyq-affiliate-card">
     <div class="pyq-affiliate-header">
         <span class="pyq-badge">Offline Practice</span>
@@ -2189,7 +2138,7 @@ function handleSaveSubmit(event) {
         });
     }
 
-  return true; // logged in, let form submit normally
+  return true; y
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -2207,12 +2156,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const resultDiv = document.getElementById("calc-result-box");
     const btn = document.getElementById("calc-trigger-btn");
 
-    // Populate dropdown options
+
     select.innerHTML = variables
       .map(v => `<option value="${v.symbol}">${v.name} (${v.symbol})</option>`)
       .join("");
 
-    // Dynamically render inputs for non-target variables
+
     function renderInputs() {
       resultDiv.classList.remove("show", "error");
       const targetSymbol = select.value;
@@ -2234,7 +2183,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let num = Number(val);
     if (isNaN(num)) return val;
 
-    // Format large/small numbers as scientific LaTeX (e.g. 1.0788 \times 10^{11})
     if (Math.abs(num) >= 10000 || (Math.abs(num) < 0.001 && num !== 0)) {
         let parts = num.toExponential(4).split('e');
         let mantissa = parts[0];
@@ -2242,11 +2190,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return `${mantissa} \\times 10^{${exponent}}`;
     }
 
-    // Regular numbers up to 4 decimal places
     return parseFloat(num.toFixed(4)).toString();
 }
 
-    // Calculation Handler
     function calculate() {
       const targetSymbol = select.value;
       const targetVar = variables.find(v => v.symbol === targetSymbol);
@@ -2299,7 +2245,6 @@ document.addEventListener("DOMContentLoaded", function () {
     select.addEventListener("change", renderInputs);
     btn.addEventListener("click", calculate);
 
-    // Initial trigger
     renderInputs();
   });
 

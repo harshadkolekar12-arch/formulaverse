@@ -10,15 +10,15 @@
      crossorigin="anonymous"></script>
 
 
-    <!-- High-CTR Dynamic Meta Description -->
+
     <meta name="description" content="Complete {{ category.name }} formula sheet for JEE Main, JEE Advanced, NEET & Class 11-12. Access key equations, definitions, derivations, and downloadable PDF notes.">
 
-    <!-- SEO Meta Tags -->
+
     <meta name="keywords" content="{{ category.name }} formulas, {{ category.name }} formula sheet, JEE {{ category.name }} notes, NEET {{ category.name }} revision, class 11 physics, class 12 physics">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <!-- Open Graph / WhatsApp / Telegram Previews -->
+
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="FormulaVerse">
     <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
@@ -26,17 +26,17 @@
     <meta property="og:description" content="Master {{ category.name }} with complete formula lists, derivations, and quick revision notes for JEE & NEET.">
     <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Twitter Card -->
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ category.name }} Formula Sheet | FormulaVerse">
     <meta name="twitter:description" content="Complete {{ category.name }} formula sheet and revision notes for JEE & NEET.">
     <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Favicon & Web Manifest -->
+
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <!-- Schema.org Organization Markup -->
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -49,7 +49,7 @@
 
 
 
-    <!-- Google Tag Manager / Analytics (gtag.js) -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -58,7 +58,7 @@
       gtag('config', 'G-YHLZCEHWF7');
     </script>
 
-    <!-- MathJax Configuration -->
+
     <script>
       MathJax = {
         tex: {
@@ -69,20 +69,19 @@
     </script>
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
-    <!-- Google Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <style>
     :root {
-        /* Base — warm cream light theme, matches rest of site */
         --bg: #FAF6ED;
         --surface: rgba(255,255,255,0.55);
         --surface-hover: rgba(255,255,255,0.80);
         --border: rgba(27,27,47,0.10);
         --border-glass: rgba(255,255,255,0.65);
 
-        /* Accents — this page's "physics spectrum" identity, remapped to the site's palette */
+
         --cyan: #0EA5A0;
         --cyan-deep: #0B7F7A;
         --pink: #DB2777;
@@ -102,7 +101,12 @@
         --font-mono: 'JetBrains Mono', monospace;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+    }
 
     html { scroll-behavior: smooth; }
 
@@ -116,7 +120,7 @@
         min-height: 100vh;
     }
 
-    /* Ambient glow wash behind everything — gives the glass cards something to blur */
+
     body::before {
         content: "";
         position: fixed;
@@ -129,7 +133,7 @@
             radial-gradient(500px 400px at 50% 100%, rgba(124,58,237,0.10), transparent 60%);
     }
 
-    /* Drifting physics glyphs — signature background texture */
+
     .glyph-field {
         position: fixed;
         inset: 0;
@@ -166,7 +170,7 @@
         z-index: 1;
     }
 
-    /* Back arrow (frosted) */
+
     .back-link {
         position: fixed;
         top: 14px;
@@ -193,7 +197,7 @@
         transform: translateX(-3px);
     }
 
-    /* Section Label */
+
     .section-label {
         display: flex;
         flex-direction: column;
@@ -222,7 +226,7 @@
         color: transparent;
     }
 
-    /* Count Circle */
+
     .count-circle {
         position: relative;
         display: flex;
@@ -257,7 +261,7 @@
         line-height: 1.5;
     }
 
-    /* Remove list styling */
+
     ul { list-style: none; padding: 0; margin: 0; }
     li { margin-bottom: 12px; }
 
@@ -289,7 +293,7 @@
         box-shadow: 0 0 0 4px rgba(14,165,160,0.15), 0 4px 18px rgba(27,27,47,0.10);
     }
 
-    /* Simulation box */
+
     .sim-box {
         margin: 16px 0;
         border-radius: 14px;
@@ -315,7 +319,7 @@
     .sim-frame-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; }
     .sim-frame-wrap iframe { border: none; position: absolute; top: 0; left: 0; }
 
-    /* HCV Book Affiliate Card */
+
 .hcv-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
@@ -432,7 +436,7 @@
     }
     @keyframes card-in { to { opacity: 1; transform: translateY(0); } }
 
-    /* Energy bar accent that lights up on hover */
+
     .formula-card::before {
         content: "";
         position: absolute;
@@ -451,7 +455,7 @@
     }
     .formula-card:hover::before { opacity: 1; width: 5px; }
 
-    /* Formula Title */
+
     .formula-title {
         font-family: var(--font-display);
         font-size: 17px;
@@ -464,7 +468,7 @@
     }
     .formula-title:hover { color: var(--cyan); }
 
-    /* Playful "explore" hint, purely decorative */
+
     .formula-card .explore-hint {
         position: absolute;
         top: 16px;
@@ -479,7 +483,7 @@
     }
     .formula-card:hover .explore-hint { opacity: 1; transform: translateX(0); color: var(--pink); }
 
-    /* Formula Expression */
+
     .formula-form {
         color: var(--amber-deep);
         max-width: 400px;
@@ -571,12 +575,7 @@
 }
 
 
-/* ══════════════════════════════════════════════
-       DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
-       Nothing above is modified — mobile stays identical.
-       ══════════════════════════════════════════════ */
     @media (min-width: 900px) {
-
         .container {
             max-width: 1000px;
             display: grid;
@@ -595,7 +594,7 @@
             grid-column: 1 / -1;
         }
 
-        /* Each formula's <ul> collapses so its <li> becomes a real grid item */
+
         .container > ul {
             display: contents;
         }
@@ -647,10 +646,10 @@
         }
 
 
-        /* Floating Back to Top Button */
+
 #backToTopBtn {
     position: fixed;
-    bottom: 90px; /* Positioned right above the mobile bottom nav bar */
+    bottom: 90px;
     right: 20px;
     z-index: 9999;
     width: 44px;
@@ -670,7 +669,7 @@
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
 }
 
-/* Active State (Shown on scroll) */
+
 #backToTopBtn.show {
     opacity: 1;
     visibility: visible;
@@ -687,16 +686,16 @@
 }
 
 .ad-banner-container {
-  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  max-width: 280px;
   width: 100%;
-  margin: 16px auto; /* Centers the banner horizontally */
+  margin: 16px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Ensures the internal ad iframe scales cleanly */
+
 .ad-banner-container iframe,
 .ad-banner-container img {
   max-width: 100% !important;
@@ -766,7 +765,7 @@
         </div>
         {% endif %}
 
-        <!-- Redesigned HC Verma Affiliate Card -->
+
 <div class="hcv-card">
     <div class="hcv-header">
         <span class="hcv-badge">Recommended Textbook</span>
@@ -801,7 +800,7 @@
 </div>
 
 
-        <!-- Formula Cards -->
+
         {% for formula in formulas %}
         <ul>
             <li>
@@ -893,7 +892,7 @@
 
       const backToTopBtn = document.getElementById("backToTopBtn");
 
-    // Show button after scrolling down 300px
+
     window.addEventListener("scroll", () => {
         if (window.scrollY > 300) {
             backToTopBtn.classList.add("show");
@@ -902,7 +901,7 @@
         }
     });
 
-    // Smooth scroll to top function
+
     function scrollToTop() {
         window.scrollTo({
             top: 0,

@@ -11,9 +11,6 @@ class FormulaConstantInline(admin.TabularInline):
     model = FormulaConstant
     extra = 0
 
-
-
-# Register your models here.
 class FormulaAdmin(admin.ModelAdmin):
     list_display=("title", "form", "given_by")
     inlines = [FormulaVariableInline, FormulaConstantInline,]

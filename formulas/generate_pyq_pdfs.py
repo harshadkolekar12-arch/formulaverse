@@ -110,7 +110,6 @@ DATA = {
             },
         ]
     },
-    # add more chapters the same way: "kinematics": {...}, "electromagnetism": {...}
 }
 
 for slug, info in DATA.items():

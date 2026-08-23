@@ -6,39 +6,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Personal Formula Vault | FormulaVerse</title>
+
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755752141"
      crossorigin="anonymous"></script>
 
+     <meta name="description" content="Access and organize your saved Physics formulas, custom revision notes, and bookmarked cheat sheets on FormulaVerse.">
+     <meta name="keywords" content="saved formulas, physics formula vault, custom physics revision sheet, formulaverse account">
+     <meta name="robots" content="noindex, follow">
 
-    <!-- Meta Description -->
-    <meta name="description" content="Access and organize your saved Physics formulas, custom revision notes, and bookmarked cheat sheets on FormulaVerse.">
-
-    <!-- SEO Meta Tags -->
-    <meta name="keywords" content="saved formulas, physics formula vault, custom physics revision sheet, formulaverse account">
-
-    <!-- Protect private/dashboard user pages from thin content indexing -->
-    <meta name="robots" content="noindex, follow">
-    <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
-
-    <!-- Open Graph / Social Previews -->
-    <meta property="og:type" content="website">
+   <meta property="og:type" content="website">
     <meta property="og:site_name" content="FormulaVerse">
     <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
     <meta property="og:title" content="Personal Formula Vault — FormulaVerse">
     <meta property="og:description" content="Your personal collection of saved Physics formulas and revision guides for JEE & NEET.">
     <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Twitter Card -->
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Personal Formula Vault — FormulaVerse">
     <meta name="twitter:description" content="Access your saved Physics formulas and revision cheat sheets.">
     <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Favicon & Web Manifest -->
+
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+     <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <!-- Schema.org Organization Markup -->
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -50,7 +44,7 @@
     </script>
 
 
-    <!-- Google Tag Manager / Analytics (gtag.js) -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -135,7 +129,7 @@
             margin-bottom:22px;
         }
 
-        /* ===== NEW: action bar (revise mode + share) ===== */
+
         .vault-actions{
             display:flex;
             justify-content:center;
@@ -202,7 +196,7 @@
         #searchBar::placeholder{ color:var(--text-dim); }
         #searchBar:focus{ border-color:var(--amber); box-shadow: 0 0 0 3px rgba(234,154,62,0.15); }
 
-      /* 1. Fix outer wrapper padding so cards don't touch screen edges */
+
 .container {
     max-width: 800px;
     width: 100%;
@@ -211,7 +205,7 @@
     box-sizing: border-box;
 }
 
-/* 2. Reset list padding */
+
 ul {
     list-style: none;
     padding: 0;
@@ -222,7 +216,7 @@ ul {
     width: 100%;
 }
 
-/* 3. Ensure cards stretch properly without overflowing */
+
 .deposit-box {
     position: relative;
     display: flex;
@@ -237,14 +231,14 @@ ul {
     box-sizing: border-box;
 }
 
-/* 4. Allow content inside card body to shrink and wrap */
+
 .box-body {
     flex: 1;
     min-width: 0; /* CRUCIAL: Allows long formulas/text to shrink inside flexbox */
     padding: 16px;
 }
 
-/* 5. Prevent long math equations from overflowing out of the card */
+
 .formula-form {
     overflow-x: auto; /* Adds a clean scrollbar if equation is too wide */
     max-width: 100%;
@@ -369,13 +363,7 @@ ul {
             z-index:10;
         }
 
-        /* ══════════════════════════════════════════════
-           REVISE MODE
-           Toggled by adding .revise-mode to <body>.
-           Hides the formula expression + "given by" line
-           behind a tap-to-reveal cover, turning each card
-           into a flashcard for active recall.
-           ══════════════════════════════════════════════ */
+
         body.revise-mode .formula-form,
         body.revise-mode .formula-author{
             filter: blur(6px);
@@ -399,9 +387,7 @@ ul {
         body.revise-mode .reveal-hint{ display:block; }
         body.revise-mode .deposit-box.is-revealed .reveal-hint{ display:none; }
 
-        /* ══════════════════════════════════════════════
-           DESKTOP GRID (≥900px only)
-           ══════════════════════════════════════════════ */
+
         @media (min-width: 900px) {
 
             .container {
@@ -460,7 +446,7 @@ ul {
          .empty-message span{ color: blue; font-weight:600; text-decoration:none; }
 
 
-         /* Custom Popup Modal Styling */
+
 .custom-modal-overlay {
     position: fixed;
     top: 0;
@@ -578,16 +564,16 @@ ul {
 
 
         .ad-banner-container {
-  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  max-width: 280px;
   width: 100%;
-  margin: 16px auto; /* Centers the banner horizontally */
+  margin: 16px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Ensures the internal ad iframe scales cleanly */
+
 .ad-banner-container iframe,
 .ad-banner-container img {
   max-width: 100% !important;
@@ -603,7 +589,7 @@ ul {
             text-align: center;
         }
 
-        /* Featured Formula Cards Grid (Content Expansion) */
+
         .featured-grid {
             display: flex;
             flex-direction: column;
@@ -881,7 +867,7 @@ function closeCustomAlert() {
     }
 }
 
-// Updated shareVault function
+
 function shareVault(formulaCount) {
     if (!formulaCount || formulaCount === 0) {
         showCustomAlert("No formulas in your vault to share yet! Save a formula first.", "Vault is Empty");
@@ -914,7 +900,7 @@ function shareVault(formulaCount) {
 
 
 
-<!-- Custom Popup Modal -->
+
 <div id="customAlertModal" class="custom-modal-overlay" onclick="closeCustomAlert()">
     <div class="custom-modal-box" onclick="event.stopPropagation()">
         <div class="custom-modal-icon">🔒</div>

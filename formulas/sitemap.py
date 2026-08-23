@@ -7,7 +7,6 @@ class StaticViewSitemap(Sitemap):
     changefreq = 'weekly'
 
     def items(self):
-        # List all main static view names here
         return ['me', 'constants', 'pyq-papers', 'units-dimensions', 'privacy', 'terms']
 
     def location(self, item):
@@ -44,7 +43,6 @@ class DailyChallengeSitemap(Sitemap):
     def items(self):
         return DailyChallenge.objects.all()
 
-# Master sitemaps dictionary
 sitemaps = {
     'static': StaticViewSitemap,
     'chapters': ChapterSitemap,

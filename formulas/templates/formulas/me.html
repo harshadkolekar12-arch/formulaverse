@@ -11,15 +11,15 @@
      crossorigin="anonymous"></script>
 
 
-    <!-- High-CTR Meta Description -->
+
     <meta name="description" content="Meet Harshad Kolekar, creator and developer of FormulaVerse — building free, comprehensive Physics formula sheets, derivations, and study tools for JEE and NEET students.">
 
-    <!-- SEO Meta Tags -->
+
     <meta name="keywords" content="Harshad Kolekar, FormulaVerse creator, FormulaVerse developer, physics app developer, JEE formula sheets, NEET physics resources">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <!-- Open Graph / WhatsApp / Social Previews -->
+
     <meta property="og:type" content="profile">
     <meta property="og:site_name" content="FormulaVerse">
     <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
@@ -27,17 +27,17 @@
     <meta property="og:description" content="Meet the developer behind FormulaVerse — free interactive Physics formula sheets and revision guides for JEE & NEET.">
     <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Twitter Card -->
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="About Harshad Kolekar — Creator of FormulaVerse">
     <meta name="twitter:description" content="Meet the developer behind FormulaVerse — free interactive Physics formula sheets for JEE & NEET.">
     <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Favicon & Web Manifest -->
+
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <!-- Schema.org Person & Organization Structured Data -->
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -66,7 +66,7 @@
 
     <
 
-    <!-- Google Tag Manager / Analytics (gtag.js) -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -75,7 +75,6 @@
       gtag('config', 'G-YHLZCEHWF7');
     </script>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -104,7 +103,10 @@
             --grad:     linear-gradient(90deg, #7c5cfc, #14b8a6);
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+
+        }
 
         html, body { margin: 0; padding: 0; background: var(--bg2); }
 
@@ -130,7 +132,6 @@
                 radial-gradient(ellipse 420px 300px at 90% 20%, rgba(139,92,246,0.08), transparent 60%);
         }
 
-        /* ===== top nav ===== */
         .back-link {
             position: fixed;
             top: 14px;
@@ -175,7 +176,6 @@
         }
         .tg-join-btn:hover { transform: translateY(-1px); }
 
-        /* Header Wrapper */
         .about-header-card {
             display: flex;
             align-items: center;
@@ -194,7 +194,6 @@
             box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
         }
 
-        /* ===== shared panel ===== */
         .panel {
             position: relative;
             background: var(--panel);
@@ -213,7 +212,6 @@
         .corner-brackets::before { top: 8px; left: 8px; border-top: 1.5px solid rgba(45,42,61,0.15); border-left: 1.5px solid rgba(45,42,61,0.15); }
         .corner-brackets::after { bottom: 8px; right: 8px; border-bottom: 1.5px solid rgba(45,42,61,0.15); border-right: 1.5px solid rgba(45,42,61,0.15); }
 
-        /* ===== about me ===== */
         .description {
             padding: 26px 24px;
             font-size: 1.05rem;
@@ -234,7 +232,6 @@
             margin-bottom: 14px;
         }
 
-        /* ===== why section ===== */
         .why-section {
             margin: 0 0 40px;
             padding: 36px 24px;
@@ -314,7 +311,6 @@
             font-size: 13px;
         }
 
-        /* ===== NEW: BETTER THAN BORING & VERDICT SECTIONS ===== */
         .better-section, .verdict-section {
             margin: 0 0 40px;
             padding: 36px 24px;
@@ -416,7 +412,6 @@
         .chip.amber  { background: var(--amber-dim);  border-color: rgba(234,154,62,0.3);  color: var(--amber); }
         .chip.rose   { background: var(--rose-dim);   border-color: rgba(236,72,153,0.3); color: var(--rose); }
 
-        /* ===== contact ===== */
         .contact-wrap { margin-bottom: 30px; }
         .btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
         .btn {
@@ -457,7 +452,6 @@
             box-shadow: 0 6px 20px rgba(234,154,62,0.25);
         }
 
-        /* ===== video intro ===== */
         .video-wrap { margin-bottom: 40px; }
         .video-frame {
             position: relative;
@@ -551,16 +545,16 @@
 
 
 .ad-banner-container {
-  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  max-width: 280px;
   width: 100%;
-  margin: 16px auto; /* Centers the banner horizontally */
+  margin: 16px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Ensures the internal ad iframe scales cleanly */
+
 .ad-banner-container iframe,
 .ad-banner-container img {
   max-width: 100% !important;
@@ -579,7 +573,6 @@
     </div>
 
     <div class="page">
-        <!-- Header Card: Icon + Text Side-by-Side -->
         <div class="about-header-card">
             <img src="{% static 'formulas/icon.jpeg' %}" alt="FormulaVerse Logo" class="header-icon">
             <div class="creator-intro">
@@ -588,7 +581,6 @@
             </div>
         </div>
 
-        <!-- VIDEO SECTION -->
         <div class="video-wrap">
             <div class="video-frame">
                 <iframe src="https://res.cloudinary.com/nimyi5kd/video/upload/VN20260731_184609_cugbhl.mp4" title="A quick hello from the creator of FormulaVerse" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -596,7 +588,7 @@
             <p class="video-caption">A quick hello — why I built FormulaVerse, in my own words.</p>
         </div>
 
-        <!-- ABOUT ME SECTION -->
+
         <div class="panel description corner-brackets">
             <div class="eyebrow-label">✦ About Me ✦</div>
             <p>
@@ -609,7 +601,6 @@
 
 
 
-        <!-- WHY I BUILT THIS SECTION -->
         <section class="panel why-section corner-brackets">
             <div class="why-header">
                 <div class="why-kicker">✦ The Story ✦</div>
@@ -700,7 +691,6 @@
             </div>
         </section>
 
-        <!-- VERDICT SECTION -->
         <section class="panel verdict-section corner-brackets">
             <div class="why-header">
                 <div class="why-kicker">✦ How To Use It ✦</div>
@@ -713,7 +703,6 @@
             </div>
         </section>
 
-        <!-- SKILLS SECTION -->
         <section class="skills-wrap">
             <div class="section-label">Skills</div>
             <div class="chip-row">
@@ -728,7 +717,7 @@
             </div>
         </section>
 
-        <!-- CONTACT SECTION -->
+
         <section class="contact-wrap" id="get-in-touch" style="scroll-margin-top: 24px;">
             <div class="section-label">Get in touch</div>
             <div class="btn-row">
@@ -751,7 +740,7 @@
   </div>
 </footer>
 
-    </div> <!-- End of .page wrapper -->
+    </div>
 
     <script>
         if ('serviceWorker' in navigator) {

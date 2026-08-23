@@ -7,16 +7,14 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 
-# Create your models here.
-
 class Chapter(models.Model):
     name = models.CharField(max_length=100, null=True)
-    explain = models.TextField(max_length=450, blank=True)
+    explain = models.TextField(max_length=700, blank=True)
     simulation_url = models.URLField(blank=True, null=True)
     sim_video = models.URLField(null=True, blank=True)
     sim_thumbnail = models.ImageField(upload_to="sim_video/thumbnail/", null=True, blank=True)
     is_premium = models.BooleanField(default=False)
-    price_inr = models.PositiveIntegerField(default=49)  # ₹, editable per chapter
+    price_inr = models.PositiveIntegerField(default=49)
     razorpay_url = models.URLField(blank=True, null=True)
 
     class Meta:
@@ -26,7 +24,6 @@ class Chapter(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        # Generates sitemap URL for chapters
         return f"/chapter/{self.id}/"
 
 
@@ -51,7 +48,7 @@ FAQ_SCHEMA = {
             },
             'answer': {
                 'type': 'string',
-                'widget': 'textarea', # Creates a large text field for long paragraphs
+                'widget': 'textarea',
                 'title': 'Answer',
             }
         }
@@ -60,7 +57,6 @@ FAQ_SCHEMA = {
 
 
 class Formula(models.Model):
-    # --- Essential ---
     title = models.CharField(max_length=80, blank=True, null=True)
     form = models.CharField(max_length=150, blank=True, null=True)
     variables = models.CharField(max_length=200, blank=True, null=True)
@@ -187,7 +183,6 @@ def has_purchased(chapter, request):
         except SimpleUser.DoesNotExist:
             pass
 
-    # Fallback: guest checkout before login, matched by raw Django session key
     session_key = request.session.session_key
     if session_key and qs.filter(session_key=session_key).exists():
         return True

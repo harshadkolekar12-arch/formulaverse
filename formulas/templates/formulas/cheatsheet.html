@@ -31,7 +31,7 @@
             background-color: #FFFFFF;
         }
 
-        /* ---------- Cover Page ---------- */
+
         .cover {
             height: 25cm;
             text-align: center;
@@ -81,7 +81,7 @@
             color: #94A3B8;
         }
 
-        /* ---------- Formula Page ---------- */
+
         .formula-page {
             page-break-before: always;
             page-break-inside: avoid;
@@ -118,7 +118,7 @@
             margin-top: 3px;
         }
 
-        /* Main Two-Column Layout Grid */
+
         .main-layout {
             width: 100%;
             border-collapse: separate;
@@ -133,7 +133,7 @@
             width: 50%;
         }
 
-        /* Hero Formula Box */
+
         .formula-box {
             text-align: center;
             background: #F0F9FF;
@@ -147,7 +147,7 @@
         .formula-box img {
             max-height: 50px;
             max-width: 90%;
-            filter: invert(1) hue-rotate(180deg); /* Adjusts dark formulas if needed */
+            filter: invert(1) hue-rotate(180deg);
             display: inline-block;
         }
 
@@ -184,7 +184,7 @@
             border-radius: 4px;
         }
 
-        /* Info Boxes */
+
         .info-box {
             background: #F8FAFC;
             border: 1px solid #E2E8F0;
@@ -214,7 +214,7 @@
             color: #0369A1;
         }
 
-        /* Variables & Units Table */
+
         table.var-table {
             width: 100%;
             border-collapse: collapse;
@@ -242,7 +242,7 @@
             background: #F8FAFC;
         }
 
-        /* Worked Example Box */
+
         .example-box {
             background: #FFFBEB;
             border: 1px solid #FDE68A;
@@ -263,7 +263,7 @@
             text-transform: uppercase;
         }
 
-        /* Common Mistakes Box */
+
         .mistakes-box {
             background: #FEF2F2;
             border: 1px solid #FECACA;
@@ -286,7 +286,7 @@
 </head>
 <body>
 
-    <!-- ============ Cover page ============ -->
+
     <div class="cover">
         <div class="brand"> 💗FORMULAVERSE</div>
         <h1>{{ topic|title }}</h1>
@@ -298,12 +298,12 @@
         <div class="meta">Generated {{ today }} &nbsp;·&nbsp; {{ site_url }}</div>
     </div>
 
-    <!-- ============ One page per formula ============ -->
+
     {% for entry in entries %}
     {% with f=entry.obj %}
     <div class="formula-page">
 
-        <!-- Header Section -->
+
         <div class="header-bar">
             <div class="chapter-tag">{{ topic|upper }}</div>
             <div class="formula-title">{{ f.title }}</div>
@@ -312,10 +312,9 @@
             {% endif %}
         </div>
 
-        <!-- Two Column Main Layout -->
+
         <table class="main-layout">
             <tr>
-                <!-- Left Column: Primary Visuals & Math -->
                 <td class="col-left">
                     {% if entry.formula_img %}
                     <div class="formula-box">
@@ -342,7 +341,7 @@
                     {% endif %}
                 </td>
 
-                <!-- Right Column: Metadata, Context & Definitions -->
+
                 <td class="col-right">
                     {% if f.when_to_use %}
                     <div class="info-box">
@@ -380,7 +379,7 @@
             </tr>
         </table>
 
-        <!-- Bottom Full-Width Cards Section -->
+
         {% if f.example %}
         <div class="example-box">
             <div class="label">Worked Example</div>

@@ -10,15 +10,15 @@
      crossorigin="anonymous"></script>
 
 
-    <!-- High-CTR Dynamic Meta Description -->
+
     <meta name="description" content="Access all {{ total }} essential Physics formulas for {{ exam_label }}. Download quick revision cheat sheets, key definitions, derivations, and solved questions.">
 
-    <!-- SEO Meta Tags -->
+
     <meta name="keywords" content="{{ exam_label }} physics formulas, {{ exam_label }} formula sheet, {{ exam_label }} physics revision, {{ exam_label }} formula list, physics cheat sheet">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://formulaverse.in{{ request.path }}">
 
-    <!-- Open Graph / WhatsApp / Social Previews -->
+
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="FormulaVerse">
     <meta property="og:url" content="https://formulaverse.in{{ request.path }}">
@@ -26,17 +26,17 @@
     <meta property="og:description" content="Browse all {{ total }} essential Physics formulas for {{ exam_label }} with equations, derivations, and quick study guides.">
     <meta property="og:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Twitter Card -->
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ exam_label }} Physics Formula List | FormulaVerse">
     <meta name="twitter:description" content="Complete {{ exam_label }} Physics formula list and revision cheat sheet.">
     <meta name="twitter:image" content="https://formulaverse.in/static/formulas/formulaverse_og_default.png">
 
-    <!-- Favicon & Web Manifest -->
+
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
 
-    <!-- Schema.org Organization Markup -->
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -49,7 +49,7 @@
 
 
 
-    <!-- Google Tag Manager / Analytics (gtag.js) -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -58,31 +58,24 @@
       gtag('config', 'G-YHLZCEHWF7');
     </script>
 
-    <!-- MathJax Configuration -->
+
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
 
     <style>
         :root {
-            /* Base — warm cream light theme, matches rest of site */
             --bg: #FAF6ED;
             --border: rgba(27,27,47,0.08);
             --border-glass: rgba(255,255,255,0.65);
             --text: #1B1B2F;
             --text-dim: #63637A;
             --text-faint: #94918A;
-
-            /* Glass surfaces */
             --card-glass: rgba(255,255,255,0.55);
             --card-glass-strong: rgba(255,255,255,0.78);
-
-            /* Accents (site-wide) */
             --accent-indigo: #4F46E5;
             --accent-indigo-deep: #3730A3;
             --accent-teal: #0EA5A0;
             --accent-teal-deep: #0B7F7A;
-
-            /* Exam identity colors — reuses the site's 3-accent system */
             --jee: #F5A623;
             --jee-2: #C97B00;
             --neet: #4F46E5;
@@ -90,7 +83,13 @@
             --both: #0EA5A0;
             --both-2: #0B7F7A;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+
+        }
+
         body {
             background: var(--bg);
             background-image:
@@ -104,7 +103,7 @@
             padding-bottom: 40px;
         }
 
-        /* ---------- Top bar (frosted) ---------- */
+
         .topbar {
             position: sticky;
             top: 0;
@@ -151,7 +150,7 @@
             box-shadow: 0 6px 16px -4px rgba(23,168,92,0.35);
         }
 
-        /* ---------- Header ---------- */
+
         .header {
             text-align: center;
             padding: 30px 16px 6px;
@@ -184,7 +183,6 @@
             color: var(--accent-indigo-deep);
         }
 
-        /* ---------- Search ---------- */
         .search-wrapper {
             margin: 22px 18px 6px;
         }
@@ -207,7 +205,7 @@
             box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
         }
 
-        /* ---------- Cards (glassmorphism) ---------- */
+
         .container { padding: 10px 18px 20px; }
         ul { list-style: none; }
         li { margin-bottom: 14px; }
@@ -413,13 +411,7 @@
           min-height: 18px;
         }
 
-        /* ══════════════════════════════════════════════
-           DESKTOP / LAPTOP ENHANCEMENTS (≥900px only)
-           No HTML changes were needed for this page —
-           the <ul> already wraps <li> cards directly,
-           so it becomes a grid container here.
-           Mobile layout below 900px is untouched.
-           ══════════════════════════════════════════════ */
+
         @media (min-width: 900px) {
 
             .header {
@@ -542,7 +534,7 @@
 
 #backToTopBtn {
     position: fixed;
-    bottom: 90px; /* Positioned right above the mobile bottom nav bar */
+    bottom: 90px;
     right: 20px;
     z-index: 9999;
     width: 44px;
@@ -562,7 +554,7 @@
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
 }
 
-/* Active State (Shown on scroll) */
+
 #backToTopBtn.show {
     opacity: 1;
     visibility: visible;
@@ -580,16 +572,16 @@
 
 
 .ad-banner-container {
-  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  max-width: 280px;
   width: 100%;
-  margin: 16px auto; /* Centers the banner horizontally */
+  margin: 16px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Ensures the internal ad iframe scales cleanly */
+
 .ad-banner-container iframe,
 .ad-banner-container img {
   max-width: 100% !important;
@@ -641,7 +633,7 @@
         <div class="count-pill">📐 {{ total }} formulas</div>
     </div>
 
-    <!-- Search -->
+
     <div class="search-wrapper">
         <input type="text" id="searchBar"
             placeholder="🔍 Search {{ exam_label }} formulas..."
@@ -665,7 +657,7 @@
 {% endif %}
 
 
-    <!-- Formula Cards -->
+
     <div class="container">
         <ul>
             {% for formula in formulas %}
@@ -674,15 +666,15 @@
                      <!-- Modernized top header layout inside the card -->
         <div class="card-top" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
 
-            <!-- Title on the left -->
+
             <div class="formula-title" style="margin: 0; flex: 1;">
                 {{ formula.title }}
             </div>
 
-            <!-- Badges grouped together nicely on the top right -->
+
             <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
 
-                <!-- Fixed Chapter Badge: Text is now properly inside the tag -->
+
                 <span class="chapter-badge">
                     {{ formula.chapter.name }}
                 </span>
@@ -822,7 +814,7 @@ function handleSaveSubmit(event) {
         }
     });
 
-    // Smooth scroll to top function
+
     function scrollToTop() {
         window.scrollTo({
             top: 0,

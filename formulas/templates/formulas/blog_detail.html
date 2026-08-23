@@ -9,12 +9,12 @@
      crossorigin="anonymous"></script>
 
 
-  <!-- Google Fonts -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- MathJax Configuration & Script -->
+
   <script>
     window.MathJax = {
       tex: {
@@ -64,7 +64,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Top Back Header */
+
     .nav-header {
       width: 100%;
       max-width: 840px;
@@ -90,7 +90,7 @@
       transform: translateX(-2px);
     }
 
-    /* Main Article Container */
+
     .article-container {
       width: 100%;
       max-width: 840px;
@@ -113,7 +113,7 @@
       }
     }
 
-    /* Article Header Section */
+
     .article-header {
       border-bottom: 1px solid var(--border-subtle);
       padding-bottom: 20px;
@@ -164,7 +164,7 @@
       }
     }
 
-    /* Article Body Typography & Layout Guards */
+
     .article-body {
       font-size: 1.02rem;
       line-height: 1.8;
@@ -218,7 +218,7 @@
       margin-bottom: 8px;
     }
 
-    /* Strict MathJax Equation Responsive Formatting */
+
     mjx-container {
       max-width: 100% !important;
       overflow-x: auto !important;
@@ -235,7 +235,7 @@
       display: block !important;
     }
 
-    /* Ads Container */
+
     .ad-banner-container {
       max-width: 100%;
       width: 100%;
@@ -252,7 +252,7 @@
       height: auto !important;
     }
 
-    /* Call to Action Box */
+
     .article-cta {
       background: linear-gradient(135deg, rgba(243, 232, 255, 0.5) 0%, rgba(254, 249, 240, 0.8) 100%);
       border: 1px solid rgba(124, 58, 237, 0.18);
@@ -296,7 +296,7 @@
       text-decoration: underline;
     }
 
-    /* Footer */
+
     .site-footer {
       margin-top: 40px;
       text-align: center;
@@ -325,7 +325,7 @@
       color: var(--text-main);
     }
 
-    /* Bottom Navigation Bar */
+
     .fv-nav-spacer { height: 72px; }
 
     .fv-bottom-nav {
@@ -376,12 +376,12 @@
 </head>
 <body>
 
-  <!-- Top Navigation Back Link -->
+
   <div class="nav-header">
     <a href="{% url 'blog_list' %}" class="nav-brand">&larr; Back to All Guides</a>
   </div>
 
-  <!-- Main Article Box -->
+
   <article class="article-container">
     <header class="article-header">
       <div class="article-meta">
@@ -392,14 +392,14 @@
       <h1 class="article-title">{{ article.title }}</h1>
     </header>
 
-    <!-- Article Content -->
+
     <div class="article-body">
       {{ article.content|safe }}
     </div>
 
 
 
-    <!-- CTA Box -->
+
     <div class="article-cta">
       <h3>⚡ Need Interactive Physics Tools?</h3>
       <p>Access step-by-step formula derivations, variable breakdowns, and practice with our built-in calculators.</p>
@@ -421,10 +421,8 @@
   </div>
 </footer>
 
-  <!-- Nav Spacer -->
-  <div class="fv-nav-spacer"></div>
 
-  <!-- Bottom Navigation Menu -->
+  <div class="fv-nav-spacer"></div>
   <nav class="nav-menu fv-bottom-nav" aria-label="Primary">
     <a href="{% url 'base-page' %}" class="fv-nav-item">
       <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
