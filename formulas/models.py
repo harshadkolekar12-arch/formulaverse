@@ -16,6 +16,7 @@ class Chapter(models.Model):
     is_premium = models.BooleanField(default=False)
     price_inr = models.PositiveIntegerField(default=49)
     razorpay_url = models.URLField(blank=True, null=True)
+    weightage = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Chapters"
@@ -286,3 +287,62 @@ class Comment(models.Model):
 
     def _str_(self):
         return f"{self.student_name} on {self.formula.title}"
+
+
+class ExamInfo(models.Model):
+    exam = models.CharField(max_length=10, choices=EXAM_CHOICES, unique=True)
+    heading = models.CharField(max_length=150, blank=True, null=True)
+    intro_text = models.TextField(blank=True, null=True)
+    stat_label = models.CharField(max_length=100, blank=True, null=True)
+    stat_value = models.CharField(max_length=50, blank=True, null=True)
+
+
+    def __str__(self):
+        return self.get_exam_display()
+
+
+class Story(models.Model):
+    formula = models.OneToOneField(Formula, on_delete=models.CASCADE, related_name="story",)
+    title = models.CharField(max_length=200, blank=True, null=True)
+    hook = models.TextField(blank=True, null=True)
+    history = models.TextField(blank=True, null=True)
+    intuition = models.TextField(blank=True, null=True)
+    derivation_narrative = models.TextField(blank=True, null=True)
+    applications = models.TextField(blank=True, null=True)
+    misconception = models.TextField(blank=True, null=True)
+    closing_thought = models.TextField(blank=True, null=True)
+    cover_note = models.CharField(max_length=300, blank=True, null=True)
+    is_published = models.BooleanField(default=False)
+    word_count = models.PositiveIntegerField(default=0, editable=False)
+    reading_time_minutes = models.PositiveSmallIntegerField(default=0, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Story"
+        verbose_name_plural = "Stories"
+        ordering = ["-updated_at"]
+
+    def __str__(self):
+        return f"Story: {self.title} ({self.formula.title})"
+
+    def get_absolute_url(self):
+        return reverse("formula-story-detail", kwargs={"slug": self.formula.slug},)
+
+    def _compute_word_count(self):
+        sections = [
+            self.hook,
+            self.history,
+            self.intuition,
+            self.derivation_narrative,
+            self.applications,
+            self.misconception,
+            self.closing_thought,
+        ]
+        return sum(len(section.split()) for section in sections if section)
+
+    def save(self, *args, **kwargs):
+        self.word_count = self._compute_word_count()
+        # Average adult reading speed ~200 wpm, rounded up
+        self.reading_time_minutes = max(1, round(self.word_count / 200))
+        super().save(*args, **kwargs)

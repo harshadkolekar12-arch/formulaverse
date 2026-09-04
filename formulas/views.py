@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.views.generic import DetailView,TemplateView, CreateView
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy, reverse
-from .models import Formula, Chapter, SimpleUser, PurchasedChapter, has_purchased, SavedFormula, ExamDate, DailyChallenge, Article, Comment
+from .models import Formula, Chapter, SimpleUser, PurchasedChapter, has_purchased, SavedFormula, ExamDate, DailyChallenge, Article, Comment, ExamInfo, Story
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -166,6 +166,10 @@ class SingleFormulaView(DetailView):
             ],
             "constants": {c.symbol: c.value for c in constants},
         }
+
+        context['story'] = getattr(self.object, 'story', None)
+        if context['story'] and not context['story'].is_published:
+            context['story'] = None
 
         formula_title = clean_latex_for_seo(getattr(self.object, 'title', str(self.object)))
         formula_expr = clean_latex_for_seo(getattr(self.object, 'form', getattr(self.object, 'formula', '')))
@@ -480,6 +484,8 @@ def get_nearest_exam(exam_prefix):
 class ExamFilterView(View):
     def get(self, request, *args, **kwargs):
         path = request.path.strip('/')
+        exam_content = ExamInfo.objects.filter(exam=path).first() if path in ('jee', 'neet', 'both') else None
+
 
         if path == 'neet':
             formula_path = reverse('neet-formulas')
@@ -553,6 +559,7 @@ class ExamFilterView(View):
             'exam_key': exam_key,
             'days_remaining': days_remaining,
             'affiliate': affiliate_data,
+            'exam_content' : exam_content,
             })
 
 def progress_dashboard(request):
@@ -1372,8 +1379,9 @@ class MasterCheatsheetPDFView(View):
 
 
 def blog_list(request):
+    count = Article.objects.all().count()
     articles = Article.objects.filter(is_published=True).order_by('-created_at')
-    return render(request, 'formulas/blog_list.html', {'articles': articles})
+    return render(request, 'formulas/blog_list.html', {'articles': articles, 'count' : count})
 
 def blog_detail(request, slug):
     article = get_object_or_404(Article, slug=slug, is_published=True)
@@ -1395,3 +1403,21 @@ def add_comment(request, slug):
 def discovery(request):
     referer = request.META.get('HTTP_REFERER', '/')
     return render(request, "formulas/discovery.html", {'referer': referer})
+
+
+def story(request, slug):
+    formula = get_object_or_404(Formula, slug=slug)
+    story_detail = get_object_or_404(Story, formula=formula, is_published=True)
+
+    context = {
+        "story" : story_detail,
+        }
+
+    return render(request, "formulas/story.html", context)
+
+
+
+def stories_list(request):
+    stories = Story.objects.filter(is_published=True).select_related('formula', 'formula__chapter').order_by('-updated_at')
+    count = stories.count()
+    return render(request, "formulas/story_list.html", {"stories": stories, "count" : count})

@@ -35,6 +35,7 @@
 
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+    <meta name="theme-color" content="#FAF8F1">
 
 
     <script type="application/ld+json">
@@ -61,48 +62,42 @@
 
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg: #FAF6ED;
-            --border: rgba(27,27,47,0.08);
-            --border-glass: rgba(255,255,255,0.65);
-            --text: #1B1B2F;
-            --text-dim: #63637A;
-            --text-faint: #94918A;
-            --card-glass: rgba(255,255,255,0.55);
-            --card-glass-strong: rgba(255,255,255,0.78);
-            --accent-indigo: #4F46E5;
-            --accent-indigo-deep: #3730A3;
-            --accent-teal: #0EA5A0;
-            --accent-teal-deep: #0B7F7A;
-            --jee: #F5A623;
-            --jee-2: #C97B00;
-            --neet: #4F46E5;
-            --neet-2: #3730A3;
-            --both: #0EA5A0;
-            --both-2: #0B7F7A;
+            --bg: #FAF8F1;
+            --surface: #FFFFFF;
+            --surface-muted: #F4F0E4;
+            --border: #E7E0CF;
+            --border-strong: #D8CFB6;
+            --ink: #16161F;
+            --ink-soft: #55546B;
+            --muted: #99927D;
+            --accent: #6D28D9;
+            --accent-soft: #EFE9FB;
+            --gold: #A6690A;
+            --success: #12946F;
+            --danger: #DC2626;
+            --radius: 14px;
+            --font-display: 'Source Serif 4', Georgia, serif;
+            --font-body: 'Outfit', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background: var(--bg);
-            background-image:
-                radial-gradient(circle at 10% 0%, rgba(79,70,229,0.16), transparent 42%),
-                radial-gradient(circle at 90% 12%, rgba(245,166,35,0.14), transparent 40%),
-                radial-gradient(circle at 30% 95%, rgba(14,165,160,0.13), transparent 38%);
-            background-attachment: fixed;
             min-height: 100vh;
-            font-family: 'Outfit', -apple-system, sans-serif;
-            color: var(--text);
+            font-family: var(--font-body);
+            color: var(--ink);
             padding-bottom: 40px;
+            -webkit-font-smoothing: antialiased;
         }
 
+        a { text-decoration: none; }
 
         .topbar {
             position: sticky;
@@ -111,339 +106,271 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 14px;
-            background: rgba(250,246,237,0.72);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--bg);
             border-bottom: 1px solid var(--border);
         }
         .back-btn {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: var(--card-glass);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--border-glass);
-            color: var(--text);
-            font-size: 1.3rem;
-            text-decoration: none;
-            transition: background 0.2s ease, border-color 0.2s ease;
+            background: var(--surface);
+            border: 1px solid var(--border-strong);
+            color: var(--ink);
+            font-size: 1.1rem;
+            transition: border-color 0.15s ease, color 0.15s ease;
         }
-        .back-btn:hover { background: var(--card-glass-strong); border-color: rgba(79,70,229,0.35); }
+        .back-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+        .estimate-pill {
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--ink-soft);
+        }
+        .estimate-pill .estimate-label { color: var(--gold); font-family: var(--font-mono); font-size: 11px; }
+        .estimate-pill .estimate-days { color: #0051A2; font-weight: 700; }
+        .estimate-pill .estimate-exam { color: var(--ink); font-weight: 600; }
 
         .share-btn {
-            background: linear-gradient(135deg, #2fd67a, #17a85c);
-            color: white;
+            background: lightblue;
+            color: #0051A2;
             padding: 8px 16px;
-            border-radius: 20px;
+            border-radius: 999px;
             font-size: 12.5px;
             font-weight: 700;
-            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 5px;
             border: none;
             cursor: pointer;
-            box-shadow: 0 6px 16px -4px rgba(23,168,92,0.35);
+            transition: background 0.15s ease;
         }
+        .share-btn:hover { background: #ffffff; }
 
 
-        .header {
-            text-align: center;
-            padding: 30px 16px 6px;
-        }
+        .header { text-align: center; padding: 40px 16px 6px; }
         h1 {
-            font-size: clamp(1.7rem, 6vw, 2.2rem);
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(120deg, var(--accent-indigo) 25%, var(--accent-teal) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-family: var(--font-display);
+            font-size: clamp(1.7rem, 6vw, 2.3rem);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--ink);
         }
-        .subtitle {
-            color: var(--text-dim);
-            font-size: 0.9rem;
-            margin-top: 6px;
-        }
+        .subtitle { color: var(--ink-soft); font-size: 0.9rem; margin-top: 6px; }
         .count-pill {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-top: 14px;
-            background: rgba(79,70,229,0.09);
-            border: 1px solid rgba(79,70,229,0.25);
-            border-radius: 20px;
+            margin-top: 16px;
+            border: 1px solid var(--border-strong);
+            border-radius: 999px;
             padding: 6px 16px;
             font-size: 0.85rem;
             font-weight: 700;
-            color: var(--accent-indigo-deep);
+            color: #0051A2;
+            font-family: var(--font-mono);
         }
 
-        .search-wrapper {
-            margin: 22px 18px 6px;
-        }
+        .search-wrapper { margin: 22px auto 6px; max-width: 560px; padding: 0 18px; }
         .search-wrapper input {
             width: 100%;
             padding: 12px 18px;
-            border-radius: 24px;
-            border: 1px solid var(--border-glass);
-            background: var(--card-glass);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: var(--text);
+            border-radius: 999px;
+            border: 1px solid var(--border-strong);
+            background: var(--surface);
+            color: var(--ink);
             font-size: 0.92rem;
             outline: none;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            font-family: inherit;
+            transition: border-color 0.15s ease;
         }
-        .search-wrapper input::placeholder { color: var(--text-faint); }
-        .search-wrapper input:focus {
-            border-color: var(--accent-indigo);
-            box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
+        .search-wrapper input::placeholder { color: var(--muted); }
+        .search-wrapper input:focus { border-color: #0051A2; }
+
+        /* ---------- About exam content ---------- */
+        .about-exam-card {
+            max-width: 680px;
+            margin: 22px auto 0;
+            padding: 0 18px;
+        }
+        .about-exam-inner {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 22px 24px;
+        }
+        .about-exam-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        .about-exam-body {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--ink-soft);
+        }
+
+        .exam-stat-pill {
+            max-width: 680px;
+            margin: 16px auto 0;
+            padding: 0 18px;
+        }
+        .exam-stat-pill-inner {
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius);
+            padding: 16px;
+            text-align: center;
+        }
+        .exam-stat-value {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0051A2;
+        }
+        .exam-stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 4px;
         }
 
 
-        .container { padding: 10px 18px 20px; }
+        .container { padding: 10px 18px 20px; max-width: 680px; margin: 0 auto; }
         ul { list-style: none; }
-        li { margin-bottom: 14px; }
+        li { margin-bottom: 12px; }
 
         .formula-card {
             position: relative;
             display: block;
-            background: var(--card-glass);
-            backdrop-filter: blur(16px) saturate(140%);
-            -webkit-backdrop-filter: blur(16px) saturate(140%);
-            border-radius: 18px;
-            padding: 18px 18px 14px;
-            border: 1px solid var(--border-glass);
-            box-shadow: 0 8px 24px -8px rgba(27,27,47,0.10);
-            overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-            text-decoration: none;
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 18px 20px 14px;
+            border: 1px solid var(--border);
+            transition: border-color 0.15s ease, transform 0.15s ease;
         }
-        .formula-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0;
-            width: 4px; height: 100%;
-            background: linear-gradient(180deg, var(--accent-indigo), var(--accent-teal));
-        }
-        .formula-card.jee::before  { background: linear-gradient(180deg, var(--jee), var(--jee-2)); }
-        .formula-card.neet::before { background: linear-gradient(180deg, var(--neet), var(--neet-2)); }
-        .formula-card.both::before { background: linear-gradient(180deg, var(--both), var(--both-2)); }
 
-        .formula-card:hover {
-            transform: translateY(-3px);
-            background: var(--card-glass-strong);
-            box-shadow: 0 14px 32px -8px rgba(79, 70, 229, 0.18);
-            border-color: rgba(79, 70, 229, 0.35);
-        }
+        .formula-card:hover { border-color: #0051A2; transform: translateY(-2px); }
 
         .card-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             gap: 10px;
+            margin-bottom: 8px;
         }
         .formula-title {
-            color: var(--text);
-            font-weight: 700;
-            font-size: 1.05rem;
+            color: var(--ink);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.02rem;
             line-height: 1.3;
+            flex: 1;
         }
+        .badge-group { display: flex; gap: 6px; align-items: center; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+
         .exam-badge {
             flex: 0 0 auto;
-            padding: 4px 11px;
-            border-radius: 7px;
-            font-size: 0.66rem;
-            font-weight: 800;
-            letter-spacing: 0.03em;
-            color: white;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: #0051A2;
+            border: 1px solid var(--border-strong);
             text-transform: uppercase;
+            white-space: nowrap;
         }
-        .exam-badge.jee  { background: linear-gradient(135deg, var(--jee), var(--jee-2)); }
-        .exam-badge.neet { background: linear-gradient(135deg, var(--neet), var(--neet-2)); }
-        .exam-badge.both { background: linear-gradient(135deg, var(--both), var(--both-2)); }
+
+        .chapter-badge {
+            background: var(--surface-muted);
+            color: var(--ink-soft);
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            white-space: nowrap;
+            display: inline-block;
+        }
 
         .formula-form {
             text-align: center;
-            color: var(--accent-indigo-deep);
-            background: rgba(79,70,229,0.06);
-            border: 1px solid rgba(79,70,229,0.14);
+            color: var(--ink);
+            background: var(--surface-muted);
+            border: 1px solid var(--border);
             border-radius: 10px;
             padding: 12px 8px;
             margin: 12px 0 10px;
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             overflow-x: auto;
         }
 
         .formula-author {
-            font-size: 12.5px;
-            color: var(--text-dim);
+            font-size: 12px;
+            color: var(--muted);
             padding-top: 4px;
             border-top: 1px dashed var(--border);
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        .formula-author::before {
-            content: "✎";
-            color: var(--text-faint);
-        }
+        .formula-author::before { content: "✎"; color: var(--muted); }
 
         .empty-state {
             text-align: center;
-            color: var(--text-faint);
+            color: var(--muted);
             padding: 60px 20px;
             font-size: 0.9rem;
             display: none;
         }
 
-        .container .chapter-badge{
-            margin-top: 2px;
-            margin-right: 2px;
-        }
-
-        .chapter-badge {
-            background: rgba(27, 27, 47, 0.05);
-            color: var(--text-dim);
-            font-size: 0.65rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            padding: 3px 8px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            white-space: nowrap;
-            display: inline-block;
-        }
-
-        a { text-decoration: none; }
-
-        .login-modal {
-          position: fixed;
-          inset: 0;
-          background: rgba(27,27,47,0.45);
-          backdrop-filter: blur(4px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 999;
-        }
+        /* ---------- Login modal ---------- */
+        .login-modal { position: fixed; inset: 0; background: rgba(22,22,31,0.4); display: flex; align-items: center; justify-content: center; z-index: 999; }
         .login-modal.hidden { display: none; }
-
-        .login-modal-content {
-          background: var(--card-glass-strong);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border: 1px solid var(--border-glass);
-          border-radius: 20px;
-          padding: 32px 28px;
-          width: 90%;
-          max-width: 360px;
-          text-align: center;
-          position: relative;
-          box-shadow: 0 24px 60px -12px rgba(27,27,47,0.25);
-        }
-
-        .login-icon { font-size: 2.5rem; margin-bottom: 8px; }
-
-        .login-modal-content h3 {
-          color: var(--text);
-          margin-bottom: 4px;
-        }
-
-        .login-modal-content p {
-          color: var(--text-dim);
-          font-size: 0.9rem;
-          margin-bottom: 20px;
-        }
-
-        .login-modal-content label {
-          display: block;
-          text-align: left;
-          color: var(--text-dim);
-          font-size: 0.85rem;
-          margin-bottom: 6px;
-          margin-top: 14px;
-        }
-
-        .login-modal-content input {
-          width: 100%;
-          padding: 12px 14px;
-          border-radius: 12px;
-          border: 1px solid var(--border);
-          background: rgba(243,238,225,0.85);
-          color: var(--text);
-          font-size: 1rem;
-        }
-
-        .verify-btn {
-          width: 100%;
-          margin-top: 22px;
-          padding: 12px;
-          border: none;
-          border-radius: 999px;
-          background: linear-gradient(135deg, var(--accent-indigo), var(--accent-teal));
-          color: white;
-          font-weight: 600;
-          font-size: 1rem;
-          cursor: pointer;
-        }
-
-        .close-btn {
-          position: absolute;
-          top: 14px;
-          right: 16px;
-          background: none;
-          border: none;
-          color: var(--text-faint);
-          font-size: 1.2rem;
-          cursor: pointer;
-        }
-
-        .error-text {
-          color: #DC2626;
-          font-size: 0.85rem;
-          margin-top: 10px;
-          min-height: 18px;
-        }
+        .login-modal-content { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 30px 26px; width: 90%; max-width: 340px; text-align: center; position: relative; box-shadow: 0 24px 60px -12px rgba(22,22,31,0.25); }
+        .login-icon { font-size: 2.2rem; margin-bottom: 8px; }
+        .login-modal-content h3 { font-family: var(--font-display); color: var(--ink); margin-bottom: 4px; font-size: 1.25rem; font-weight: 600; }
+        .login-modal-content p { color: var(--ink-soft); font-size: 0.88rem; margin-bottom: 18px; }
+        .login-modal-content label { display: block; text-align: left; color: var(--ink-soft); font-size: 0.8rem; margin: 12px 0 6px; }
+        .login-modal-content input { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-muted); color: var(--ink); font-size: 0.92rem; }
+        .login-modal-content input:focus { outline: none; border-color: var(--accent); }
+        .verify-btn { width: 100%; margin-top: 20px; padding: 12px; border: none; border-radius: 999px; background: var(--ink); color: #fff; font-weight: 700; font-size: 0.92rem; cursor: pointer; transition: background 0.15s ease; }
+        .verify-btn:hover { background: var(--accent); }
+        .close-btn { position: absolute; top: 14px; right: 16px; background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer; }
+        .error-text { color: var(--danger); font-size: 0.82rem; margin-top: 10px; min-height: 18px; }
 
 
         @media (min-width: 900px) {
-
-            .header {
-                max-width: 1100px;
-                margin: 0 auto;
-                padding-top: 40px;
-            }
-
-            .search-wrapper {
-                max-width: 560px;
-                margin: 22px auto 6px;
-            }
-
+            .header { max-width: 1100px; margin: 0 auto; padding-top: 48px; }
+            .search-wrapper { max-width: 560px; }
+            .about-exam-card, .exam-stat-pill { max-width: 720px; }
             .container {
                 max-width: 1100px;
                 margin: 0 auto;
                 padding: 10px 24px 20px;
             }
-
             .container ul {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
+                gap: 14px;
             }
-
-            .container li {
-                margin-bottom: 0;
-            }
-
-            .formula-card {
-                height: 100%;
-            }
+            .container li { margin-bottom: 0; }
+            .formula-card { height: 100%; }
         }
 
          .site-footer {
@@ -451,143 +378,90 @@
             padding-top: 40px;
             text-align: center;
             font-size: 0.875rem;
-            color: var(--text-muted);
+            color: var(--muted);
         }
-
-        .site-footer p {
-            margin-bottom: 8px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.15s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-main);
-        }
+        .site-footer p { margin-bottom: 8px; }
+        .footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+        .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.15s ease; }
+        .footer-links a:hover { color: var(--ink); }
 
         .affiliate-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-left: 4px solid #2563eb;
-    border-radius: 16px;
-    padding: 14px 16px;
-    margin: 16px 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.affiliate-badge {
-    display: inline-block;
-    background: #eff6ff;
-    color: #1d4ed8;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 20px;
-    margin-bottom: 6px;
-    letter-spacing: 0.5px;
-}
-
-.affiliate-title {
-    margin: 0 0 4px 0;
-    font-size: 14px;
-    font-weight: 700;
-    color: #0f172a;
-    line-height: 1.3;
-}
-
-.affiliate-subtitle {
-    margin: 0 0 10px 0;
-    font-size: 12px;
-    color: #64748b;
-    line-height: 1.4;
-}
-
-.affiliate-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #ff9900; /* Amazon Gold */
-    color: #111111;
-    font-weight: 700;
-    font-size: 12px;
-    padding: 8px 14px;
-    border-radius: 20px;
-    text-decoration: none;
-    transition: transform 0.1s ease;
-}
-
-.affiliate-btn:active {
-    transform: scale(0.97);
-}
+            max-width: 680px;
+            margin: 16px auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 18px;
+        }
+        .affiliate-badge {
+            display: inline-block;
+            background: var(--surface-muted);
+            color: var(--ink-soft);
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+        .affiliate-title { margin: 0 0 4px 0; font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+        .affiliate-subtitle { margin: 0 0 12px 0; font-size: 12px; color: var(--ink-soft); line-height: 1.4; }
+        .affiliate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #ff9900;
+            color: #111111;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 9px 16px;
+            border-radius: 999px;
+            transition: transform 0.1s ease;
+        }
+        .affiliate-btn:active { transform: scale(0.97); }
 
 
-#backToTopBtn {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    z-index: 9999;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    color: #ffffff;
-    border: none;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-}
+        #backToTopBtn {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 9999;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: lighblue;
+            color: #0051A2;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s, background 0.15s ease;
+        }
+        #backToTopBtn.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        #backToTopBtn:hover { background: #ffffff; }
 
 
-#backToTopBtn.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
+        .ad-banner-container {
+          max-width: 280px;
+          width: 100%;
+          margin: 16px auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+        }
+        .ad-banner-container iframe,
+        .ad-banner-container img { max-width: 100% !important; height: auto !important; }
 
-#backToTopBtn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.5);
-}
-
-#backToTopBtn:active {
-    transform: translateY(0);
-}
-
-
-.ad-banner-container {
-  max-width: 280px;
-  width: 100%;
-  margin: 16px auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-
-.ad-banner-container iframe,
-.ad-banner-container img {
-  max-width: 100% !important;
-  height: auto !important;
-}
-
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; }
+        }
 
     </style>
 
@@ -619,12 +493,13 @@
     <div class="topbar">
         <a class="back-btn" href="{% url 'index-page' %}">←</a>
         {% if exam_key %}
-<div style="text-align:center; font-size:13px; color:var(--text-dim);">
-    <p style="color: #C97B00;">#Estimated:</p><span style="color:var(--accent-indigo); font-weight:700;">{{ days_remaining }} days</span> until <span style="color: var(--text);">{{ exam_key }}</span>
-</div>
-{% endif %}
+        <div class="estimate-pill">
+            <div class="estimate-label">#Estimated:</div>
+            <span class="estimate-days">{{ days_remaining }} days</span> until <span class="estimate-exam">{{ exam_key }}</span>
+        </div>
+        {% endif %}
 
-        <button onclick="handleShareClick()" class="share-btn">📱 Share</button>
+        <button onclick="handleShareClick()" class="share-btn"> ↗ Share </button>
     </div>
 
     <div class="header">
@@ -634,27 +509,25 @@
     </div>
 
 
+    {% if exam_content.stat_value %}
+    <div class="exam-stat-pill">
+        <div class="exam-stat-pill-inner">
+            <div class="exam-stat-value">{{ exam_content.stat_value }}</div>
+            <div class="exam-stat-label">{{ exam_content.stat_label }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+
     <div class="search-wrapper">
         <input type="text" id="searchBar"
             placeholder="🔍 Search {{ exam_label }} formulas..."
             oninput="searchFormulas()">
     </div>
 
-    {% if affiliate %}
-<div class="affiliate-card">
-    <div class="affiliate-badge">{{ affiliate.tag_label }}</div>
-    <div class="affiliate-content">
-        <div class="affiliate-info">
-            <h4 class="affiliate-title">📚 {{ affiliate.title }}</h4>
-            <p class="affiliate-subtitle">{{ affiliate.subtitle }}</p>
-        </div>
-        <a href="{{ affiliate.link }}" target="_blank" rel="noopener sponsored" class="affiliate-btn">
-            View on Amazon
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-        </a>
-    </div>
-</div>
-{% endif %}
+
+
+
 
 
 
@@ -662,31 +535,18 @@
         <ul>
             {% for formula in formulas %}
             <li data-tag="{{ formula.exam_tag }}">
-                <a class="formula-card {{ formula.exam_tag }}" href="{{ formula.get_absolute_url }}">
-                     <!-- Modernized top header layout inside the card -->
-        <div class="card-top" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
+                <a class="formula-card" href="{{ formula.get_absolute_url }}">
+                    <div class="card-top">
+                        <div class="formula-title">{{ formula.title }}</div>
 
+                        <div class="badge-group">
+                            <span class="chapter-badge">{{ formula.chapter.name }}</span>
 
-            <div class="formula-title" style="margin: 0; flex: 1;">
-                {{ formula.title }}
-            </div>
-
-
-            <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
-
-
-                <span class="chapter-badge">
-                    {{ formula.chapter.name }}
-                </span>
-
-                {% if formula.exam_tag != 'none' %}
-                <div class="exam-badge {{ formula.exam_tag }}">
-                    {{ formula.get_exam_tag_display }}
-                </div>
-                {% endif %}
-
-            </div>
-        </div>
+                            {% if formula.exam_tag != 'none' %}
+                            <div class="exam-badge">{{ formula.get_exam_tag_display }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
 
                     <div class="formula-form">$$ {{ formula.form }} $$</div>
 
@@ -699,8 +559,16 @@
         </ul>
         <div class="empty-state" id="emptyState">No formulas match your search.</div>
     </div>
-        <div class="empty-state" id="emptyState">No formulas match your search.</div>
+
+
+    {% if exam_content %}
+    <div class="about-exam-card">
+        <div class="about-exam-inner">
+            <div class="about-exam-label">About {{ exam_content.get_exam_display }} Physics</div>
+            <div class="about-exam-body">{{ exam_content.intro_text }}</div>
+        </div>
     </div>
+    {% endif %}
 
 <button id="backToTopBtn" onclick="scrollToTop()" title="Back to top" aria-label="Back to top">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -805,6 +673,7 @@ function handleSaveSubmit(event) {
   return true; // logged in, let form submit normally
 }
 
+const backToTopBtn = document.getElementById("backToTopBtn");
 
   window.addEventListener("scroll", () => {
         if (window.scrollY > 300) {

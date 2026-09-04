@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django_jsonform.widgets import JSONFormWidget
-from .models import Formula,Chapter, PYQ, SimpleUser, ExamDate, FormulaVariable, FormulaConstant, DailyChallenge, Article, Comment, FAQ_SCHEMA
+from .models import Formula,Chapter, PYQ, SimpleUser, ExamDate, FormulaVariable, FormulaConstant, DailyChallenge, Article, Comment, FAQ_SCHEMA, ExamInfo, Story
 
 
 class FormulaVariableInline(admin.TabularInline):
@@ -32,10 +32,15 @@ class DailyChallengeAdmin(admin.ModelAdmin):
 class ArticleAdmin(admin.ModelAdmin):
     list_display=("title")
 
+class ExamInfoAdmin(admin.ModelAdmin):
+    list_display = ('exam', 'heading')
 
 class CommentAdmin(admin.ModelAdmin):
     list_display=("formula", "comment_text")
 
+
+class StoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'formula', 'is_published')
 
 admin.site.register(Formula, FormulaAdmin)
 admin.site.register(Chapter)
@@ -43,6 +48,8 @@ admin.site.register(PYQ)
 admin.site.register(DailyChallenge, DailyChallengeAdmin)
 admin.site.register(Article)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(ExamInfo, ExamInfoAdmin)
+admin.site.register(Story, StoryAdmin)
 
 
 @admin.register(SimpleUser)

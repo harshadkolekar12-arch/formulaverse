@@ -27,7 +27,7 @@
 
 <meta property="og:image" content="https://formulaverse.in/static/formulaverse_og_default.png"/>
 <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2098916755..."></script>
+<meta name="theme-color" content="#FAF8F1">
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YHLZCEHWF7"></script>
 <script>
@@ -44,300 +44,203 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cri..." rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
 
 <style>
-  * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-
-  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg1:      #fdf3e7;
-    --bg2:      #fef9f0;
-    --bg3:      #fbeee0;
-    --surface:  rgba(255, 255, 255, 0.62);
-    --surface-hover: rgba(255, 255, 255, 0.82);
-    --border-soft: rgba(120, 100, 80, 0.10);
-    --border:   rgba(255, 255, 255, 0.9);
-    --ink:      #2d2a3d;
-    --sub:      #7c7a8c;
-    --teal:     #0d9488;
-    --teal-dim: rgba(13, 148, 136, 0.12);
-    --orange:   #ea9a3e;
+    --bg: #FAF8F1;
+    --surface: #FFFFFF;
+    --surface-muted: #F4F0E4;
+    --border: #E7E0CF;
+    --border-strong: #D8CFB6;
+    --ink: #16161F;
+    --ink-soft: #55546B;
+    --muted: #99927D;
+    --accent: #6D28D9;
+    --accent-soft: #EFE9FB;
+    --gold: #A6690A;
+    --success: #12946F;
+    --danger: #DC2626;
+    --radius: 14px;
+    --font-display: 'Source Serif 4', Georgia, serif;
+    --font-body: 'Outfit', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
   }
 
   body {
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
+    font-family: var(--font-body);
+    background: var(--bg);
     color: var(--ink);
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
+
   header {
-    padding: 18px 24px;
+    padding: 14px 20px;
     display: flex;
     align-items: center;
     gap: 14px;
     position: sticky;
     top: 0;
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1.5px solid var(--border-soft);
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
     z-index: 10;
   }
   .back-btn {
     width: 34px; height: 34px;
     border-radius: 50%;
-    border: 1.5px solid var(--border-soft);
-    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
     color: var(--ink);
     text-decoration: none;
     display: grid; place-items: center;
-    font-size: 20px;
-    transition: background .15s;
+    font-size: 18px;
+    transition: border-color .15s ease, color .15s ease;
   }
-  .back-btn:hover { background: #fff; }
-  .header-title { font-size: 17px; font-weight: 700; }
+  .back-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .header-title { font-size: 15px; font-weight: 700; color: var(--ink); }
+
   .hero { text-align: center; padding: 40px 24px 24px; }
-  .hero h1 { font-size: clamp(24px, 6vw, 32px); margin-bottom: 8px; }
-  .hero p { color: var(--sub); font-size: 14px; max-width: 340px; margin: 0 auto; line-height: 1.6; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 6vw, 2.1rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .hero p { color: var(--ink-soft); font-size: 14px; max-width: 380px; margin: 0 auto; line-height: 1.6; }
 
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px;
-    padding: 24px;
+    gap: 14px;
+    padding: 0 24px 24px;
     max-width: 900px;
     margin: 0 auto;
   }
   .paper-card {
     background: var(--surface);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: var(--radius);
     padding: 18px;
     display: flex;
     align-items: center;
     gap: 12px;
-    box-shadow: 0 4px 24px rgba(140, 120, 90, 0.12);
-    transition: background .2s, transform .2s, box-shadow .2s;
+    transition: border-color .15s ease, transform .15s ease;
   }
-  .paper-card:hover {
-    background: var(--surface-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(140, 120, 90, 0.18);
-  }
+  .paper-card:hover { border-color: #0051A2; transform: translateY(-2px); }
+
   .paper-icon {
-    width: 40px; height: 40px;
+    width: 38px; height: 38px;
     border-radius: 10px;
-    background: var(--teal-dim);
+    background: var(--surface-muted);
     display: grid; place-items: center;
-    font-size: 20px;
+    font-size: 18px;
     flex-shrink: 0;
   }
   .paper-info { flex: 1; min-width: 0; }
   .paper-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; color: var(--ink); }
-  .paper-meta { font-size: 11px; color: var(--sub); }
+  .paper-meta { font-size: 11px; color: var(--muted); font-family: var(--font-mono); }
   .download-btn {
-    background: var(--teal-dim);
-    color: var(--teal);
-    border: 1px solid rgba(13, 148, 136, 0.3);
+    background: var(--surface);
+    color: var(--ink-soft);
+    border: 1px solid var(--border-strong);
     padding: 6px 14px;
-    border-radius: 20px;
+    border-radius: 999px;
     font-size: 11px;
     font-weight: 700;
     text-decoration: none;
     white-space: nowrap;
     flex-shrink: 0;
-    transition: background .15s, color .15s;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
   }
-  .download-btn:hover { background: var(--teal); color: white; }
+  .download-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-  .empty-state {
-    text-align: center;
-    padding: 60px 24px;
-    color: var(--sub);
-    grid-column: 1/-1;
-  }
-
+  .empty-state { text-align: center; padding: 60px 24px; color: var(--muted); grid-column: 1/-1; }
 
   .tg-join-btn {
     display: inline-flex;
     align-items: center;
-    background: #24A1DE; /* Official Telegram Blue */
+    background: #24A1DE;
     color: #ffffff !important;
     padding: 8px 16px;
     font-size: 14px;
     font-weight: 600;
-    border-radius: 6px;
+    border-radius: 999px;
     text-decoration: none !important;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0 4px 10px rgba(36, 161, 222, 0.2);
-}
+    transition: transform .15s ease;
+  }
+  .tg-join-btn:hover { transform: translateY(-1px); }
 
-.tg-join-btn:hover {
-    background: #1d82b3;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(36, 161, 222, 0.3);
-}
+  .top-nav { position: absolute; top: 10px; right: 15px; align-items: center; z-index: 100; }
 
- .top-nav {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            align-items: center;
-            z-index: 100;
- }
-
- @media (min-width: 900px) {
-
-    header {
-        padding: 20px 40px;
-    }
-
-    .hero {
-        padding: 48px 24px 28px;
-    }
-
-    .hero p {
-        max-width: 480px;
-    }
-
-    .grid {
-        gap: 20px;
-    }
-
+  @media (min-width: 900px) {
+    header { padding: 18px 40px; }
+    .hero { padding: 48px 24px 28px; }
+    .hero p { max-width: 480px; }
+    .grid { gap: 18px; }
 
     body > div[style*="margin-top:24px"] {
         max-width: 900px !important;
         margin-left: auto !important;
         margin-right: auto !important;
     }
- }
+  }
 
-  .site-footer {
-            margin-top: auto;
-            padding-top: 40px;
-            text-align: center;
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        .site-footer p {
-            margin-bottom: 8px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.15s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-main);
-        }
+  .site-footer { margin-top: auto; padding-top: 40px; text-align: center; font-size: 0.875rem; color: var(--muted); }
+  .site-footer p { margin-bottom: 8px; }
+  .footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.15s ease; }
+  .footer-links a:hover { color: var(--ink); }
 
 
 .pyq-affiliate-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 18px;
-    padding: 16px;
-    margin: 20px 0 24px 0;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin: 20px auto 24px;
+    max-width: 900px;
 }
 
-.pyq-affiliate-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
+.pyq-affiliate-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .pyq-badge {
-    background: #e0f2fe;
-    color: #0369a1;
-    font-size: 11px;
-    font-weight: 700;
+    background: var(--surface-muted);
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.06em;
     padding: 4px 10px;
-    border-radius: 20px;
+    border-radius: 999px;
 }
-
-.pyq-amazon-tag {
-    color: #d97706;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.pyq-affiliate-body {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 14px;
-}
-
-.pyq-icon {
-    font-size: 26px;
-    line-height: 1;
-    background: #f0fdf4;
-    padding: 8px;
-    border-radius: 12px;
-    border: 1px solid #dcfce7;
-}
-
-.pyq-details {
-    flex: 1;
-}
-
-.pyq-title {
-    margin: 0 0 3px 0;
-    font-size: 15px;
-    font-weight: 700;
-    color: #0f172a;
-}
-
-.pyq-desc {
-    margin: 0;
-    font-size: 12px;
-    color: #64748b;
-    line-height: 1.4;
-}
-
+.pyq-amazon-tag { color: var(--muted); font-size: 11px; font-weight: 600; }
+.pyq-affiliate-body { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+.pyq-icon { font-size: 24px; line-height: 1; background: var(--surface-muted); padding: 8px; border-radius: 10px; }
+.pyq-details { flex: 1; }
+.pyq-title { margin: 0 0 3px 0; font-size: 15px; font-weight: 700; color: var(--ink); }
+.pyq-desc { margin: 0; font-size: 12.5px; color: var(--ink-soft); line-height: 1.4; }
 .pyq-amazon-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     width: 100%;
-    background: #ff9900; /* Amazon Gold */
+    background: #ff9900;
     color: #111111;
     font-size: 13px;
     font-weight: 700;
-    padding: 10px;
-    border-radius: 12px;
+    padding: 11px;
+    border-radius: 10px;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(255, 153, 0, 0.25);
     transition: transform 0.1s ease, background 0.15s ease;
 }
-
-.pyq-amazon-btn:active {
-    transform: scale(0.98);
-    background: #e68a00;
-}
+.pyq-amazon-btn:active { transform: scale(0.98); background: #e68a00; }
 
 
 #backToTopBtn {
@@ -345,13 +248,12 @@
     bottom: 90px;
     right: 20px;
     z-index: 9999;
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    color: #ffffff;
+    background: lightblue;
+    color: #0051A2;
     border: none;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -359,23 +261,11 @@
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s, background 0.15s ease;
 }
 
-#backToTopBtn.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-#backToTopBtn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.5);
-}
-
-#backToTopBtn:active {
-    transform: translateY(0);
-}
+#backToTopBtn.show { opacity: 1; visibility: visible; transform: translateY(0); }
+#backToTopBtn:hover { background: #ffffff; }
 
 
 
@@ -396,6 +286,26 @@
   height: auto !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}
+
+
+.pyq-affiliate-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin: 20px 0 24px; }
+        .pyq-affiliate-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+        .pyq-badge { background: var(--surface-muted); color: var(--ink-soft); font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 999px; }
+        .pyq-amazon-tag { color: var(--muted); font-size: 11px; font-weight: 600; }
+        .pyq-affiliate-body { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+        .pyq-icon { font-size: 24px; line-height: 1; background: var(--surface-muted); padding: 8px; border-radius: 10px; }
+        .pyq-title { margin: 0 0 3px 0; font-size: 15px; font-weight: 700; color: var(--ink); }
+        .pyq-desc { margin: 0; font-size: 12.5px; color: var(--ink-soft); line-height: 1.4; }
+        .pyq-amazon-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
+            background: #ff9900; color: #111111; font-size: 13px; font-weight: 700; padding: 11px;
+            border-radius: 10px; text-decoration: none; transition: transform 0.1s ease, background 0.15s ease;
+        }
+        .pyq-amazon-btn:active { transform: scale(0.98); background: #e68a00; }
+
 
 </style>
 
@@ -404,7 +314,7 @@
 <body>
 
 <header>
-    <a href="{% url 'index-page' %}" class="back-btn"> < </a>
+    <a href="{% url 'index-page' %}" class="back-btn">←</a>
     <span class="header-title">📄 PYQ Papers</span>
 </header>
 
@@ -413,24 +323,24 @@
     <p>JEE & NEET question papers, sorted by chapter — download and practice.</p>
 </div>
 
-<div class="pyq-affiliate-card">
-    <div class="pyq-affiliate-header">
-        <span class="pyq-badge">Offline Practice</span>
-        <span class="pyq-amazon-tag">Amazon Official</span>
-    </div>
-    <div class="pyq-affiliate-body">
-        <div class="pyq-icon">📖</div>
-        <div class="pyq-details">
-            <h4 class="pyq-title">Prefer practicing on paper?</h4>
-            <p class="pyq-desc">Get chapter-wise 36+ years JEE & NEET solved paper books with detailed solutions.</p>
-        </div>
-    </div>
-    <a href="https://amzn.to/44QrFdw" target="_blank" rel="noopener sponsored" class="pyq-amazon-btn">
-        Get Solved Papers on Amazon
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-    </a>
-</div>
 
+ <div class="pyq-affiliate-card">
+            <div class="pyq-affiliate-header">
+                <span class="pyq-badge">Offline Practice</span>
+                <span class="pyq-amazon-tag">Amazon Official</span>
+            </div>
+            <div class="pyq-affiliate-body">
+                <div class="pyq-icon">📖</div>
+                <div class="pyq-details">
+                    <h4 class="pyq-title">Prefer practicing on paper?</h4>
+                    <p class="pyq-desc">Get chapter-wise 36+ years JEE &amp; NEET solved paper books with detailed solutions.</p>
+                </div>
+            </div>
+            <a href="https://amzn.to/44QrFdw" target="_blank" rel="noopener sponsored" class="pyq-amazon-btn">
+                Get Solved Papers on Amazon
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+        </div>
 
 
 
@@ -469,6 +379,7 @@
     });
 }
 
+const backToTopBtn = document.getElementById("backToTopBtn");
 
   window.addEventListener("scroll", () => {
         if (window.scrollY > 300) {

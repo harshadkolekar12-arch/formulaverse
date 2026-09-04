@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ story.title }} | FormulaVerse Chronicles</title>
+
+
+  <script>
+      MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+
+<style>
+  :root{
+    --cream: #F7F3EA;
+    --cream-card: #FFFFFF;
+    --ink: #1F2430;
+    --ink-soft: #52596B;
+    --rule: #E4DECC;
+    --accent-blue: #2E5AA8;
+    --accent-blue-soft: #EAF1FC;
+    --accent-clay: #B5643A;
+    --tag-bg: #F1ECDD;
+    --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:var(--accent-blue); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent-blue); outline-offset:3px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    max-width:760px;
+    margin:0 auto;
+    padding:28px 24px 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .back-link{
+    font-family:var(--mono);
+    font-size:16px;
+    letter-spacing:0.02em;
+    color:var(--ink-soft);
+  }
+  .back-link:hover{ color:var(--accent-blue); }
+  .reading-meta{
+    font-family:var(--mono);
+    font-size:15px;
+    color:var(--ink-soft);
+    letter-spacing:0.03em;
+    white-space: nowrap;
+  }
+
+  /* ---------- Masthead ---------- */
+  .masthead{
+    max-width:760px;
+    margin:0 auto;
+    padding:40px 24px 32px;
+    text-align:center;
+    border-bottom:1px solid var(--rule);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight: 600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color: #0051A2;
+    background: lightblue;
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:22px;
+  }
+  .eyebrow .dot{
+    width:5px; height:5px; border-radius:50%;
+    background: #0051A2;
+  }
+  h1.story-title{
+    font-family:var(--serif);
+    font-size:1.78rem;
+    line-height:1.18;
+    font-weight:500;
+    margin:0 0 14px;
+    color:var(--ink);
+  }
+  .story-subline{
+    font-family:var(--sans);
+    font-size:15px;
+    color:var(--ink-soft);
+    max-width:520px;
+    margin:0 auto;
+  }
+  .story-subline .formula-name{
+    font-style: bold;
+    color: #0051A2;
+    font-weight: 400;
+  }
+
+  /* ---------- Article ---------- */
+  .article{
+    max-width:640px;
+    margin:0 auto;
+    padding:52px 24px 24px;
+  }
+
+  .section{
+    margin-bottom:52px;
+  }
+  .section:last-of-type{ margin-bottom:0; }
+
+  .section-label{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight: 600;
+    letter-spacing:0.10em;
+    text-transform:uppercase;
+    color:var(--accent-blue);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .section-label::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--rule);
+  }
+
+  .section p{
+    font-family:var(--serif);
+    font-size:1.09rem;
+    line-height:1.8;
+    color:var(--ink);
+    margin:0 0 20px;
+  }
+  .section p:last-child{ margin-bottom:0; }
+
+  /* Drop cap on the hook, the story's opening */
+  .section.hook p:first-of-type::first-letter{
+    font-family:var(--serif);
+    font-size:3.4em;
+    font-weight:600;
+    float:left;
+    line-height:0.85;
+    padding:6px 8px 0 0;
+    color:var(--accent-clay);
+  }
+
+  /* Pull quote used inside the derivation / turning-point section */
+  .pull-quote{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.28rem;
+    line-height:1.55;
+    color:var(--accent-blue);
+    border-left:3px solid var(--accent-blue);
+    padding:4px 0 4px 22px;
+    margin:28px 0;
+  }
+
+  /* Misconception callout */
+  .callout{
+    background:var(--cream-card);
+    border:1px solid var(--rule);
+    border-radius:14px;
+    padding:22px 24px;
+    margin-top:8px;
+  }
+  .callout-label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--accent-clay);
+    margin-bottom:10px;
+    display:block;
+  }
+  .callout p{
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.7;
+    color:var(--ink-soft);
+    margin:0;
+  }
+
+  /* Closing thought — set apart, centered, quiet */
+  .section.closing{
+    text-align:center;
+    padding-top:12px;
+    border-top:1px solid var(--rule);
+  }
+  .section.closing p{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.2rem;
+    line-height:1.7;
+    color:var(--ink);
+    max-width:480px;
+    margin:0 auto;
+  }
+  .closing-mark{
+    width:28px; height:2px;
+    background:var(--accent-clay);
+    margin:0 auto 28px;
+  }
+
+  /* ---------- Formula card footer link ---------- */
+  .back-to-formula{
+    max-width:640px;
+    margin:56px auto 0;
+    padding:0 24px 60px;
+  }
+  .formula-card{
+    background:var(--cream-card);
+    border:1px solid var(--rule);
+    border-radius:16px;
+    padding:24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .formula-card-left{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .formula-card-label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .formula-card-name{
+    font-family:var(--serif);
+    font-size:1.15rem;
+    color:var(--ink);
+  }
+  .formula-card-cta{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:14px;
+    color:#fff;
+    background:var(--accent-blue);
+    padding:11px 20px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .formula-card-cta:hover{
+    text-decoration:none;
+    background:#254a8c;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:520px){
+    h1.story-title{ font-size:1.9rem; }
+    .section p{ font-size:1.02rem; }
+    .section.hook p:first-of-type::first-letter{ font-size:2.8em; }
+    .formula-card{ flex-direction:column; align-items:flex-start; }
+    .formula-card-cta{ width:100%; text-align:center; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; }
+  }
+
+   .site-footer {
+            margin-top: 16px;
+            padding-top: 0;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--muted);
+        }
+        .site-footer p { margin-bottom: 8px; }
+        .footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+        .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.15s ease; }
+        .footer-links a:hover { color: var(--ink); }
+
+        .fv-nav-spacer { height: 68px; }
+        .fv-bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+            background: #ffffff; border-top: 1px solid var(--border);
+        }
+        .fv-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 2px; text-decoration: none; color: var(--muted); transition: color 0.2s ease; }
+        .fv-nav-item:hover { color: var(--ink); }
+        .fv-nav-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+        .fv-nav-item.is-active { color: var(--ink); }
+        .fv-nav-icon { font-size: 1.1rem; line-height: 1; }
+        .fv-nav-label { font-size: 10.5px; letter-spacing: 0.02em; }
+
+
+             #backToTopBtn {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        z-index: 9999;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: lightblue;
+        color: #0051A2;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s, background 0.15s ease;
+    }
+    #backToTopBtn.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    #backToTopBtn:hover { background: #80B3FF; }
+
+
+ .ad-native-wrapper {
+  max-width: 400px;
+  margin: 1.5rem auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+
+.ad-native-wrapper img {
+  max-height: 180px !important;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back-link" href="{% url 'single-formula-page' slug=story.formula.slug %}">&larr; Back </a>
+    <span class="reading-meta">{{ story.reading_time_minutes }} min read &middot; {{ story.word_count }} words</span>
+  </div>
+
+  <header class="masthead">
+    <span class="eyebrow"><span class="dot"></span>Physics Chronicles &middot; {{ story.formula.chapter }}</span>
+    <h1 class="story-title">{{ story.title }}</h1>
+    <p class="story-subline">The story behind <span class="formula-name">{{ story.formula.title }}</span>{% if story.cover_note %} — {{ story.cover_note }}{% endif %}</p>
+  </header>
+
+  <article class="article">
+
+    <section class="section hook">
+      <span class="section-label">The Puzzle</span>
+      <p>{{ story.hook|linebreaks }}</p>
+    </section>
+
+    <section class="section history">
+      <span class="section-label">How It Was Found</span>
+      <p>{{ story.history|linebreaks }}</p>
+    </section>
+
+    <section class="section intuition">
+      <span class="section-label">The Idea, Before the Math</span>
+      <p>{{ story.intuition|linebreaks }}</p>
+    </section>
+
+    <section class="section derivation">
+      <span class="section-label">The Elegant Turn</span>
+      <p>{{ story.derivation_narrative|linebreaks }}</p>
+    </section>
+
+    <section class="section applications">
+      <span class="section-label">Where It Lives Today</span>
+      <p>{{ story.applications|linebreaks }}</p>
+    </section>
+
+    <section class="section misconception">
+      <span class="section-label">A Myth Worth Retiring</span>
+      <div class="callout">
+        <span class="callout-label">⚠ Common Mistake</span>
+        <p>{{ story.misconception|linebreaks }}</p>
+      </div>
+    </section>
+
+    <section class="section closing">
+      <div class="closing-mark"></div>
+      <p>{{ story.closing_thought|linebreaks }}</p>
+    </section>
+
+  </article>
+
+
+
+        <div class="ad-native-wrapper">
+            <script async="async" data-cfasync="false" src="https://pl30854659.profitableratecpmnetwork.com/839994ed0cd70e78485e96284f4eae08/invoke.js"></script>
+<div id="container-839994ed0cd70e78485e96284f4eae08"></div>
+        </div>
+
+  <div class="back-to-formula">
+    <div class="formula-card">
+      <div class="formula-card-left">
+        <span class="formula-card-label">Ready for the shortcut version?</span>
+        <span class="formula-card-name">{{ story.formula.title }} — full formula page</span>
+      </div>
+      <a class="formula-card-cta" href="{% url 'single-formula-page' slug=story.formula.slug %}">Open Formula Page →</a>
+    </div>
+  </div>
+
+
+
+    <button id="backToTopBtn" onclick="scrollToTop()" title="Back to top" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+</button>
+
+
+<footer class="site-footer">
+  <p>© 2026 formulaverse.in</p>
+  <div class="footer-links">
+    <a href="/me">About</a> •
+    <a href="/me#get-in-touch">Contact Us</a> •
+    <a href="/privacy/">Privacy Policy</a> •
+    <a href="/terms/">Terms of Service</a>
+  </div>
+</footer>
+
+<script>
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    });
+
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+</script>
+
+<div class="fv-nav-spacer"></div>
+<nav class="nav-menu fv-bottom-nav" aria-label="Primary">
+  <a href="{% url 'base-page' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
+    <span class="fv-nav-label">Home</span>
+  </a>
+  <a href="{% url 'index-page' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
+    <span class="fv-nav-label">Index</span>
+  </a>
+  <a href="{% url 'blog_list' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#128214;</span>
+    <span class="fv-nav-label">Guides</span>
+  </a>
+  <a href="{% url 'all-saved' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
+    <span class="fv-nav-label">Vault</span>
+  </a>
+  <a href="{% url 'stories-list' %}" class="fv-nav-item is-active">
+    <span class="fv-nav-icon" aria-hidden="true">&#128220;</span>
+    <span class="fv-nav-label">Stories</span>
+  </a>
+
+
+</nav>
+</body>
+</html>

@@ -72,9 +72,9 @@
     }
 
     .nav-brand {
-      font-size: 0.88rem;
+      font-size: 0.67rem;
       font-weight: 700;
-      color: var(--brand-purple);
+      color: #0051A2;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
@@ -131,8 +131,8 @@
     }
 
     .category-tag {
-      background: var(--brand-purple-light);
-      color: var(--brand-purple);
+      background: lightblue;
+      color: #0051A2;
       padding: 4px 10px;
       border-radius: 999px;
       font-weight: 700;
@@ -149,7 +149,7 @@
 
     .article-title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 2.1rem;
+      font-size: 1.67rem;
       font-weight: 800;
       color: #111827;
       margin: 0;
@@ -256,7 +256,7 @@
     .article-cta {
       background: linear-gradient(135deg, rgba(243, 232, 255, 0.5) 0%, rgba(254, 249, 240, 0.8) 100%);
       border: 1px solid rgba(124, 58, 237, 0.18);
-      border-left: 5px solid var(--brand-purple);
+      border-left: 5px solid #0051A2;
       padding: 20px 22px;
       border-radius: 16px;
       margin-top: 36px;
@@ -281,7 +281,7 @@
     }
 
     .cta-link {
-      color: var(--brand-purple);
+      color: #0051A2;
       font-weight: 700;
       font-size: 0.9rem;
       text-decoration: none;
@@ -370,6 +370,44 @@
         text-decoration: none;
     }
 
+     #backToTopBtn {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        z-index: 9999;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: lightblue;
+        color: #0051A2;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s, background 0.15s ease;
+    }
+    #backToTopBtn.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    #backToTopBtn:hover { background: #80B3FF; }
+
+     .ad-native-wrapper {
+  max-width: 400px;
+  margin: 1.5rem auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+
+.ad-native-wrapper img {
+  max-height: 180px !important;
+  object-fit: cover;
+  border-radius: 8px;
+}
 
   </style>
 
@@ -398,6 +436,10 @@
     </div>
 
 
+        <div class="ad-native-wrapper">
+            <script async="async" data-cfasync="false" src="https://pl30854659.profitableratecpmnetwork.com/839994ed0cd70e78485e96284f4eae08/invoke.js"></script>
+<div id="container-839994ed0cd70e78485e96284f4eae08"></div>
+        </div>
 
 
     <div class="article-cta">
@@ -411,6 +453,13 @@
     </div>
   </article>
 
+
+    <button id="backToTopBtn" onclick="scrollToTop()" title="Back to top" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+</button>
+
 <footer class="site-footer">
   <p>© 2026 formulaverse.in</p>
   <div class="footer-links">
@@ -422,29 +471,52 @@
 </footer>
 
 
+<script>
+
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    });
+
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+</script>
+
   <div class="fv-nav-spacer"></div>
   <nav class="nav-menu fv-bottom-nav" aria-label="Primary">
-    <a href="{% url 'base-page' %}" class="fv-nav-item">
-      <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
-      <span class="fv-nav-label">Home</span>
-    </a>
-    <a href="{% url 'index-page' %}" class="fv-nav-item">
-      <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
-      <span class="fv-nav-label">Index</span>
-    </a>
-    <a href="{% url 'blog_list' %}" class="fv-nav-item is-active">
-      <span class="fv-nav-icon" aria-hidden="true">&#128214;</span>
-      <span class="fv-nav-label">Guides</span>
-    </a>
-    <a href="{% url 'all-saved' %}" class="fv-nav-item">
-      <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
-      <span class="fv-nav-label">Vault</span>
-    </a>
-    <a href="{% url 'my-purchase' %}" class="fv-nav-item">
-      <span class="fv-nav-icon" aria-hidden="true">&#128179;</span>
-      <span class="fv-nav-label">My Purchase</span>
-    </a>
-  </nav>
-
+  <a href="{% url 'base-page' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
+    <span class="fv-nav-label">Home</span>
+  </a>
+  <a href="{% url 'index-page' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#128218;</span>
+    <span class="fv-nav-label">Index</span>
+  </a>
+  <a href="{% url 'blog_list' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#128214;</span>
+    <span class="fv-nav-label">Guides</span>
+  </a>
+  <a href="{% url 'all-saved' %}" class="fv-nav-item">
+    <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
+    <span class="fv-nav-label">Vault</span>
+  </a>
+  <a href="{% url 'stories-list' %}" class="fv-nav-item is-active">
+    <span class="fv-nav-icon" aria-hidden="true">&#128220;</span>
+    <span class="fv-nav-label">Stories</span>
+  </a>
+</nav>
 </body>
 </html>

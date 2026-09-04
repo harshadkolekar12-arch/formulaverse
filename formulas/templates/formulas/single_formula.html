@@ -17,7 +17,7 @@
      crossorigin="anonymous"></script>
 
 
-    <meta name="description" content="{{ formula.title }} formula - variables, SI units, Hand-written derivation, and solved numerical example  for JEE  & NEET.">
+    <meta name="description" content="{{ formula.title }} formula - variables, SI units, Hand-written derivation, and solved numerical example for JEE & NEET.">
 
     <meta name="keywords" content="{{ formula.title }}, {{ formula.title }} formula, {{ formula.title }} derivation, {{ formula.title }} units, JEE physics formula, NEET physics formula, class 11 physics, class 12 physics">
     <meta name="robots" content="index, follow">
@@ -37,6 +37,7 @@
 
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
+    <meta name="theme-color" content="#FAF8F1">
 
     <script type="application/ld+json">
     {
@@ -118,251 +119,183 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg:      #FAF6ED;
-            --ink:     #1B1B2F;
-            --muted:   #63637A;
-            --faint:   #94918A;
-            --line:    rgba(27,27,47,0.10);
-            --line-glass: rgba(255,255,255,0.65);
-            --surface:        rgba(255,255,255,0.55);
-            --surface-strong: rgba(255,255,255,0.78);
-            --surface-2:      rgba(243,238,225,0.65);
-            --violet:      #7C3AED;
-            --violet-deep: #6D28D9;
-            --indigo:      #4F46E5;
-            --cyan:        #0EA5A0;
-            --cyan-deep:   #0B7F7A;
-            --gold:        #F5A623;
-            --gold-deep:   #B96F00;
-            --coral:       #DB2777;
-            --danger:      #DC2626;
-            --jee:   #F5A623;
-            --neet:  #0EA5A0;
+            --bg: #FAF8F1;
+            --surface: #FFFFFF;
+            --surface-muted: #F4F0E4;
+            --border: #E7E0CF;
+            --border-strong: #D8CFB6;
+            --ink: #16161F;
+            --ink-soft: #55546B;
+            --muted: #99927D;
+            --accent: #6D28D9;
+            --accent-soft: #EFE9FB;
+            --gold: #A6690A;
+            --success: #12946F;
+            --success-soft: #E7F6F0;
+            --danger: #DC2626;
+            --danger-soft: #FDECEC;
             --radius: 14px;
-            --font-display: 'Space Grotesk', sans-serif;
-            --font-body: 'Outfit', sans-serif;
+            --font-display: 'Source Serif 4', Georgia, serif;
+            --font-body: 'Outfit', -apple-system, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
-            --spectrum-gradient: linear-gradient(90deg, var(--violet), var(--indigo) 25%, var(--cyan) 50%, var(--gold) 75%, var(--coral));
         }
 
         html { scroll-behavior: smooth; }
 
         body {
-            background-color: var(--bg);
-            background-image:
-                radial-gradient(circle at 1px 1px, rgba(27,27,47,0.035) 1px, transparent 1px) 0 0/26px 26px,
-                radial-gradient(circle at 8% 4%, rgba(79,70,229,0.14), transparent 40%),
-                radial-gradient(circle at 92% 10%, rgba(245,166,35,0.12), transparent 38%),
-                radial-gradient(circle at 30% 96%, rgba(14,165,160,0.12), transparent 38%);
-            background-attachment: fixed;
+            background: var(--bg);
             color: var(--ink);
             font-family: var(--font-body);
             min-height: 100vh;
             padding: 0 0 60px;
             line-height: 1.6;
-            position: relative;
+            -webkit-font-smoothing: antialiased;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: -20%; left: 50%;
-            transform: translateX(-50%);
-            width: 900px; height: 620px;
-            background: radial-gradient(ellipse, rgba(124,58,237,0.08) 0%, transparent 65%);
-            pointer-events: none;
-            z-index: 0;
-        }
+        a { color: inherit; }
 
-        .spectrum-thread {
+        .accent-topline { height: 2px; width: 100%; background: var(--accent); }
+
+        /* ---------- Sprint banner ---------- */
+        .sprint-banner-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 10px 16px 0;
+        }
+        .sprint-pill-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--ink-soft);
+            padding: 6px 4px;
+        }
+        .sprint-pill-btn:hover { color: #0051A2; }
+        .sprint-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--danger); flex-shrink: 0;
+            animation: livePulse 2s infinite;
+        }
+        @keyframes livePulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+
+        /* ---------- Top bar ---------- */
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px 20px;
+            gap: 8px;
             position: sticky;
             top: 0;
-            height: 3px;
-            width: 100%;
-            background: var(--spectrum-gradient);
-            background-size: 200% 100%;
-            animation: thread-flow 8s linear infinite;
-            z-index: 30;
-        }
-        @keyframes thread-flow {
-            0%   { background-position: 0% 0; }
-            100% { background-position: 200% 0; }
+            z-index: 29;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
         }
 
-       .top-bar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 10px 16px;
-  gap: 8px;
-  position: sticky;
-  top: 0px;
-  z-index: 29;
-  background: rgba(250, 246, 237, 0.85);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
-}
-
-
-
-.btn-save {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  background: linear-gradient(135deg, var(--gold), #E08E00);
-  border: none;
-  border-radius: 20px;
-  color: #1a1408;
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.3);
-  transition: transform .15s, box-shadow .2s;
-}
-
-.btn-save:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(245, 166, 35, 0.4);
-}
-
-.btn-save:active {
-  transform: scale(0.97);
-}
-
-        .util-btn {
-            background: transparent;
-            border: 1px solid var(--line);
-            color: var(--ink);
-            padding: 7px 14px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 12px;
+        .pill-btn {
+            border: 1px solid var(--border-strong);
+            background: #FFFFFF;
+            color: black;
+            padding: 7px 16px;
+            border-radius: 999px;
+            font-size: 0.8rem;
             font-weight: 600;
-            font-family: var(--font-body);
-            display: flex;
-            align-items: center;
-            margin-left: auto;
+            cursor: pointer;
             text-decoration: none;
-            transition: border-color .2s, transform .15s, background .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
         }
-        .util-btn:active { transform: scale(0.96); }
-        .util-copy  { border-color: var(--cyan); color: var(--cyan-deep); }
-        .util-copy:hover  { background: rgba(14,165,160,0.10); }
-        .util-share { background: #25D366; border-color: #25D366; color: #06210f; font-weight: 700; margin-left: auto; }
-        .util-share:hover { filter: brightness(1.05); }
+        .pill-btn:hover { background: lightblue; color: black; border-color: #0051A2; }
+        .pill-btn.primary { background: lightblue; color: #0051A2; border-color: var(--ink); }
+        .pill-btn.primary:hover { background: #ffffff; border-color: #0051A2; }
 
-        /* ===== Hero ===== */
+        /* ---------- Hero ---------- */
         .page-header {
-            position: relative;
-            padding: 30px 20px 4px;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 40px 20px 4px;
             text-align: center;
-            overflow: hidden;
-            z-index: 1;
         }
 
         .chapter-eyebrow {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
+            gap: 6px;
             font-family: var(--font-mono);
             font-size: 0.68rem;
-            letter-spacing: 0.16em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--gold-deep);
-            background: rgba(245,166,35,0.10);
-            border: 1px solid rgba(245,166,35,0.35);
+            color: #0051A2;
+            border: 1px solid var(--border-strong);
             border-radius: 999px;
             padding: 5px 14px;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
-        .chapter-eyebrow b { color: var(--muted); font-weight: 500; }
+        .chapter-eyebrow b { color: var(--muted); font-weight: 600; }
 
         .formula-title {
             font-family: var(--font-display);
-            font-weight: 700;
+            font-weight: 600;
             color: var(--ink);
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-            font-size: clamp(1.4rem, 5vw, 2.3rem);
-            line-height: 1.22;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
+            letter-spacing: -0.01em;
+            margin-bottom: 10px;
+            font-size: clamp(1.6rem, 5vw, 2.5rem);
+            line-height: 1.18;
             text-wrap: balance;
         }
 
         .given-by {
-            text-align: center;
-            color: var(--coral);
-            opacity: 0.9;
-            font-size: 0.76rem;
-            font-family: var(--font-mono);
-            line-height: 1.5;
-            padding: 0 16px;
-            max-width: 600px;
-            margin: 0 auto;
+            font-family: var(--font-display);
+            font-style: italic;
+            color: #353839;
+            font-size: 0.9rem;
         }
-        .given-by span { color: var(--muted); }
+        .given-by span { font-style: normal; }
 
+        /* ---------- Formula card ---------- */
         .formula-card {
             position: relative;
             background: var(--surface);
-            backdrop-filter: blur(18px) saturate(140%);
-            -webkit-backdrop-filter: blur(18px) saturate(140%);
-            background-image:
-                linear-gradient(rgba(27,27,47,0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(27,27,47,0.035) 1px, transparent 1px);
-            background-size: 22px 22px;
-            border: 1px solid var(--line-glass);
-            border-radius: 18px;
-            margin: 22px auto 0;
-            max-width: 420px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin: 24px auto 0;
+            max-width: 460px;
             overflow: hidden;
-            box-shadow: 0 20px 44px -14px rgba(79,70,229,0.20), 0 8px 20px -10px rgba(27,27,47,0.08);
-            z-index: 1;
         }
 
-        .formula-ribbon {
-            position: absolute;
-            top: 14px;
-            left: -34px;
-            width: 130px;
-            transform: rotate(-45deg);
-            text-align: center;
+        .formula-card-label {
             font-family: var(--font-mono);
-            font-size: 7.5px;
-            font-weight: 900;
-            letter-spacing: 0.1em;
+            font-size: 0.62rem;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: #14122A;
-            background: var(--spectrum-gradient);
-            padding: 3px 0;
-            box-shadow: 0 3px 8px rgba(27,27,47,0.25);
+            color: var(--muted);
+            padding: 12px 18px 0;
         }
 
         .formula-card-inner {
-            padding: 2rem 1.5rem 1.4rem;
+            padding: 0.6rem 1.5rem 1.6rem;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         .formula-container {
-            font-size: 1.3rem;
+            font-size: 1.12rem;
             font-weight: 500;
             color: var(--ink);
             text-align: center;
             width: 100%;
-            padding: 0.4rem 0.5rem 0.3rem;
+            padding: 0.6rem 0.5rem 0.4rem;
             overflow-x: auto;
             scrollbar-width: none;
         }
@@ -370,27 +303,20 @@
 
         .formula-subline {
             font-size: 0.85rem;
-            color: var(--muted);
+            color: var(--ink-soft);
             text-align: center;
-            max-width: 320px;
-            margin: 4px 0 16px;
+            max-width: 340px;
+            margin: 2px 0 18px;
         }
 
-        .diagram-toggle-row {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-        }
+        .diagram-toggle-row { display: flex; gap: 10px; width: 100%; }
         .diagram-toggle-btn {
             flex: 1;
-            padding: 9px 14px;
+            padding: 10px 14px;
             border-radius: 10px;
-            background: var(--surface-2);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid var(--line);
-            color: var(--cyan-deep);
-            font-family: var(--font-body);
+            background: var(--surface);
+            border: 1px solid var(--border-strong);
+            color: var(--ink-soft);
             font-weight: 600;
             font-size: 0.82rem;
             cursor: pointer;
@@ -398,17 +324,16 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: border-color .2s, transform .15s;
+            transition: border-color .15s ease, color .15s ease;
         }
-        .diagram-toggle-btn:active { transform: scale(0.97); }
-        .diagram-toggle-btn.open { border-color: var(--cyan); }
+        .diagram-toggle-btn:hover, .diagram-toggle-btn.open { border-color: #0051A2; color: #0051A2; }
 
         .diagram-panel {
             display: none;
             width: 100%;
-            margin-top: 14px;
-            padding-top: 14px;
-            border-top: 1px dashed var(--line);
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
             flex-direction: column;
             align-items: center;
             gap: 12px;
@@ -416,997 +341,495 @@
         .diagram-panel.open { display: flex; }
 
         .derivation-label {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--coral);
-            font-weight: 600;
+            color: var(--muted);
         }
 
         .derivation-thumbnail-container {
             position: relative;
             cursor: pointer;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
-            border: 2px solid var(--line);
+            border: 1px solid var(--border);
             max-width: 280px;
             width: 100%;
-            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow .25s ease;
             background: #ffffff;
+            transition: border-color 0.2s ease;
         }
-        .derivation-thumbnail-container:hover {
-            transform: scale(1.03);
-            border-color: var(--coral);
-            box-shadow: 0 8px 24px rgba(219,39,119,0.20);
-        }
+        .derivation-thumbnail-container:hover { border-color: var(--accent); }
         .derivation-thumbnail {
             display: block;
             width: 100%;
             height: auto;
             max-height: 160px;
             object-fit: cover;
-            opacity: 0.95;
             background: #ffffff;
         }
 
-        .zoom-hint {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            color: #ffffff;
-            background: rgba(27,27,47,0.55);
-            font-size: 0.7rem;
-            text-align: center;
-            padding: 4px 0;
-        }
-
-        .desmos-embed-container {
-            width: 100%;
-            max-width: 320px;
-            aspect-ratio: 4 / 3;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid var(--line);
-
-            background: #ffffff;
-        }
-        .desmos-embed-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-            background: #ffffff;
-        }
+        .zoom-hint { font-size: 0.72rem; color: var(--muted); }
 
         .derivation-pdf-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: linear-gradient(135deg, #ff5e62, #ff9966);
+            background: var(--ink);
             color: #ffffff !important;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             padding: 10px 20px;
-            border-radius: 50px;
-            box-shadow: 0 8px 20px -6px rgba(255,94,98,0.35);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 999px;
         }
-        .derivation-pdf-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px -6px rgba(255,94,98,0.5);
-        }
+        .derivation-pdf-btn:hover { background: var(--accent); }
 
-        /* ===== Image zoom modal — intentionally kept dark; a darkened
-           surround gives images maximum contrast regardless of site theme ===== */
+        /* image zoom modal — deliberately dark for max image contrast */
         .zoom-overlay {
             position: fixed; inset: 0;
             background-color: rgba(10,12,20,0.92);
             display: flex; justify-content: center; align-items: center;
             z-index: 9999; opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.25s ease;
         }
         .zoom-overlay.active { opacity: 1; pointer-events: auto; }
         .zoom-img {
             max-width: 90%; max-height: 85%;
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .zoom-overlay.active .zoom-img { transform: scale(1); }
         .close-zoom-btn {
             position: absolute; top: 20px; right: 25px;
-            color: #fff; font-size: 40px; font-weight: bold;
-            cursor: pointer; transition: color 0.2s;
-        }
-        .close-zoom-btn:hover { color: var(--coral); }
-
-        /* ===== Layout ===== */
-        .content-wrapper {
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 1;
+            color: #fff; font-size: 36px; font-weight: 400;
+            cursor: pointer;
         }
 
-        .quick-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 22px;
-        }
-        .quick-chip {
-            background: var(--surface);
-            backdrop-filter: blur(12px) saturate(140%);
-            -webkit-backdrop-filter: blur(12px) saturate(140%);
-            border-radius: 12px;
-            padding: 13px 14px;
-            border: 1px solid var(--line-glass);
-        }
-        .quick-chip.when { border-color: rgba(219,39,119,0.30); background: rgba(219,39,119,0.06); }
-        .quick-chip.recall { border-color: rgba(14,165,160,0.30); background: rgba(14,165,160,0.06); }
-        .quick-label {
-            font-family: var(--font-display);
-            font-size: 0.64rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .quick-chip.when .quick-label { color: var(--coral); }
-        .quick-chip.recall .quick-label { color: var(--cyan-deep); }
-        .quick-body { font-size: 0.82rem; color: var(--ink); line-height: 1.45; }
+        /* ---------- Layout ---------- */
+        .content-wrapper { max-width: 680px; margin: 0 auto; padding: 0 20px; }
 
-        .example-card {
-            margin-top: 14px;
-            background: rgba(245,166,35,0.08);
-            backdrop-filter: blur(12px) saturate(140%);
-            -webkit-backdrop-filter: blur(12px) saturate(140%);
-            border: 1px solid rgba(245,166,35,0.35);
-            border-radius: var(--radius);
-            padding: 18px 20px;
-        }
-        .example-label {
-            font-family: var(--font-display);
-            font-size: 0.7rem;
-            font-weight: 700;
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            font-weight: 600;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--gold-deep);
-            margin-bottom: 8px;
+            color: #0051A2;
             display: flex;
             align-items: center;
             gap: 6px;
+            margin-bottom: 10px;
         }
-        .example-card .card-content { font-size: 0.95rem; color: var(--ink); }
+
+        .detail-block .detail-label{
+            color: #0051A2;
+
+        }
+
+
+        .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 24px; }
+        @media (max-width: 480px) { .quick-grid { grid-template-columns: 1fr; } }
+        .quick-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+        .quick-chip .section-label { color: var(--accent); margin-bottom: 6px; }
+        .quick-body { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.5; }
+
+        .pyq-row { margin-top: 20px; }
+        .pyq-pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+        .pyq-pill {
+            font-size: 0.78rem; font-weight: 600; font-family: var(--font-mono);
+            color: var(--ink-soft); background: var(--surface);
+            border: 1px solid var(--border-strong); border-radius: 999px; padding: 5px 14px;
+        }
+
+        .content-card {
+            margin-top: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
+        }
+        .content-card h2 {
+            font-family: var(--font-display);
+            font-size: 1.18rem;
+            font-weight: 600;
+            color: #0051A2;
+            margin-bottom: 14px;
+        }
+        .content-card .detail-block { margin-bottom: 16px; }
+        .content-card .detail-block:last-child { margin-bottom: 0; }
+        .content-card .detail-label {
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .content-card .detail-block.mistakes .detail-label { color: var(--danger); }
+        .content-card .detail-body { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.6; }
+        .content-card .detail-body.units-row {
+            display: flex; align-items: center; font-size: 0.9rem; color: var(--ink-soft);
+            max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+        }
+
+        .example-card .card-content { font-size: 0.94rem; color: var(--ink-soft); margin-bottom: 4px; }
+        .example-card .card-content strong { color: var(--ink); }
+
         .result-badge {
             margin-top: 14px;
             padding: 14px 18px;
             border-radius: 10px;
-            font-family: var(--font-display);
             font-weight: 600;
-            background: rgba(14,165,160,0.10);
-            border: 1px solid rgba(14,165,160,0.30);
-            color: var(--cyan-deep);
+            background: var(--success-soft);
+            border: 1px solid rgba(18,148,111,0.3);
+            color: var(--success);
         }
 
-        .pyq-row { margin-top: 14px; }
-        .pyq-pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-        .pyq-pill {
-            font-size: 0.8rem;
-            font-weight: 600;
-            font-family: var(--font-mono);
-            color: var(--violet-deep);
-            background: rgba(124,58,237,0.10);
-            border: 1px solid rgba(124,58,237,0.35);
-            border-radius: 999px;
-            padding: 5px 14px;
-        }
-        .pyq-heading {
-            font-family: var(--font-display);
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--violet-deep);
-        }
+        .explanation img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); margin-top: 16px; }
 
-        .accordion {
-            margin-top: 16px;
-            border: 1px solid var(--line-glass);
-            border-radius: var(--radius);
-            overflow: hidden;
-            background: var(--surface);
-            backdrop-filter: blur(14px) saturate(140%);
-            -webkit-backdrop-filter: blur(14px) saturate(140%);
-        }
-        .accordion-header {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 18px;
-            background: transparent;
-            border: none;
-            color: var(--ink);
-            font-family: var(--font-body);
-            font-weight: 600;
-            font-size: 1.05rem;
-            cursor: pointer;
-        }
-        .accordion-chevron { transition: transform .2s ease; color: var(--muted); font-size: 1rem; }
-        .accordion-header.open .accordion-chevron { transform: rotate(180deg); }
-        .accordion-body {
-            display: none;
-            padding: 0 18px 18px;
-        }
-        .accordion-body.open { display: block; }
-        .detail-block { margin-bottom: 16px; }
-        .detail-block:last-child { margin-bottom: 0; }
-        .detail-label {
-            font-family: var(--font-display);
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--indigo);
-            margin-bottom: 6px;
-        }
-        .detail-block.mistakes .detail-label { color: var(--danger); }
-        .detail-body { font-size: 0.88rem; color: var(--ink); line-height: 1.55; }
-        .detail-body ol, .detail-body ul { margin-top: 6px; padding-left: 1.2em; }
-        .detail-body li { margin-bottom: 4px; }
-
-        .explanation img {
-            width: 100%;
-            border-radius: var(--radius);
-            border: 1px solid var(--line);
-            margin-top: 16px;
-        }
-
-
-        .practice-section {
-            padding: 20px 0 0;
+        /* ---------- Calculator ---------- */
+        .calc-box {
             margin-top: 20px;
-            border-top: 1px dashed var(--line);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
         }
-        .practice-heading {
-            color: var(--ink);
-            font-family: var(--font-display);
-            font-size: 1.02rem;
-            font-weight: 600;
-            margin-bottom: 12px;
+        .calc-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 16px; }
+        .calc-group { margin-bottom: 16px; }
+        .calc-label {
+            display: block; font-family: var(--font-mono); font-size: 0.66rem; font-weight: 600;
+            color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;
         }
-        .diff-row { display: flex; gap: 10px; margin-bottom: 16px; }
-        .diff-btn {
-            flex: 1;
-            padding: 11px;
-            border-radius: 10px;
-            font-family: var(--font-display);
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            border: 1px solid;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            transition: transform .15s ease, box-shadow .2s ease;
+        .solve-for {
+            width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border-strong);
+            font-size: 0.92rem; background: var(--surface); color: var(--ink); outline: none;
         }
-        .diff-btn:active { transform: scale(0.97); }
-        .diff-easy   { background: rgba(21,128,61,0.10);  color: #15803D;      border-color: rgba(21,128,61,0.45); }
-        .diff-medium { background: rgba(245,166,35,0.12); color: var(--gold-deep); border-color: rgba(245,166,35,0.5); }
-        .diff-hard   { background: rgba(219,39,119,0.10); color: var(--coral); border-color: rgba(219,39,119,0.45); }
-        .diff-btn.active { box-shadow: 0 0 0 2px currentColor inset; }
+        .solve-for:focus, .calc-field input:focus { border-color: #0051A2; }
+        .calc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        @media (max-width: 480px) { .calc-inputs { grid-template-columns: 1fr; } }
+        .calc-field label { display: block; font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 4px; font-weight: 600; }
+        .calc-field input {
+            width: 100%; padding: 9px 11px; border-radius: 8px; border: 1px solid #0051A2;
+            font-size: 0.9rem; outline: none; background: var(--surface); color: var(--ink);
+        }
+        .calc-btn {
+            width: 100%; padding: 12px; border: none; border-radius: 10px;
+            background: lightblue; color: #0051A2; font-weight: 700; font-size: 0.92rem; cursor: pointer;
+            transition: background 0.15s ease;
+        }
+        .calc-btn:hover { background: #ffffff; }
+        .calc-result {
+            margin-top: 16px; padding: 12px; border-radius: 10px;
+            background: var(--success-soft); border: 1px solid rgba(18,148,111,0.3);
+            color: var(--success); font-weight: 700; font-size: 1rem; display: none; text-align: center;
+        }
+        .calc-result.show { display: block; }
+        .calc-result.error { background: var(--danger-soft); border-color: rgba(220,38,38,0.3); color: var(--danger); font-weight: 500; font-size: 0.88rem; }
 
-        .loading-text {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            color: var(--muted);
-            font-size: 14px;
+        /* ---------- FAQ ---------- */
+        .faq-container { margin-top: 20px; }
+        .faq-heading { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+        .faq-heading h2 { font-family: var(--font-display); font-size: 1.18rem; font-weight: 600; color: var(--ink); }
+        .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-top: 12px; }
+        .faq-item h3 { font-weight: 700; color: var(--ink); font-size: 0.98rem; margin-bottom: 8px; line-height: 1.4; }
+        .faq-item .mathjax-render { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.6; }
+
+        /* ---------- Deep dive ---------- */
+        .mathjax-render {
+            font-size: 0.92rem; line-height: 1.65; color: var(--ink-soft);
+            overflow-x: auto; overflow-y: hidden; max-width: 100%;
+            word-wrap: break-word; overflow-wrap: break-word; -webkit-overflow-scrolling: touch;
         }
+        .mathjax-render .MathJax_Display, .mathjax-render .mjx-chtml, .mathjax-render .katex-display {
+            max-width: 100% !important; overflow-x: auto !important; overflow-y: hidden !important; padding: 4px 0;
+        }
+        .exam-tips-card { border-color: var(--border-strong); }
+        .exam-tips-card h2 { color: var(--gold); }
+
+        /* ---------- Practice ---------- */
+        .practice-section { padding: 24px 0 0; margin-top: 24px; border-top: 1px solid var(--border); }
+        .practice-heading { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 12px; }
+
+        .diff-tabs {
+            display: inline-flex; border: 1px solid var(--border); border-radius: 999px;
+            padding: 3px; gap: 2px; background: var(--surface); margin-bottom: 18px;
+        }
+        .diff-btn {
+            padding: 9px 18px; border-radius: 999px; font-weight: 600; font-size: 0.82rem;
+            cursor: pointer; border: none; background: transparent; color: var(--ink-soft);
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+        .diff-btn.active { background: lightblue; color: #0051A2; }
+
+        .loading-text { display: none; text-align: center; padding: 20px; color: var(--muted); font-size: 14px; }
 
         #question-box { display: none; }
-        .question-card {
-            background: var(--surface-2);
-            backdrop-filter: blur(10px) saturate(140%);
-            -webkit-backdrop-filter: blur(10px) saturate(140%);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 14px;
-            border-left: 4px solid var(--cyan);
-        }
+        .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
         .question-card p { color: var(--ink); font-size: 15px; line-height: 1.6; }
 
-        #options-box { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
-
-        #feedback-box {
-            display: none;
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 14px;
+        #options-box { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+        .option-btn {
+            width: 100%; padding: 12px 16px; border-radius: 10px; text-align: left;
+            background: var(--surface); border: 1px solid var(--border-strong);
+            color: var(--ink); font-size: 14px; cursor: pointer; line-height: 1.5;
+            transition: border-color .15s ease;
         }
+        .option-btn:hover:not(:disabled) { border-color: var(--accent); }
+        .option-btn span { font-weight: 700; color: var(--accent); margin-right: 4px; }
+
+        #feedback-box { display: none; border-radius: 12px; padding: 14px; margin-bottom: 14px; }
+        #feedback-box.correct { background: var(--success-soft); border: 1px solid rgba(18,148,111,0.35); }
+        #feedback-box.incorrect { background: var(--danger-soft); border: 1px solid rgba(220,38,38,0.35); }
 
         .next-btn {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            background: var(--surface);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: var(--cyan-deep);
-            border: 1px solid var(--cyan);
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background .2s ease;
+            width: 100%; padding: 12px; border-radius: 10px; background: var(--surface);
+            color: var(--ink); border: 1px solid var(--border-strong); font-weight: 600; font-size: 14px; cursor: pointer;
+            transition: border-color .15s ease;
         }
-        .next-btn:hover { background: rgba(14,165,160,0.10); }
+        .next-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-        .similar-scroll {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding: 4px 2px 8px;
-            margin-top: 12px;
-            scrollbar-width: thin;
+        /* ---------- Comment form ---------- */
+        .comment-card p.comment-sub { color: var(--ink-soft); font-size: 0.85rem; margin-bottom: 16px; }
+        .comment-form { display: flex; flex-direction: column; gap: 12px; }
+        .comment-form input, .comment-form textarea {
+            width: 100%; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: 10px;
+            font-size: 0.9rem; box-sizing: border-box; font-family: var(--font-body); color: var(--ink); background: var(--surface);
         }
+        .comment-form input:focus, .comment-form textarea:focus { outline: none; border-color: #0051A2; }
+        .comment-form textarea { resize: vertical; }
+        .comment-submit-btn {
+            align-self: flex-start; background: lightblue; color: #0051A2; font-weight: 600;
+            padding: 10px 22px; border: none; border-radius: 999px; cursor: pointer; font-size: 0.88rem;
+            transition: background 0.15s ease;
+        }
+        .comment-submit-btn:hover { background: var(--mute); }
+
+        /* ---------- Similar formulas ---------- */
+        .similar-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 4px 2px 8px; margin-top: 10px; scrollbar-width: thin; }
         .similar-card-mini {
-            flex: 0 0 auto;
-            min-width: 190px;
-            max-width: 220px;
-            background-image: linear-gradient(135deg, rgba(124,58,237,0.10), rgba(14,165,160,0.08));
-            background-color: var(--surface);
-            backdrop-filter: blur(12px) saturate(140%);
-            -webkit-backdrop-filter: blur(12px) saturate(140%);
-            border: 1px solid rgba(124,58,237,0.22);
-            border-left: 3px solid var(--coral);
-            border-radius: 10px;
-            padding: 12px 14px;
-            text-decoration: none;
-            display: block;
-            transition: transform .2s ease, border-color .2s ease;
+            flex: 0 0 auto; min-width: 190px; max-width: 220px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-left: 3px solid #0051A2; border-radius: 10px;
+            padding: 12px 14px; text-decoration: none; display: block;
+            transition: border-color .2s ease;
         }
-        .similar-card-mini:hover { transform: translateY(-2px); border-color: rgba(124,58,237,0.45); }
-        .similar-title { color: var(--cyan-deep); font-weight: 600; font-size: 13px; display: block; margin-bottom: 4px; }
-        .similar-formula { color: var(--gold-deep); font-size: 12.5px; font-weight: 500; }
+        .similar-card-mini:hover { border-color: #0051A2; }
+        .similar-title { color: var(--ink); font-weight: 600; font-size: 13px; display: block; margin-bottom: 4px; }
+        .similar-formula { color: var(--ink-soft); font-size: 12.5px; }
 
-        .tg-join-btn {
-            display: inline-flex;
-            align-items: center;
-            background: #24A1DE;
-            color: #ffffff !important;
-            padding: 10px 16px;
-            margin-top: 25px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 8px;
-            text-decoration: none !important;
-            box-shadow: 0 8px 20px -6px rgba(36,161,222,0.35);
-            transition: transform .15s ease;
+        /* ---------- Discovery banner ---------- */
+        .discovery-banner { margin-top: 24px; padding: 20px 24px; border: 1px solid var(--border); background: LIGHTBLUE; border-radius: 16px; text-align: center; }
+        .discovery-banner p { font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+        .discovery-banner a { color: #0051A2; font-weight: 700; text-decoration: none; }
+        .discovery-banner a:hover { text-decoration: underline; }
+
+        /* ---------- Affiliate card ---------- */
+        .pyq-affiliate-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin: 20px 0 24px; }
+        .pyq-affiliate-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+        .pyq-badge { background: var(--surface-muted); color: var(--ink-soft); font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 999px; }
+        .pyq-amazon-tag { color: var(--muted); font-size: 11px; font-weight: 600; }
+        .pyq-affiliate-body { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+        .pyq-icon { font-size: 24px; line-height: 1; background: var(--surface-muted); padding: 8px; border-radius: 10px; }
+        .pyq-title { margin: 0 0 3px 0; font-size: 15px; font-weight: 700; color: var(--ink); }
+        .pyq-desc { margin: 0; font-size: 12.5px; color: var(--ink-soft); line-height: 1.4; }
+        .pyq-amazon-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
+            background: #ff9900; color: #111111; font-size: 13px; font-weight: 700; padding: 11px;
+            border-radius: 10px; text-decoration: none; transition: transform 0.1s ease, background 0.15s ease;
         }
-        .tg-join-btn:hover { transform: translateY(-1px); }
+        .pyq-amazon-btn:active { transform: scale(0.98); background: #e68a00; }
 
+        /* ---------- Animation modal ---------- */
         #animationModal {
             display: none; position: fixed; inset: 0;
-            background: rgba(27,27,47,0.5); backdrop-filter: blur(4px); z-index: 9999;
+            background: rgba(22,22,31,0.45); z-index: 9999;
             align-items: center; justify-content: center;
         }
         .modal-box {
-            background: var(--surface-strong);
-            backdrop-filter: blur(20px) saturate(140%);
-            -webkit-backdrop-filter: blur(20px) saturate(140%);
-            border: 1px solid rgba(124,58,237,0.30);
-            border-radius: 16px; width: 90%; max-width: 600px;
-            padding: 24px; position: relative;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; width: 90%; max-width: 600px; padding: 24px; position: relative;
         }
-        .modal-close {
-            position: absolute; top: 12px; right: 16px;
-            background: none; border: none; color: var(--muted);
-            font-size: 22px; cursor: pointer;
+        .modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; color: var(--muted); font-size: 22px; cursor: pointer; }
+
+        /* ---------- Login modal ---------- */
+        .login-modal { position: fixed; inset: 0; background: rgba(22,22,31,0.4); display: flex; align-items: center; justify-content: center; z-index: 999; }
+        .login-modal.hidden { display: none; }
+        .login-modal-content { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 30px 26px; width: 90%; max-width: 340px; text-align: center; position: relative; box-shadow: 0 24px 60px -12px rgba(22,22,31,0.25); }
+        .login-icon { font-size: 2.2rem; margin-bottom: 8px; }
+        .login-modal-content h3 { font-family: var(--font-display); color: var(--ink); margin-bottom: 4px; font-size: 1.25rem; font-weight: 600; }
+        .login-modal-content p { color: var(--ink-soft); font-size: 0.88rem; margin-bottom: 18px; }
+        .login-modal-content label { display: block; text-align: left; color: var(--ink-soft); font-size: 0.8rem; margin: 12px 0 6px; }
+        .login-modal-content input { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-muted); color: var(--ink); font-size: 0.92rem; }
+        .login-modal-content input:focus { outline: none; border-color: #0051A2; }
+        .verify-btn { width: 100%; margin-top: 20px; padding: 12px; border: none; border-radius: 999px; background: lightblue; color: #0051A2; font-weight: 700; font-size: 0.92rem; cursor: pointer; transition: background 0.15s ease; }
+        .verify-btn:hover { background: #E6F0FA; }
+        .close-btn { position: absolute; top: 14px; right: 16px; background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer; }
+        .error-text { color: var(--danger); font-size: 0.82rem; margin-top: 10px; min-height: 18px; }
+
+        /* ---------- Ads ---------- */
+        .ad-banner-container { max-width: 250px; width: 100%; margin: 24px auto; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .ad-banner-container iframe, .ad-banner-container img { max-width: 100% !important; height: auto !important; }
+
+        /* ---------- Footer ---------- */
+        .site-footer { margin-top: 20px; padding: 28px 20px 20px; text-align: center; font-size: 0.82rem; color: var(--muted); border-top: 1px solid var(--border); }
+        .site-footer p { margin-bottom: 8px; }
+        .footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+        .footer-links a { color: var(--muted); text-decoration: none; }
+        .footer-links a:hover { color: var(--ink); }
+
+        /* ---------- Bottom nav ---------- */
+        .fv-nav-spacer { height: 68px; }
+        .fv-bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+            background: var(--surface); border-top: 1px solid var(--border);
         }
+        .fv-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 2px; text-decoration: none; color: var(--muted); transition: color 0.2s ease; }
+        .fv-nav-item:hover { color: var(--ink); }
+        .fv-nav-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+        .fv-nav-item.is-active { color: var(--ink); }
+        .fv-nav-icon { font-size: 1.1rem; line-height: 1; }
+        .fv-nav-label { font-size: 10.5px; letter-spacing: 0.02em; }
 
         @media (prefers-reduced-motion: reduce) {
-            .spectrum-thread { animation: none; }
+            .sprint-dot { animation: none; }
         }
-
-        .login-modal {
-          position: fixed;
-          inset: 0;
-          background: rgba(27,27,47,0.45);
-          backdrop-filter: blur(4px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 999;
-        }
-        .login-modal.hidden { display: none; }
-
-        .login-modal-content {
-          background: var(--surface-strong);
-          backdrop-filter: blur(20px) saturate(140%);
-          -webkit-backdrop-filter: blur(20px) saturate(140%);
-          border: 1px solid var(--line-glass);
-          border-radius: 20px;
-          padding: 32px 28px;
-          width: 90%;
-          max-width: 360px;
-          text-align: center;
-          position: relative;
-          box-shadow: 0 24px 60px -12px rgba(27,27,47,0.25);
-        }
-
-        .login-icon { font-size: 2.5rem; margin-bottom: 8px; }
-
-        .login-modal-content h3 {
-          color: var(--ink);
-          margin-bottom: 4px;
-        }
-
-        .login-modal-content p {
-          color: var(--muted);
-          font-size: 0.9rem;
-          margin-bottom: 20px;
-        }
-
-        .login-modal-content label {
-          display: block;
-          text-align: left;
-          color: var(--muted);
-          font-size: 0.85rem;
-          margin-bottom: 6px;
-          margin-top: 14px;
-        }
-
-        .login-modal-content input {
-          width: 100%;
-          padding: 12px 14px;
-          border-radius: 12px;
-          border: 1px solid var(--line);
-          background: rgba(243,238,225,0.85);
-          color: var(--ink);
-          font-size: 1rem;
-        }
-
-        .verify-btn {
-          width: 100%;
-          margin-top: 22px;
-          padding: 12px;
-          border: none;
-          border-radius: 999px;
-          background: linear-gradient(135deg, var(--indigo), var(--cyan));
-          color: white;
-          font-weight: 600;
-          font-size: 1rem;
-          cursor: pointer;
-        }
-
-        .close-btn {
-          position: absolute;
-          top: 14px;
-          right: 16px;
-          background: none;
-          border: none;
-          color: var(--faint);
-          font-size: 1.2rem;
-          cursor: pointer;
-        }
-
-        .error-text {
-          color: var(--danger);
-          font-size: 0.85rem;
-          margin-top: 10px;
-          min-height: 18px;
-        }
-
 
         @media (min-width: 900px) {
-
-            .content-wrapper {
-                max-width: 760px;
-                padding: 0 24px;
-            }
-
-            .formula-card {
-                max-width: 560px;
-            }
-
-            .formula-container {
-                font-size: 1.55rem;
-            }
-
-            .quick-grid {
-                gap: 14px;
-            }
-
-            .example-card,
-            .accordion,
-            .practice-section {
-                padding-left: 4px;
-                padding-right: 4px;
-            }
-
-            .similar-scroll {
-                overflow-x: visible;
-                flex-wrap: wrap;
-                gap: 12px;
-            }
-            .similar-card-mini {
-                min-width: 220px;
-                max-width: none;
-                flex: 1 1 calc(33.333% - 12px);
-            }
-
-            .diff-row {
-                max-width: 460px;
-            }
+            .content-wrapper { max-width: 760px; padding: 0 24px; }
+            .formula-card { max-width: 560px; }
+            .formula-container { font-size: 1.55rem; }
+            .quick-grid { gap: 14px; }
+            .similar-scroll { overflow-x: visible; flex-wrap: wrap; gap: 12px; }
+            .similar-card-mini { min-width: 220px; max-width: none; flex: 1 1 calc(33.333% - 12px); }
+            .diff-tabs { max-width: 460px; }
         }
 
-        .calc-box {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 20px;
-    margin: 20px 0;
-    font-family: inherit;
-    box-sizing: border-box;
-  }
 
-  .calc-title {
-    margin-top: 0;
-    margin-bottom: 16px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #1e293b;
-  }
-
-  .calc-group {
-    margin-bottom: 16px;
-  }
-
-  .calc-label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-  }
-
-  .solve-for {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #cbd5e1;
-    font-size: 0.95rem;
-    background-color: #ffffff;
-    outline: none;
-    box-sizing: border-box;
-  }
-
-  .solve-for:focus, .field input:focus {
-    border-color: #2563eb;
-  }
-
-  .calc-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  @media (max-width: 480px) {
-    .calc-inputs {
-      grid-template-columns: 1fr;
+          .section-title {
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin: 34px 0 14px;
+        text-align: center;
     }
-  }
+    .chapter-pill-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .chapter-pill-grid a {
+        background: var(--surface);
+        border: 1px solid var(--border-strong);
+        padding: 12px 8px;
+        border-radius: 12px;
+        text-decoration: none;
+        color: var(--ink);
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    .chapter-pill-grid a:hover { border-color: #0051A2; color: #0051A2; }
 
-  .calc-field label {
-    display: block;
-    font-size: 0.8rem;
-    color: #475569;
-    margin-bottom: 4px;
-    font-weight: 600;
-  }
+     #backToTopBtn {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        z-index: 9999;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: lightblue;
+        color: #0051A2;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s, background 0.15s ease;
+    }
+    #backToTopBtn.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    #backToTopBtn:hover { background: #80B3FF; }
 
-  .calc-field input {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 6px;
-    border: 1px solid #cbd5e1;
-    font-size: 0.9rem;
-    box-sizing: border-box;
-    outline: none;
-  }
-
-  .calc-btn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background-color: #2563eb;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-
-  .calc-btn:hover {
-    background-color: #1d4ed8;
-  }
-
-  .calc-result {
-    margin-top: 16px;
-    padding: 12px;
-    border-radius: 8px;
-    background-color: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #166534;
-    font-weight: 700;
-    font-size: 1rem;
-    display: none;
+.story-cta-banner{
+    background: var(--accent-blue-soft, #EAF1FC);
+    border-radius: 14px;
+    padding: 20px 24px;
     text-align: center;
-  }
-
-  .calc-result.show {
-    display: block;
-  }
-
-  .calc-result.error {
-    background-color: #fef2f2;
-    border-color: #fecaca;
-    color: #991b1b;
-    font-weight: normal;
-    font-size: 0.9rem;
-  }
-
-
- .site-footer {
-            margin-top: 12px;
-            padding-top: 0;
-            text-align: center;
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        .site-footer p {
-            margin-bottom: 8px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.15s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-main);
-        }
-
-        .sprint-banner-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 0.75rem 1rem 0.25rem 1rem;
+    margin: 20px 0;
 }
-
-.sprint-pill-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    border: 1px solid #e9d5ff;
-    box-shadow: 0 4px 14px rgba(124, 58, 237, 0.12);
-    border-radius: 9999px;
-    padding: 0.4rem 0.9rem;
-    text-decoration: none;
-    transition: all 0.25s ease-in-out;
-}
-
-.sprint-pill-btn:hover {
-    transform: translateY(-2px);
-    border-color: #c084fc;
-    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.22);
-    background: #ffffff;
-}
-
-.sprint-icon {
-    font-size: 0.9rem;
-}
-
-.sprint-text {
-    font-size: 0.825rem;
-    font-weight: 700;
-    color: #4c1d95;
-    letter-spacing: -0.01em;
-}
-
-.sprint-badge {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    color: #ffffff;
-    font-size: 0.65rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    padding: 0.15rem 0.45rem;
-    border-radius: 9999px;
-    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.35);
-    animation: livePulse 2s infinite;
-}
-
-@keyframes livePulse {
-    0% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.05); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-
-.fv-nav-spacer { height: 68px; }
-
-.fv-bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 200;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
-    background: rgba(254, 249, 240, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-top: 1px solid rgba(140, 110, 70, 0.14);
-    box-shadow: 0 -6px 24px rgba(140, 120, 90, 0.10);
-}
-
-.fv-nav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    padding: 4px 2px;
-    text-decoration: none;
-    color: #a9a6b8;
-    font-family: 'Outfit', sans-serif;
-    transition: color 0.2s ease;
-}
-.fv-nav-item:hover { color: #0d9488; }
-.fv-nav-item:focus-visible { outline: 2px solid #0d9488; outline-offset: 2px; border-radius: 8px; }
-.fv-nav-item.is-active { color: #0d9488; }
-
-.fv-nav-icon { font-size: 1.15rem; line-height: 1; }
-.fv-nav-label { font-size: 10.5px; letter-spacing: 0.02em; }
-
-
-
-
-.ad-banner-container {
-  max-width: 250px;
-  width: 100%;
-  margin: 24px auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* Ensures the internal ad iframe scales cleanly */
-.ad-banner-container iframe,
-.ad-banner-container img {
-  max-width: 100% !important;
-  height: auto !important;
-}
-
-.pyq-affiliate-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 18px;
-    padding: 16px;
-    margin: 20px 0 24px 0;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
-}
-
-.pyq-affiliate-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.pyq-badge {
-    background: #e0f2fe;
-    color: #0369a1;
+.story-cta-eyebrow{
+    font-family: var(--mono, monospace);
     font-size: 11px;
-    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 4px 10px;
-    border-radius: 20px;
+    color: var(--accent-blue, #2E5AA8);
+    margin: 0 0 8px;
 }
-
-.pyq-amazon-tag {
-    color: #d97706;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.pyq-affiliate-body {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 14px;
-}
-
-.pyq-icon {
-    font-size: 26px;
-    line-height: 1;
-    background: #f0fdf4;
-    padding: 8px;
-    border-radius: 12px;
-    border: 1px solid #dcfce7;
-}
-
-.pyq-details {
-    flex: 1;
-}
-
-.pyq-title {
-    margin: 0 0 3px 0;
-    font-size: 15px;
-    font-weight: 700;
-    color: #0f172a;
-}
-
-.pyq-desc {
-    margin: 0;
-    font-size: 12px;
-    color: #64748b;
-    line-height: 1.4;
-}
-
-.pyq-amazon-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    background: #ff9900; /* Amazon Gold */
-    color: #111111;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 10px;
-    border-radius: 12px;
+.story-cta-title{
+    font-family: var(--serif, Georgia, serif);
+    font-size: 1.10rem;
+    font-weight: 600;
+    color: var(--ink, #1F2430);
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(255, 153, 0, 0.25);
-    transition: transform 0.1s ease, background 0.15s ease;
 }
-
-.pyq-amazon-btn:active {
-    transform: scale(0.98);
-    background: #e68a00;
+.story-cta-title:hover{ color: var(--accent-blue, #2E5AA8); }
+.story-cta-meta{
+    font-size: 13px;
+    color: var(--ink-soft, #52596B);
+    margin: 6px 0 0;
 }
-
-
- .formula-deep-dive {
-    margin-top: 24px;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  .content-section {
-    margin-bottom: 24px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .content-section:last-child {
-    margin-bottom: 0;
-  }
-
-  .content-section h2 {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #1a202c;
-    margin-bottom: 10px;
-  }
-
-  .mathjax-render {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: #4a5568;
-    overflow-x: auto;
-    overflow-y: hidden;
-    max-width: 100%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .mathjax-render .MathJax_Display,
-  .mathjax-render .mjx-chtml,
-  .mathjax-render .katex-display {
-    max-width: 100% !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    padding: 4px 0;
-  }
-
-  /* Mobile Tweaks */
-  @media (max-width: 640px) {
-    .formula-deep-dive {
-      padding: 16px;
-      margin-top: 18px;
-    }
-  }
-
     </style>
-
-
 </head>
 <body>
 
-
-    <div class="sprint-banner-wrapper">
-    <a href="{% url 'daily-sprint' %}" class="sprint-pill-btn">
-        <span class="sprint-icon">⚡</span>
-        <span class="sprint-text">Daily Escape Sprint</span>
-        <span class="sprint-badge">LIVE</span>
-    </a>
-</div>
-
+    <div class="accent-topline"></div>
 
     <div id="loginModal" class="login-modal hidden">
-  <div class="login-modal-content">
-    <button class="close-btn" onclick="closeLoginModal()">✕</button>
-    <div class="login-icon">🔐</div>
-    <h3>Quick verification</h3>
-    <p>Just few things to save or share formulas</p>
+      <div class="login-modal-content">
+        <button class="close-btn" onclick="closeLoginModal()">✕</button>
+        <div class="login-icon">🔐</div>
+        <h3>Quick verification</h3>
+        <p>Just few things to save or share formulas</p>
 
-    <label> Your Name </label>
-    <input type="text" id="nameInput" placeholder="e.g. Rahul/Jack" required />
+        <label> Your Name </label>
+        <input type="text" id="nameInput" placeholder="e.g. Rahul/Jack" required />
 
-    <label>Date of Birth</label>
-    <input type="date" id="dobInput" required />
+        <label>Date of Birth</label>
+        <input type="date" id="dobInput" required />
 
-    <label id="captchaLabel">Loading...</label>
-    <input type="number" id="captchaInput" placeholder="Your answer" required />
+        <label id="captchaLabel">Loading...</label>
+        <input type="number" id="captchaInput" placeholder="Your answer" required />
 
-    <button class="verify-btn" onclick="submitSimpleLogin()">Continue</button>
-    <p id="loginError" class="error-text"></p>
-  </div>
-</div>
+        <button class="verify-btn" onclick="submitSimpleLogin()">Continue</button>
+        <p id="loginError" class="error-text"></p>
+      </div>
+    </div>
 
-    <div class="spectrum-thread"></div>
+    <div class="sprint-banner-wrapper">
+        <a href="{% url 'daily-sprint' %}" class="sprint-pill-btn">
+            <span class="sprint-dot"></span>
+            <span>Daily Escape Sprint — live now</span>
+        </a>
+    </div>
 
     <div class="top-bar">
-  <form method="POST" action="{% url 'saved-page' slug=formula.slug %}" id="saveForm" onsubmit="return handleSaveSubmit(event)" style="margin: 0;">
-    {% csrf_token %}
-    <button type="submit" name="save" class="btn-save">★ Save</button>
-  </form>
+      <form method="POST" action="{% url 'saved-page' slug=formula.slug %}" id="saveForm" onsubmit="return handleSaveSubmit(event)" style="margin: 0;">
+        {% csrf_token %}
+        <button type="submit" name="save" class="pill-btn primary">★ Save</button>
+      </form>
 
-  <button onclick="handleShareClick()" class="util-btn util-share">📱 Share</button>
-</div>
-
+      <button onclick="handleShareClick()" class="pill-btn">↗ Share</button>
+    </div>
 
     <div class="page-header">
         {% if formula.chapter %}
@@ -1419,7 +842,7 @@
     </div>
 
     <div class="formula-card">
-        <div class="formula-ribbon">FormulaVerse</div>
+        <div class="formula-card-label">FormulaVerse</div>
 
         <div class="formula-card-inner">
             <div class="formula-container">
@@ -1440,7 +863,7 @@
             <div class="diagram-panel" id="diagramPanel">
 
                 {% if formula.diagram_url %}
-                <p class="derivation-label">— Diagram/Graph —</p>
+                <p class="derivation-label">Diagram / Graph</p>
                 <div class="derivation-thumbnail-container">
                     <img src="{{ formula.diagram_url.url }}"
                          alt="Diagram"
@@ -1453,7 +876,7 @@
 
 
                 {% if formula.derivation_image %}
-                <p class="derivation-label">— Hand-written Derivation —</p>
+                <p class="derivation-label">Hand-written Derivation</p>
                 {% if formula.derivation_image.url|lower|slice:"-4:" == ".pdf" %}
                     <a href="{{ formula.derivation_image.url }}" target="_blank" class="derivation-pdf-btn">
                         <span class="pdf-icon">📄</span> Open PDF Derivation
@@ -1485,25 +908,23 @@
         {% if formula.when_to_use or formula.mnemonic %}
         <div class="quick-grid">
             {% if formula.when_to_use %}
-            <div class="quick-chip when">
-                <div class="quick-label">🎯 When to use</div>
+            <div class="quick-chip">
+                <div class="section-label">🎯 When to use</div>
                 <div class="quick-body">{{ formula.when_to_use }}</div>
             </div>
             {% endif %}
             {% if formula.mnemonic %}
-            <div class="quick-chip recall">
-                <div class="quick-label">💡 Quick recall</div>
+            <div class="quick-chip">
+                <div class="section-label">💡 Quick recall</div>
                 <div class="quick-body">{{ formula.mnemonic }}</div>
             </div>
             {% endif %}
         </div>
         {% endif %}
 
-
-
         {% if formula.pyq_appearances %}
         <div class="pyq-row">
-            <div class="pyq-heading">📄 Appeared in</div>
+            <div class="section-label">📄 Appeared in</div>
             <div class="pyq-pill-row">
                 {% for appearance in formula.pyq_appearances %}
                 <span class="pyq-pill">{{ appearance }}</span>
@@ -1512,74 +933,74 @@
         </div>
         {% endif %}
 
-<div class="details-static-block" style="margin-top: 20px; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; background-color: #ffffff;">
-    <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: #2c3e50;">Variables, Units &amp; Common Mistakes</h2>
+        <div class="content-card">
+            <h2>Variables, Units &amp; Common Mistakes</h2>
 
-    {% if formula.variables %}
-    <div class="detail-block" style="margin-bottom: 14px;">
-        <h3 class="detail-label" style="font-size: 0.95rem; font-weight: 600; color: #4a5568; margin-bottom: 4px;">Variables</h3>
-        <div class="detail-body" style="font-size: 0.9rem; color: #2d3748;">{{ formula.variables }}</div>
-    </div>
-    {% endif %}
+            {% if formula.variables %}
+            <div class="detail-block">
+                <h3 class="detail-label">Variables</h3>
+                <div class="detail-body">{{ formula.variables }}</div>
+            </div>
+            {% endif %}
 
-    {% if formula.units %}
-    <div class="detail-block" style="margin-bottom: 14px;">
-        <h3 class="detail-label" style="font-size: 0.95rem; font-weight: 600; color: #4a5568; margin-bottom: 4px;">Units</h3>
-        <div class="detail-body" style="display: flex; justify-content: flex-start; align-items: center; font-size: 0.9rem; color: #2d3748; max-width: 100%; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scroling: touch;">
-            $${{ formula.units }}$$
+            {% if formula.units %}
+            <div class="detail-block">
+                <h3 class="detail-label">Units</h3>
+                <div class="detail-body units-row">
+                    $${{ formula.units }}$$
+                </div>
+            </div>
+            {% endif %}
+
+            {% if formula.common_mistakes %}
+            <div class="detail-block mistakes">
+                <h3 class="detail-label">⚠️ Common Mistakes</h3>
+                <div class="detail-body">{{ formula.common_mistakes|linebreaks }}</div>
+            </div>
+            {% endif %}
         </div>
-    </div>
-    {% endif %}
-
-    {% if formula.common_mistakes %}
-    <div class="detail-block" style="margin-bottom: 8px;">
-        <h3 class="detail-label" style="font-size: 0.95rem; font-weight: 600; color: #e53e3e; margin-bottom: 4px;">⚠️ Common Mistakes</h3>
-        <div class="detail-body" style="font-size: 0.9rem; color: #2d3748;">{{ formula.common_mistakes|linebreaks }}</div>
-    </div>
-    {% endif %}
-</div>
 
         {% if formula.worked_example %}
-        <div class="example-card">
-            <div class="example-label">🧮 Worked example</div>
-            <div class="card-content">Q) {{ formula.example }}</div>
-            <div class="card-content" style="overflow-x: auto; max-width: 100%; margin-top: 6px;">
-    <div><strong>Ans:</strong></div>
-    <div style="margin-top: 4px;">
-        \[ {{ formula.answer }} \]
-    </div>
-</div>
+        <div class="content-card example-card">
+            <h2>🧮 Worked Example</h2>
+            <div class="card-content"><strong>Q)</strong> {{ formula.example }}</div>
+            <div class="card-content" style="overflow-x: auto; max-width: 100%; margin-top: 10px;">
+                <div><strong>Ans:</strong></div>
+                <div style="margin-top: 4px;">
+                    \[ {{ formula.answer }} \]
+                </div>
+            </div>
         </div>
         {% endif %}
 
         {{ calculator_config|json_script:"calc-config" }}
 
-{% if calculator_config.variables %}
-<div class="calc-box">
-  <h3 class="calc-title">Interactive Calculator</h3>
+        {% if calculator_config.variables %}
+        <div class="calc-box">
+          <h3 class="calc-title">Interactive Calculator</h3>
 
-  <div class="calc-group">
-    <label class="calc-label" for="solve-for-select">Solve for</label>
-    <select id="solve-for-select" class="solve-for"></select>
-  </div>
+          <div class="calc-group">
+            <label class="calc-label" for="solve-for-select">Solve for</label>
+            <select id="solve-for-select" class="solve-for"></select>
+          </div>
 
-  <div class="calc-inputs" id="calc-inputs-container"></div>
+          <div class="calc-inputs" id="calc-inputs-container"></div>
 
-  <button type="button" class="calc-btn" id="calc-trigger-btn">Calculate</button>
+          <button type="button" class="calc-btn" id="calc-trigger-btn">Calculate</button>
 
-  <div class="calc-result" id="calc-result-box"></div>
-</div>
-{% endif %}
-
-
-
-
-
-
+          <div class="calc-result" id="calc-result-box"></div>
+        </div>
+        {% endif %}
 
         {% if result %}
         <div class="result-badge">{{ result }}</div>
         {% endif %}
+
+
+<div class="ad-native-wrapper">
+            <script async="async" data-cfasync="false" src="https://pl30854659.profitableratecpmnetwork.com/839994ed0cd70e78485e96284f4eae08/invoke.js"></script>
+<div id="container-839994ed0cd70e78485e96284f4eae08"></div>
+        </div>
 
         <div class="explanation">
             {% if explanation %}
@@ -1587,87 +1008,75 @@
             {% endif %}
         </div>
 
-
         <div id="animationModal">
             <div class="modal-box">
                 <button onclick="closeAnimation()" class="modal-close">✕</button>
-                <h3 id="animTitle" style="color:var(--violet-deep); margin:0 0 16px 0; font-family:var(--font-display);"></h3>
+                <h3 id="animTitle" style="color:var(--accent); margin:0 0 16px 0; font-family:var(--font-display);"></h3>
                 <div id="loadingAnim" style="text-align:center; color:var(--muted); padding:40px;">⚙️ Generating animation...</div>
                 <div id="animationContent"></div>
             </div>
         </div>
 
-<section class="formula-deep-dive">
-
-  {% if formula.conceptual_overview %}
-  <div class="content-section">
-    <h2>Detailed Conceptual Overview</h2>
-    <div class="mathjax-render">
-      {{ formula.conceptual_overview|linebreaks }}
-    </div>
-  </div>
-  {% endif %}
-
-  {% if formula.step_by_step_derivation %}
-  <div class="content-section">
-    <h2>Mathematical Derivation & Fundamentals</h2>
-    <div class="mathjax-render">
-      {{ formula.step_by_step_derivation|linebreaks }}
-    </div>
-  </div>
-  {% endif %}
-
-  {% if formula.real_world_applications %}
-  <div class="content-section">
-    <h2>Real-world Engineering & Practical Applications</h2>
-    <div class="mathjax-render">
-      {{ formula.real_world_applications|linebreaks }}
-    </div>
-  </div>
-  {% endif %}
-
-  {% if formula.jee_neet_exam_tips %}
-  <div class="content-section" style="background-color: #fffaf0; border-left: 4px solid #ed8936; padding: 16px; border-radius: 8px;">
-    <h2 style="font-size: 1.05rem; color: #c05621; margin-bottom: 8px;">💡 JEE Mains & NEET High-Yield Notes & Shortcuts</h2>
-    <div class="mathjax-render" style="color: #744210;">
-      {{ formula.jee_neet_exam_tips|linebreaks }}
-    </div>
-  </div>
-  {% endif %}
-
-</section>
-
-
-{% if formula.faqs %}
-<div class="faq-container" style="background: #ffffff; border-radius: 16px; padding: 24px; margin-top: 24px; margin-bottom: 24px; border: 1px solid #f0eee6; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);">
-    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid #f7f5ee; padding-bottom: 12px;">
-        <span style="font-size: 1.25rem;">❓</span>
-        <h2 style="font-size: 1.25rem; font-weight: 700; color: #2d3748; margin: 0;">Frequently Asked Questions — FAQs</h2>
-    </div>
-
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-        {% for faq in formula.faqs %}
-        <div style="background: #faf8f5; border-radius: 12px; padding: 18px 20px; border: 1px solid #f0ece1;">
-            <h3 style="font-weight: 700; color: #1a202c; font-size: 1.05rem; margin: 0 0 10px 0; line-height: 1.4;">
-                Q{{ forloop.counter }}: {{ faq.question }}
-            </h3>
-            <div class="mathjax-render" style="color: #4a5568; font-size: 0.96rem; line-height: 1.65; margin: 0;">
-                {{ faq.answer|linebreaks }}
-            </div>
+        {% if formula.conceptual_overview %}
+        <div class="content-card">
+            <h2>Detailed Conceptual Overview</h2>
+            <div class="mathjax-render">{{ formula.conceptual_overview|linebreaks }}</div>
         </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
+        {% endif %}
 
+        {% if formula.step_by_step_derivation %}
+        <div class="content-card">
+            <h2>Mathematical Derivation &amp; Fundamentals</h2>
+            <div class="mathjax-render">{{ formula.step_by_step_derivation|linebreaks }}</div>
+        </div>
+        {% endif %}
+
+        {% if formula.real_world_applications %}
+        <div class="content-card">
+            <h2>Real-world Engineering &amp; Practical Applications</h2>
+            <div class="mathjax-render">{{ formula.real_world_applications|linebreaks }}</div>
+        </div>
+        {% endif %}
+
+        {% if formula.jee_neet_exam_tips %}
+        <div class="content-card exam-tips-card">
+            <h2>💡 JEE Mains &amp; NEET High-Yield Notes &amp; Shortcuts</h2>
+            <div class="mathjax-render">{{ formula.jee_neet_exam_tips|linebreaks }}</div>
+        </div>
+        {% endif %}
+
+        {% if formula.faqs %}
+        <div class="faq-container">
+            <div class="faq-heading">
+                <span>❓</span>
+                <h2>Frequently Asked Questions</h2>
+            </div>
+
+            {% for faq in formula.faqs %}
+            <div class="faq-item">
+                <h3>Q{{ forloop.counter }}: {{ faq.question }}</h3>
+                <div class="mathjax-render">{{ faq.answer|linebreaks }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+
+        <div class="story-cta-banner">
+    <p class="story-cta-eyebrow">📖 Physics Chronicles</p>
+    <a href="{% url 'formula-story-detail' slug=formula.slug %}" class="story-cta-title">
+        Read: {{ story.title }} →
+    </a>
+    <p class="story-cta-meta">{{ story.reading_time_minutes }} min read</p>
+</div>
 
         <div class="practice-section">
-            <div class="practice-heading">⚡ Practice Questions — Difficulty</div>
+            <div class="practice-heading">⚡ Practice Questions</div>
 
-            <div class="diff-row">
-                <button onclick="loadQuestion('easy')" id="diffEasyBtn" class="diff-btn diff-easy">🟢 Easy</button>
-                <button onclick="loadQuestion('medium')" id="diffMediumBtn" class="diff-btn diff-medium active">🟡 Medium</button>
-                <button onclick="loadQuestion('hard')" id="diffHardBtn" class="diff-btn diff-hard">🔴 Hard</button>
+            <div class="diff-tabs">
+                <button onclick="loadQuestion('easy')" id="diffEasyBtn" class="diff-btn">🟢 Easy</button>
+                <button onclick="loadQuestion('medium')" id="diffMediumBtn" class="diff-btn active">🟡 Medium</button>
+                <button onclick="loadQuestion('hard')" id="diffHardBtn" class="diff-btn">🔴 Hard</button>
             </div>
 
             <div id="loading" class="loading-text">⏳ Generating question...</div>
@@ -1684,39 +1093,20 @@
             </div>
         </div>
 
-<div class="content-section" style="margin-top: 24px; background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
-  <h2 style="font-size: 1.15rem; font-weight: 700; color: #1a202c; margin-bottom: 6px;">💬 Have a Doubt or Feedback?</h2>
-  <p style="font-size: 0.85rem; color: #718096; margin-bottom: 16px;">Ask a question about this derivation or leave a note for other students.</p>
+        <div class="content-card comment-card">
+            <h2>💬 Have a Doubt or Feedback?</h2>
+            <p class="comment-sub">Ask a question about this derivation or leave a note for other students.</p>
 
-  <form method="POST" action="{% url 'add_comment' formula.slug %}" style="display: flex; flex-direction: column; gap: 12px;">
-    {% csrf_token %}
-    <input
-      type="text"
-      name="student_name"
-      placeholder="Your Name or Username"
-      required
-      style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e0; border-radius: 8px; font-size: 0.9rem; box-sizing: border-box;"
-    />
-
-    <textarea
-      name="comment_text"
-      rows="3"
-      placeholder="Type your message or doubt here..."
-      required
-      style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e0; border-radius: 8px; font-size: 0.9rem; box-sizing: border-box; resize: vertical;"
-    ></textarea>
-
-    <button
-      type="submit"
-      style="align-self: flex-start; background-color: #7c3aed; color: #ffffff; font-weight: 600; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem;"
-    >
-      Post Comment
-    </button>
-  </form>
-</div>
+            <form method="POST" action="{% url 'add_comment' formula.slug %}" class="comment-form">
+                {% csrf_token %}
+                <input type="text" name="student_name" placeholder="Your Name or Username" required />
+                <textarea name="comment_text" rows="3" placeholder="Type your message or doubt here..." required></textarea>
+                <button type="submit" class="comment-submit-btn">Post Comment</button>
+            </form>
+        </div>
 
         <div>
-             <div class="practice-heading" style="margin-top:22px;"> 💡 You Might Also Need </div>
+            <div class="practice-heading" style="margin-top:26px;">💡 You Might Also Need</div>
             <div class="similar-scroll">
             {% for similar in similar_formulas %}
             <a href="{{ similar.get_absolute_url }}" class="similar-card-mini">
@@ -1730,47 +1120,54 @@
         </div>
 
 
-<div style="background: #f0f3ff; border: 1px solid #d0d7de; border-radius: 8px; padding: 1.2rem; margin-top: 2rem; text-align: center;">
-    <p style="margin: 0; font-weight: 600;">🚀 Curious about modern breakthroughs?</p>
-    <a href="/discovery/" style="color: #6c5ce7; font-weight: 700; text-decoration: none;">Explore Incredible Physics Discoveries (2022–2023) &rarr;</a>
+
+     <h2 class="section-title">Explore by more Chapters</h2>
+<div class="chapter-pill-grid">
+    <a href='/chapter/electrostatics/'> Electrostatics</a>
+    <a href='/chapter/magnetism/'> Magnetism </a>
+    <a href='/chapter/kinematics/'> Kinematics</a>
+    <a href='/chapter/current%20electricity/'> Current Electricity </a>
 </div>
 
-
-
-<div class="pyq-affiliate-card">
-    <div class="pyq-affiliate-header">
-        <span class="pyq-badge">Offline Practice</span>
-        <span class="pyq-amazon-tag">Amazon Official</span>
-    </div>
-    <div class="pyq-affiliate-body">
-        <div class="pyq-icon">📖</div>
-        <div class="pyq-details">
-            <h4 class="pyq-title">Prefer practicing on paper?</h4>
-            <p class="pyq-desc">Get chapter-wise 36+ years JEE & NEET solved paper books with detailed solutions.</p>
+        <div class="discovery-banner">
+            <p>🚀 Curious about modern breakthroughs?</p>
+            <a href="/discovery/">Explore Incredible Physics Discoveries (2022–2023) &rarr;</a>
         </div>
-    </div>
-    <a href="https://amzn.to/44QrFdw" target="_blank" rel="noopener sponsored" class="pyq-amazon-btn">
-        Get Solved Papers on Amazon
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-    </a>
-</div>
+
+        <div class="pyq-affiliate-card">
+            <div class="pyq-affiliate-header">
+                <span class="pyq-badge">Offline Practice</span>
+                <span class="pyq-amazon-tag">Amazon Official</span>
+            </div>
+            <div class="pyq-affiliate-body">
+                <div class="pyq-icon">📖</div>
+                <div class="pyq-details">
+                    <h4 class="pyq-title">Prefer practicing on paper?</h4>
+                    <p class="pyq-desc">Get chapter-wise 36+ years JEE &amp; NEET solved paper books with detailed solutions.</p>
+                </div>
+            </div>
+            <a href="https://amzn.to/44QrFdw" target="_blank" rel="noopener sponsored" class="pyq-amazon-btn">
+                Get Solved Papers on Amazon
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+        </div>
 
     </div>
 
+    <footer class="site-footer">
+      <p>© 2026 formulaverse.in</p>
+      <div class="footer-links">
+        <a href="/me">About</a> •
+        <a href="/me#get-in-touch">Contact Us</a> •
+        <a href="/privacy/">Privacy Policy</a> •
+        <a href="/terms/">Terms of Service</a>
+      </div>
+    </footer>
 
+    <div class="fv-nav-spacer"></div>
 
-<footer class="site-footer">
-  <p>© 2026 formulaverse.in</p>
-  <div class="footer-links">
-    <a href="/me">About</a> •
-    <a href="/me#get-in-touch">Contact Us</a> •
-    <a href="/privacy/">Privacy Policy</a> •
-    <a href="/terms/">Terms of Service</a>
-  </div>
-</footer>
-
-<nav class="nav-menu fv-bottom-nav" aria-label="Primary">
-  <a href="{% url 'base-page' %}" class="fv-nav-item is-active">
+   <nav class="nav-menu fv-bottom-nav" aria-label="Primary">
+  <a href="{% url 'base-page' %}" class="fv-nav-item">
     <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
     <span class="fv-nav-label">Home</span>
   </a>
@@ -1786,11 +1183,17 @@
     <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
     <span class="fv-nav-label">Vault</span>
   </a>
-  <a href="{% url 'my-purchase' %}" class="fv-nav-item">
-    <span class="fv-nav-icon" aria-hidden="true">&#128179;</span>
-    <span class="fv-nav-label">My Purchase</span>
+  <a href="{% url 'stories-list' %}" class="fv-nav-item is-active">
+    <span class="fv-nav-icon" aria-hidden="true">&#128220;</span>
+    <span class="fv-nav-label">Stories</span>
   </a>
 </nav>
+
+    <button id="backToTopBtn" onclick="scrollToTop()" title="Back to top" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+</button>
 
 <script>
 let currentDifficulty = 'medium';
@@ -1831,7 +1234,9 @@ function loadQuestion(difficulty) {
     setActiveDiffButton(difficulty);
     document.getElementById('loading').style.display = 'block';
     document.getElementById('question-box').style.display = 'none';
-    document.getElementById('feedback-box').style.display = 'none';
+    const feedbackBox = document.getElementById('feedback-box');
+    feedbackBox.style.display = 'none';
+    feedbackBox.classList.remove('correct', 'incorrect');
 
     fetch(`/practice/{{ formula.slug }}/?difficulty=${difficulty}`)
         .then(res => res.json())
@@ -1851,22 +1256,10 @@ function loadQuestion(difficulty) {
             const optionsBox = document.getElementById('options-box');
             optionsBox.innerHTML = '';
 
-            const colors = { 'A': 'rgba(79,70,229,0.07)', 'B': 'rgba(14,165,160,0.07)', 'C': 'rgba(219,39,119,0.07)', 'D': 'rgba(124,58,237,0.07)' };
-            const borderColors = { 'A': '#4F46E5', 'B': '#0EA5A0', 'C': '#DB2777', 'D': '#7C3AED' };
-
             for (let key in data.options) {
                 optionsBox.innerHTML += `
-                    <button onclick="checkAnswer('${key}')"
-                        style="width:100%; padding:12px 16px;
-                               border-radius:10px; text-align:left;
-                               background:${colors[key]};
-                               backdrop-filter:blur(8px);
-                               -webkit-backdrop-filter:blur(8px);
-                               border:1px solid ${borderColors[key]};
-                               color:#1B1B2F; font-size:14px;
-                               cursor:pointer; line-height:1.5;">
-                        <span style="font-weight:700; color:${borderColors[key]};">${key}.</span>
-                        ${data.options[key] || '⚠️ Network issue! Please reload'}
+                    <button onclick="checkAnswer('${key}')" class="option-btn">
+                        <span>${key}.</span>${data.options[key] || '⚠️ Network issue! Please reload'}
                     </button>`;
             }
 
@@ -1885,14 +1278,12 @@ function checkAnswer(selected) {
     const feedbackText = document.getElementById('feedback-text');
 
     if (selected === correctAnswer) {
-        feedback.style.background = 'rgba(21,128,61,0.10)';
-        feedback.style.border = '1px solid #15803D';
-        feedbackText.style.color = '#15803D';
+        feedback.classList.remove('incorrect');
+        feedback.classList.add('correct');
         feedbackText.innerText = '✅ Correct! ' + currentExplanation;
     } else {
-        feedback.style.background = 'rgba(219,39,119,0.10)';
-        feedback.style.border = '1px solid #DB2777';
-        feedbackText.style.color = '#B91C1C';
+        feedback.classList.remove('correct');
+        feedback.classList.add('incorrect');
         feedbackText.innerText = `❌ Wrong! Correct answer: ${correctAnswer}. ${currentExplanation}`;
     }
     feedback.style.display = 'block';
@@ -2138,7 +1529,7 @@ function handleSaveSubmit(event) {
         });
     }
 
-  return true; y
+  return true;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -2258,9 +1649,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+      const backToTopBtn = document.getElementById("backToTopBtn");
+
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    });
+
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
 </script>
-
-
 
 </body>
 </html>

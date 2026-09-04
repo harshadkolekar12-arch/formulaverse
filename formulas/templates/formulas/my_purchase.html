@@ -14,138 +14,157 @@
     <link rel="manifest" href="{% static 'formulas/manifest.json' %}">
     <link rel="icon" type="image/png" href="{% static 'formulas/icon.jpeg' %}">
     <meta name="description" content="Your purchased chapter PDFs on FormulaVerse">
+    <meta name="theme-color" content="#FAF8F1">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
     <style>
-        :root{
-            --bg1:#fdf3e7;
-            --bg2:#fef9f0;
-            --bg3:#fbeee0;
-            --surface: rgba(255, 255, 255, 0.62);
-            --surface-strong: rgba(255, 255, 255, 0.8);
-            --border-soft: rgba(120, 100, 80, 0.10);
-            --border: rgba(255, 255, 255, 0.9);
-            --amber:#ea9a3e;
-            --amber-dim:#c98a2e;
-            --ink:#2d2a3d;
-            --text-dim:#7c7a8c;
-            --teal:#0d9488;
-            --teal-dim: rgba(13,148,136,0.12);
-            --grad: linear-gradient(90deg, #7c5cfc, #14b8a6);
+        :root {
+            --bg: #FAF8F1;
+            --surface: #FFFFFF;
+            --surface-muted: #F4F0E4;
+            --border: #E7E0CF;
+            --border-strong: #D8CFB6;
+            --ink: #16161F;
+            --ink-soft: #55546B;
+            --muted: #99927D;
+            --accent: #6D28D9;
+            --accent-soft: #EFE9FB;
+            --gold: #A6690A;
+            --success: #12946F;
+            --danger: #DC2626;
+            --radius: 14px;
+            --font-display: 'Source Serif 4', Georgia, serif;
+            --font-body: 'Outfit', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
-        *{ box-sizing:border-box; }
+        * { box-sizing: border-box; }
 
-        body{
-            font-family:'Outfit', 'Segoe UI', sans-serif;
-            background:
-                radial-gradient(circle at 50% -10%, #fff6e9 0%, var(--bg2) 55%),
-                linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
-            color:var(--ink);
-            margin:0;
-            padding:28px 16px 60px;
-            min-height:100vh;
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--ink);
+            margin: 0;
+            padding: 28px 16px 60px;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .back-link{
-            position:fixed;
-            top:14px;
-            left:14px;
-            color:var(--amber-dim);
-            font-size:1.8rem;
-            z-index:10;
-            text-decoration:none;
+        .back-link {
+            position: fixed;
+            top: 14px;
+            left: 14px;
+            color: var(--ink);
+            font-size: 1.5rem;
+            z-index: 10;
+            text-decoration: none;
         }
 
-        .page-header{ text-align:center; margin-bottom:28px; padding-top:20px; }
-        .page-header h1{ font-size:1.9rem; margin:0 0 6px; }
-        .page-header p{
-            color:var(--text-dim);
-            font-size:0.90rem;
-            letter-spacing:2px;
-            margin:0;
+        .page-header { text-align: center; margin-bottom: 28px; padding-top: 20px; }
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.6rem, 5vw, 2rem);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin: 0 0 6px;
+            color: var(--ink);
+        }
+        .page-header p {
+            color: var(--muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin: 0;
         }
 
-        .container{ max-width:720px; margin:0 auto; }
+        .container { max-width: 680px; margin: 0 auto; }
 
-        .lock-card{
-            background: var(--surface-strong);
-            border:1px solid var(--border);
-            border-radius:18px;
-            padding:36px 26px;
-            text-align:center;
-            max-width:360px;
-            margin:40px auto;
+        .lock-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 26px;
+            text-align: center;
+            max-width: 360px;
+            margin: 40px auto;
         }
-        .lock-card .icon{ font-size:30px; margin-bottom:12px; }
-        .lock-card p.lead{ font-weight:700; font-size:18px; margin:0 0 8px; }
-        .lock-card p.sub{ color:var(--text-dim); font-size:13px; margin:0 0 20px; }
-        .lock-cta{
-            display:inline-block;
-            background:var(--grad);
-            color:#fff;
-            font-weight:700;
-            padding:11px 26px;
-            border-radius:50px;
-            text-decoration:none;
-            font-size:14px;
+        .lock-card .icon { font-size: 28px; margin-bottom: 12px; }
+        .lock-card p.lead { font-family: var(--font-display); font-weight: 600; font-size: 18px; margin: 0 0 8px; color: var(--ink); }
+        .lock-card p.sub { color: var(--ink-soft); font-size: 13px; margin: 0 0 20px; line-height: 1.5; }
+        .lock-cta {
+            display: inline-block;
+            background: lightblue;
+            color: #0051A2;
+            font-weight: 700;
+            padding: 11px 26px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.15s ease;
         }
+        .lock-cta:hover { background: #80B3FF; }
 
-        ul{ list-style:none; padding:0; margin:0; display:grid; gap:14px; }
+        ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
 
-        .purchase-card{
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            gap:14px;
-            background:var(--surface);
-            backdrop-filter: blur(16px);
-            border:1px solid var(--border);
-            border-radius:14px;
-            padding:18px 20px;
-            box-shadow: 0 4px 24px rgba(140, 120, 90, 0.12);
+        .purchase-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            transition: border-color 0.15s ease;
         }
+        .purchase-card:hover { border-color: var(--accent); }
 
-        .purchase-info .chapter-name{ font-size:1.05rem; font-weight:600; margin:0 0 4px; }
-        .purchase-info .purchase-meta{ font-size:0.78rem; color:var(--text-dim); }
-        .purchase-info .purchase-meta .amount{ color:var(--teal); font-weight:600; }
+        .purchase-info .chapter-name { font-family: var(--font-display); font-size: 1.02rem; font-weight: 600; margin: 0 0 4px; color: var(--ink); }
+        .purchase-info .purchase-meta { font-size: 0.78rem; color: var(--muted); font-family: var(--font-mono); }
+        .purchase-info .purchase-meta .amount { color: var(--success); font-weight: 700; }
 
-        .btn-download{
-            flex-shrink:0;
-            display:inline-flex;
-            align-items:center;
-            gap:6px;
-            padding:10px 20px;
-            background:var(--teal-dim);
-            border:1px solid rgba(13,148,136,0.3);
-            border-radius:8px;
-            color:var(--teal);
-            font-family:inherit;
-            font-size:0.8rem;
-            font-weight:700;
-            text-decoration:none;
-            white-space:nowrap;
-            transition: background 0.2s ease;
+        .btn-download {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border-strong);
+            border-radius: 999px;
+            color: var(--ink-soft);
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
         }
-        .btn-download:hover{ background: rgba(13,148,136,0.2); }
+        .btn-download:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-        .empty-message{
-            text-align:center;
-            font-size:1.05rem;
-            color:var(--text-dim);
-            padding:60px 20px;
-            border:1px dashed rgba(120,100,80,0.25);
-            border-radius:14px;
-            background: rgba(255,255,255,0.4);
+        .empty-message {
+            text-align: center;
+            font-size: 1.02rem;
+            color: var(--ink-soft);
+            padding: 60px 20px;
+            border: 1px dashed var(--border-strong);
+            border-radius: var(--radius);
+            background: var(--surface);
         }
-        .empty-message a{ color:var(--teal); font-weight:600; text-decoration:none; }
+        .empty-message a { color: #0051A2; font-weight: 600; text-decoration: none; }
+        .empty-message a:hover { text-decoration: underline; }
 
-        .value-note{
-            max-width:360px;
-            margin:20px auto 0;
-            text-align:center;
-            font-size:0.82rem;
-            color:var(--text-dim);
-            line-height:1.5;
+        .value-note {
+            max-width: 360px;
+            margin: 20px auto 0;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--ink-soft);
+            line-height: 1.5;
         }
 
          .fv-nav-spacer { height: 72px; }
@@ -160,11 +179,8 @@
             justify-content: space-around;
             align-items: center;
             padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
-            background: rgba(254, 249, 240, 0.92);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(140, 110, 70, 0.14);
-            box-shadow: 0 -6px 24px rgba(140, 120, 90, 0.10);
+            background: var(--surface);
+            border-top: 1px solid var(--border);
         }
 
         .fv-nav-item {
@@ -175,22 +191,21 @@
             gap: 3px;
             padding: 4px 2px;
             text-decoration: none;
-            color: #a9a6b8;
-            font-family: 'Outfit', sans-serif;
+            color: var(--muted);
             transition: color 0.2s ease;
         }
-        .fv-nav-item:hover { color: #0d9488; }
-        .fv-nav-item:focus-visible { outline: 2px solid #0d9488; outline-offset: 2px; border-radius: 8px; }
+        .fv-nav-item:hover { color: var(--ink); }
+        .fv-nav-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
 
-        .fv-nav-item.is-active { color: #0d9488; }
+        .fv-nav-item.is-active { color: var(--ink); }
 
-        .fv-nav-icon { font-size: 1.15rem; line-height: 1; }
+        .fv-nav-icon { font-size: 1.1rem; line-height: 1; }
         .fv-nav-label { font-size: 10.5px; letter-spacing: 0.02em; }
 
         .ad-banner-container {
-  max-width: 280px; /* Adjust between 250px - 300px based on preference */
+  max-width: 280px;
   width: 100%;
-  margin: 16px auto; /* Centers the banner horizontally */
+  margin: 16px auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -209,28 +224,19 @@
             padding-top: 40px;
             text-align: center;
             font-size: 0.875rem;
-            color: var(--text-muted);
+            color: var(--muted);
         }
 
-        .site-footer p {
-            margin-bottom: 8px;
-        }
+        .site-footer p { margin-bottom: 8px; }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
+        .footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
 
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.15s ease;
-        }
+        .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.15s ease; }
 
-        .footer-links a:hover {
-            color: var(--text-main);
+        .footer-links a:hover { color: var(--ink); }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; }
         }
 
     </style>
@@ -308,9 +314,8 @@
 </footer>
 
 
-
 <nav class="nav-menu fv-bottom-nav" aria-label="Primary">
-  <a href="{% url 'base-page' %}" class="fv-nav-item is-active">
+  <a href="{% url 'base-page' %}" class="fv-nav-item">
     <span class="fv-nav-icon" aria-hidden="true">&#8962;</span>
     <span class="fv-nav-label">Home</span>
   </a>
@@ -326,9 +331,9 @@
     <span class="fv-nav-icon" aria-hidden="true">&#9733;</span>
     <span class="fv-nav-label">Vault</span>
   </a>
-  <a href="{% url 'my-purchase' %}" class="fv-nav-item">
-    <span class="fv-nav-icon" aria-hidden="true">&#128179;</span>
-    <span class="fv-nav-label">My Purchase</span>
+  <a href="{% url 'stories-list' %}" class="fv-nav-item is-active">
+    <span class="fv-nav-icon" aria-hidden="true">&#128220;</span>
+    <span class="fv-nav-label">Stories</span>
   </a>
 </nav>
 
